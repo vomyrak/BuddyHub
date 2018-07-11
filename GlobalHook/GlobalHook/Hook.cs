@@ -25,9 +25,9 @@ namespace GlobalHook
         }
 
 
-        private static LowLevelKeyboardProc _proc = HookCallback;
-        private static LowLevelMouseProc _proc2 = MouseHookCallback;
-        private static IntPtr _hookID = IntPtr.Zero;
+        private static LowLevelKeyboardProc _keyProc = KeyHookCallback;
+        private static LowLevelMouseProc _mouseProc = MouseHookCallback;
+        private static IntPtr _keyHookID = IntPtr.Zero;
         private static IntPtr _mouseHookID = IntPtr.Zero;
 
         [StructLayout(LayoutKind.Sequential)]
@@ -49,14 +49,15 @@ namespace GlobalHook
 
         public myHook()
         {
-            _hookID = SetHook(_proc);
-            _mouseHookID = SetMouseHook(_proc2);
+            _keyHookID = setKeyHook(_keyProc);
+            _mouseHookID = SetMouseHook(_mouseProc);
             Application.Run();
-            UnhookWindowsHookEx(_hookID);
+            UnhookWindowsHookEx(_keyHookID);
             UnhookWindowsHookEx(_mouseHookID);
         }
 
-        private static IntPtr SetHook(LowLevelKeyboardProc proc)
+        //Bind keyboard hook to system processes
+        private static IntPtr setKeyHook(LowLevelKeyboardProc proc)
         {
             using (Process curProcess = Process.GetCurrentProcess())
             using (ProcessModule curModule = curProcess.MainModule)
@@ -65,6 +66,7 @@ namespace GlobalHook
             }
         }
         
+        //Bind mouse hook to system processes
         private static IntPtr SetMouseHook(LowLevelMouseProc proc)
         {
             using (Process curProcess = Process.GetCurrentProcess())
@@ -75,14 +77,14 @@ namespace GlobalHook
         }
 
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
-        private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        private static IntPtr KeyHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
             {
                 int vkCode = Marshal.ReadInt32(lParam);
                 Console.WriteLine((Keys)vkCode);
             }
-            return CallNextHookEx(_hookID, nCode, wParam, lParam);
+            return CallNextHookEx(_keyHookID, nCode, wParam, lParam);
         }
 
         private delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
@@ -98,7 +100,7 @@ namespace GlobalHook
 
 
 
-
+        //DLL imports from dynamic libraries
         
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
