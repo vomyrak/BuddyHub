@@ -1,4 +1,8 @@
-﻿using System;
+﻿// WSUROP 2018 Universal Controller Source Code
+//
+// Set-up of input event hooks
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,10 +51,14 @@ namespace GlobalHook
             public IntPtr dwExtraInfo;
         }
 
+
+
         public myHook()
         {
             _keyHookID = setKeyHook(_keyProc);
             _mouseHookID = SetMouseHook(_mouseProc);
+            TheHook.Test myTest = new TheHook.Test();
+            myTest.mouseTest();
             Application.Run();
             UnhookWindowsHookEx(_keyHookID);
             UnhookWindowsHookEx(_mouseHookID);

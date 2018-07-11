@@ -4,3 +4,9 @@ C:\Users\Vomyrak\Documents\VS Projects\GlobalHook\GlobalHook\GlobalHook\obj\Debu
 C:\Users\Vomyrak\Documents\VS Projects\GlobalHook\GlobalHook\GlobalHook\obj\Debug\GlobalHook.csproj.CoreCompileInputs.cache
 C:\Users\Vomyrak\Documents\VS Projects\GlobalHook\GlobalHook\GlobalHook\obj\Debug\TheHook.exe
 C:\Users\Vomyrak\Documents\VS Projects\GlobalHook\GlobalHook\GlobalHook\obj\Debug\TheHook.pdb
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\GlobalHook\GlobalHook\bin\Debug\TheHook.exe
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\GlobalHook\GlobalHook\bin\Debug\TheHook.pdb
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\GlobalHook\GlobalHook\obj\Debug\GlobalHook.csprojAssemblyReference.cache
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\GlobalHook\GlobalHook\obj\Debug\GlobalHook.csproj.CoreCompileInputs.cache
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\GlobalHook\GlobalHook\obj\Debug\TheHook.exe
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\GlobalHook\GlobalHook\obj\Debug\TheHook.pdb

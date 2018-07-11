@@ -1,4 +1,8 @@
-﻿using System;
+﻿// WSUROP 2018 Universal Controller Source Code
+//
+// Programme Entry
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
