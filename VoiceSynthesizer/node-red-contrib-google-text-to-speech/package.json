@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@google-cloud/text-to-speech": "^0.3.0",
-    "fs": "0.0.1-security"
+    "fs": "0.0.1-security",
+    "xmlhttprequest": "^1.8.0"
   }
 }
