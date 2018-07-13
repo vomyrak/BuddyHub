@@ -2,7 +2,8 @@
 
 ## Installation
 * `npm install` in this directory,
-* `cd ~/.node-red`
+    * MacOS/Linux: `cd ~/.node-red` 
+    * Windows: `cd %userprofile%/.node-red`
 * `npm install <location of node module>` <br />
 Substitude the `<location of node module>` with the path to this directory
 
