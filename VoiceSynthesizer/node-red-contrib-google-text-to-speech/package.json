@@ -1,0 +1,21 @@
+{
+  "name": "node-red-contrib-google-text-to-speech",
+  "version": "1.0.0",
+  "description": "",
+  "main": "text-to-speech.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joan",
+  "license": "ISC",
+  "node-red": {
+    "nodes": {
+      "text-to-speech": "text-to-speech.js"
+    }
+  },
+  "dependencies": {
+    "@google-cloud/text-to-speech": "^0.3.0",
+    "fs": "0.0.1-security",
+    "xmlhttprequest": "^1.8.0"
+  }
+}
