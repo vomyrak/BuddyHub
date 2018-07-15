@@ -1,8 +1,4 @@
-﻿// WSUROP 2018 Universal Controller Source Code
-//
-// Set-up of input event hooks
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,9 +25,9 @@ namespace GlobalHook
         }
 
 
-        private static LowLevelKeyboardProc _keyProc = KeyHookCallback;
-        private static LowLevelMouseProc _mouseProc = MouseHookCallback;
-        private static IntPtr _keyHookID = IntPtr.Zero;
+        private static LowLevelKeyboardProc _proc = HookCallback;
+        private static LowLevelMouseProc _proc2 = MouseHookCallback;
+        private static IntPtr _hookID = IntPtr.Zero;
         private static IntPtr _mouseHookID = IntPtr.Zero;
 
         [StructLayout(LayoutKind.Sequential)]
@@ -51,21 +47,16 @@ namespace GlobalHook
             public IntPtr dwExtraInfo;
         }
 
-
-
         public myHook()
         {
-            _keyHookID = setKeyHook(_keyProc);
-            _mouseHookID = SetMouseHook(_mouseProc);
-            TheHook.Test myTest = new TheHook.Test();
-            myTest.mouseTest();
+            _hookID = SetHook(_proc);
+            _mouseHookID = SetMouseHook(_proc2);
             Application.Run();
-            UnhookWindowsHookEx(_keyHookID);
+            UnhookWindowsHookEx(_hookID);
             UnhookWindowsHookEx(_mouseHookID);
         }
 
-        //Bind keyboard hook to system processes
-        private static IntPtr setKeyHook(LowLevelKeyboardProc proc)
+        private static IntPtr SetHook(LowLevelKeyboardProc proc)
         {
             using (Process curProcess = Process.GetCurrentProcess())
             using (ProcessModule curModule = curProcess.MainModule)
@@ -74,7 +65,6 @@ namespace GlobalHook
             }
         }
         
-        //Bind mouse hook to system processes
         private static IntPtr SetMouseHook(LowLevelMouseProc proc)
         {
             using (Process curProcess = Process.GetCurrentProcess())
@@ -85,14 +75,14 @@ namespace GlobalHook
         }
 
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
-        private static IntPtr KeyHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
             {
                 int vkCode = Marshal.ReadInt32(lParam);
                 Console.WriteLine((Keys)vkCode);
             }
-            return CallNextHookEx(_keyHookID, nCode, wParam, lParam);
+            return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
 
         private delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
@@ -108,7 +98,7 @@ namespace GlobalHook
 
 
 
-        //DLL imports from dynamic libraries
+
         
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
