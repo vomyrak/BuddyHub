@@ -63,3 +63,23 @@ app.get('/device', function(req, res) {
     });
   });
 });
+
+app.post('/request', function(req, res) {
+  console.log(req.body.device);
+  console.log(req.body.method);
+  const listQuery = "SELECT DISTINCT device FROM outputdevice";
+  const query = {
+    // give the query a unique name
+    name: 'get-methods',
+    text: 'SELECT * FROM outputdevice WHERE device = $1',
+    values: [req.query.selected]
+  };
+  pool.query(query, (err, result) => {
+    pool.query(listQuery, (listErr, listResult) => {
+      res.render('device', {
+        methods: result.rows,
+        devices: listResult.rows
+      });
+    });
+  });
+});

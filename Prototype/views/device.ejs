@@ -24,7 +24,11 @@
     <div class="method">
       <div class="col-sm-3">
         <% methods.forEach(function(method) { %>
-          <button class="method-button" type="submit" value="<%= method.method %>" id='<%= method.method %>'><%= method.method %></button>
+          <input type="hidden" id="http_method<%= method.method %>" value='<%= method.http_method %>' />
+          <input type="hidden" id="link<%= method.method %>" value='<%= method.link %>' />
+          <input type="hidden" id="data<%= method.method %>" value='<%= method.data %>' />
+          <input type="hidden" id="headers<%= method.method %>" value='<%= method.headers %>' />
+          <button onclick="sendRequest(this)" class="method-button" type="submit" value="<%= method.method %>" id='<%= method.method %>'><%= method.method %></button>
           <% }); %>
       </div>
       <div class="col-sm-9">
@@ -34,4 +38,5 @@
       </div>
     </div>
   </div>
+  <script src="../js/device.js"></script>
 </body>
