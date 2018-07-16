@@ -7,6 +7,7 @@
   <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" type="text/css" href="../css/menu.css" />
+  <link rel="stylesheet" type="text/css" href="../css/device.css" />
 </head>
 
 <body>
@@ -19,7 +20,18 @@
         <% }); %>
     </ul>
   </div>
-  <div class="col-md-9 column margintop10">
-    <h2> Select a Device on the left to start </h2>
+  <div class="col-md-9 column margintop20">
+    <div class="method">
+      <div class="col-sm-3">
+        <% methods.forEach(function(method) { %>
+          <button class="method-button" type="submit" value="<%= method.method %>" id='<%= method.method %>'><%= method.method %></button>
+          <% }); %>
+      </div>
+      <div class="col-sm-9">
+        <% methods.forEach(function(method) { %>
+          <textarea rows="2" class="method-text" readonly><%= method.description %></textarea>
+          <% }); %>
+      </div>
+    </div>
   </div>
 </body>

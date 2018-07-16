@@ -39,10 +39,27 @@ app.get('/', function(req, res) {
   // Render the page with all output devices in the menu
   const listQuery = "SELECT DISTINCT device FROM outputdevice";
   pool.query(listQuery, (listErr, listResult) => {
-    console.log(process.env.PASSWORD);
-    console.log(listErr);
     res.render('index', {
       devices: listResult.rows
+    });
+  });
+});
+
+app.get('/device', function(req, res) {
+  // Render the page with all output devices in the menu
+  const listQuery = "SELECT DISTINCT device FROM outputdevice";
+  const query = {
+    // give the query a unique name
+    name: 'get-methods',
+    text: 'SELECT * FROM outputdevice WHERE device = $1',
+    values: [req.query.selected]
+  };
+  pool.query(query, (err, result) => {
+    pool.query(listQuery, (listErr, listResult) => {
+      res.render('device', {
+        methods: result.rows,
+        devices: listResult.rows
+      });
     });
   });
 });
