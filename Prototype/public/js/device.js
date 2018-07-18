@@ -38,9 +38,6 @@ function sendRequest(button) {
       }
     } else {
       console.log(this.responseText);
-      if (callback_function != '') {
-        callback_map[callback_function](this.response);
-      }
     }
   };
   // Open Connection
@@ -55,7 +52,7 @@ function sendRequest(button) {
 }
 
 function decodeAndPlay(encodedMP3) {
-  var audio = new Audio(encodedMP3);
+  var audio = new Audio('http://localhost:8000/synthesize-text-audio.mp3');
   audio.play();
   // console.log(encodedMP3);
 }
