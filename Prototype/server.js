@@ -1,7 +1,10 @@
 const express = require('express');
 const app = express();
+const fs = require('fs');
 const server = require('http').createServer(app);
 const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+const { exec } = require('child_process');
+util = require('util');
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // to support JSON-encoded bodies
@@ -95,6 +98,38 @@ app.post('/tts', function(req, res) {
       if (this.readyState == 4 && this.status == 200) {
         // If the http request is successful
         // console.log(this.responseText);
+        // Write the response text to the output file
+        const outputFile = './output.txt';
+        fs.writeFile(outputFile, this.responseText, 'binary', err => {
+          if (err) {
+            console.error('ERROR:', err);
+            return;
+          }
+          console.log(`Audio content written to file: ${outputFile}`);
+          // Execute the command to turn the response text to an mp3 file
+          // See: https://cloud.google.com/text-to-speech/docs/create-audio#text-to-speech-text-protocol
+          exec('sed \'s|audioContent| |\' < ./output.txt > ./tmp-output.txt && tr -d \'\n ":{}\' < ./tmp-output.txt > ./tmp-output-2.txt && base64 ./tmp-output-2.txt --decode > ./synthesize-text-audio.mp3 && rm ./tmp-output*.txt && rm ./output.txt', (err, stdout, stderr) => {
+            if (err) {
+              console.error('ERROR:', err);
+              // Node couldn't execute the command
+              return;
+            }
+
+            var filePath = "./synthesize-text-audio.mp3";
+            var stat = fs.statSync(filePath);
+
+            res.writeHead(200, {
+              'Content-Type': 'audio/mpeg',
+              'Content-Length': stat.size
+            });
+
+            var readStream = fs.createReadStream(filePath);
+            // We replaced all the event handlers with a simple call to util.pump()
+            readStream.pipe(res);
+            // Set the output message to path of the audio file generated
+            // res.sendfile("./synthesize-text-audio.mp3");
+          });
+        });
       } else {
         console.log(this.responseText);
       }

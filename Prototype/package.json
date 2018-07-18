@@ -10,12 +10,15 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "child_process": "^1.0.2",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
+    "fs": "0.0.1-security",
     "http": "0.0.0",
     "mongodb": "^3.1.1",
     "mysql": "^2.15.0",
     "pg": "^7.4.3",
+    "util": "^0.11.0",
     "xmlhttprequest": "^1.8.0"
   }
 }

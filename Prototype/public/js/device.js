@@ -32,11 +32,16 @@ function sendRequest(button) {
       // If there is a callback function,
       // find the coresponding function in the callback_map and apply.
       if (callback_function != '') {
+        // console.log(this.responseText);
         console.log(this.responseText);
-        callback_map[callback_function](this.responseText);
+        callback_map[callback_function](this.response);
+      }
+    } else {
+      console.log(this.responseText);
+      if (callback_function != '') {
+        callback_map[callback_function](this.response);
       }
     }
-    console.log(this.responseText);
   };
   // Open Connection
   xhttp.open(http_method, link, true);
@@ -50,5 +55,7 @@ function sendRequest(button) {
 }
 
 function decodeAndPlay(encodedMP3) {
-  console.log(encodedMP3);
+  var audio = new Audio(encodedMP3);
+  audio.play();
+  // console.log(encodedMP3);
 }
