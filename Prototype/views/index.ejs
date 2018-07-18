@@ -12,10 +12,10 @@
 <body>
   <div class="col-md-3 column margintop20">
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="/"><span class="glyphicon glyphicon-chevron-right"></span> Home</a></li>
+      <li><a href="/" class="active2"><span class="glyphicon glyphicon-chevron-right"></span> Home</a></li>
       <% devices.forEach(function(device) { %>
+        <!--/ Product Option in menu for each output device -->
         <li><a href="/device?selected=<%= device.device %>"><span class="glyphicon glyphicon-chevron-right"></span> <%= device.device %></a></li>
-        <!--/ Product Item -->
         <% }); %>
     </ul>
   </div>
