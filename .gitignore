@@ -4,3 +4,8 @@
 
 /C_Sharp_Server/C_Sharp_Server/bin/Debug/netcoreapp2.0
 /C_Sharp_Server/C_Sharp_Server/obj
+/UC/UCUI/UCUI/obj
+/C_Sharp_Server/C_Sharp_Client/bin/Debug
+/C_Sharp_Server/C_Sharp_Client/obj/Debug
+/C_Sharp_Server/packages
+/C_Sharp_Server/C_Sharp_Server/auth.json
