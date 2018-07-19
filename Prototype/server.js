@@ -143,3 +143,17 @@ app.post('/tts', function(req, res) {
     xhttp.send(JSON.stringify(data));
   });
 });
+
+app.get('/synthesize-text-audio.mp3', function(req, res) {
+  var filePath = "./synthesize-text-audio.mp3";
+  var stat = fs.statSync(filePath);
+
+  res.writeHead(200, {
+    'Content-Type': 'audio/mpeg',
+    'Content-Length': stat.size
+  });
+
+  var readStream = fs.createReadStream(filePath);
+  // We replaced all the event handlers with a simple call to util.pump()
+  readStream.pipe(res);
+});
