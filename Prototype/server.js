@@ -14,15 +14,16 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
   extended: true
 }));
 
+// Config and connect to mongo database
 var options = {useNewUrlParser: true, auth: {authdb: "admin"}};
 options.user = filereader.user;
 options.pass = filereader.pass;
 var connectString = "mongodb://"+filereader.dns+":27017/uc";
-
 mongoose.connect(connectString, options)
     .then(() => console.log('Connected to MongoDB...'))
     .catch(error => console.error('Failed to connect',error));
 
+// Model for mongo database
 const outputSchema = new mongoose.Schema({
     device: String,
     methods: [{
@@ -83,6 +84,7 @@ app.get('/device', function(req, res) {
   listQuery.exec(function (err, devices) {
     if (err) return handleError(err);
 
+    // Render the page with methods of the selected device
     var query = OutputDevice.findOne({device: req.query.selected});
     query.exec(function (error, selected) {
       if (error) return handleError(error);
@@ -97,6 +99,7 @@ app.get('/device', function(req, res) {
 
 app.post('/tts', function(req, res) {
   var input = req.body.input
+  // Config json object to be send to the google tts API
   var data = {
     input :{
       text: input
