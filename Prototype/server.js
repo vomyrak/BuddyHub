@@ -14,7 +14,14 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
   extended: true
 }));
 
-mongoose.connect('mongodb://localhost:27017/uc', {useNewUrlParser: true});
+var options = {useNewUrlParser: true, auth: {authdb: "admin"}};
+options.user = filereader.user;
+options.pass = filereader.pass;
+var connectString = "mongodb://"+filereader.dns+":27017/uc";
+
+mongoose.connect(connectString, options)
+    .then(() => console.log('Connected to MongoDB...'))
+    .catch(error => console.error('Failed to connect',error));
 
 const outputSchema = new mongoose.Schema({
     device: String,
@@ -123,7 +130,7 @@ app.post('/tts', function(req, res) {
             // Node couldn't execute the command
             return;
           }
-          res.sendStatus(200)
+          res.sendStatus(200);
         });
       });
     }
