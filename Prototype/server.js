@@ -105,13 +105,6 @@ app.get('/device', function(req, res) {
   });
 });
 
-app.post('/get_key', function(req, res) {
-  const query = "SELECT * FROM keys WHERE header_name = \'" + req.body.header + "\'";
-  pool.query(query, (err, result) => {
-    res.send(result.rows[0].key);
-  });
-});
-
 app.post('/tts', function(req, res) {
   var input = req.body.input
   const query = "SELECT * FROM keys WHERE header_name = 'X-Goog-Api-Key'";
