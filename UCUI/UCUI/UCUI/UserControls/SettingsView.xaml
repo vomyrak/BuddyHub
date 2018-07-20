@@ -51,7 +51,7 @@
                     Margin='10 0 0 0'
                     Content='Center Mouse'
                     FontFamily='Calibri'
-                    IsChecked='False' />
+                    IsChecked='{Binding IsCenter, UpdateSourceTrigger=PropertyChanged}' />
           <CheckBox x:Name='ShakeButton'
                     Grid.Row='1'
                     Grid.Column='1'

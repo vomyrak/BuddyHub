@@ -24,6 +24,20 @@ namespace UCUI.Models
             }
         }
 
+        private bool isCenter;
+        public bool IsCenter
+        {
+            get { return isCenter; }
+            set
+            {
+                if(value!=isCenter)
+                {
+                    isCenter = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         void OnPropertyChanged([CallerMemberName]string propertyName = null)

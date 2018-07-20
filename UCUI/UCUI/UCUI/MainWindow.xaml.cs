@@ -120,7 +120,7 @@ namespace UCUI
 
         private void CheckCenterMouse(object sender, RoutedEventArgs e)
         {
-            if ((bool)SettingsView.CenterMouse.IsChecked)
+            if (((UCSettings)DataContext).IsCenter)
             {
                System.Windows.Forms.Cursor.Position = new System.Drawing.Point(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width / 2, System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height / 2);
 
