@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "C_Sharp_Server", "C_Sharp_S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C_Sharp_Client", "C_Sharp_Client\C_Sharp_Client.csproj", "{37D40AC3-7F33-4B09-BFEB-F6465EA136E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lynxmotion", "Lynxmotion\Lynxmotion.csproj", "{ACC49F8E-39F8-4B75-89DB-B4B91DA15671}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLynxmotion", "TestLynxmotion\TestLynxmotion.csproj", "{56AC5AFD-6DFB-46B9-A9B7-ACEC11E418EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{37D40AC3-7F33-4B09-BFEB-F6465EA136E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37D40AC3-7F33-4B09-BFEB-F6465EA136E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37D40AC3-7F33-4B09-BFEB-F6465EA136E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACC49F8E-39F8-4B75-89DB-B4B91DA15671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACC49F8E-39F8-4B75-89DB-B4B91DA15671}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACC49F8E-39F8-4B75-89DB-B4B91DA15671}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACC49F8E-39F8-4B75-89DB-B4B91DA15671}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56AC5AFD-6DFB-46B9-A9B7-ACEC11E418EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56AC5AFD-6DFB-46B9-A9B7-ACEC11E418EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56AC5AFD-6DFB-46B9-A9B7-ACEC11E418EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56AC5AFD-6DFB-46B9-A9B7-ACEC11E418EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
