@@ -59,26 +59,21 @@
                     Margin='0 0 10 0'
                     Content='Visual Feedback'
                     FontFamily='Calibri'
-                    IsChecked='False'
-                    Click='ShakeButton_Click' />
+                    IsChecked='{Binding IsShake, UpdateSourceTrigger=PropertyChanged}' />
           <Button x:Name='ScanTemplates'
                   Grid.Row='4'
                   Grid.Column='0'
                   HorizontalAlignment='Stretch'
                   Content='Scan Templates'
                   Margin='10,0,10,0'
-                  Background="#FF353535"
-                  FontFamily="Calibri"
-                  Foreground="White" />
+                  Style='{StaticResource Shaker}'/>
           <Button x:Name='Feedback'
                   Grid.Row='4'
                   Grid.Column='1'
                   HorizontalAlignment='Stretch'
                   Content='Send Feedback'
                   Margin='10,0,10,0'
-                  Background="#FF353535"
-                  FontFamily="Calibri"
-                  Foreground="White" />
+                  Style='{StaticResource Shaker}' />
         </Grid>
         <TextBlock HorizontalAlignment='Center'
                    Text='Click anywhere outside to return'

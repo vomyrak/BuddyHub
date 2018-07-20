@@ -32,11 +32,11 @@
     
     <views:SettingsView x:Name='SettingsView'
                         Visibility='Collapsed' />
-    
+
     <DockPanel x:Name='MainView'>
       <TextBlock x:Name='titleBlock'
                  TextWrapping='Wrap'
-                 Text='   Universal Controller v0.1'
+                 Text='   Universal Controller v0.01'
                  FontSize='24'
                  Background="#FF353535"
                  FontFamily="Calibri"
@@ -75,20 +75,16 @@
                 <RowDefinition Height='30' />
               </Grid.RowDefinitions>
               <Button Name='SettingsButton'
+                      Style='{StaticResource Shaker}'
+                      Content='Settings'
                       Grid.Column='0'
                       Margin='1 1 1 2'
-                      Content='Settings'
-                      Background="#FF353535"
-                      FontFamily="Calibri"
-                      Foreground="White"
                       Click='PageOpen' />
               <Button Name='HelpButton'
                       Grid.Column='1'
                       Content='Help'
                       Margin='0 1 1 2'
-                      Background="#FF353535"
-                      FontFamily="Calibri"
-                      Foreground="White"
+                      Style='{StaticResource Shaker}'
                       Click='PageOpen' />
 
             </Grid>
@@ -109,10 +105,10 @@
                     <TextBlock Text='{Binding description}'
                                HorizontalAlignment='Left'
                                Foreground="Gray"
-                               Margin='9, 0, 0, 10' 
+                               Margin='9, 0, 0, 10'
                                FontSize='15'
-                               TextWrapping='Wrap'/>
-                    
+                               TextWrapping='Wrap' />
+
                   </StackPanel>
                 </DataTemplate>
               </ListBox.ItemTemplate>
@@ -124,13 +120,13 @@
                           Value="30" />
                 </Style>
               </ListBox.Resources>
-              
+
             </ListBox>
           </DockPanel>
         </Expander>
         <Grid x:Name='ButtonGrid'
               Grid.Column='1'>
-          
+
           <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
@@ -159,7 +155,6 @@
             </Style>
 
           </Grid.Resources>
-
         </Grid>
       </Grid>
     </DockPanel>

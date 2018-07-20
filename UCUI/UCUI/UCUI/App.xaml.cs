@@ -13,6 +13,6 @@ namespace UCUI
     /// </summary>
     public partial class App : Application
     {
-        public static bool shake = false;
+ 
     }
 }

@@ -26,14 +26,24 @@
           <RotateTransform />
         </Setter.Value>
       </Setter>
-      <Style.Triggers>
-        <MultiTrigger>
-          <MultiTrigger.Conditions>
-            <Condition Property='IsPressed'
-                       Value='True' />
-          </MultiTrigger.Conditions>
 
-          <MultiTrigger.EnterActions>
+      <Setter Property='Background'
+              Value='#FF353535' />
+      <Setter Property='Foreground'
+              Value='White' />
+      <Setter Property='FontFamily'
+              Value='Calibri' />
+      
+      <Style.Triggers>
+        <MultiDataTrigger>
+          <MultiDataTrigger.Conditions>
+            <Condition Binding='{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}'
+                       Value='True' />
+            <Condition Binding='{Binding IsShake}'
+                       Value='True' />
+          </MultiDataTrigger.Conditions>
+
+          <MultiDataTrigger.EnterActions>
             <BeginStoryboard>
               <Storyboard TargetProperty="RenderTransform.Angle">
                 <DoubleAnimation From="0"
@@ -55,86 +65,12 @@
                                  FillBehavior="Stop" />
               </Storyboard>
             </BeginStoryboard>
-          </MultiTrigger.EnterActions>
-        </MultiTrigger>
+          </MultiDataTrigger.EnterActions>
+        </MultiDataTrigger>
       </Style.Triggers>
     </Style>
 
-    <Style TargetType="{x:Type Button}"
-           x:Key='ShakerBig'>
-      <Setter Property="RenderTransformOrigin"
-              Value="0.5 0.5" />
-      <Setter Property="RenderTransform">
-        <Setter.Value>
-          <RotateTransform />
-        </Setter.Value>
-      </Setter>
-      <Setter Property='Background'
-              Value='#FF353535' />
-      <Setter Property='Foreground'
-              Value='White' />
-      <Setter Property='FontFamily'
-              Value='Calibri' />
-      <Setter Property='Margin'
-              Value='10' />
-
-      <Style.Triggers>
-        <MultiTrigger>
-          <MultiTrigger.Conditions>
-            <Condition Property='IsPressed'
-                       Value='True' />
-          </MultiTrigger.Conditions>
-
-          <MultiTrigger.EnterActions>
-            <BeginStoryboard>
-              <Storyboard TargetProperty="RenderTransform.Angle">
-                <DoubleAnimation From="0"
-                                 To="5"
-                                 Duration="0:0:0.05"
-                                 AutoReverse="True"
-                                 FillBehavior="Stop" />
-                <DoubleAnimation BeginTime="0:0:0.05"
-                                 From="5"
-                                 To="-5"
-                                 Duration="0:0:0.1"
-                                 AutoReverse="True"
-                                 FillBehavior="Stop" />
-                <DoubleAnimation BeginTime="0:0:0.2"
-                                 From="-5"
-                                 To="0"
-                                 Duration="0:0:0.1"
-                                 AutoReverse="False"
-                                 FillBehavior="Stop" />
-              </Storyboard>
-            </BeginStoryboard>
-          </MultiTrigger.EnterActions>
-        </MultiTrigger>
-      </Style.Triggers>
-    </Style>
-
-    <Style TargetType="{x:Type Button}"
-           x:Key='DefaultBig'>
-
-      <Setter Property='Background'
-              Value='#FF353535' />
-      <Setter Property='Foreground'
-              Value='White' />
-      <Setter Property='FontFamily'
-              Value='Calibri' />
-      <Setter Property='Margin'
-              Value='10' />
-      </Style >
-    
-    <Style TargetType="{x:Type Button}"
-           x:Key='DefaultSmall'>
-
-      <Setter Property='Background'
-              Value='#FF353535' />
-      <Setter Property='Foreground'
-              Value='White' />
-      <Setter Property='FontFamily'
-              Value='Calibri' />
-    </Style >
+   
 
   </Application.Resources>
   

@@ -10,7 +10,7 @@ namespace UCUI.Models
 {
     class UCSettings : INotifyPropertyChanged
     {
-        private bool isShake;
+        private  bool isShake;
         public bool IsShake
         {
             get { return isShake;}

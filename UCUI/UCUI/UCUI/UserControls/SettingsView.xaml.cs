@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UCUI.Models;
 
 namespace UCUI.UserControls
 {
@@ -23,21 +24,6 @@ namespace UCUI.UserControls
         public SettingsView()
         {
             InitializeComponent();
-        }
-
-
-        private void ShakeButton_Click(object sender, RoutedEventArgs e)
-        {
-            if((bool)ShakeButton.IsChecked)
-            {
-                Feedback.Style = (Style)Application.Current.Resources["Shaker"];
-                ScanTemplates.Style = (Style)Application.Current.Resources["Shaker"];
-            }
-            else
-            {
-                Feedback.Style = (Style)Application.Current.Resources["DefaultSmall"];
-                ScanTemplates.Style = (Style)Application.Current.Resources["DefaultSmall"];
-            }
         }
     }
 }

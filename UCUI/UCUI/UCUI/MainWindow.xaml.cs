@@ -38,8 +38,8 @@ namespace UCUI
             Panel.SetZIndex(SettingsView, 3);
             Panel.SetZIndex(Overlay, 1);
             Panel.SetZIndex(Outside, 2);
-
-            
+            DataContext = new UCSettings();
+            HelpButton.Style= (Style)Application.Current.Resources["Shaker"];
 
 
 
@@ -61,7 +61,7 @@ namespace UCUI
             Overlay.Visibility = Visibility.Visible;
             Outside.Visibility = Visibility.Visible;
             MainView.Effect = new BlurEffect();
-            CheckCenterMouse();
+            CheckCenterMouse(null, null);
         }
 
         private void Outside_Click(object sender, RoutedEventArgs e)
@@ -71,34 +71,6 @@ namespace UCUI
             Outside.Visibility = Visibility.Collapsed;
             Overlay.Visibility = Visibility.Collapsed;
             MainView.Effect = null;
-            if ((bool)SettingsView.ShakeButton.IsChecked)
-            {
-                HelpButton.Style = (Style)Application.Current.Resources["Shaker"];
-                SettingsButton.Style = (Style)Application.Current.Resources["Shaker"];
-                
-                foreach (Control Butt in ButtonGrid.Children)
-                {
-                    if (Butt.GetType() == HelpButton.GetType())
-                    {
-                        Butt.Style = (Style)Application.Current.Resources["ShakerBig"];
-                    }
-                }
-            }
-            else
-            {
-                HelpButton.Style = (Style)Application.Current.Resources["DefaultSmall"];
-                SettingsButton.Style = (Style)Application.Current.Resources["DefaultSmall"];
-                SettingsView.Feedback.Style = (Style)Application.Current.Resources["DefaultSmall"];
-                SettingsView.ScanTemplates.Style = (Style)Application.Current.Resources["DefaultSmall"];
-
-                foreach (Control Butt in ButtonGrid.Children)
-                {
-                    if (Butt.GetType() == HelpButton.GetType())
-                    {
-                        Butt.Style = (Style)Application.Current.Resources["DefaultBig"];
-                    }
-                }
-            }
         }
 
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -121,10 +93,12 @@ namespace UCUI
                     {
                         ButtonArray[i].Content = i.ToString();
                         ButtonArray[i].Name = "Button" + i.ToString();
+                        ButtonArray[i].Margin = new Thickness(10, 10, 10, 10);
+                        ButtonArray[i].Click += CheckCenterMouse;
                         Grid.SetColumn(ButtonArray[i], i % 3 + 1);
                         Grid.SetRow(ButtonArray[i], i/3 + 1);
                         ButtonGrid.Children.Add(ButtonArray[i]);
-                        if ((bool)SettingsView.ShakeButton.IsChecked) ButtonArray[i].Style = (Style)Application.Current.Resources["ShakerBig"];
+                        ButtonArray[i].Style = (Style)Application.Current.Resources["Shaker"];
                     }
                 }
 
@@ -138,14 +112,13 @@ namespace UCUI
                     Grid.SetRow(myTextbox, 1);
                     Grid.SetColumnSpan(myTextbox, 3);
                     ButtonGrid.Children.Add(myTextbox);
-
                 }
             }
-            CheckCenterMouse();
+            CheckCenterMouse(null, null);
             
         }
 
-        private void CheckCenterMouse()
+        private void CheckCenterMouse(object sender, RoutedEventArgs e)
         {
             if ((bool)SettingsView.CenterMouse.IsChecked)
             {
