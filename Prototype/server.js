@@ -35,17 +35,6 @@ const outputSchema = new mongoose.Schema({
 
 const OutputDevice = mongoose.model('outputDevices', outputSchema, 'outputDevices');
 
-const pg = require('pg');
-// Connect to users database
-const pool = new pg.Pool({
-  user: 'joan',
-  host: '127.0.0.1',
-  database: 'wsurop18',
-  password: process.env.PASSWORD,
-  port: '5432'
-});
-
-
 // A dictionary of online users
 const users = {};
 
@@ -76,12 +65,6 @@ app.get('/', function(req, res) {
       devices: devices
     });
   });
-  // const listQuery = "SELECT DISTINCT device FROM outputdevice";
-  // pool.query(listQuery, (listErr, listResult) => {
-  //   res.render('index', {
-  //     devices: listResult.rows
-  //   });
-  // });
 });
 
 app.get('/device', function(req, res) {
