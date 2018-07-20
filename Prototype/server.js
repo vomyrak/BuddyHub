@@ -5,6 +5,8 @@ const server = require('http').createServer(app);
 const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 const { exec } = require('child_process');
 const mongoose = require("mongoose");
+const filereader = require("./auth.json");
+const filereader2 = require("./keys.json");
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // to support JSON-encoded bodies
