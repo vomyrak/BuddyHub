@@ -31,14 +31,14 @@
           <input type="hidden" id="data<%= method.method %>" value='<%= method.data %>' />
           <input type="hidden" id="headers<%= method.method %>" value='<%= method.headers %>' />
           <input type="hidden" id="callback_function<%= method.method %>" value='<%= method.callback_function %>' />
-          <input type="hidden" id="text_input<%= method.method %>" value='<%= method.text_input %>' />
+          <input type="hidden" id="text_input_field<%= method.method %>" value='<%= method.text_input_field %>' />
           <button onclick="sendRequest(this)" class="method-button" type="submit" value="<%= method.method %>" id='<%= method.method %>'><%= method.method %></button>
         </div>
         <div class="col-sm-9">
           <!-- Show the description of the method in a textarea -->
           <textarea rows="2" class="method-text" readonly><%= method.description %></textarea>
         </div>
-        <%if (method.text_input != null) { %>
+        <%if (method.text_input_field != '') { %>
           <input class="input-textbox" id="textbox<%= method.method %>" value='' />
           <% } %>
         <% }); %>

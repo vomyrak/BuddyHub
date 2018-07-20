@@ -4,13 +4,34 @@ const fs = require('fs');
 const server = require('http').createServer(app);
 const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 const { exec } = require('child_process');
-util = require('util');
+const mongoose = require("mongoose");
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
   extended: true
 }));
+
+mongoose.connect('mongodb://localhost:27017/uc', {useNewUrlParser: true});
+
+const outputSchema = new mongoose.Schema({
+    device: String,
+    methods: [{
+      method: String,
+      description: String,
+      http_method: String,
+      link: String,
+      data: String,
+      headers: String,
+      callback_function: String,
+      text_input_field:String,
+      params: [{
+        param_field: String,
+        param_choices: [Number]}]
+    }]
+});
+
+const OutputDevice = mongoose.model('outputDevices', outputSchema, 'outputDevices');
 
 const pg = require('pg');
 // Connect to users database
@@ -41,31 +62,63 @@ const html_dir = __dirname + '/public/html/';
 app.get('/', function(req, res) {
   // Direct to home page
   // Render the page with all output devices in the menu
-  const listQuery = "SELECT DISTINCT device FROM outputdevice";
-  pool.query(listQuery, (listErr, listResult) => {
+
+  var query = OutputDevice.find().sort('device');
+  query.select('device');
+
+
+  query.exec(function (err, devices) {
+    if (err) return handleError(err);
+
     res.render('index', {
-      devices: listResult.rows
+      devices: devices
     });
   });
+  // const listQuery = "SELECT DISTINCT device FROM outputdevice";
+  // pool.query(listQuery, (listErr, listResult) => {
+  //   res.render('index', {
+  //     devices: listResult.rows
+  //   });
+  // });
 });
 
 app.get('/device', function(req, res) {
   // Render the page with all output devices in the menu
-  const listQuery = "SELECT DISTINCT device FROM outputdevice";
-  const query = {
-    // give the query a unique name
-    name: 'get-methods',
-    text: 'SELECT * FROM outputdevice WHERE device = $1',
-    values: [req.query.selected]
-  };
-  pool.query(query, (err, result) => {
-    pool.query(listQuery, (listErr, listResult) => {
+  var listQuery = OutputDevice.find().sort('device');
+  listQuery.select('device');
+
+
+  listQuery.exec(function (err, devices) {
+    if (err) return handleError(err);
+
+    var query = OutputDevice.findOne({device: req.query.selected});
+    query.exec(function (error, selected) {
+      if (error) return handleError(error);
+
+      console.log(selected);
+
       res.render('device', {
-        methods: result.rows,
-        devices: listResult.rows
+        devices: devices,
+        methods: selected.methods
       });
     });
   });
+  //////////////////////////////////////
+  // const listQuery = "SELECT DISTINCT device FROM outputdevice";
+  // const query = {
+  //   // give the query a unique name
+  //   name: 'get-methods',
+  //   text: 'SELECT * FROM outputdevice WHERE device = $1',
+  //   values: [req.query.selected]
+  // };
+  // pool.query(query, (err, result) => {
+  //   pool.query(listQuery, (listErr, listResult) => {
+  //     res.render('device', {
+  //       methods: result.rows,
+  //       devices: listResult.rows
+  //     });
+  //   });
+  // });
 });
 
 app.post('/get_key', function(req, res) {

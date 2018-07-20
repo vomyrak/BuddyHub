@@ -6,7 +6,7 @@ function sendRequest(button) {
   var data = document.getElementById("data" + button.value).value;
   var headers = JSON.parse(document.getElementById("headers" + button.value).value);
   var callback_function = document.getElementById("callback_function" + button.value).value;
-  var text_input = document.getElementById("text_input" + button.value).value;
+  var text_input = document.getElementById("text_input_field" + button.value).value;
 
   // Add the text input to data if required
   if (text_input != '') {
