@@ -5,16 +5,17 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
-namespace C_Sharp_Server
+namespace CSharpServer
 {
     class WebServer
     {
         //Variables declared with "readonly" keyword is a runtime constant
         private readonly HttpListener _listener = new HttpListener();
-        private readonly Func<HttpListenerRequest, string> _respondMethod;
+        private readonly Func<HttpListenerRequest, List<DeviceInfo>, string> _respondMethod;
+        private List<DeviceInfo> ConnectedDeviceList;
 
         //Func<in T, out TResult> specifies a method that takes parameter of type T and returns parameter of type TResult.
-        public WebServer(string[] prefixes, Func<HttpListenerRequest, string> method)
+        public WebServer(List<DeviceInfo> ConnectedDeviceList, string[] prefixes, Func<HttpListenerRequest, List<DeviceInfo>, string> method)
         {
             if (!HttpListener.IsSupported) throw new NotSupportedException("Needs Windows XP SP2, Server 2003 or later.");
 
@@ -27,10 +28,11 @@ namespace C_Sharp_Server
 
             _respondMethod = method;
             _listener.Start();
+            this.ConnectedDeviceList = ConnectedDeviceList;
         }
 
-        public WebServer(Func<HttpListenerRequest, string> method, params string[] prefixes)
-            : this(prefixes, method) { }
+        public WebServer(List<DeviceInfo> connectedDeviceList, Func<HttpListenerRequest, List<DeviceInfo>, string> method, params string[] prefixes)
+            : this(connectedDeviceList, prefixes, method) { }
 
         public void Run()
         {
@@ -46,7 +48,7 @@ namespace C_Sharp_Server
                             var ctx = c as HttpListenerContext;
                             try
                             {
-                                string rstr = _respondMethod(ctx.Request);
+                                string rstr = _respondMethod(ctx.Request, ConnectedDeviceList);
                                 byte[] buf = Encoding.UTF8.GetBytes(rstr);
                                 ctx.Response.ContentLength64 = buf.Length;
                                 ctx.Response.OutputStream.Write(buf, 0, buf.Length);

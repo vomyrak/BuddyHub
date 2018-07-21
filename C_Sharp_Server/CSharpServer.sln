@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "C_Sharp_Server", "C_Sharp_Server\C_Sharp_Server.csproj", "{F5D1027B-51F8-49C3-AB85-4D90AD0D4422}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpServer", "C_Sharp_Server\CSharpServer.csproj", "{F5D1027B-51F8-49C3-AB85-4D90AD0D4422}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C_Sharp_Client", "C_Sharp_Client\C_Sharp_Client.csproj", "{37D40AC3-7F33-4B09-BFEB-F6465EA136E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpClient", "C_Sharp_Client\CSharpClient.csproj", "{37D40AC3-7F33-4B09-BFEB-F6465EA136E4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lynxmotion", "Lynxmotion\Lynxmotion.csproj", "{ACC49F8E-39F8-4B75-89DB-B4B91DA15671}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLynxmotion", "TestLynxmotion\TestLynxmotion.csproj", "{56AC5AFD-6DFB-46B9-A9B7-ACEC11E418EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFunction", "TestFunction\TestFunction.csproj", "{F99C2052-FA2C-4887-8E4C-DB0FB43B32DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{56AC5AFD-6DFB-46B9-A9B7-ACEC11E418EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56AC5AFD-6DFB-46B9-A9B7-ACEC11E418EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56AC5AFD-6DFB-46B9-A9B7-ACEC11E418EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F99C2052-FA2C-4887-8E4C-DB0FB43B32DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F99C2052-FA2C-4887-8E4C-DB0FB43B32DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F99C2052-FA2C-4887-8E4C-DB0FB43B32DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F99C2052-FA2C-4887-8E4C-DB0FB43B32DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
