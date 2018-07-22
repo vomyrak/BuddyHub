@@ -11,11 +11,10 @@ namespace CSharpServer
     {
         //Variables declared with "readonly" keyword is a runtime constant
         private readonly HttpListener _listener = new HttpListener();
-        private readonly Func<HttpListenerRequest, List<DeviceInfo>, string> _respondMethod;
-        private List<DeviceInfo> ConnectedDeviceList;
+        private readonly Func<HttpListenerRequest, string> _respondMethod;
 
         //Func<in T, out TResult> specifies a method that takes parameter of type T and returns parameter of type TResult.
-        public WebServer(List<DeviceInfo> ConnectedDeviceList, string[] prefixes, Func<HttpListenerRequest, List<DeviceInfo>, string> method)
+        public WebServer(string[] prefixes, Func<HttpListenerRequest, string> method)
         {
             if (!HttpListener.IsSupported) throw new NotSupportedException("Needs Windows XP SP2, Server 2003 or later.");
 
@@ -28,11 +27,10 @@ namespace CSharpServer
 
             _respondMethod = method;
             _listener.Start();
-            this.ConnectedDeviceList = ConnectedDeviceList;
         }
 
-        public WebServer(List<DeviceInfo> connectedDeviceList, Func<HttpListenerRequest, List<DeviceInfo>, string> method, params string[] prefixes)
-            : this(connectedDeviceList, prefixes, method) { }
+        public WebServer(Func<HttpListenerRequest, string> method, params string[] prefixes)
+            : this(prefixes, method) { }
 
         public void Run()
         {
@@ -48,7 +46,7 @@ namespace CSharpServer
                             var ctx = c as HttpListenerContext;
                             try
                             {
-                                string rstr = _respondMethod(ctx.Request, ConnectedDeviceList);
+                                string rstr = _respondMethod(ctx.Request);
                                 byte[] buf = Encoding.UTF8.GetBytes(rstr);
                                 ctx.Response.ContentLength64 = buf.Length;
                                 ctx.Response.OutputStream.Write(buf, 0, buf.Length);
