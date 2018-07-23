@@ -20,14 +20,13 @@ board.on('ready', function(){
     pin: 'A0'
   });
 
-  temperature.on('data', function() {
-    board.emit('tempReading', temperature.C);
+  temperature.on('change', function() {
+    board.emit('tempChange', temperature.C);
   });
 });
 
 io.sockets.on('connection', function(socket) {
-  board.on('tempReading', function(data) {
-    console.log(data);
+  board.on('tempChange', function(data) {
     socket.emit('newData', data);
   })
 })
