@@ -39,7 +39,6 @@ namespace UCUI
             Panel.SetZIndex(Overlay, 1);
             Panel.SetZIndex(Outside, 2);
             DataContext = new UCSettings();
-            HelpButton.Style= (Style)Application.Current.Resources["Shaker"];
 
 
 
@@ -92,13 +91,17 @@ namespace UCUI
                     if (myOption.buttonVisible[i])
                     {
                         ButtonArray[i].Content = i.ToString();
+                        string disp = i.ToString();
                         ButtonArray[i].Name = "Button" + i.ToString();
                         ButtonArray[i].Margin = new Thickness(10, 10, 10, 10);
                         ButtonArray[i].Click += CheckCenterMouse;
                         Grid.SetColumn(ButtonArray[i], i % 3 + 1);
                         Grid.SetRow(ButtonArray[i], i/3 + 1);
                         ButtonGrid.Children.Add(ButtonArray[i]);
-                        ButtonArray[i].Style = (Style)Application.Current.Resources["Shaker"];
+                        ButtonArray[i].Style = (Style)Application.Current.Resources["Pusher"];
+                      /*  ButtonArray[i].Click+= delegate (object a, RoutedEventArgs b) {
+                            titleBlock.Text = disp;
+                        };*/
                     }
                 }
 

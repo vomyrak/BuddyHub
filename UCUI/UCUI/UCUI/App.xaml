@@ -33,7 +33,7 @@
               Value='White' />
       <Setter Property='FontFamily'
               Value='Calibri' />
-      
+
       <Style.Triggers>
         <MultiDataTrigger>
           <MultiDataTrigger.Conditions>
@@ -66,14 +66,144 @@
               </Storyboard>
             </BeginStoryboard>
           </MultiDataTrigger.EnterActions>
-        </MultiDataTrigger>
+        </MultiDataTrigger><!--Jitter animation-->
       </Style.Triggers>
     </Style>
 
-   
+    <Style TargetType="Button"
+           x:Key='Pusher'>
+      <Setter Property='Background'
+              Value='#FF353535' />
+      <Setter Property='Foreground'
+              Value='White' />
+      <Setter Property='FontFamily'
+              Value='Calibri' />
+      <Setter Property="RenderTransformOrigin"
+              Value="0.5 0.5" />
+      <Setter Property="RenderTransform">
+        <Setter.Value>
+          <RotateTransform />
+        </Setter.Value>
+      </Setter>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+
+            <Grid>
+
+              <Rectangle x:Name='_bottom'
+                         Fill="#FF353535"
+                         RadiusX="20"
+                         RadiusY="20"
+                         Margin='0,2,0,0' />
+
+              <Border x:Name='_top'
+                      Margin='0,0,0,10'>
+                <Grid>
+                  <Rectangle x:Name='_color'
+                             Fill="Gray"
+                             RadiusX="20"
+                             RadiusY="20" />
+                  <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    Content="{TemplateBinding Content}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center" />
+                </Grid>
+              </Border>
+            </Grid>
+
+            <ControlTemplate.Triggers>
+              <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                  <Condition Binding='{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}'
+                             Value='True' />
+                </MultiDataTrigger.Conditions>
+
+                <MultiDataTrigger.EnterActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                          Storyboard.TargetName="_top"
+                                          Duration="0:0:0.1"
+                                          From="0,0,0,10"
+                                          To="0,10,0,0" />
+                      <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                          Storyboard.TargetName="_bottom"
+                                          Duration="0:0:0.1"
+                                          From="0,2,0,0"
+                                          To="0,12,0,0" />
+                    </Storyboard>
+                  </BeginStoryboard>
+                </MultiDataTrigger.EnterActions>
+                <MultiDataTrigger.ExitActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                          Storyboard.TargetName="_top"
+                                          Duration="0:0:0.1"
+                                          From="0,10,0,0"
+                                          To="0,0,0,10" />
+                      <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                          Storyboard.TargetName="_bottom"
+                                          Duration="0:0:0.1"
+                                          From="0,12,0,0"
+                                          To="0,2,0,0" />
+                    </Storyboard>
+                  </BeginStoryboard>
+                </MultiDataTrigger.ExitActions>
+              </MultiDataTrigger> <!--Press down animation-->
+              <Trigger Property="IsMouseOver"
+                       Value="True">
+                <Setter Property="Fill"
+                        TargetName="_color"
+                        Value="#FFEBCB31" />
+              </Trigger>
+              <Trigger Property='IsPressed'
+                       Value="True">
+                <Setter Property="Fill"
+                        TargetName="_color"
+                        Value="#FFD9AE2C" />
+              </Trigger>
+              <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                  <Condition Binding='{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}'
+                             Value='True' />
+                  <Condition Binding='{Binding IsShake}'
+                             Value='True' />
+                </MultiDataTrigger.Conditions>
+
+                <MultiDataTrigger.EnterActions>
+                  <BeginStoryboard>
+                    <Storyboard TargetProperty="RenderTransform.Angle">
+                      <DoubleAnimation From="0"
+                                       To="5"
+                                       Duration="0:0:0.05"
+                                       AutoReverse="True"
+                                       FillBehavior="Stop" />
+                      <DoubleAnimation BeginTime="0:0:0.05"
+                                       From="5"
+                                       To="-5"
+                                       Duration="0:0:0.1"
+                                       AutoReverse="True"
+                                       FillBehavior="Stop" />
+                      <DoubleAnimation BeginTime="0:0:0.2"
+                                       From="-5"
+                                       To="0"
+                                       Duration="0:0:0.1"
+                                       AutoReverse="False"
+                                       FillBehavior="Stop" />
+                    </Storyboard>
+                  </BeginStoryboard>
+                </MultiDataTrigger.EnterActions>
+              </MultiDataTrigger> <!--Jitter animation-->
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+
+    </Style>
 
   </Application.Resources>
-  
-  
+
 </Application>
   
