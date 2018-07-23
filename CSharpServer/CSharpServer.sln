@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpServer", "CSharpServer\CSharpServer.csproj", "{F5D1027B-51F8-49C3-AB85-4D90AD0D4422}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpClient", "CSharpClient\CSharpClient.csproj", "{37D40AC3-7F33-4B09-BFEB-F6465EA136E4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lynxmotion", "Lynxmotion\Lynxmotion.csproj", "{ACC49F8E-39F8-4B75-89DB-B4B91DA15671}"
@@ -13,16 +11,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLynxmotion", "TestLynxm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFunction", "TestFunction\TestFunction.csproj", "{F99C2052-FA2C-4887-8E4C-DB0FB43B32DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject2", "TestProject2\TestProject2.csproj", "{BA49B3F1-9545-4386-A5CC-AB1AF6B97BB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpServer", "CSharpServer\CSharpServer.csproj", "{53E9D1C4-88A6-494B-9D12-912E11BA1226}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F5D1027B-51F8-49C3-AB85-4D90AD0D4422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F5D1027B-51F8-49C3-AB85-4D90AD0D4422}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F5D1027B-51F8-49C3-AB85-4D90AD0D4422}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F5D1027B-51F8-49C3-AB85-4D90AD0D4422}.Release|Any CPU.Build.0 = Release|Any CPU
 		{37D40AC3-7F33-4B09-BFEB-F6465EA136E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{37D40AC3-7F33-4B09-BFEB-F6465EA136E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37D40AC3-7F33-4B09-BFEB-F6465EA136E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +37,14 @@ Global
 		{F99C2052-FA2C-4887-8E4C-DB0FB43B32DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F99C2052-FA2C-4887-8E4C-DB0FB43B32DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F99C2052-FA2C-4887-8E4C-DB0FB43B32DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA49B3F1-9545-4386-A5CC-AB1AF6B97BB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA49B3F1-9545-4386-A5CC-AB1AF6B97BB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA49B3F1-9545-4386-A5CC-AB1AF6B97BB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA49B3F1-9545-4386-A5CC-AB1AF6B97BB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53E9D1C4-88A6-494B-9D12-912E11BA1226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53E9D1C4-88A6-494B-9D12-912E11BA1226}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53E9D1C4-88A6-494B-9D12-912E11BA1226}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53E9D1C4-88A6-494B-9D12-912E11BA1226}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

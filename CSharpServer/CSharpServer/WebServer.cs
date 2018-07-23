@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Threading;
-using System.Linq;
-using System.Collections.Generic;
 using System.Text;
 
 namespace CSharpServer
@@ -12,7 +10,7 @@ namespace CSharpServer
         //Variables declared with "readonly" keyword is a runtime constant
         private readonly HttpListener _listener = new HttpListener();
         private readonly Func<HttpListenerRequest, string> _respondMethod;
-
+        
         //Func<in T, out TResult> specifies a method that takes parameter of type T and returns parameter of type TResult.
         public WebServer(string[] prefixes, Func<HttpListenerRequest, string> method)
         {

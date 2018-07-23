@@ -1,9 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Web;
 using System.Net;
-using System.Net.Http;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
@@ -11,6 +9,7 @@ using Newtonsoft.Json;
 using Lynxmotion;
 using System.Reflection;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace CSharpServer
 {
@@ -19,10 +18,9 @@ namespace CSharpServer
         
         static void Main(string[] args)
         {
-
+            
             Server server = new Server();
             server.Run();
-
         }
 
         
@@ -64,7 +62,7 @@ namespace CSharpServer
             // Generate database connection string from auth.json
             string path;
             if (Debugger.IsAttached)
-                path = "..\\..\\..\\auth.json";
+                path = "..\\..\\auth.json";
             else
                 path = "auth.json";
 
@@ -100,7 +98,7 @@ namespace CSharpServer
         public static string SendResponse(HttpListenerRequest request)
         {
             // Parse the request string and return requested result as a string
-            string[] parsedRequest = request.RawUrl.Split("/", StringSplitOptions.RemoveEmptyEntries);
+            string[] parsedRequest = request.RawUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
             if (parsedRequest.Length == 0) return "";
             else
             {
@@ -115,9 +113,8 @@ namespace CSharpServer
                         {
                             Type thisType = typeof(Server);
                             MethodInfo thisMethod = thisType.GetMethod(connectedDeviceList[connectedDeviceList.Count - 1].functionArray[0].name);
-                            thisMethod.Invoke(null, new string[2] { "0", "1" });
-
-                            TestRoboticArm("0", connectedDeviceList[connectedDeviceList.Count - 1].functionArray[0].param[0].ToString());
+                            thisMethod.Invoke(null, new string[2] { "0", "1300" });
+               
                         }
                         return "success";
                     }
@@ -138,14 +135,16 @@ namespace CSharpServer
         /// <param name="param">Parameter passed to the function</param>
         public static void TestRoboticArm(string servo, string param)
         {
-            Lynxmotion.AL5C al5c;
-            Lynxmotion.SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
+           
+            AL5C al5c;
+            SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
             if (SSC32s.Length > 0)
             {
                 al5c = new AL5C(SSC32s[0].PortName);
                 short survoIndex = short.Parse(servo);
                 short pwmVal = short.Parse(param);
                 al5c.setElbow_PW(pwmVal);
+                al5c.updateServos();
             }
 
         }
