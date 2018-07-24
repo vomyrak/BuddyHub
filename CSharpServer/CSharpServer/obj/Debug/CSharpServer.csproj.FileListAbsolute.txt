@@ -32,3 +32,37 @@ C:\WSUROP18\CSharpServer\CSharpServer\bin\Debug\System.Net.Http.Primitives.xml
 C:\WSUROP18\CSharpServer\CSharpServer\obj\Debug\CSharpServer.csproj.CopyComplete
 C:\WSUROP18\CSharpServer\CSharpServer\obj\Debug\CSharpServer.exe
 C:\WSUROP18\CSharpServer\CSharpServer\obj\Debug\CSharpServer.pdb
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\CSharpServer.exe.config
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\CSharpServer.exe
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\CSharpServer.pdb
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\CSharpClient.exe
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\DnsClient.dll
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\ITHit.WebDAV.Server.dll
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\ITHit.WebDAV.Server.HttpListener.dll
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\Lynxmotion.dll
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\MongoDB.Bson.dll
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\MongoDB.Driver.Core.dll
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\MongoDB.Driver.dll
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\Newtonsoft.Json.dll
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\System.Buffers.dll
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\System.Net.Http.Extensions.dll
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\System.Net.Http.Primitives.dll
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\CSharpClient.pdb
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\CSharpClient.exe.config
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\Lynxmotion.pdb
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\DnsClient.xml
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\ITHit.WebDAV.Server.xml
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\ITHit.WebDAV.Server.HttpListener.xml
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\MongoDB.Bson.xml
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\MongoDB.Driver.xml
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\MongoDB.Driver.Core.xml
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\Newtonsoft.Json.xml
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\System.Net.Http.Extensions.xml
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\bin\Debug\System.Net.Http.Primitives.xml
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\obj\Debug\CSharpServer.csproj.App.config
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\obj\Debug\CSharpServer.csprojAssemblyReference.cache
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\obj\Debug\CSharpServer.csproj.CoreCompileInputs.cache
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\obj\Debug\CSharpServer.csproj.CopyComplete
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\obj\Debug\CSharpServer.exe
+D:\Visual Studio\Projects\WSUROP\CSharpServer\CSharpServer\obj\Debug\CSharpServer.pdb

@@ -6,10 +6,10 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using Newtonsoft.Json;
-using Lynxmotion;
 using System.Reflection;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Dynamic;
 
 namespace CSharpServer
 {
@@ -18,7 +18,6 @@ namespace CSharpServer
         
         static void Main(string[] args)
         {
-            
             Server server = new Server();
             server.Run();
         }
@@ -38,7 +37,7 @@ namespace CSharpServer
         public Server()
         {
             connectedDeviceList = new List<DeviceInfo>();
-            ws = new WebServer(Server.SendResponse, "http://localhost:8080/");
+            ws = new WebServer(this.SendResponse, "http://localhost:8080/");
         }
 
         /// <summary>
@@ -57,7 +56,7 @@ namespace CSharpServer
         /// Query the existence of device within database
         /// </summary>
         /// <param name="deviceName">The name of the device to look for</param>
-        public static void QueryDeviceInfo(string deviceName)
+        public void QueryDeviceInfo(string deviceName)
         {
             // Generate database connection string from auth.json
             string path;
@@ -95,7 +94,7 @@ namespace CSharpServer
         /// </summary>
         /// <param name="request">Http request from client</param>
         /// <returns>A string corresponding to the status of the operation</returns>
-        public static string SendResponse(HttpListenerRequest request)
+        public string SendResponse(HttpListenerRequest request)
         {
             // Parse the request string and return requested result as a string
             string[] parsedRequest = request.RawUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
@@ -111,9 +110,25 @@ namespace CSharpServer
                         QueryDeviceInfo(deviceName);
                         if (connectedDeviceList[connectedDeviceList.Count - 1].device == deviceName)
                         {
-                            Type thisType = typeof(Server);
-                            MethodInfo thisMethod = thisType.GetMethod(connectedDeviceList[connectedDeviceList.Count - 1].functionArray[0].name);
-                            thisMethod.Invoke(null, new string[2] { "0", "1300" });
+                            //Type thisType = typeof(Server);
+                            //MethodInfo thisMethod = thisType.GetMethod(connectedDeviceList[connectedDeviceList.Count - 1].functionArray[0].name);
+                            //thisMethod.Invoke(this, new string[2] { "0", "1300" });
+
+                            var dll = Assembly.LoadFile(Directory.GetCurrentDirectory() + "\\Lynxmotion.dll");
+                            Type AL5C = dll.GetType(dll.GetName().Name + ".AL5C");
+                            if (AL5C != null)
+                            {
+                                Type SSC32 = dll.GetType(dll.GetName().Name + ".SSC32");
+                                dynamic[] SSC32s = (dynamic[])SSC32.GetMethod("EnumerateConnectedSSC32").Invoke(null, new object[] { 9600 });
+                                   
+                                if (SSC32s.Length > 0)
+                                {
+                                    dynamic al5c = Activator.CreateInstance(AL5C, new object[] { SSC32s[0].PortName });
+                                    al5c.setElbow_PW(short.Parse("1500"));
+                                    al5c.updateServos();
+
+                                }
+                            }
                
                         }
                         return "success";
@@ -133,21 +148,21 @@ namespace CSharpServer
         /// </summary>
         /// <param name="servo">The index of the servo to be controlled</param>
         /// <param name="param">Parameter passed to the function</param>
-        public static void TestRoboticArm(string servo, string param)
-        {
+        //public void TestRoboticArm(string servo, string param)
+        //{
            
-            AL5C al5c;
-            SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
-            if (SSC32s.Length > 0)
-            {
-                al5c = new AL5C(SSC32s[0].PortName);
-                short survoIndex = short.Parse(servo);
-                short pwmVal = short.Parse(param);
-                al5c.setElbow_PW(pwmVal);
-                al5c.updateServos();
-            }
+        //    AL5C al5c;
+        //    SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
+        //    if (SSC32s.Length > 0)
+        //    {
+        //        al5c = new AL5C(SSC32s[0].PortName);
+        //        short survoIndex = short.Parse(servo);
+        //        short pwmVal = short.Parse(param);
+        //        al5c.setElbow_PW(pwmVal);
+        //        al5c.updateServos();
+        //    }
 
-        }
+        //}
     }
 
 
