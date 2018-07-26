@@ -19,7 +19,10 @@ namespace CSharpServer
         static void Main(string[] args)
         {
             Server server = new Server();
+            DeviceInterface deviceInterface = new DeviceInterface();
             server.Run();
+            deviceInterface.TestRoboticArm();
+
         }
 
         
@@ -46,9 +49,7 @@ namespace CSharpServer
         public void Run()
         {
             ws.Run();
-            Console.WriteLine("Press any key to quit");
-            Console.ReadKey();
-            ws.Stop();
+
         }
 
         
@@ -56,7 +57,7 @@ namespace CSharpServer
         /// Query the existence of device within database
         /// </summary>
         /// <param name="deviceName">The name of the device to look for</param>
-        public void QueryDeviceInfo(string deviceName)
+        public string QueryDeviceInfo(string deviceName)
         {
             // Generate database connection string from auth.json
             string path;
@@ -83,10 +84,7 @@ namespace CSharpServer
                 .Find(new FilterDefinitionBuilder<DeviceInfo>().Eq(x => x.device, deviceName))
                 .ToListAsync()
                 .Result;
-            if (outputDevice.Count != 0)
-            {
-                connectedDeviceList.Add(outputDevice[0]);
-            }
+            return outputDevice[0].ToString();
         }
 
         /// <summary>
@@ -103,36 +101,22 @@ namespace CSharpServer
             {
                 try
                 {
-                    string deviceName = parsedRequest[0];
-                    if (deviceName == "test") return string.Format("<HTML><BODY>My web page.<br>{0}</BODY></HTML>", DateTime.Now);
-                    else
+                    int actionType = int.Parse(parsedRequest[0]);
+                    switch (actionType)
                     {
-                        QueryDeviceInfo(deviceName);
-                        if (connectedDeviceList[connectedDeviceList.Count - 1].device == deviceName)
-                        {
-                            //Type thisType = typeof(Server);
-                            //MethodInfo thisMethod = thisType.GetMethod(connectedDeviceList[connectedDeviceList.Count - 1].functionArray[0].name);
-                            //thisMethod.Invoke(this, new string[2] { "0", "1300" });
+                        case (int)Action.Test:
+                            return string.Format("<HTML><BODY>My web page.<br>{0}</BODY></HTML>", DateTime.Now);
+                        case (int)Action.CheckExistence:
+                            return QueryDeviceInfo(parsedRequest[1]);
+                        case (int)Action.CallFunction:
+                            return parsedRequest[1] + "/" + parsedRequest[2] + "/" + parsedRequest[3];
+                        default:
+                            throw new InvalidActionException("Not a valid action to perform.");
 
-                            var dll = Assembly.LoadFile(Directory.GetCurrentDirectory() + "\\Lynxmotion.dll");
-                            Type AL5C = dll.GetType(dll.GetName().Name + ".AL5C");
-                            if (AL5C != null)
-                            {
-                                Type SSC32 = dll.GetType(dll.GetName().Name + ".SSC32");
-                                dynamic[] SSC32s = (dynamic[])SSC32.GetMethod("EnumerateConnectedSSC32").Invoke(null, new object[] { 9600 });
-                                   
-                                if (SSC32s.Length > 0)
-                                {
-                                    dynamic al5c = Activator.CreateInstance(AL5C, new object[] { SSC32s[0].PortName });
-                                    al5c.setElbow_PW(short.Parse("1500"));
-                                    al5c.updateServos();
-
-                                }
-                            }
-               
-                        }
-                        return "success";
                     }
+
+                    
+                    
                 }
                 catch (Exception e)
                 {
@@ -177,6 +161,11 @@ namespace CSharpServer
         public string device { get; set; }
         [BsonElement("function")]
         public List<Function> functionArray { get; set; }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     /// <summary>

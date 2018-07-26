@@ -4,7 +4,6 @@ C:\WSUROP18\CSharpServer\CSharpServer\obj\Debug\CSharpServer.csproj.CoreCompileI
 C:\WSUROP18\CSharpServer\CSharpServer\bin\Debug\CSharpServer.exe.config
 C:\WSUROP18\CSharpServer\CSharpServer\bin\Debug\CSharpServer.exe
 C:\WSUROP18\CSharpServer\CSharpServer\bin\Debug\CSharpServer.pdb
-C:\WSUROP18\CSharpServer\CSharpServer\bin\Debug\CSharpClient.exe
 C:\WSUROP18\CSharpServer\CSharpServer\bin\Debug\DnsClient.dll
 C:\WSUROP18\CSharpServer\CSharpServer\bin\Debug\ITHit.WebDAV.Server.dll
 C:\WSUROP18\CSharpServer\CSharpServer\bin\Debug\ITHit.WebDAV.Server.HttpListener.dll
@@ -17,8 +16,6 @@ C:\WSUROP18\CSharpServer\CSharpServer\bin\Debug\System.Buffers.dll
 C:\WSUROP18\CSharpServer\CSharpServer\bin\Debug\System.Net.Http.Extensions.dll
 C:\WSUROP18\CSharpServer\CSharpServer\bin\Debug\System.Net.Http.Primitives.dll
 C:\WSUROP18\CSharpServer\CSharpServer\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
-C:\WSUROP18\CSharpServer\CSharpServer\bin\Debug\CSharpClient.pdb
-C:\WSUROP18\CSharpServer\CSharpServer\bin\Debug\CSharpClient.exe.config
 C:\WSUROP18\CSharpServer\CSharpServer\bin\Debug\Lynxmotion.pdb
 C:\WSUROP18\CSharpServer\CSharpServer\bin\Debug\DnsClient.xml
 C:\WSUROP18\CSharpServer\CSharpServer\bin\Debug\ITHit.WebDAV.Server.xml

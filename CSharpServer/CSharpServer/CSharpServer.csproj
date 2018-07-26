@@ -36,6 +36,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Device.cs" />
+    <Compile Include="DeviceInterface.cs" />
+    <Compile Include="IDevice.cs" />
+    <Compile Include="ProgrammeException.cs" />
     <Compile Include="Programme.cs" />
     <Compile Include="WebServer.cs" />
   </ItemGroup>
@@ -83,10 +87,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CSharpClient\CSharpClient.csproj">
-      <Project>{37d40ac3-7f33-4b09-bfeb-f6465ea136e4}</Project>
-      <Name>CSharpClient</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Lynxmotion\Lynxmotion.csproj">
       <Project>{acc49f8e-39f8-4b75-89db-b4b91da15671}</Project>
       <Name>Lynxmotion</Name>

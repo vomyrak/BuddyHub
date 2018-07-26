@@ -1,4 +1,5 @@
 ﻿using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,18 +13,22 @@ namespace CSharpClient
         private static readonly HttpClient client = new HttpClient();
         static void Main(string[] args)
         {
-            string path = "http://localhost:8080/test/";
+            string path = "http://localhost:8080/robotic_arm/";
             var result = "";
-            try
+            string input = Console.ReadLine();
+            while (input != null)
             {
-                result = getResponse(path).GetAwaiter().GetResult();
+                try
+                {
+                    result = getResponse(path + input).GetAwaiter().GetResult();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                Console.WriteLine(result);
+                input = Console.ReadLine();
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            Console.WriteLine(result);
-            Console.ReadKey();
         }
 
         private static async Task<string> getResponse(string path)
