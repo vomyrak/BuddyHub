@@ -18,7 +18,7 @@ def textToSpeech(text):
 	file = 'temp.mp3'
 	tts.save(file)
 	webbrowser.open(file)
-	sleep(3)
+	sleep(1)
 
 assistant = getAssistant(sys.argv[1])
 text = sys.argv[2]
