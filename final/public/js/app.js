@@ -1,4 +1,4 @@
-   
+
 // Create UCdevices object
 var UCdevices = {
     RobotArm: ["Up", "Down", "Left", "Right"],
@@ -11,18 +11,18 @@ function getObject(value){
 
     deviceName = value;
     getfunc = UCdevices[deviceName];
-//    
+//
 //    for (var i=0;i<UCdevices[deviceName].length;i++){
-//        
+//
 //        var objbtn = UCdevices[deviceName][i];
 //        btn.push(objbtn);
 //    }
-//    
+//
 ////Remove last child
 // btn.pop();
-//    
+//
 }
-    
+
 
 $(document).ready(function() {
   $('body').on('click','#create_me',function(){
@@ -32,7 +32,7 @@ $(document).ready(function() {
     $.each(getfunc, (key, value) =>{
       $('#tab' + index).append("<button type=\"button\" class=\"ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check\">"+value+"</button>" );
     })
-        
+
     $('a[href="#tab'+index+'"]').click();
   })
 
@@ -40,7 +40,7 @@ $(document).ready(function() {
     event.preventDefault();//stop browser to take action for clicked anchor
 
     //get displaying tab content jQuery selector
-    var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');					
+    var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');
 
     //find actived navigation and remove 'active' css
     var actived_nav = $('.nav-tabs > li.active');
@@ -67,15 +67,15 @@ $(document).ready(function() {
 //var selectedFunc = [];
 //function displayFunc(value) {
 //
-//    //Clean id=functions 
+//    //Clean id=functions
 //    while (document.getElementById("functions").firstChild) {
 //        document.getElementById("functions").removeChild(document.getElementById("functions").firstChild);
 //    }
 //
 //    //Clean id=demo
 //    document.getElementById("demo").innerHTML = "";
-//    
-//    var deviceFunc; 
+//
+//    var deviceFunc;
 //    //Populate id=functions
 //	for (deviceFunc in UCdevices[value])
 //    {
@@ -88,7 +88,7 @@ $(document).ready(function() {
 //    //Get selected functions
 //    function getEventTarget(e) {
 //        e = e || window.event;
-//        return e.target || e.srcElement; 
+//        return e.target || e.srcElement;
 //    }
 //
 //    var ul = document.getElementById('functions');
@@ -100,24 +100,24 @@ $(document).ready(function() {
 //        var target = getEventTarget(event);
 //
 //        array[x] =target.innerHTML;
-//        
+//
 //        target.style.fontWeight="bold";
-//        
+//
 //        for (var i=0;i<x;i++){
 //            if(array[x] == array[i] && x>0){
 //                array.splice(i,1); //Delete reselected node
 //                array.pop(); //Delete duplicate
 //                x = array.length-1;
 //                target.style.fontWeight = "normal";
-//            }   
+//            }
 //        }
-//       
+//
 //        x++;
-//        
+//
 //        for (var y=0; y<array.length; y++){
 //        e = e + array[y] + "/";
 //        }
-//        
+//
 //        selectedFunc = e.split("/");
 //
 //        //Print selected functions
