@@ -6,7 +6,7 @@ const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 const { exec } = require('child_process');
 const mongoose = require("mongoose");
 const filereader = require("./auth.json");
-const filereader2 = require("./keys.json");
+// const filereader2 = require("./keys.json");
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // to support JSON-encoded bodies
@@ -63,7 +63,7 @@ app.get('/', function(req, res) {
   // Render the page with all output devices in the menu
 
   var query = OutputDevice.find().sort('device');
-  query.select('device');
+  //query.select('device');
 
 
   query.exec(function (err, devices) {
@@ -142,23 +142,9 @@ app.post('/tts', function(req, res) {
   xhttp.open("POST", "https://texttospeech.googleapis.com/v1beta1/text:synthesize", true);
   // Set headers of the http request
   xhttp.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-  xhttp.setRequestHeader("X-Goog-Api-Key", filereader2.google);
+  // xhttp.setRequestHeader("X-Goog-Api-Key", filereader2.google);
   // Send the http request with the data
   xhttp.send(JSON.stringify(data));
-});
-
-app.get('/synthesize-text-audio.mp3', function(req, res) {
-  var filePath = "./synthesize-text-audio.mp3";
-  var stat = fs.statSync(filePath);
-
-  res.writeHead(200, {
-    'Content-Type': 'audio/mpeg',
-    'Content-Length': stat.size
-  });
-
-  var readStream = fs.createReadStream(filePath);
-  // We replaced all the event handlers with a simple call to util.pump()
-  readStream.pipe(res);
 });
 
 app.get('/synthesize-text-audio.mp3', function(req, res) {
