@@ -1,16 +1,15 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Web;
 using System.Net;
-using System.Net.Http;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using Newtonsoft.Json;
-using Lynxmotion;
 using System.Reflection;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Dynamic;
 
 namespace CSharpServer
 {
@@ -21,6 +20,7 @@ namespace CSharpServer
         {
             
             Server server = new Server();
+            DeviceInterface deviceInterface = new DeviceInterface();
             server.Run();
         }
 
@@ -39,8 +39,12 @@ namespace CSharpServer
         public Server()
         {
             connectedDeviceList = new List<DeviceInfo>();
+<<<<<<< HEAD
             SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
             ws = new WebServer(Server.SendResponse, "http://localhost:8080/");
+=======
+            ws = new WebServer(this.SendResponse, "http://localhost:8080/");
+>>>>>>> c239ddca8237d46e7c055be01ce701ce3c5e72f0
         }
 
         /// <summary>
@@ -49,9 +53,7 @@ namespace CSharpServer
         public void Run()
         {
             ws.Run();
-            Console.WriteLine("Press any key to quit");
-            Console.ReadKey();
-            ws.Stop();
+
         }
 
         
@@ -59,12 +61,12 @@ namespace CSharpServer
         /// Query the existence of device within database
         /// </summary>
         /// <param name="deviceName">The name of the device to look for</param>
-        public static void QueryDeviceInfo(string deviceName)
+        public string QueryDeviceInfo(string deviceName)
         {
             // Generate database connection string from auth.json
             string path;
             if (Debugger.IsAttached)
-                path = "..\\..\\..\\auth.json";
+                path = "..\\..\\auth.json";
             else
                 path = "auth.json";
 
@@ -86,10 +88,7 @@ namespace CSharpServer
                 .Find(new FilterDefinitionBuilder<DeviceInfo>().Eq(x => x.device, deviceName))
                 .ToListAsync()
                 .Result;
-            if (outputDevice.Count != 0)
-            {
-                connectedDeviceList.Add(outputDevice[0]);
-            }
+            return outputDevice[0].ToString();
         }
 
         /// <summary>
@@ -97,30 +96,31 @@ namespace CSharpServer
         /// </summary>
         /// <param name="request">Http request from client</param>
         /// <returns>A string corresponding to the status of the operation</returns>
-        public static string SendResponse(HttpListenerRequest request)
+        public string SendResponse(HttpListenerRequest request)
         {
             // Parse the request string and return requested result as a string
-            string[] parsedRequest = request.RawUrl.Split("/", StringSplitOptions.RemoveEmptyEntries);
+            string[] parsedRequest = request.RawUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
             if (parsedRequest.Length == 0) return "";
             else
             {
                 try
                 {
-                    string deviceName = parsedRequest[0];
-                    if (deviceName == "test") return string.Format("<HTML><BODY>My web page.<br>{0}</BODY></HTML>", DateTime.Now);
-                    else
+                    int actionType = int.Parse(parsedRequest[0]);
+                    switch (actionType)
                     {
-                        QueryDeviceInfo(deviceName);
-                        if (connectedDeviceList[connectedDeviceList.Count - 1].device == deviceName)
-                        {
-                            Type thisType = typeof(Server);
-                            MethodInfo thisMethod = thisType.GetMethod(connectedDeviceList[connectedDeviceList.Count - 1].functionArray[0].name);
-                            thisMethod.Invoke(null, new string[2] { "0", "1" });
+                        case (int)Action.Test:
+                            return string.Format("<HTML><BODY>My web page.<br>{0}</BODY></HTML>", DateTime.Now);
+                        case (int)Action.CheckExistence:
+                            return QueryDeviceInfo(parsedRequest[1]);
+                        case (int)Action.CallFunction:
+                            return parsedRequest[1] + "/" + parsedRequest[2] + "/" + parsedRequest[3];
+                        default:
+                            throw new InvalidActionException("Not a valid action to perform.");
 
-                            TestRoboticArm("0", connectedDeviceList[connectedDeviceList.Count - 1].functionArray[0].param[0].ToString());
-                        }
-                        return "success";
                     }
+
+                    
+                    
                 }
                 catch (Exception e)
                 {
@@ -136,6 +136,7 @@ namespace CSharpServer
         /// </summary>
         /// <param name="servo">The index of the servo to be controlled</param>
         /// <param name="param">Parameter passed to the function</param>
+<<<<<<< HEAD
         public static void TestRoboticArm(string servo, string param)
         {
            
@@ -150,6 +151,23 @@ namespace CSharpServer
             }
 
         }
+=======
+        //public void TestRoboticArm(string servo, string param)
+        //{
+           
+        //    AL5C al5c;
+        //    SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
+        //    if (SSC32s.Length > 0)
+        //    {
+        //        al5c = new AL5C(SSC32s[0].PortName);
+        //        short survoIndex = short.Parse(servo);
+        //        short pwmVal = short.Parse(param);
+        //        al5c.setElbow_PW(pwmVal);
+        //        al5c.updateServos();
+        //    }
+
+        //}
+>>>>>>> c239ddca8237d46e7c055be01ce701ce3c5e72f0
     }
 
 
@@ -164,6 +182,11 @@ namespace CSharpServer
         public string device { get; set; }
         [BsonElement("function")]
         public List<Function> functionArray { get; set; }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     /// <summary>
