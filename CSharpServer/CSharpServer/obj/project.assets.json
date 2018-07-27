@@ -1738,6 +1738,15 @@
           "lib/netstandard1.3/System.Threading.ThreadPool.dll": {}
         }
       },
+      "CSharpClient/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/CSharpClient.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CSharpClient.dll": {}
+        }
+      },
       "Lynxmotion/1.0.0": {
         "type": "project",
         "compile": {
@@ -5679,6 +5688,11 @@
         "system.threading.threadpool.nuspec"
       ]
     },
+    "CSharpClient/1.0.0": {
+      "type": "project",
+      "path": "../CSharpClient/CSharpClient.csproj",
+      "msbuildProject": "../CSharpClient/CSharpClient.csproj"
+    },
     "Lynxmotion/1.0.0": {
       "type": "project",
       "path": "../Lynxmotion/Lynxmotion.csproj",
@@ -5687,6 +5701,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
+      "CSharpClient >= 1.0.0",
       "Lynxmotion >= 1.0.0",
       "Microsoft.NETCore.App >= 2.0.0",
       "MongoDB.Driver >= 2.7.0",
@@ -5695,23 +5710,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\VomyraK\\.nuget\\packages\\": {},
+    "C:\\Users\\Vomyrak\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Visual Studio\\Projects\\WSUROP\\CSharpServer\\CSharpServer\\CSharpServer.csproj",
+      "projectUniqueName": "C:\\Users\\Vomyrak\\Documents\\VS Projects\\WSUROP18\\CSharpServer\\CSharpServer\\CSharpServer.csproj",
       "projectName": "CSharpServer",
-      "projectPath": "D:\\Visual Studio\\Projects\\WSUROP\\CSharpServer\\CSharpServer\\CSharpServer.csproj",
-      "packagesPath": "C:\\Users\\VomyraK\\.nuget\\packages\\",
-      "outputPath": "D:\\Visual Studio\\Projects\\WSUROP\\CSharpServer\\CSharpServer\\obj\\",
+      "projectPath": "C:\\Users\\Vomyrak\\Documents\\VS Projects\\WSUROP18\\CSharpServer\\CSharpServer\\CSharpServer.csproj",
+      "packagesPath": "C:\\Users\\Vomyrak\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Vomyrak\\Documents\\VS Projects\\WSUROP18\\CSharpServer\\CSharpServer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\VomyraK\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Vomyrak\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5724,8 +5739,11 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "D:\\Visual Studio\\Projects\\WSUROP\\CSharpServer\\Lynxmotion\\Lynxmotion.csproj": {
-              "projectPath": "D:\\Visual Studio\\Projects\\WSUROP\\CSharpServer\\Lynxmotion\\Lynxmotion.csproj"
+            "C:\\Users\\Vomyrak\\Documents\\VS Projects\\WSUROP18\\CSharpServer\\CSharpClient\\CSharpClient.csproj": {
+              "projectPath": "C:\\Users\\Vomyrak\\Documents\\VS Projects\\WSUROP18\\CSharpServer\\CSharpClient\\CSharpClient.csproj"
+            },
+            "C:\\Users\\Vomyrak\\Documents\\VS Projects\\WSUROP18\\CSharpServer\\Lynxmotion\\Lynxmotion.csproj": {
+              "projectPath": "C:\\Users\\Vomyrak\\Documents\\VS Projects\\WSUROP18\\CSharpServer\\Lynxmotion\\Lynxmotion.csproj"
             }
           }
         }
@@ -5740,6 +5758,7 @@
       "netcoreapp2.0": {
         "dependencies": {
           "Microsoft.NETCore.App": {
+            "suppressParent": "All",
             "target": "Package",
             "version": "[2.0.0, )",
             "autoReferenced": true

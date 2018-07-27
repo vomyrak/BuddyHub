@@ -1,8 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <ApplicationIcon />
+    <StartupObject />
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +13,9 @@
     <PackageReference Include="System.Net.Http" Version="4.3.3" />
   </ItemGroup>
 
+
   <ItemGroup>
+    <ProjectReference Include="..\CSharpClient\CSharpClient.csproj" />
     <ProjectReference Include="..\Lynxmotion\Lynxmotion.csproj" />
   </ItemGroup>
 

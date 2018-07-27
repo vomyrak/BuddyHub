@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 
-namespace C_Sharp_Client
+namespace CSharpClient
 {
     class Client
     {

@@ -19,10 +19,9 @@ namespace CSharpServer
         
         static void Main(string[] args)
         {
-
+            
             Server server = new Server();
             server.Run();
-
         }
 
         
@@ -40,6 +39,7 @@ namespace CSharpServer
         public Server()
         {
             connectedDeviceList = new List<DeviceInfo>();
+            SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
             ws = new WebServer(Server.SendResponse, "http://localhost:8080/");
         }
 
@@ -138,8 +138,9 @@ namespace CSharpServer
         /// <param name="param">Parameter passed to the function</param>
         public static void TestRoboticArm(string servo, string param)
         {
-            Lynxmotion.AL5C al5c;
-            Lynxmotion.SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
+           
+            AL5C al5c;
+            SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
             if (SSC32s.Length > 0)
             {
                 al5c = new AL5C(SSC32s[0].PortName);
