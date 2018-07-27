@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../css/menu.css" />
+  <link rel="stylesheet" type="text/css" href="../css/device.css" />
+</head>
+
+<body>
+  <div class="col-md-3 column margintop20">
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="/"><span class="glyphicon glyphicon-chevron-right"></span> Home</a></li>
+      <% devices.forEach(function(device) { %>
+        <!--/ Product Option in menu for each output device -->
+        <li><a href="/device?selected=<%= device.device %>"><span class="glyphicon glyphicon-chevron-right"></span> <%= device.device %></a></li>
+        <% }); %>
+    </ul>
+  </div>
+  <div class="col-md-9 column margintop20">
+    <div class="method">
+      <% methods.forEach(function(method) { %>
+        <div class="col-sm-3">
+          <!-- Produce a button for each method -->
+          <!-- Store the information for http request in the hidden input fields -->
+          <input type="hidden" id="http_method<%= method.method %>" value='<%= method.http_method %>' />
+          <input type="hidden" id="link<%= method.method %>" value='<%= method.link %>' />
+          <input type="hidden" id="data<%= method.method %>" value='<%= method.data %>' />
+          <input type="hidden" id="headers<%= method.method %>" value='<%= method.headers %>' />
+          <input type="hidden" id="callback_function<%= method.method %>" value='<%= method.callback_function %>' />
+          <input type="hidden" id="text_input<%= method.method %>" value='<%= method.text_input %>' />
+          <button onclick="sendRequest(this)" class="method-button" type="submit" value="<%= method.method %>" id='<%= method.method %>'><%= method.method %></button>
+        </div>
+        <div class="col-sm-9">
+          <!-- Show the description of the method in a textarea -->
+          <textarea rows="2" class="method-text" readonly><%= method.description %></textarea>
+        </div>
+        <%if (method.text_input != null) { %>
+          <input class="input-textbox" id="textbox<%= method.method %>" value='' />
+          <% } %>
+        <% }); %>
+    </div>
+  </div>
+  <script src="../js/device.js"></script>
+</body>
