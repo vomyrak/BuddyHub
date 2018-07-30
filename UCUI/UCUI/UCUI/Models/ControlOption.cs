@@ -10,8 +10,9 @@ namespace UCUI.Models
     {
         public bool[] buttonVisible { get; set; }
         public bool textBoxVisible { get; set; }
-        public int number { get; set; }
         public string name { get; set; }
         public string description { get; set; }
+        public string imageName { get; set; }
+        public Uri actualUri { get; set; }
     }
 }

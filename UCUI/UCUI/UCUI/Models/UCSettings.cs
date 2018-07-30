@@ -38,6 +38,48 @@ namespace UCUI.Models
             }
         }
 
+        private bool isHover;
+        public bool IsHover
+        {
+            get { return isHover; }
+            set
+            {
+                if(value!=isHover)
+                {
+                    isHover = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool isSound;
+        public bool IsSound
+        {
+            get { return isSound; }
+            set
+            {
+                if(value!=isSound)
+                {
+                    isSound = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string buttonKey;
+        public string ButtonKey
+        {
+            get { return buttonKey; }
+            set
+            {
+                if (value != buttonKey)
+                {
+                    buttonKey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         void OnPropertyChanged([CallerMemberName]string propertyName = null)

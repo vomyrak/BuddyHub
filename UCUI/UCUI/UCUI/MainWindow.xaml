@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UCUI"
+        xmlns:prop='clr-namespace:UCUI.Models'
         mc:Ignorable="d"
         xmlns:views='clr-namespace:UCUI.UserControls'
         Title="Universal Controller"
@@ -15,7 +16,8 @@
   
   
   
-  <Grid>
+  <Grid KeyDown='Grid_KeyDown'
+        KeyUp='Grid_KeyUp'>
     <Rectangle Name='Overlay'
                Fill='#7F000000' 
                Visibility='Collapsed'/>
@@ -25,7 +27,7 @@
             Click='Outside_Click'
             Opacity='0'
             Background='#00000000'
-            BorderBrush='#00000000' />
+            BorderBrush='#00000000'/>
     
     <views:HelpView x:Name='HelpView'
                     Visibility='Collapsed' />
@@ -34,15 +36,11 @@
                         Visibility='Collapsed' />
 
     <DockPanel x:Name='MainView'>
-      <TextBlock x:Name='titleBlock'
-                 TextWrapping='Wrap'
-                 Text='   Universal Controller v0.01'
-                 FontSize='24'
-                 Background="#FF353535"
-                 FontFamily="Calibri"
-                 FontWeight="Bold"
-                 Foreground="White"
-                 DockPanel.Dock='Top' />
+      <TextBlock Background='#FF353535'
+                 Text='{Binding IsOneDown}'
+                 DockPanel.Dock='Top'
+                 Foreground='White'/>
+
       <Grid>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width='Auto' />
@@ -80,13 +78,12 @@
                       Grid.Column='0'
                       Margin='1 1 1 2'
                       Click='PageOpen' />
-              <Button Name='HelpButton'
+              <Button x:Name='HelpButton'
                       Grid.Column='1'
-                      Content='Help'
+                                 Content='Help'
                       Margin='0 1 1 2'
                       Style='{StaticResource Shaker}'
                       Click='PageOpen' />
-
             </Grid>
 
             <ListBox x:Name='ControlOptions'
@@ -97,19 +94,25 @@
 
               <ListBox.ItemTemplate>
                 <DataTemplate>
-                  <StackPanel Orientation='Vertical'>
+                  <DockPanel>
+                    <Image DockPanel.Dock='Left'
+                           Source='{Binding actualUri}'
+                           MaxWidth='64'
+                           MaxHeight='64'/>
                     <TextBlock Text='{Binding name}'
                                HorizontalAlignment='Left'
                                Foreground="#FF353535"
-                               Margin='9, 0, 0, 0' />
+                               Margin='9, 0, 0, 0' 
+                               DockPanel.Dock='Top'/>
                     <TextBlock Text='{Binding description}'
                                HorizontalAlignment='Left'
                                Foreground="Gray"
                                Margin='9, 0, 0, 10'
                                FontSize='15'
-                               TextWrapping='Wrap' />
+                               TextWrapping='Wrap' 
+                               DockPanel.Dock='Bottom'/>
 
-                  </StackPanel>
+                  </DockPanel>
                 </DataTemplate>
               </ListBox.ItemTemplate>
 
@@ -136,22 +139,16 @@
           </Grid.ColumnDefinitions>
           <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height='2*'/>
+            <RowDefinition Height='2*'/>
+            <RowDefinition Height='2*'/>
             <RowDefinition />
           </Grid.RowDefinitions>
 
           <Grid.Resources>
             <Style TargetType="{x:Type Button}">
-              <Setter Property="Background"
-                      Value="#FF353535" />
               <Setter Property='Margin'
                       Value='10' />
-              <Setter Property='FontFamily'
-                      Value='Calibri' />
-              <Setter Property='Foreground'
-                      Value='White' />
             </Style>
 
           </Grid.Resources>

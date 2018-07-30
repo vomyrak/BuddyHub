@@ -12,11 +12,11 @@
             BorderBrush='#FF353535'
             HorizontalAlignment='Center'
             VerticalAlignment='Center'
-            CornerRadius='3'
+            CornerRadius='15'
             Background='White'>
       <StackPanel>
         <Grid MinHeight='150'
-              MinWidth='200'>
+              MinWidth='300'>
           <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
@@ -34,21 +34,23 @@
                      Background='White'
                      MaxWidth='500'
                      FontFamily='Calibri'
-                     Text='This is where the settings go'
+                     Text='Settings'
+                     FontSize='30'
                      Grid.Row='0'
                      Grid.ColumnSpan='2' />
-          <CheckBox x:Name='SwitchMode'
+          <CheckBox x:Name='AudioButton'
                     Grid.Row='1'
                     Grid.Column='0'
                     HorizontalAlignment='Left'
-                    Margin='10 0 0 0'
-                    Content='Switch Mode'
-                    FontFamily='Calibri' />
+                    Margin='10 0 10 0'
+                    Content='Audio Feedback'
+                    FontFamily='Calibri'
+                    IsChecked='{Binding IsSound, UpdateSourceTrigger=PropertyChanged}' />
           <CheckBox x:Name='CenterMouse'
                     Grid.Row='2'
                     Grid.Column='0'
                     HorizontalAlignment='Left'
-                    Margin='10 0 0 0'
+                    Margin='10 0 10 0'
                     Content='Center Mouse'
                     FontFamily='Calibri'
                     IsChecked='{Binding IsCenter, UpdateSourceTrigger=PropertyChanged}' />
@@ -60,6 +62,14 @@
                     Content='Visual Feedback'
                     FontFamily='Calibri'
                     IsChecked='{Binding IsShake, UpdateSourceTrigger=PropertyChanged}' />
+          <CheckBox x:Name='HoverButton'
+                    Grid.Row='2'
+                    Grid.Column='1'
+                    HorizontalAlignment='Left'
+                    Margin='0 0 10 0'
+                    Content='Click on Hover'
+                    FontFamily='Calibri'
+                    IsChecked='{Binding IsHover, UpdateSourceTrigger=PropertyChanged}'/>
           <Button x:Name='ScanTemplates'
                   Grid.Row='4'
                   Grid.Column='0'

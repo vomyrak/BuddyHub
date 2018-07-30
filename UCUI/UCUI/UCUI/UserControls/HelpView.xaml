@@ -13,7 +13,7 @@
             BorderBrush='#FF353535'
             HorizontalAlignment='Center'
             VerticalAlignment='Center'
-            CornerRadius='3'
+            CornerRadius='15'
             Background='White'>
       <StackPanel>
       <TextBlock TextWrapping='Wrap'

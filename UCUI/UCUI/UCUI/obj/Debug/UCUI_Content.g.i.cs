@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("1200px-imperial_college_london_crest.svg.ico")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("ucicon.ico")]
 
 

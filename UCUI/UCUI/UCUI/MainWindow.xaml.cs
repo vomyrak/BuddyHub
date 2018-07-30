@@ -16,8 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UCUI.Models;
 using UCUI.UserControls;
-using UCUI.Hook;
-
+using System.Media;
 
 
 namespace UCUI
@@ -32,7 +31,7 @@ namespace UCUI
         public MainWindow()
         {
             InitializeComponent();
-            ControlOptions.ItemsSource=ControlSource.Options;
+            ControlOptions.ItemsSource = ControlSource.Options;
             Panel.SetZIndex(MainView, 0);
             Panel.SetZIndex(HelpView, 3);
             Panel.SetZIndex(SettingsView, 3);
@@ -48,7 +47,7 @@ namespace UCUI
         private void PageOpen(object sender, RoutedEventArgs e)
         {
             Button myButton = (Button)sender;
-            switch(myButton.Content)
+            switch (myButton.Content)
             {
                 case "Settings":
                     SettingsView.Visibility = System.Windows.Visibility.Visible;
@@ -79,13 +78,13 @@ namespace UCUI
             if (ControlOptions.SelectedItem != null)
             {
                 ButtonArray = new Button[9];
-                for(int i=0; i<9; i++)
+                for (int i = 0; i < 9; i++)
                 {
                     ButtonArray[i] = new Button();
                 }
-                
+
                 ControlOption myOption = (ControlOption)ControlOptions.SelectedItem;
-                
+
                 for (int i = 0; i < 9; i++)
                 {
                     if (myOption.buttonVisible[i])
@@ -96,41 +95,102 @@ namespace UCUI
                         ButtonArray[i].Margin = new Thickness(10, 10, 10, 10);
                         ButtonArray[i].Click += CheckCenterMouse;
                         Grid.SetColumn(ButtonArray[i], i % 3 + 1);
-                        Grid.SetRow(ButtonArray[i], i/3 + 1);
+                        Grid.SetRow(ButtonArray[i], i / 3 + 1);
                         ButtonGrid.Children.Add(ButtonArray[i]);
                         ButtonArray[i].Style = (Style)Application.Current.Resources["Pusher"];
-                      /*  ButtonArray[i].Click+= delegate (object a, RoutedEventArgs b) {
-                            titleBlock.Text = disp;
-                        };*/
+
+                        ButtonArray[i].PreviewMouseDown += delegate (object a, MouseButtonEventArgs b)
+                        {
+                            if(((UCSettings)DataContext).IsSound) UCMethods.PlayMySound();
+                        };
+                        ButtonArray[i].Click += delegate (object a, RoutedEventArgs b)
+                        {
+
+                        };
+
+                        ButtonArray[i].MouseEnter += delegate (object a, MouseEventArgs b)
+                        {
+                            if (((UCSettings)DataContext).IsHover)
+                            {
+                                CheckSound(null, null);
+                                CheckCenterMouse(null, null);
+                            }
+                           
+                        };
                     }
                 }
 
-                if(myOption.textBoxVisible)
+                if (myOption.textBoxVisible)
                 {
                     TextBox myTextbox = new TextBox();
                     myTextbox.TextWrapping = TextWrapping.Wrap;
                     myTextbox.Name = "TextInput";
                     myTextbox.FontSize = 36;
-                    Grid.SetColumn(myTextbox, 1 );
+                    Grid.SetColumn(myTextbox, 1);
                     Grid.SetRow(myTextbox, 1);
                     Grid.SetColumnSpan(myTextbox, 3);
                     ButtonGrid.Children.Add(myTextbox);
                 }
             }
             CheckCenterMouse(null, null);
-            
+
         }
 
         private void CheckCenterMouse(object sender, RoutedEventArgs e)
         {
-            if (((UCSettings)DataContext).IsCenter)
+            if (((UCSettings)DataContext).IsCenter) 
+                UCMethods.SetPosition(this);
+
+        }
+
+        private void CheckSound(object sender, RoutedEventArgs e)
+        {
+            if (((UCSettings)DataContext).IsSound)
+                UCMethods.PlayMySound();
+        }
+
+
+
+        private void Grid_KeyDown(object sender, KeyEventArgs e)
+        {
+            UCMethods.PlayMySound();
+            switch(e.Key)
             {
-               System.Windows.Forms.Cursor.Position = new System.Drawing.Point(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width / 2, System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height / 2);
+                case (Key.NumPad7):
+                    ((UCSettings)DataContext).ButtonKey = "Button0";
+                    break;
+                case (Key.NumPad8):
+                    ((UCSettings)DataContext).ButtonKey = "Button1";
+                    break;
+                case (Key.NumPad9):
+                    ((UCSettings)DataContext).ButtonKey = "Button2";
+                    break;
+                case (Key.NumPad4):
+                    ((UCSettings)DataContext).ButtonKey = "Button3";
+                    break;
+                case (Key.NumPad5):
+                    ((UCSettings)DataContext).ButtonKey = "Button4";
+                    break;
+                case (Key.NumPad6):
+                    ((UCSettings)DataContext).ButtonKey = "Button5";
+                    break;
+                case (Key.NumPad1):
+                    ((UCSettings)DataContext).ButtonKey = "Button6";
+                    break;
+                case (Key.NumPad2):
+                    ((UCSettings)DataContext).ButtonKey = "Button7";
+                    break;
+                case (Key.NumPad3):
+                    ((UCSettings)DataContext).ButtonKey = "Button8";
+                    break;
 
             }
         }
 
-
+        private void Grid_KeyUp(object sender, KeyEventArgs e)
+        {
+            ((UCSettings)DataContext).ButtonKey = "Button12";
+        }
     }
 
 }

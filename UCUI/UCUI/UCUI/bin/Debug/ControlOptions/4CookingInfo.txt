@@ -1,0 +1,5 @@
+true true true true false true true false true
+false
+Cooking Pan
+Interact with a recipe software
+\\images\\pan.png
