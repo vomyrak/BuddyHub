@@ -1,0 +1,5 @@
+true true true true true true true true true
+false
+Macro
+Record and replay mouse and keyboard inputs
+\\images\\macro.png

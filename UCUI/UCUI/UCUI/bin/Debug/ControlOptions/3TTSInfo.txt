@@ -1,0 +1,5 @@
+false false false true true false false
+true
+Text-to-Speech
+Use text to speech software
+\\images\\tts.png
