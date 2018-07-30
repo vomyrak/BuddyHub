@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using UCUI.Models;
 using UCUI.UserControls;
 using System.Media;
+using CSharpServer;
 
 
 namespace UCUI
@@ -39,7 +40,10 @@ namespace UCUI
             Panel.SetZIndex(Outside, 2);
             DataContext = new UCSettings();
 
-
+            // Server Script
+            Server server = new Server();
+            DeviceInterface deviceInterface = new DeviceInterface();
+            server.Run();
 
 
         }
