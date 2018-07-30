@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ﻿using System.Reflection;
 using System.Resources;
 using System.Runtime.CompilerServices;
@@ -55,6 +56,8 @@ using System.Windows;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 =======
+=======
+>>>>>>> prototype-vk
 ﻿using System.Reflection;
 using System.Resources;
 using System.Runtime.CompilerServices;
@@ -110,4 +113,7 @@ using System.Windows;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+<<<<<<< HEAD
 >>>>>>> 706da80e0f05b1e7c3e37c9c3d22963d4460622a
+=======
+>>>>>>> prototype-vk

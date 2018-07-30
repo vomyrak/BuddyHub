@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
@@ -25,6 +26,8 @@ Global
 	EndGlobalSection
 EndGlobal
 =======
+=======
+>>>>>>> prototype-vk
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
@@ -50,4 +53,7 @@ Global
 		SolutionGuid = {E07350F3-6FB0-4934-857D-68FC6A886B21}
 	EndGlobalSection
 EndGlobal
+<<<<<<< HEAD
 >>>>>>> 706da80e0f05b1e7c3e37c9c3d22963d4460622a
+=======
+>>>>>>> prototype-vk

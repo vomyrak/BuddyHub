@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ﻿<UserControl x:Class="UCUI.UserControls.HelpView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -34,6 +35,8 @@
   </Grid>
 </UserControl>
 =======
+=======
+>>>>>>> prototype-vk
 ﻿<UserControl x:Class="UCUI.UserControls.HelpView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -68,4 +71,7 @@
     </Border>
   </Grid>
 </UserControl>
+<<<<<<< HEAD
 >>>>>>> 706da80e0f05b1e7c3e37c9c3d22963d4460622a
+=======
+>>>>>>> prototype-vk

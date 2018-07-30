@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ﻿UCUI
 
 
@@ -20,6 +21,8 @@ MainWindow.xaml;UserControls\HelpView.xaml;UserControls\SettingsView.xaml;
 False
 
 =======
+=======
+>>>>>>> prototype-vk
 ﻿UCUI
 
 
@@ -40,4 +43,7 @@ MainWindow.xaml;UserControls\HelpView.xaml;UserControls\SettingsView.xaml;
 
 False
 
+<<<<<<< HEAD
 >>>>>>> 706da80e0f05b1e7c3e37c9c3d22963d4460622a
+=======
+>>>>>>> prototype-vk

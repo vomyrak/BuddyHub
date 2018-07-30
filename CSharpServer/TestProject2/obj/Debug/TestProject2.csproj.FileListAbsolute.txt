@@ -1,0 +1,10 @@
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\CSharpServer\TestProject2\bin\Debug\TestProject2.exe.config
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\CSharpServer\TestProject2\bin\Debug\TestProject2.exe
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\CSharpServer\TestProject2\bin\Debug\TestProject2.pdb
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\CSharpServer\TestProject2\bin\Debug\Lynxmotion.dll
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\CSharpServer\TestProject2\bin\Debug\Lynxmotion.pdb
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\CSharpServer\TestProject2\obj\Debug\TestProject2.csprojAssemblyReference.cache
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\CSharpServer\TestProject2\obj\Debug\TestProject2.csproj.CoreCompileInputs.cache
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\CSharpServer\TestProject2\obj\Debug\TestProject2.csproj.CopyComplete
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\CSharpServer\TestProject2\obj\Debug\TestProject2.exe
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\CSharpServer\TestProject2\obj\Debug\TestProject2.pdb

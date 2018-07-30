@@ -4,3 +4,23 @@
 
 /C_Sharp_Server/C_Sharp_Server/bin/Debug/netcoreapp2.0
 /C_Sharp_Server/C_Sharp_Server/obj
+/UC/UCUI/UCUI/obj
+/C_Sharp_Server/C_Sharp_Client/bin/Debug
+/C_Sharp_Server/C_Sharp_Client/obj/Debug
+/C_Sharp_Server/packages
+/C_Sharp_Server/C_Sharp_Server/auth.json
+/C_Sharp_Server/Lynxmotion
+/C_Sharp_Server/TestLynxmotion
+/C_Sharp_Server/TestFunction
+/CSharpServer/CSharpClient/bin/Debug
+/CSharpServer/CSharpClient/obj
+/CSharpServer/CSharpServer/bin/Debug/netcoreapp2.0
+/CSharpServer/CSharpServer/auth.json
+/CSharpServer/Lynxmotion
+/CSharpServer/packages
+/CSharpServer/TestFunction
+/CSharpServer/TestLynxmotion
+/CSharpServer/.vs/CSharpServer/v15/Server/sqlite3
+/CSharpServer/CSharpServer/bin/Debug
+/UC
+/VoiceSynthesizer

@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 C:\Users\win10\Desktop\UC\UCUI\UCUI\bin\Debug\UCUI.exe.config
 C:\Users\win10\Desktop\UC\UCUI\UCUI\bin\Debug\UCUI.exe
 C:\Users\win10\Desktop\UC\UCUI\UCUI\bin\Debug\UCUI.pdb
@@ -21,6 +22,8 @@ C:\Users\win10\Desktop\UC\UCUI\UCUI\obj\Debug\App.baml
 C:\Users\win10\Desktop\UC\UCUI\UCUI\obj\Debug\UserControls\SettingsView.g.cs
 C:\Users\win10\Desktop\UC\UCUI\UCUI\obj\Debug\UserControls\SettingsView.baml
 =======
+=======
+>>>>>>> prototype-vk
 C:\Users\win10\Desktop\UC\UCUI\UCUI\bin\Debug\UCUI.exe.config
 C:\Users\win10\Desktop\UC\UCUI\UCUI\bin\Debug\UCUI.exe
 C:\Users\win10\Desktop\UC\UCUI\UCUI\bin\Debug\UCUI.pdb
@@ -42,4 +45,7 @@ C:\Users\win10\Desktop\UC\UCUI\UCUI\obj\Debug\UserControls\HelpView.baml
 C:\Users\win10\Desktop\UC\UCUI\UCUI\obj\Debug\App.baml
 C:\Users\win10\Desktop\UC\UCUI\UCUI\obj\Debug\UserControls\SettingsView.g.cs
 C:\Users\win10\Desktop\UC\UCUI\UCUI\obj\Debug\UserControls\SettingsView.baml
+<<<<<<< HEAD
 >>>>>>> 706da80e0f05b1e7c3e37c9c3d22963d4460622a
+=======
+>>>>>>> prototype-vk
