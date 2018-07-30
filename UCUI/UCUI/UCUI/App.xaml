@@ -119,6 +119,18 @@
       </Style.Triggers>
     </Style>
 
+    <Style TargetType='Button'
+           x:Key='PushPic'>
+      <Setter Property='Template'>
+        <Setter.Value>
+          <ControlTemplate>
+            
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+      
+    </Style>
+
     <!--Pusher Style-->
     <Style TargetType="Button"
            x:Key='Pusher'>
