@@ -3,7 +3,7 @@ const app = express();
 const fs = require('fs');
 const server = require('http').createServer(app);
 const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-const { exec } = require('child_process');
+const exec = require('child_process').exec;
 const mongoose = require("mongoose");
 const filereader = require("./auth.json");
 const filereader2 = require("./keys.json");
@@ -71,28 +71,6 @@ app.get('/', function(req, res) {
 
     res.render('index', {
       devices: devices
-    });
-  });
-});
-
-app.get('/device', function(req, res) {
-  // Render the page with all output devices in the menu
-  var listQuery = OutputDevice.find().sort('device');
-  listQuery.select('device');
-
-
-  listQuery.exec(function (err, devices) {
-    if (err) return handleError(err);
-
-    // Render the page with methods of the selected device
-    var query = OutputDevice.findOne({device: req.query.selected});
-    query.exec(function (error, selected) {
-      if (error) return handleError(error);
-
-      res.render('device', {
-        devices: devices,
-        methods: selected.methods
-      });
     });
   });
 });
