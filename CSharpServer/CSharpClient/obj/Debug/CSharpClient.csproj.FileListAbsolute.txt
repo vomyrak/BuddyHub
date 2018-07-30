@@ -16,3 +16,21 @@ C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\CSharpServer\CSharpClient\obj\De
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\CSharpServer\CSharpClient\obj\Debug\CSharpClient.csproj.CopyComplete
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\CSharpServer\CSharpClient\obj\Debug\C_Sharp_Client.exe
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\CSharpServer\CSharpClient\obj\Debug\C_Sharp_Client.pdb
+C:\WSUROP18\CSharpServer\CSharpClient\bin\Debug\CSharpClient.exe.config
+C:\WSUROP18\CSharpServer\CSharpClient\bin\Debug\CSharpClient.exe
+C:\WSUROP18\CSharpServer\CSharpClient\bin\Debug\CSharpClient.pdb
+C:\WSUROP18\CSharpServer\CSharpClient\bin\Debug\DnsClient.dll
+C:\WSUROP18\CSharpServer\CSharpClient\bin\Debug\MongoDB.Bson.dll
+C:\WSUROP18\CSharpServer\CSharpClient\bin\Debug\MongoDB.Driver.Core.dll
+C:\WSUROP18\CSharpServer\CSharpClient\bin\Debug\MongoDB.Driver.dll
+C:\WSUROP18\CSharpServer\CSharpClient\bin\Debug\System.Buffers.dll
+C:\WSUROP18\CSharpServer\CSharpClient\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\WSUROP18\CSharpServer\CSharpClient\bin\Debug\DnsClient.xml
+C:\WSUROP18\CSharpServer\CSharpClient\bin\Debug\MongoDB.Bson.xml
+C:\WSUROP18\CSharpServer\CSharpClient\bin\Debug\MongoDB.Driver.xml
+C:\WSUROP18\CSharpServer\CSharpClient\bin\Debug\MongoDB.Driver.Core.xml
+C:\WSUROP18\CSharpServer\CSharpClient\obj\Debug\CSharpClient.csprojAssemblyReference.cache
+C:\WSUROP18\CSharpServer\CSharpClient\obj\Debug\CSharpClient.csproj.CoreCompileInputs.cache
+C:\WSUROP18\CSharpServer\CSharpClient\obj\Debug\CSharpClient.csproj.CopyComplete
+C:\WSUROP18\CSharpServer\CSharpClient\obj\Debug\CSharpClient.exe
+C:\WSUROP18\CSharpServer\CSharpClient\obj\Debug\CSharpClient.pdb

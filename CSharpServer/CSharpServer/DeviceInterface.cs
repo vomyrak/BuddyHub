@@ -133,33 +133,32 @@ namespace CSharpServer
                     newDevice = Activator.CreateInstance(type) as IDevice;
                 }
             }
-            dynamic al5c = newDevice.ConnectDevice();
-            Type AL5C = dll.GetType(dll.GetName().Name + "." + deviceName);
-            ConnectedDeviceList[deviceName].DeviceObject = al5c;
+            string portName = newDevice.GetSerialPort();
+            ConnectedDeviceList[deviceName].DeviceObject = newDevice.ConnectDevice(portName);
         }
 
         public void TestRoboticArm()
         {
             CheckValidDevice("robotic_arm");
-            //string input = Console.ReadLine();
-            //while (input != "")
-            //{
-            //    int number = 0;
-            //    int.TryParse(input, out number);
-            //    if (number != 0)
-            //    {
-            //        TestFunction("robotic_arm/random/" + number);
-            //    }
-            //    input = Console.ReadLine();
-            //}
-            int param = 500;
-            while (param <= 2500)
+            string input = Console.ReadLine();
+            while (input != "")
             {
-                TestFunction("robotic_arm/random/" + param);
-                param += 20;
-                System.Threading.Thread.Sleep(200);
-                
+                int number = 0;
+                int.TryParse(input, out number);
+                if (number != 0)
+                {
+                    TestFunction("robotic_arm/random/" + number);
+                }
+                input = Console.ReadLine();
             }
+            //int param = 500;
+            //while (param <= 2500)
+            //{
+            //    TestFunction("robotic_arm/random/" + param);
+            //    param += 20;
+            //    System.Threading.Thread.Sleep(200);
+            //    
+            //}
         }
 
         public class ControllerDevice

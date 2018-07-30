@@ -22,3 +22,15 @@ C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\CSharpServer\TestLynxmotion\obj\
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\CSharpServer\TestLynxmotion\obj\Debug\TestLynxmotion.csproj.CopyComplete
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\CSharpServer\TestLynxmotion\obj\Debug\TestLynxmotion.exe
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\CSharpServer\TestLynxmotion\obj\Debug\TestLynxmotion.pdb
+C:\WSUROP18\CSharpServer\TestLynxmotion\bin\Debug\TestLynxmotion.exe
+C:\WSUROP18\CSharpServer\TestLynxmotion\bin\Debug\TestLynxmotion.pdb
+C:\WSUROP18\CSharpServer\TestLynxmotion\bin\Debug\Lynxmotion.dll
+C:\WSUROP18\CSharpServer\TestLynxmotion\bin\Debug\Lynxmotion.pdb
+C:\WSUROP18\CSharpServer\TestLynxmotion\obj\Debug\TestLynxmotion.csprojAssemblyReference.cache
+C:\WSUROP18\CSharpServer\TestLynxmotion\obj\Debug\TestLynxmotion.Form1.resources
+C:\WSUROP18\CSharpServer\TestLynxmotion\obj\Debug\TestLynxmotion.Properties.Resources.resources
+C:\WSUROP18\CSharpServer\TestLynxmotion\obj\Debug\TestLynxmotion.csproj.GenerateResource.cache
+C:\WSUROP18\CSharpServer\TestLynxmotion\obj\Debug\TestLynxmotion.csproj.CoreCompileInputs.cache
+C:\WSUROP18\CSharpServer\TestLynxmotion\obj\Debug\TestLynxmotion.csproj.CopyComplete
+C:\WSUROP18\CSharpServer\TestLynxmotion\obj\Debug\TestLynxmotion.exe
+C:\WSUROP18\CSharpServer\TestLynxmotion\obj\Debug\TestLynxmotion.pdb

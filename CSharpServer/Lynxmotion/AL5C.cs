@@ -1,4 +1,4 @@
-﻿﻿// Lynxmotion SSC32/AL5x Robotic Arm Library
+﻿// Lynxmotion SSC32/AL5x Robotic Arm Library
 //
 // Copyright © Rémy Dispagne, 2014
 // cramer at libertysurf.fr
@@ -17,15 +17,33 @@
 //  along with this library.  If not, see <http://www.gnu.org/licenses/>.
 //
 //  All trademarks, service marks, trade names, product names are the property of their respective owners.
+using System.ComponentModel;
+using System.ComponentModel.Composition;
+using CSharpServer;
 
 namespace Lynxmotion
 {
+
+    [Export(typeof(IDevice))]
     /// <summary>
     /// Class definition of an AL5C robot arm driven by a SSC32 board
     /// <remarks>This requires the whole arm has been mounted and wired following the Lynxmotion manual. See <see cref="http://www.lynxmotion.com/images/html/build142.htm"/> for mounting details.</remarks>
     /// </summary>
-    public class AL5C : SSC32
+    public class AL5C : SSC32, IDevice
     {
+
+        public AL5C()
+        {        }
+
+
+        public string GetSerialPort() {
+            SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
+            if (SSC32s.Length > 0)
+            {
+                return SSC32s[0].PortName;
+            }
+            return "";
+        }
         /// <summary>
         /// Allocate each servo to its corresponding channel
         /// </summary>
@@ -46,6 +64,7 @@ namespace Lynxmotion
             WristRotateServo = servos[wristRotateServoChannel];
         }
 
+        
         /// <summary>
         /// Creates an AL5C robot arm
         /// </summary>
@@ -303,6 +322,12 @@ namespace Lynxmotion
             setShoulder_PW(1983);
             setElbow_PW(2106);
             setWrist_PW(1112);
+            
+        }
+        public object ConnectDevice(string serialPort)
+        {
+            
+            return new AL5C(serialPort);
         }
     }
 }

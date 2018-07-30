@@ -10,3 +10,9 @@ C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\C_Sharp_Server\Lynxmotion\obj\De
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\C_Sharp_Server\Lynxmotion\obj\Debug\Lynxmotion.csproj.CoreCompileInputs.cache
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\C_Sharp_Server\Lynxmotion\obj\Debug\Lynxmotion.dll
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\C_Sharp_Server\Lynxmotion\obj\Debug\Lynxmotion.pdb
+C:\WSUROP18\CSharpServer\Lynxmotion\bin\Debug\Lynxmotion.dll
+C:\WSUROP18\CSharpServer\Lynxmotion\bin\Debug\Lynxmotion.pdb
+C:\WSUROP18\CSharpServer\Lynxmotion\obj\Debug\Lynxmotion.csprojAssemblyReference.cache
+C:\WSUROP18\CSharpServer\Lynxmotion\obj\Debug\Lynxmotion.csproj.CoreCompileInputs.cache
+C:\WSUROP18\CSharpServer\Lynxmotion\obj\Debug\Lynxmotion.dll
+C:\WSUROP18\CSharpServer\Lynxmotion\obj\Debug\Lynxmotion.pdb
