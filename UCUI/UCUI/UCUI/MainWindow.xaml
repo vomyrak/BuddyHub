@@ -37,9 +37,9 @@
 
     <DockPanel x:Name='MainView'>
       <TextBlock Background='#FF353535'
-                 Text='{Binding IsOneDown}'
                  DockPanel.Dock='Top'
-                 Foreground='White'/>
+                 Foreground='White'
+                 x:Name="TitleBlock"/>
 
       <Grid>
         <Grid.ColumnDefinitions>

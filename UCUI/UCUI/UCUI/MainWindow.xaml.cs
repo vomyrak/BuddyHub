@@ -18,6 +18,7 @@ using UCUI.Models;
 using UCUI.UserControls;
 using System.Media;
 using CSharpServer;
+using System.Threading;
 
 
 namespace UCUI
@@ -41,10 +42,8 @@ namespace UCUI
             DataContext = new UCSettings();
 
             // Server Script
-            Server server = new Server();
-            DeviceInterface deviceInterface = new DeviceInterface();
-            server.Run();
-
+            var serverThread = new Thread(ServerRoutine);
+            serverThread.Start();
 
         }
 
@@ -195,6 +194,15 @@ namespace UCUI
         {
             ((UCSettings)DataContext).ButtonKey = "Button12";
         }
+
+        private void ServerRoutine()
+        {
+            Server server = new Server();
+            DeviceInterface deviceInterface = new DeviceInterface();
+            server.Run();
+            deviceInterface.TestRoboticArm();
+        }
+
     }
 
 }
