@@ -101,7 +101,7 @@ namespace CSharpServer
         public void CallFunction(string deviceName, string funcName, dynamic[] param)
         {
             dynamic testObject = ConnectedDeviceList[deviceName].DeviceObject;
-            testObject.setElbow_PW(short.Parse(param[0]));
+            testObject.setGripper_PW(short.Parse(param[0]));
             testObject.updateServos();
         }
 

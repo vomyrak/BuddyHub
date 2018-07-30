@@ -29,6 +29,8 @@ namespace UCUI
     public partial class MainWindow : Window
     {
         private Button[] ButtonArray;
+        private Server server;
+        private DeviceInterface deviceInterface;
 
         public MainWindow()
         {
@@ -108,7 +110,9 @@ namespace UCUI
                         };
                         ButtonArray[i].Click += delegate (object a, RoutedEventArgs b)
                         {
-
+                            //deviceInterface.TestRoboticArm();
+                            var newThread = new Thread(deviceInterface.TestRoboticArm);
+                            newThread.Start();
                         };
 
                         ButtonArray[i].MouseEnter += delegate (object a, MouseEventArgs b)
@@ -197,10 +201,11 @@ namespace UCUI
 
         private void ServerRoutine()
         {
-            Server server = new Server();
-            DeviceInterface deviceInterface = new DeviceInterface();
+            server = new Server();
+            deviceInterface = new DeviceInterface();
             server.Run();
-            deviceInterface.TestRoboticArm();
+            //deviceInterface.TestRoboticArm();
+
         }
 
     }
