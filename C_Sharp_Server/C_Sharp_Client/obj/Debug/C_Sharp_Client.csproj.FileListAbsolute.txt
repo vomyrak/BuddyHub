@@ -1,0 +1,7 @@
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\C_Sharp_Server\C_Sharp_Client\bin\Debug\C_Sharp_Client.exe.config
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\C_Sharp_Server\C_Sharp_Client\bin\Debug\C_Sharp_Client.exe
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\C_Sharp_Server\C_Sharp_Client\bin\Debug\C_Sharp_Client.pdb
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\C_Sharp_Server\C_Sharp_Client\obj\Debug\C_Sharp_Client.csprojAssemblyReference.cache
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\C_Sharp_Server\C_Sharp_Client\obj\Debug\C_Sharp_Client.csproj.CoreCompileInputs.cache
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\C_Sharp_Server\C_Sharp_Client\obj\Debug\C_Sharp_Client.exe
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\C_Sharp_Server\C_Sharp_Client\obj\Debug\C_Sharp_Client.pdb

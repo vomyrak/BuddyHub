@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿UCUI
 
 
@@ -18,3 +19,25 @@ MainWindow.xaml;UserControls\HelpView.xaml;UserControls\SettingsView.xaml;
 
 False
 
+=======
+﻿UCUI
+
+
+winexe
+C#
+.cs
+C:\Users\win10\Desktop\UC\UCUI\UCUI\obj\Debug\
+UCUI
+none
+false
+DEBUG;TRACE
+C:\Users\win10\Desktop\UC\UCUI\UCUI\App.xaml
+3-1627370344
+
+10424907714
+151984215308
+MainWindow.xaml;UserControls\HelpView.xaml;UserControls\SettingsView.xaml;
+
+False
+
+>>>>>>> 706da80e0f05b1e7c3e37c9c3d22963d4460622a

@@ -1,0 +1,12 @@
+C:\Users\Vomyrak\Documents\Visual Studio Code\Lynxmotion\TestLynxmotion\bin\Debug\TestLynxmotion.exe
+C:\Users\Vomyrak\Documents\Visual Studio Code\Lynxmotion\TestLynxmotion\bin\Debug\TestLynxmotion.pdb
+C:\Users\Vomyrak\Documents\Visual Studio Code\Lynxmotion\TestLynxmotion\bin\Debug\Lynxmotion.dll
+C:\Users\Vomyrak\Documents\Visual Studio Code\Lynxmotion\TestLynxmotion\bin\Debug\Lynxmotion.pdb
+C:\Users\Vomyrak\Documents\Visual Studio Code\Lynxmotion\TestLynxmotion\obj\Debug\TestLynxmotion.csprojAssemblyReference.cache
+C:\Users\Vomyrak\Documents\Visual Studio Code\Lynxmotion\TestLynxmotion\obj\Debug\TestLynxmotion.Form1.resources
+C:\Users\Vomyrak\Documents\Visual Studio Code\Lynxmotion\TestLynxmotion\obj\Debug\TestLynxmotion.Properties.Resources.resources
+C:\Users\Vomyrak\Documents\Visual Studio Code\Lynxmotion\TestLynxmotion\obj\Debug\TestLynxmotion.csproj.GenerateResource.cache
+C:\Users\Vomyrak\Documents\Visual Studio Code\Lynxmotion\TestLynxmotion\obj\Debug\TestLynxmotion.csproj.CoreCompileInputs.cache
+C:\Users\Vomyrak\Documents\Visual Studio Code\Lynxmotion\TestLynxmotion\obj\Debug\TestLynxmotion.csproj.CopyComplete
+C:\Users\Vomyrak\Documents\Visual Studio Code\Lynxmotion\TestLynxmotion\obj\Debug\TestLynxmotion.exe
+C:\Users\Vomyrak\Documents\Visual Studio Code\Lynxmotion\TestLynxmotion\obj\Debug\TestLynxmotion.pdb
