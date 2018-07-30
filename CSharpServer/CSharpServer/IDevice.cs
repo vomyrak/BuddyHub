@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Dynamic;
+using System.ComponentModel;
+using System.ComponentModel.Composition;
 
 namespace CSharpServer
 {
-    interface IDevice : IDisposable
-    {
-        object ConnectDevice();
-        //string GetDevicdHID();
-        
 
+    public interface IDevice
+    {
+        object ConnectDevice(string serialPort);
+        string GetSerialPort();
     }
 }
