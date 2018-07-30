@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{37D40AC3-7F33-4B09-BFEB-F6465EA136E4}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>C_Sharp_Client</RootNamespace>
-    <AssemblyName>C_Sharp_Client</AssemblyName>
+    <RootNamespace>CSharpClient</RootNamespace>
+    <AssemblyName>CSharpClient</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -64,7 +64,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
