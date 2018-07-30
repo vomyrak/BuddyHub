@@ -6,7 +6,7 @@ const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 const { exec } = require('child_process');
 const mongoose = require("mongoose");
 const filereader = require("./auth.json");
-// const filereader2 = require("./keys.json");
+const filereader2 = require("./keys.json");
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // to support JSON-encoded bodies
@@ -127,7 +127,9 @@ app.post('/tts', function(req, res) {
         console.log(`Audio content written to file: ${outputFile}`);
         // Execute the command to turn the response text to an mp3 file
         // See: https://cloud.google.com/text-to-speech/docs/create-audio#text-to-speech-text-protocol
-        exec('sed \'s|audioContent| |\' < ./output.txt > ./tmp-output.txt && tr -d \'\n ":{}\' < ./tmp-output.txt > ./tmp-output-2.txt && base64 ./tmp-output-2.txt --decode > ./synthesize-text-audio.mp3 && rm ./tmp-output*.txt && rm ./output.txt', (err, stdout, stderr) => {
+        // Windows:
+        exec('base64 ./output.txt --decode > synthesized-audio.mp3', (err, stdout, stderr) => {
+        //exec('sed \'s|audioContent| |\' < ./output.txt > ./tmp-output.txt && tr -d \'\n ":{}\' < ./tmp-output.txt > ./tmp-output-2.txt && base64 ./tmp-output-2.txt --decode > ./synthesize-text-audio.mp3 && rm ./tmp-output*.txt && rm ./output.txt', (err, stdout, stderr) => {
           if (err) {
             console.error('ERROR:', err);
             // Node couldn't execute the command
@@ -142,7 +144,7 @@ app.post('/tts', function(req, res) {
   xhttp.open("POST", "https://texttospeech.googleapis.com/v1beta1/text:synthesize", true);
   // Set headers of the http request
   xhttp.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-  // xhttp.setRequestHeader("X-Goog-Api-Key", filereader2.google);
+  xhttp.setRequestHeader("X-Goog-Api-Key", filereader2.google);
   // Send the http request with the data
   xhttp.send(JSON.stringify(data));
 });

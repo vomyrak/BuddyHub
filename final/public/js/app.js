@@ -1,43 +1,49 @@
-
 // Create UCdevices object
 var UCdevices = {
-    RobotArm: ["Up", "Down", "Left", "Right"],
-    AlexaCommands: ["Weather", "Uber", "Read News"],
-    RoomLights: ["On", "Off"]
+  RobotArm: ["Up", "Down", "Left", "Right"],
+  AlexaCommands: ["Weather", "Uber", "Read News"],
+  RoomLights: ["On", "Off"]
 };
 
-var deviceName, getfunc, btn;
-function getObject(value){
+var deviceName, getfunc, btn, methods;
 
-    deviceName = value;
-    getfunc = UCdevices[deviceName];
-//
-//    for (var i=0;i<UCdevices[deviceName].length;i++){
-//
-//        var objbtn = UCdevices[deviceName][i];
-//        btn.push(objbtn);
-//    }
-//
-////Remove last child
-// btn.pop();
-//
+function getObject(value) {
+
+  deviceName = value;
+  // methods = JSON.parse(methods);
+  // console.log(methods);
+  getfunc = UCdevices[deviceName];
+  //
+  //    for (var i=0;i<UCdevices[deviceName].length;i++){
+  //
+  //        var objbtn = UCdevices[deviceName][i];
+  //        btn.push(objbtn);
+  //    }
+  //
+  ////Remove last child
+  // btn.pop();
+  //
 }
 
 
 $(document).ready(function() {
-  $('body').on('click','#create_me',function(){
-    var index = $('.nav-tabs li').length+1;
-    $("#home-tab").append("<li class=\"active\"><a href=\"#tab" + index + "\">" + deviceName + "</a></li>");
-    $('.ui-page').append("<section id=\"tab" + index + "\" class=\"tab-content active\" />" );
-    $.each(getfunc, (key, value) =>{
-      $('#tab' + index).append("<button type=\"button\" class=\"ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check\">"+value+"</button>" );
-    })
+  $('body').on('click', '#create_me', function() {
+    var index = $('.nav-tabs li').length + 1;
+    var unspacedDeviceName = deviceName.replace(/\s/g, '');
 
-    $('a[href="#tab'+index+'"]').click();
+    $("#home-tab").append("<li class=\"active\"><a href=\"#tab" + unspacedDeviceName + "\">" + deviceName + "</a></li>");
+    //$('.ui-page').append("<section id=\"tab" + index + "\" class=\"tab-content active\" />");
+
+    // $.each(getfunc, (key, value) =>{
+    //   $('#tab' + index).append("<button type=\"button\" class=\"ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check\">"+value+"</button>" );
+    // })
+
+
+    $('a[href="#tab' + unspacedDeviceName + '"]').click();
   })
 
-  $('.nav-tabs').on('click','li > a',function(event){
-    event.preventDefault();//stop browser to take action for clicked anchor
+  $('.nav-tabs').on('click', 'li > a', function(event) {
+    event.preventDefault(); //stop browser to take action for clicked anchor
 
     //get displaying tab content jQuery selector
     var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');

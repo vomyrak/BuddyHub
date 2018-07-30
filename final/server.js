@@ -6,7 +6,7 @@ const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 const { exec } = require('child_process');
 const mongoose = require("mongoose");
 const filereader = require("./auth.json");
-// const filereader2 = require("./keys.json");
+const filereader2 = require("./keys.json");
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // to support JSON-encoded bodies
@@ -142,7 +142,7 @@ app.post('/tts', function(req, res) {
   xhttp.open("POST", "https://texttospeech.googleapis.com/v1beta1/text:synthesize", true);
   // Set headers of the http request
   xhttp.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-  // xhttp.setRequestHeader("X-Goog-Api-Key", filereader2.google);
+  xhttp.setRequestHeader("X-Goog-Api-Key", filereader2.google);
   // Send the http request with the data
   xhttp.send(JSON.stringify(data));
 });

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../css/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <link href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" />
   <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
@@ -29,9 +29,6 @@
         </select>
       </div>
 
-      <% devices.forEach(function(device) { %>
-        <input type="hidden" id="methods_<%=device.device %>" value='<%= device.methods %>' />
-        <% }); %>
           <!--
 <ul id="functions"></ul>
 <p id="demo"></p>
@@ -46,8 +43,33 @@
     </div>
 
   </section>
+  <% devices.forEach(function(device) { %>
+    <section id="tab<%= device.device.replace(/\s/g, '') %>" class="tab-content hide">
+      <% device.methods.forEach(function(method) { %>
+        <div class="col-sm-3">
+          <!-- Produce a button for each method -->
+          <!-- Store the information for http request in the hidden input fields -->
+          <input type="hidden" id="http_method<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.http_method %>' />
+          <input type="hidden" id="link<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.link %>' />
+          <input type="hidden" id="data<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.data %>' />
+          <input type="hidden" id="headers<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.headers %>' />
+          <input type="hidden" id="callback_function<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.callback_function %>' />
+          <input type="hidden" id="text_input_field<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.text_input_field %>' />
+          <button onclick="sendRequest(this)" class="method-button" type="submit" value="<%= method.method %><%= device.device.replace(/\s/g, '') %>" id='<%= method.method %><%= device.device.replace(/\s/g, '') %>'><%= method.method %></button>
+        </div>
+        <!-- <div class="col-sm-9"> -->
+          <!-- Show the description of the method in a textarea -->
+          <!-- <textarea rows="2" class="method-text" readonly><%= method.description %></textarea> -->
+        <!-- </div> -->
+        <%if (method.text_input_field != '') { %>
+          <input class="input-textbox" id="textbox<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='' />
+          <% } %>
+        <% }); %>
+    </section>
+    <% }); %>
 
   <script src="../js/app.js"></script>
+  <script src="../js/http.js"></script>
 </body>
 
 </html>
