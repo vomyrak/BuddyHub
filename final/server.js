@@ -60,7 +60,7 @@ const html_dir = __dirname + '/public/html/';
 
 app.get('/', function(req, res) {
   // Direct to home page
-  // Render the page with all output devices in the menu
+  // Render the page with all output devices in the dropdown
 
   var query = OutputDevice.find().sort('device');
   //query.select('device');
