@@ -1,4 +1,4 @@
-var deviceName, btn, methods;
+var deviceName, btn, tabs;
 
 function getObject(value) {
   deviceName = value;
@@ -6,11 +6,17 @@ function getObject(value) {
 
 
 $(document).ready(function() {
+  tabs= [];
   $('body').on('click', '#create_me', function() {
     var index = $('.nav-tabs li').length + 1;
     var unspacedDeviceName = deviceName.replace(/\s/g, '');
     // Create the tab when user requires it, and link it to the tab content
-    $("#home-tab").append("<li class=\"active\"><a href=\"#tab" + unspacedDeviceName + "\">" + deviceName + "</a></li>");
+
+    if (!tabs.includes(unspacedDeviceName)) {
+      $("#home-tab").append("<li class=\"active\"><a href=\"#tab" + unspacedDeviceName + "\" id=\"#tabname" + unspacedDeviceName + "\">" + deviceName + "</a></li>");
+      tabs.push(unspacedDeviceName);
+    }
+
 
     $('a[href="#tab' + unspacedDeviceName + '"]').click();
   })
