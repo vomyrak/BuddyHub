@@ -14,13 +14,14 @@ namespace CSharpServer
     public enum Action
     {
         Test,
-        CheckExistence,
+        CheckName,
+        CheckIds,
         CallFunction
     }
 
     public class DeviceInterface
     {
-        private Dictionary<string, ControllerDevice> ConnectedDeviceList;
+        public Dictionary<string, ControllerDevice> ConnectedDeviceList { get; set; }
         private static readonly HttpClient client = new HttpClient();
         private string SelectedDevice { get; set; }
         private string ServerAddress { get; set; }
@@ -69,7 +70,22 @@ namespace CSharpServer
 
         public DeviceInfo QueryDeviceInfo(string deviceName)
         {
-            string QueryUrl = QueryUrlBuilder(ServerAddress, Action.CheckExistence, deviceName);
+            string QueryUrl = QueryUrlBuilder(ServerAddress, Action.CheckName, deviceName);
+            string result = "";
+            try
+            {
+                result = getResponse(QueryUrl).GetAwaiter().GetResult();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return JsonConvert.DeserializeObject<DeviceInfo>(result);
+        }
+
+        public DeviceInfo QueryDeviceInfo(string vid, string pid)
+        {
+            string QueryUrl = QueryUrlBuilder(ServerAddress, Action.CheckIds, vid + "/" + pid);
             string result = "";
             try
             {
@@ -166,7 +182,14 @@ namespace CSharpServer
             public DeviceInfo DeviceInfo { get; set; }
             public dynamic Library { get; set; }
             public dynamic DeviceObject { get; set; }
+            public string DeviceId { get; set; }
 
+            public ControllerDevice() { }
+            public ControllerDevice(DeviceInfo deviceInfo, string deviceId)
+            {
+                DeviceInfo = deviceInfo;
+                DeviceId = deviceId;
+            }
         }
     }
 

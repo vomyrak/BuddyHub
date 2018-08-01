@@ -19,6 +19,8 @@ using UCUI.UserControls;
 using System.Media;
 using CSharpServer;
 using System.Threading;
+using System.Windows.Interop;
+using System.Management;
 
 
 namespace UCUI
@@ -31,6 +33,12 @@ namespace UCUI
         private Button[] ButtonArray;
         private Server server;
         private DeviceInterface deviceInterface;
+        private HwndSource windowHandle;
+
+        // USB Message Constants
+        private const int WM_DEVICECHANGE = 0x219;
+        private const int WM_DEVICEARRIVAL = 0x8000;
+        private const int WM_DEVICEREMOVECOMPLETE = 0X8004;
 
         public MainWindow()
         {
@@ -43,12 +51,122 @@ namespace UCUI
             Panel.SetZIndex(Outside, 2);
             DataContext = new UCSettings();
 
-            // Server Script
+            // Server script
             var serverThread = new Thread(ServerRoutine);
             serverThread.Start();
 
+            // Obtain window handle and attach system message hook
+            var handle = new WindowInteropHelper(this).EnsureHandle();
+            windowHandle = HwndSource.FromHwnd(handle);
+            windowHandle.AddHook(new HwndSourceHook(WndProc));
         }
 
+
+        #region
+        // Region of Code for USB device events
+        /// <summary>
+        /// Callback function for message processing
+        /// </summary>
+        /// <param name="hwnd">Window Handle</param>
+        /// <param name="msg">Message</param>
+        /// <param name="wParam">Main Message</param>
+        /// <param name="lParam">Secondary Message</param>
+        /// <param name="handled"></param>
+        /// <returns></returns>
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            switch (msg)
+            {
+                case WM_DEVICECHANGE:
+                    switch ((uint)wParam.ToInt32()) {
+                        case WM_DEVICEARRIVAL:
+
+                            if (!(ObtainDeviceInfo())) MessageBox.Show("Device Not Found");
+                            
+                            break;
+                        case WM_DEVICEREMOVECOMPLETE:
+                            CheckRemovedDevice();
+                            break;
+
+                    }
+                    break;
+            }
+            return IntPtr.Zero;
+        }
+
+        private void CheckRemovedDevice()
+        {
+            Thread thread = new Thread(() =>
+            {
+                ManagementClass USBClass = new ManagementClass("Win32_USBHUB");
+                System.Management.ManagementObjectCollection USBCollection = USBClass.GetInstances();
+
+                foreach (System.Management.ManagementObject usb in USBCollection)
+                {
+                    string deviceId = usb["deviceid"].ToString();
+                    foreach (KeyValuePair<string, DeviceInterface.ControllerDevice> registeredDevice in deviceInterface.ConnectedDeviceList)
+                    {
+                        if (deviceId != registeredDevice.Value.DeviceId)
+                        {
+                            deviceInterface.ConnectedDeviceList.Remove(registeredDevice.Key);
+                        }
+                    }
+                }
+            });
+            thread.Start();
+            thread.Join();
+
+        }
+
+        private bool ObtainDeviceInfo()
+        {
+            bool result = false;
+            Thread thread = new Thread(() =>
+            {
+                ManagementClass USBClass = new ManagementClass("Win32_USBHUB");
+                System.Management.ManagementObjectCollection USBCollection = USBClass.GetInstances();
+
+                foreach (System.Management.ManagementObject usb in USBCollection)
+                {
+                    try
+                    {
+                        string deviceId = usb["deviceid"].ToString();
+                        if (deviceId == null)
+                        {
+                            throw new Exception("Device not found!");
+                        }
+                        else
+                        {
+
+
+                            int vidIndex = deviceId.IndexOf("VID_");
+                            //int vidIndex = 0;
+                            string startingAtVid = deviceId.Substring(vidIndex + 4); // + 4 to remove "VID_"                    
+                            string vid = startingAtVid.Substring(0, 4); // vid is four characters long
+
+                            int pidIndex = deviceId.IndexOf("PID_");
+                            string startingAtPid = deviceId.Substring(pidIndex + 4); // + 4 to remove "PID_"                    
+                            string pid = startingAtPid.Substring(0, 4); // pid is four characters long
+
+
+                            DeviceInfo newDeviceInfo = deviceInterface.QueryDeviceInfo(vid, pid);
+                            if (newDeviceInfo != null)
+                            {
+                                deviceInterface.AddDevice(newDeviceInfo.Device, new DeviceInterface.ControllerDevice(newDeviceInfo, deviceId));
+                                result = true;
+                                MessageBox.Show("Recognised Device Pluged in");
+                            }
+                        }
+                    }
+                    catch (Exception e) { }
+                }
+            });
+            thread.Start();
+            thread.Join();
+            return result;
+        }
+
+        #endregion
         private void PageOpen(object sender, RoutedEventArgs e)
         {
             Button myButton = (Button)sender;

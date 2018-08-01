@@ -71,6 +71,36 @@ namespace CSharpServer
             return outputDevice[0].ToString();
         }
 
+        public string QueryDeviceInfo(string vid, string pid)
+        {
+            // Generate database connection string from auth.json
+            string path;
+            if (Debugger.IsAttached)
+                path = "..\\..\\auth.json";
+            else
+                path = "auth.json";
+
+            string json = "";
+            using (StreamReader sr = File.OpenText(path))
+            {
+                json = sr.ReadToEnd();
+            }
+            Auth auth = JsonConvert.DeserializeObject<Auth>(json);
+            var connectionString = new MongoUrlBuilder();
+            connectionString.Server = new MongoServerAddress(auth.Dns, 27017);
+            connectionString.Username = auth.User;
+            connectionString.Password = auth.Pass;
+            // Establish connection
+            var mongo = new MongoClient(connectionString.ToMongoUrl());
+            var db = mongo.GetDatabase("uc");
+            var coll = db.GetCollection<DeviceInfo>("outputData");
+            var outputDevice = coll
+                .Find(new FilterDefinitionBuilder<DeviceInfo>().Eq(x => x.Vid, vid) 
+                    & new FilterDefinitionBuilder<DeviceInfo>().Eq(x => x.Pid, pid))
+                .ToListAsync()
+                .Result;
+            return outputDevice[0].ToString();
+        }
         /// <summary>
         /// Send response to the client according to request information
         /// </summary>
@@ -90,8 +120,10 @@ namespace CSharpServer
                     {
                         case (int)Action.Test:
                             return string.Format("<HTML><BODY>My web page.<br>{0}</BODY></HTML>", DateTime.Now);
-                        case (int)Action.CheckExistence:
+                        case (int)Action.CheckName:
                             return QueryDeviceInfo(parsedRequest[1]);
+                        case (int)Action.CheckIds:
+                            return QueryDeviceInfo(parsedRequest[1], parsedRequest[2]);
                         case (int)Action.CallFunction:
                             return parsedRequest[1] + "/" + parsedRequest[2] + "/" + parsedRequest[3];
                         default:

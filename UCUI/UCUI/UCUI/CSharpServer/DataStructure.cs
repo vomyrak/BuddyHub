@@ -18,6 +18,10 @@ namespace CSharpServer
         public string _id { get; set; }
         [BsonElement("device")]
         public string Device { get; set; }
+        [BsonElement("vid")]
+        public string Vid { get; set; }
+        [BsonElement("pid")]
+        public string Pid { get; set; }
         [BsonElement("function")]
         public List<Function> FunctionArray { get; set; }
 
