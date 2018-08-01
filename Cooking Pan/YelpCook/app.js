@@ -8,22 +8,15 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
 // SCHEMA setup
-var Insctruction {
-  step 1: String
-  step 1 image: String
-  step 2:
-  step 3:
-}
 
-var recipeSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    temperature: Number,
-    cooking_time: Number,
-    instruction: Instruction
-});
+var Step = require("./models/step"),
+    Recipe = require("./models/recipe")
 
-var Recipe = mongoose.model("Recipe", recipeSchema);
+//
+
+
+
+//
 
 app.get("/", function(req, res){
     res.render("landing");
@@ -45,7 +38,7 @@ app.get("/recipes/new", function(req, res){
 
 // SHOW - shows more info about a recipe
 app.get("/recipes/:id", function(req,res){
-    Recipe.findById(req.params.id, function(err, foundRecipe){
+    Recipe.findById(req.params.id).populate("instruction").exec(function(err, foundRecipe){
         if(err){
             console.log(err);
         } else {

@@ -4,6 +4,12 @@
 
 <img src="<%=recipe.image%>">
 
-<p><%=recipe.instruction%></p>
+<!-- <p><%=recipe.instruction%></p> -->
+
+<% recipe.instruction.forEach(function(step){ %>
+    <p>
+      <strong><%= step.stepnumber %></strong> - <%= step.step %>
+    </p>
+<%});%>
 
 <% include partials/footer %>
