@@ -2,14 +2,17 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="../css/style.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
   <link href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" />
-  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../css/style.css" />
 </head>
 
 <body>
-  <div>
+  <div class="container">
+    <Br>
+    <H1 style="text-align: center;">Universal Controller 1.0</H1>
+    <br></Br>
     <ul class="nav nav-tabs" role="tablist" id="home-tab">
       <li class="active">
         <a href="#tab1">Home</a>
@@ -17,20 +20,21 @@
     </ul>
   </div>
   <section id="tab1" class="tab-content active">
-    <div>
-      <H1>Universal Controller 1.0</H1>
-      <div>
-        <!-- Select devices -->
-        <select id="device" onChange="getObject(this.value)">
-          <option value="" disabled selected>Select</option>
-          <% devices.forEach(function(device) { %>
-          <option value="<%= device.device %>"><%= device.device %></option>
-          <% }); %>
-        </select>
-      </div>
+    <div class="container">
+      <div class="row">
+        <div class="col">
 
-      <div style="padding:10px 20px;width:150px; margin:auto;">
-        <button type="button" id='create_me' class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add Device</button>
+          <!-- Select devices -->
+          <select id="device" onChange="getObject(this.value)">
+                        <option value="" disabled selected>Select</option>
+                        <% devices.forEach(function(device) { %>
+                          <option value="<%= device.device %>"><%= device.device %></option>
+                          <% }); %>
+                    </select>
+          <div style="padding:30px 20px; width:300px; margin:auto">
+            <button type="button" id='create_me' class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add Device</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -42,24 +46,30 @@
       <% device.methods.forEach(function(method) { %>
         <!-- If text input required, generate a text box -->
         <%if (method.text_input_field != '') { %>
+          <div class="col-sm-12">
           <input class="input-textbox" id="textbox<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='' />
+          </div>
           <% } %>
-        <div class="col-sm-3">
-          <!-- Store the information for http request in the hidden input fields -->
-          <input type="hidden" id="http_method<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.http_method %>' />
-          <input type="hidden" id="link<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.link %>' />
-          <input type="hidden" id="data<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.data %>' />
-          <input type="hidden" id="headers<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.headers %>' />
-          <input type="hidden" id="callback_function<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.callback_function %>' />
-          <input type="hidden" id="text_input_field<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.text_input_field %>' />
-          <button onclick="sendRequest(this)" class="method-button" type="submit" value="<%= method.method %><%= device.device.replace(/\s/g, '') %>" id='<%= method.method %><%= device.device.replace(/\s/g, '') %>'><%= method.method %></button>
-        </div>
+          <div>
+            <!-- Store the information for http request in the hidden input fields -->
+            <input type="hidden" id="http_method<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.http_method %>' />
+            <input type="hidden" id="link<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.link %>' />
+            <input type="hidden" id="data<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.data %>' />
+            <input type="hidden" id="headers<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.headers %>' />
+            <input type="hidden" id="callback_function<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.callback_function %>' />
+            <input type="hidden" id="text_input_field<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.text_input_field %>' />
+            <button onclick="sendRequest(this)" style="padding:30px 30px; margin: 15px auto; width:300px" class="method-button ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check" type="submit" value="<%= method.method %><%= device.device.replace(/\s/g, '') %>" id='<%= method.method %><%= device.device.replace(/\s/g, ' ') %>'><%= method.method %></button>
+          </div>
+          <% }); %>
+        </section>
         <% }); %>
-    </section>
-    <% }); %>
 
+  <script src="../js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
   <script src="../js/index.js"></script>
-  <script src="../js/http.js"></script>
+
+
 </body>
 
 </html>

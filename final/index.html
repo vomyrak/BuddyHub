@@ -1,48 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href= "/css/bootstrap.min.css">
-        <link href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet"/>
-        <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    </head>
 
-    <body>
-        <div class="container">
-            <Br>
-            <H1 style="text-align: center;">Universal Controller 1.0</H1>
-            <br></Br>
-            <ul class="nav nav-tabs" role ="tablist" id="home-tab">
-                <li class="active">
-                    <a href="#tab1">Home</a>
-                </li>
-            </ul>
-            </div>
-            <section id="tab1" class="tab-content active">
-                <div class="container">
-                    <div class="row">
-                    <div class="col">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="public/css/bootstrap.min.css">
+  <link href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="public/css/style.css" />
+</head>
 
-                        <!-- Select devices -->
-                    <select id="device" onChange = "getObject(this.value)">
+<body>
+  <div class="container">
+    <Br>
+    <H1 style="text-align: center;">Universal Controller 1.0</H1>
+    <br></Br>
+    <ul class="nav nav-tabs" role="tablist" id="home-tab">
+      <li class="active">
+        <a href="#tab1">Home</a>
+      </li>
+    </ul>
+  </div>
+  <section id="tab1" class="tab-content active">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+
+          <!-- Select devices -->
+          <select id="device" onChange="getObject(this.value)">
                         <option value="" disabled selected>Select</option>
                         <option value="RobotArm">Robot Arm</option>
                         <option value="AlexaCommands">Alexa Commands</option>
                         <option value="RoomLights">Room Lights</option>
                     </select>
-                    <div style="padding:30px 20px; width:300px; margin:auto">
-                        <button type="button" id='create_me' class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add Device</button>
-                    </div>
-                    </div>
-                    </div>
-                </div>
+          <div style="padding:30px 20px; width:300px; margin:auto">
+            <button type="button" id='create_me' class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add Device</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            </section>
+  </section>
 
-        <script src= "/js/bootstrap.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-        <script src="/js/app.js"></script>
+  <script src="public/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <script src="js/app.js"></script>
 
 
-    </body>
+</body>
+
 </html>
