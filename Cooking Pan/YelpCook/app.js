@@ -53,7 +53,15 @@ app.post("/recipes", function(req,res){
     var instruction = req.body.instruction;
     var temperature = req.body.temperature;
     var cooking_time = req.body.cooking_time;
-    var newRecipe = {name: name, image: image, instruction: instruction, temperature: temperature, cooking_time:cooking_time};
+    var nof_steps = req.body.steps;
+    var newRecipe = {name: name, image: image, temperature: temperature, cooking_time:cooking_time, instruction: []};
+        for (var i=0;i<nof_steps;i++){
+                var tempstep = req.body['step' + i];
+                newRecipe.instruction.push({
+                  stepnumber: i+1,
+                  step: tempstep
+                });
+          };
             Recipe.create(newRecipe
         , function(err, recipe){
         if(err){
