@@ -7,19 +7,22 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace UCUI.Models
 {
     class UCMethods
     {
-        
+        [DllImport("User32.dll")]
+        private static extern bool SetCursorPos(int X, int Y);
+
         static public double GetWindowLeft(Window window)
         {
             if (window.WindowState == WindowState.Maximized)
             {
                 var leftField = typeof(Window).GetField("_actualLeft", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                return (double)leftField.GetValue(window)+7.2;
+                return (double)leftField.GetValue(window) + 7.2;
             }
             else
                 return window.Left;
@@ -30,7 +33,7 @@ namespace UCUI.Models
             if (window.WindowState == WindowState.Maximized)
             {
                 var leftField = typeof(Window).GetField("_actualTop", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                return (double)leftField.GetValue(window)+7.2;
+                return (double)leftField.GetValue(window) + 7.2;
             }
             else
                 return window.Top;
@@ -41,8 +44,6 @@ namespace UCUI.Models
         {
             using (SoundPlayer player = new SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "\\sounds\\AudioFeedback.wav"))
             {
-                // Use PlaySync to load and then play the sound.
-                // ... The program will pause until the sound is complete.
                 player.Play();
             }
 
@@ -59,9 +60,6 @@ namespace UCUI.Models
             var top = Convert.ToInt32((GetWindowTop(win) + win.ActualHeight / 2) * dy);
             SetCursorPos(left, top);
         }
-
-        [DllImport("User32.dll")]
-        private static extern bool SetCursorPos(int X, int Y);
 
     }
 }

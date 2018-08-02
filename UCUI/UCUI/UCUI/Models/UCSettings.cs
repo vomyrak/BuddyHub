@@ -5,11 +5,28 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace UCUI.Models 
 {
     class UCSettings : INotifyPropertyChanged
     {
+        static private string[] keyBinds = new string[9];
+
+       
+        static public void SetKey(string keyIn, int i)
+        {
+            if (keyIn != keyBinds[i])
+            {
+                keyBinds[i] = keyIn;
+            }
+        }
+
+        static public string GetKey(int i)
+        {
+            return keyBinds[i];
+        }
+
         private  bool isShake;
         public bool IsShake
         {
@@ -86,5 +103,7 @@ namespace UCUI.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
     }
 }

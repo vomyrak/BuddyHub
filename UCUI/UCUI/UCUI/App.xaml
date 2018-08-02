@@ -119,18 +119,6 @@
       </Style.Triggers>
     </Style>
 
-    <Style TargetType='Button'
-           x:Key='PushPic'>
-      <Setter Property='Template'>
-        <Setter.Value>
-          <ControlTemplate>
-            
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-      
-    </Style>
-
     <!--Pusher Style-->
     <Style TargetType="Button"
            x:Key='Pusher'>
@@ -191,12 +179,28 @@
                 </DataTrigger.Binding>
                 <DataTrigger.EnterActions>
                   <BeginStoryboard Storyboard='{StaticResource PushDown}' />
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <ColorAnimation To="#FFD9AE2C"
+                                      Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
+                                      FillBehavior='HoldEnd'
+                                      Duration="0:0:0.05" />
+                    </Storyboard>
+                  </BeginStoryboard>
                 </DataTrigger.EnterActions>
                 <DataTrigger.ExitActions>
                   <BeginStoryboard Storyboard='{StaticResource PushUp}' />
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <ColorAnimation To="Gray"
+                                      Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
+                                      FillBehavior='HoldEnd'
+                                      Duration="0:0:0.05" />
+                    </Storyboard>
+                  </BeginStoryboard>
                 </DataTrigger.ExitActions>
               </DataTrigger>
-              
+
               <Trigger Property="IsMouseOver"
                        Value="True">
                 <Setter Property="Fill"
@@ -214,7 +218,6 @@
           </ControlTemplate>
         </Setter.Value>
       </Setter>
-
     </Style>
 
   </Application.Resources>

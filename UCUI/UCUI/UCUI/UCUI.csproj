@@ -37,7 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ucicon.ico</ApplicationIcon>
+    <ApplicationIcon>Images\ucicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DnsClient, Version=1.0.7.0, Culture=neutral, PublicKeyToken=4574bb5573c51424, processorArchitecture=MSIL">
@@ -151,10 +151,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="1200px-Imperial_College_London_crest.svg.ico" />
+    <Resource Include="Images\1200px-Imperial_College_London_crest.svg.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ucicon.ico" />
+    <Resource Include="Images\ucicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ButtPic.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="CSharpServer\CSharpServer.csproj">

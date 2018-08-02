@@ -17,6 +17,25 @@
       <StackPanel>
         <Grid MinHeight='250'
               MinWidth='350'>
+          <Grid.Resources>
+            <Style x:Key="{x:Type CheckBox}"
+                   TargetType="{x:Type CheckBox}">
+              <Setter Property='HorizontalAlignment'
+                      Value='Left' />
+              <Setter Property='FontFamily'
+                      Value='Calibri' />
+              <Setter Property='Margin'
+                      Value='10' />
+              <Setter Property='FontSize'
+                      Value='12' />
+              <Setter Property='LayoutTransform'>
+                <Setter.Value>
+                  <ScaleTransform ScaleX='2'
+                                  ScaleY='2' />
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </Grid.Resources>
           <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
@@ -24,72 +43,86 @@
           <Grid.RowDefinitions>
             <RowDefinition Height='6*' />
             <RowDefinition Height='Auto' />
+            <RowDefinition Height='Auto' />
             <RowDefinition Height='3*' />
             <RowDefinition Height='3*' />
             <RowDefinition Height='3*' />
           </Grid.RowDefinitions>
+          
           <Rectangle Grid.Row='1'
                      Grid.Column='0'
                      Grid.ColumnSpan='2'
-                     Fill='#FF353535'
-                     Margin='30'
-                     RadiusX='5'
-                     RadiusY='5'>
-          </Rectangle>
+                     Fill='LightGray'
+                     Margin='10'
+                     RadiusX='10'
+                     RadiusY='10'
+                     Grid.RowSpan='2'/>
+          <TextBlock Text='Click a button and press a key to control it with'
+                     Grid.Row='1' 
+                     Grid.ColumnSpan='2'
+                     HorizontalAlignment='Center'
+                     FontFamily='Calibri'
+                     FontSize='20'
+                     Margin='10'
+                     />
           <Grid x:Name='BindGrid'
-                Grid.Row='1'
+                Grid.Row='2'
                 Grid.Column='0'
                 Grid.ColumnSpan='2'
-                Margin='30'>
+                Margin='15'>
             <Grid.ColumnDefinitions>
               <ColumnDefinition />
               <ColumnDefinition />
               <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-              <RowDefinition/>
-              <RowDefinition/>
-              <RowDefinition/>
+              <RowDefinition />
+              <RowDefinition />
+              <RowDefinition />
+              <RowDefinition />
             </Grid.RowDefinitions>
-            <Grid.Resources  >
-              <Style x:Key="{x:Type Rectangle}"
-                     TargetType="{x:Type Rectangle}">
-                <Setter Property='MinWidth'
-                        Value='30' />
-                <Setter Property='MinHeight'
-                        Value='40' />
+            <Grid.Resources>
+              <Style x:Key="{x:Type Image}"
+                     TargetType="{x:Type Image}">
+                <Setter Property='Source'
+                        Value="pack://application:,,,/Images/ButtPic.png" />
+                <Setter Property='MaxHeight'
+                        Value="60" />
+                <Setter Property='HorizontalAlignment'
+                        Value='Stretch' />
+                <Setter Property='VerticalAlignment'
+                        Value='Stretch' />
+                <Setter Property='Margin'
+                        Value="5" />
+              </Style>
+
+              <Style x:Key="{x:Type TextBox}"
+                     TargetType="{x:Type TextBox}">
+                <Setter Property='MaxHeight'
+                        Value="30" />
                 <Setter Property='MaxWidth'
                         Value='60' />
-                <Setter Property='RadiusX'
-                        Value='5' />
-                <Setter Property='RadiusY'
-                        Value='5' />
-                <Setter Property='Fill'
+                <Setter Property='FontFamily'
+                        Value='Calibri' />
+                <Setter Property='TextAlignment'
+                        Value='Center' />
+                <Setter Property='FontSize'
+                        Value='16' />
+                <Setter Property='Background'
                         Value='Gray' />
-                <Setter Property='Margin'
-                        Value='15' />
+                <Setter Property='Foreground'
+                        Value='White' />
+                <Setter Property='Cursor'
+                        Value='Hand' />
+
               </Style>
             </Grid.Resources>
-            <Rectangle Grid.Column='0'
-                       Grid.Row='0' />
-            <Rectangle Grid.Column='1'
-                       Grid.Row='0' />
-            <Rectangle Grid.Column='2'
-                       Grid.Row='0' />
-            
-            <Rectangle Grid.Column='0'
-                       Grid.Row='1' />
-            <Rectangle Grid.Column='1'
-                       Grid.Row='1' />
-            <Rectangle Grid.Column='2'
-                       Grid.Row='1' />
-            
-            <Rectangle Grid.Column='0'
-                       Grid.Row='2' />
-            <Rectangle Grid.Column='1'
-                       Grid.Row='2' />
-            <Rectangle Grid.Column='2'
-                       Grid.Row='2' />
+            <Button Grid.Row='3'
+                    Grid.Column='2'
+                    Content='Clear'
+                    Style='{StaticResource Shaker}' 
+                    Margin='28 5 28 5'
+                    Click='Clear_Click'/>
           </Grid>
           <TextBlock TextWrapping='Wrap'
                      VerticalAlignment='Center'
@@ -100,57 +133,42 @@
                      Text='Settings'
                      FontSize='30'
                      Grid.Row='0'
-                     Grid.ColumnSpan='2' />
+                     Grid.ColumnSpan='2' 
+                     x:Name='SettingsBlock'/>
           <CheckBox x:Name='AudioButton'
-                    Grid.Row='2'
+                    Grid.Row='3'
                     Grid.Column='0'
-                    HorizontalAlignment='Left'
-                    Margin='10 0 10 0'
                     Content='Audio Feedback'
-                    FontFamily='Calibri'
                     IsChecked='{Binding IsSound, UpdateSourceTrigger=PropertyChanged}' />
           <CheckBox x:Name='CenterMouse'
-                    Grid.Row='3'
+                    Grid.Row='4'
                     Grid.Column='0'
-                    HorizontalAlignment='Left'
-                    Margin='10 0 10 0'
                     Content='Center Mouse'
-                    FontFamily='Calibri'
                     IsChecked='{Binding IsCenter, UpdateSourceTrigger=PropertyChanged}' />
           <CheckBox x:Name='ShakeButton'
-                    Grid.Row='2'
-                    Grid.Column='1'
-                    HorizontalAlignment='Left'
-                    Margin='0 0 10 0'
-                    Content='Visual Feedback'
-                    FontFamily='Calibri'
-                    IsChecked='{Binding IsShake, UpdateSourceTrigger=PropertyChanged}' />
-          <CheckBox x:Name='HoverButton'
                     Grid.Row='3'
                     Grid.Column='1'
-                    HorizontalAlignment='Left'
-                    Margin='0 0 10 0'
+                    Content='Visual Feedback'
+                    IsChecked='{Binding IsShake, UpdateSourceTrigger=PropertyChanged}' />
+          <CheckBox x:Name='HoverButton'
+                    Grid.Row='4'
+                    Grid.Column='1'
                     Content='Click on Hover'
-                    FontFamily='Calibri'
                     IsChecked='{Binding IsHover, UpdateSourceTrigger=PropertyChanged}' />
-          <Button x:Name='ScanTemplates'
-                  Grid.Row='4'
-                  Grid.Column='0'
-                  HorizontalAlignment='Stretch'
-                  Content='Scan Templates'
-                  Margin='10,0,10,0'
-                  Style='{StaticResource Shaker}' />
-          <Button x:Name='Feedback'
-                  Grid.Row='4'
-                  Grid.Column='1'
-                  HorizontalAlignment='Stretch'
-                  Content='Send Feedback'
-                  Margin='10,0,10,0'
-                  Style='{StaticResource Shaker}' />
+          <Button Grid.Row='5'
+                  Grid.Column='0' 
+                  Grid.ColumnSpan='2'
+                  Content='Save Settings'
+                  HorizontalAlignment='Center'
+                  FontSize='20'
+                  Style='{StaticResource Shaker}'
+                  Margin='10'
+                  Click='Save_Click'
+                  MinWidth='150'
+                  MinHeight='60'/>
+
         </Grid>
-        <TextBlock HorizontalAlignment='Center'
-                   Text='Click anywhere outside to return'
-                   Margin='10' />
+
       </StackPanel>
     </Border>
   </Grid>
