@@ -31,7 +31,7 @@ io.on('connection', function(socket) {
                 console.log(err);
             }
             else {
-                console.log(data.temperature);
+  //              console.log(data.temperature);
                 socket.emit('newTemp', data.temperature);
             }
         });
