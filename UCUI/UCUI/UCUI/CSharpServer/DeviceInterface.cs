@@ -26,7 +26,7 @@ namespace CSharpServer
         private string SelectedDevice { get; set; }
         private string ServerAddress { get; set; }
 
-       
+
 
         public DeviceInterface() {
             ConnectedDeviceList = new Dictionary<string, ControllerDevice>();
@@ -97,7 +97,8 @@ namespace CSharpServer
             }
             return JsonConvert.DeserializeObject<DeviceInfo>(result);
         }
-
+        #region
+        // For testing only
         public void TestFunction(string command)
         {
             string QueryUrl = QueryUrlBuilder(ServerAddress, Action.CallFunction, command);
@@ -111,7 +112,7 @@ namespace CSharpServer
                 Console.WriteLine(e);
             }
             string[] parsedResult = result.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-            CallFunction(parsedResult[0], parsedResult[1], new object[] { parsedResult[2]});
+            CallFunction(parsedResult[0], parsedResult[1], new object[] { parsedResult[2] });
         }
 
         public void CallFunction(string deviceName, string funcName, dynamic[] param)
@@ -120,6 +121,20 @@ namespace CSharpServer
             testObject.setGripper_PW(short.Parse(param[0]));
             testObject.updateServos();
         }
+        #endregion
+
+        public MethodInfo BindFunction(ControllerDevice controllerDevice, string funcName){
+            Assembly dll = controllerDevice.Library;
+            dynamic deviceInstance = controllerDevice.DeviceObject;
+            //Type deviceType = dll.GetType(controllerDevice.DeviceInfo.Device);
+            Type deviceType = dll.GetType(dll.GetName().Name + ".AL5C");
+            return deviceType.GetMethod(funcName);
+            
+        }
+
+
+
+
 
         public string QueryUrlBuilder(string serverAddress, Action action, string deviceName)
         {
@@ -137,7 +152,7 @@ namespace CSharpServer
             return responseString;
         }
 
-        private void BindDevice(string deviceName)
+        public void BindDevice(string deviceName)
         {
             var dll = Assembly.LoadFile(Directory.GetCurrentDirectory() + "\\" + "Lynxmotion" + ".dll");
             ConnectedDeviceList[deviceName].Library = dll;
@@ -155,7 +170,7 @@ namespace CSharpServer
 
         public void TestRoboticArm()
         {
-            CheckValidDevice("robotic_arm");
+            //CheckValidDevice("robotic_arm");
             //string input = Console.ReadLine();
             //while (input != "")
             //{

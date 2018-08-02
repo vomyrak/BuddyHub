@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lynxmotion", "UCUI\Plugin\L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USB_Detector", "USB_Detector\USB_Detector.csproj", "{2380D8BD-A354-462F-BF1F-BD672F09CC21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USBHIDDRIVER", "csharp-usb-hid-driver\USBHIDDRIVER\USBHIDDRIVER.csproj", "{58F64D08-1159-4A19-9EC4-DDD5ED056946}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{2380D8BD-A354-462F-BF1F-BD672F09CC21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2380D8BD-A354-462F-BF1F-BD672F09CC21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2380D8BD-A354-462F-BF1F-BD672F09CC21}.Release|Any CPU.Build.0 = Release|Any CPU
-		{58F64D08-1159-4A19-9EC4-DDD5ED056946}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58F64D08-1159-4A19-9EC4-DDD5ED056946}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58F64D08-1159-4A19-9EC4-DDD5ED056946}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58F64D08-1159-4A19-9EC4-DDD5ED056946}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

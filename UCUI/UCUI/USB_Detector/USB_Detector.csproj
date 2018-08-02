@@ -80,11 +80,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\csharp-usb-hid-driver\USBHIDDRIVER\USBHIDDRIVER.csproj">
-      <Project>{58f64d08-1159-4a19-9ec4-ddd5ed056946}</Project>
-      <Name>USBHIDDRIVER</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

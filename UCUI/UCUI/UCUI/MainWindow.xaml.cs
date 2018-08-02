@@ -21,6 +21,7 @@ using CSharpServer;
 using System.Threading;
 using System.Windows.Interop;
 using System.Management;
+using System.Reflection;
 
 
 namespace UCUI
@@ -39,6 +40,11 @@ namespace UCUI
         private const int WM_DEVICECHANGE = 0x219;
         private const int WM_DEVICEARRIVAL = 0x8000;
         private const int WM_DEVICEREMOVECOMPLETE = 0X8004;
+
+
+        // Threading Management
+        private Thread newThread;
+        private delegate void CallingDelegate();
 
         public MainWindow()
         {
@@ -59,6 +65,8 @@ namespace UCUI
             var handle = new WindowInteropHelper(this).EnsureHandle();
             windowHandle = HwndSource.FromHwnd(handle);
             windowHandle.AddHook(new HwndSourceHook(WndProc));
+
+            ObtainDeviceInfo();
         }
 
 
@@ -80,9 +88,9 @@ namespace UCUI
                 case WM_DEVICECHANGE:
                     switch ((uint)wParam.ToInt32()) {
                         case WM_DEVICEARRIVAL:
-
-                            if (!(ObtainDeviceInfo())) MessageBox.Show("Device Not Found");
-                            
+                            string deviceName = ObtainDeviceInfo();
+                            if (deviceName == "") MessageBox.Show("Device Not Found");
+                            else InitialiseDevice(deviceName);
                             break;
                         case WM_DEVICEREMOVECOMPLETE:
                             CheckRemovedDevice();
@@ -104,11 +112,13 @@ namespace UCUI
                 foreach (System.Management.ManagementObject usb in USBCollection)
                 {
                     string deviceId = usb["deviceid"].ToString();
-                    foreach (KeyValuePair<string, DeviceInterface.ControllerDevice> registeredDevice in deviceInterface.ConnectedDeviceList)
+                    
+                    foreach (string registeredDevice in deviceInterface.ConnectedDeviceList.Keys.ToArray())
                     {
-                        if (deviceId != registeredDevice.Value.DeviceId)
+                        if (deviceId != deviceInterface.ConnectedDeviceList[registeredDevice].DeviceId)
                         {
-                            deviceInterface.ConnectedDeviceList.Remove(registeredDevice.Key);
+                            deviceInterface.ConnectedDeviceList.Remove(registeredDevice);
+                            MessageBox.Show("Device Removed");
                         }
                     }
                 }
@@ -118,9 +128,9 @@ namespace UCUI
 
         }
 
-        private bool ObtainDeviceInfo()
+        private string ObtainDeviceInfo()
         {
-            bool result = false;
+            string result = "";
             Thread thread = new Thread(() =>
             {
                 ManagementClass USBClass = new ManagementClass("Win32_USBHUB");
@@ -152,9 +162,10 @@ namespace UCUI
                             DeviceInfo newDeviceInfo = deviceInterface.QueryDeviceInfo(vid, pid);
                             if (newDeviceInfo != null)
                             {
-                                deviceInterface.AddDevice(newDeviceInfo.Device, new DeviceInterface.ControllerDevice(newDeviceInfo, deviceId));
-                                result = true;
-                                MessageBox.Show("Recognised Device Pluged in");
+                                result = newDeviceInfo.Device;
+                                deviceInterface.AddDevice(result, new DeviceInterface.ControllerDevice(newDeviceInfo, deviceId));
+                                InitialiseDevice(result);
+                                //MessageBox.Show("Recognised Device Pluged in");
                             }
                         }
                     }
@@ -166,6 +177,10 @@ namespace UCUI
             return result;
         }
 
+        private void InitialiseDevice(string deviceName)
+        {
+            deviceInterface.BindDevice(deviceName);
+        }
         #endregion
         private void PageOpen(object sender, RoutedEventArgs e)
         {
@@ -229,8 +244,21 @@ namespace UCUI
                         ButtonArray[i].Click += delegate (object a, RoutedEventArgs b)
                         {
                             //deviceInterface.TestRoboticArm();
-                            var newThread = new Thread(deviceInterface.TestRoboticArm);
+                            MethodInfo methodToBind = deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "RelaxAllServos");
+                            ThreadStart threadStart = new ThreadStart(()=>
+                            {
+                                deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "setGripper_PW")
+                                    .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, new object[] { (short)500 });
+                                deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "updateServos")
+                                    .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, null);
+                            }
+                                );
+
+                            newThread = new Thread(threadStart);
                             newThread.Start();
+                            newThread.Join();
+
+
                         };
 
                         ButtonArray[i].MouseEnter += delegate (object a, MouseEventArgs b)
