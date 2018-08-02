@@ -6,6 +6,8 @@ var express = require("express"),
 mongoose.connect("mongodb://cooking:wsurop18@ds223268.mlab.com:23268/wsurop_cooking", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
+// app.use(express.static(path.join(__dirname, "static")));
+app.use(express.static(__dirname + '/public'));
 
 // SCHEMA setup
 
