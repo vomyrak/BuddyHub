@@ -1,48 +1,83 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
         <link rel="stylesheet" href= "/css/bootstrap.min.css">
         <link href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet"/>
-        <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    </head>
+        <link rel="stylesheet" title="default" type="text/css" href="/css/style.css" />
+        <link rel= "alternate stylesheet" type= "text/css" href= "/css/style2.css" title="alternate" />
 
-    <body>
-        <div class="container">
-            <Br>
-            <H1 style="text-align: center;">Universal Controller 1.0</H1>
-            <br></Br>
-            <ul class="nav nav-tabs" role ="tablist" id="home-tab">
-                <li class="active">
-                    <a href="#tab1">Home</a>
-                </li>
-            </ul>
-            </div>
-            <section id="tab1" class="tab-content active">
-                <div class="container">
-                    <div class="row">
-                    <div class="col">
+   </head>
 
-                        <!-- Select devices -->
-                    <select id="device" onChange = "getObject(this.value)">
-                        <option value="" disabled selected>Select</option>
-                        <option value="RobotArm">Robot Arm</option>
-                        <option value="AlexaCommands">Alexa Commands</option>
-                        <option value="RoomLights">Room Lights</option>
-                    </select>
-                    <div style="padding:30px 20px; width:300px; margin:auto">
-                        <button type="button" id='create_me' class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add Device</button>
-                    </div>
-                    </div>
-                    </div>
-                </div>
+    <body id="myBody">
 
-            </section>
+<!--Collapsible style changer-->
 
-        <script src= "/js/bootstrap.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-        <script src="/js/app.js"></script>
+        <div class="pos-f-t">
+            <nav class="navbar navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
+  <div class="collapse" id="navbarToggleExternalContent">
+    <div class="bg-dark p-4">
+
+<!--Change STYLES-->
+   <a href="#" onclick="setActiveStyleSheet('default'); return false;">default</a>
+<a href="#" onclick="setActiveStyleSheet('alternate'); return false;">alternate</a>
+        <BR></BR>
+        <a href="javascript:void(0);" onclick="resizeText(1)" id="plustext">+</a> | <a href="javascript:void(0);" onclick="resizeText(-1)" id="minustext">-</a>
+    </div>
+  </div>
+
+</div>
+
+
+<!--
+         <div class="col-sm-5">
+      <button type="button" class="btn btn-lg btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off" >
+        <div class="handle"></div>
+      </button>
+    </div>
+-->
+
+    <div class="container">
+        <Br></Br>
+    <H1 style="text-align: center; font-size : 2.0em; font-weight: bolder">Universal Controller 2.0</H1>
+    <ul class="nav nav-tabs" role ="tablist" id="home-tab">
+        <li class="active">
+            <a href="#tab1">Home</a>
+        </li>
+    </ul>
+    </div>
+    <section id="tab1" class="tab-content active">
+        <div class="container" >
+
+
+                <!-- Select devices -->
+         <select  class="dropdown" id="device" onChange = "getObject(this.value)">
+            <option value="" disabled selected>Select</option>
+            <option value="RobotArm">Robot Arm</option>
+            <option value="AlexaCommands">Alexa Commands</option>
+            <option value="RoomLights">Room Lights</option>
+        </select>
+
+
+        <div style="padding:30px 20px; width:300px; margin:auto">
+            <button type="button" id='create_me' class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check" style="font-size : 1.0em">Add Device</button>
+        </div>
+
+        </div>
+    </section>
+
+    <script src= "/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src= "https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/stylesheetswitcher.js"></script>
+    <script src= "/js/resizetext.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js'></script>
 
 
     </body>

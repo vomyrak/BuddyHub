@@ -1,10 +1,4 @@
-.pos-f-t a:any-link{
-    
-    color:white !important;
-}
-
 .pos-f-t {
-    
     color:white !important;
     text-shadow: none;
 }
@@ -12,20 +6,24 @@
   margin-bottom: 18px;
   margin-left: 0;
   list-style: none;
+
 }
 
 .nav > li > a {
   display: block;
+    
 }
 
 .nav-tabs{
   *zoom: 1;
+    
 }
 
 .nav-tabs:before,
 .nav-tabs:after {
   display: table;
   content: "";
+    
 }
 
 .nav-tabs:after {
@@ -34,6 +32,7 @@
 
 .nav-tabs > li {
   float: left;
+    
 }
 
 .nav-tabs > li > a {
@@ -44,7 +43,8 @@
 }
 
 .nav-tabs {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #fff;
+    
 }
 
 .nav-tabs > li {
@@ -69,15 +69,9 @@
 .nav-tabs > .active > a:hover {
   color: #555555;
   cursor: default;
-  background-color: #fff;
+  background-color: #000;
   border: 1px solid #ddd;
   border-bottom-color: transparent;
-}
-
-a {
-    color: black ;
-    text-shadow: none;
-    
 }
 
 li {
@@ -90,6 +84,43 @@ li {
 
 .tab-content.hide{
   display: none;
+}
+
+
+
+button {
+    background-color: lightgray !important;
+    color: black !important;
+}
+
+
+#create_me {
+    background-color: #fff;
+    color : #000;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
+
+div {
+    background-color: black !important;
+}
+
+.dropdown {
+    text-shadow: none;
+    color: white;
+
+}
+
+h1 {
+    background-color: black;
+    color: white;
+}
+
+
+a {
+    color: white !important;
+    text-shadow: none;
+    
 }
 
 button:hover {
