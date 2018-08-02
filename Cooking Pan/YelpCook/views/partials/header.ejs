@@ -11,8 +11,10 @@
             var socket;
             function onLoad() {
                 socket = io.connect('http://localhost:3000/');
-                socket.on('newTemp', function(data) {
-                    $('#temperature').text(data);
+                socket.on('connect', function() {
+                    this.on('newTemp', function(data) {
+                        $('#temperature').text(data);
+                    });
                 });
             }
         </script>
