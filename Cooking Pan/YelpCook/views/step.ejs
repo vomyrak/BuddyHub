@@ -5,18 +5,28 @@
   <h1 style="text-align: center">This is going to be the step page</h1>
 
   <% for (var l = recipe.instruction.length, i = 0; i < l; i++) { %>
-    <% step = recipe.instruction[i]%>
-    <% if(step.stepnumber == recipe.instruction.length) {%>
-      <p style="text-align: center">
-        <strong><%= step.stepnumber %></strong> - <%= step.step %>
-        <center><a href="/recipes/" class="btn btn-primary">This is the last step</a></center>
-      </p>
-    <% break; } else if (step.id === stepid) { %>
+      <% step = recipe.instruction[i]%>
+      <% if(step.id === stepid && step.stepnumber === 1) {%>
+      <% break; } else if (step.id === stepid) { %>
           <p style="text-align: center">
-            <strong><%= step.stepnumber %></strong> - <%= step.step %>
-            <center><a href="/recipe/<%= recipe._id%>/<%= recipe.instruction[step.stepnumber]._id%>" class="btn btn-primary">Next step</a></center>
+            <center><a href="/recipe/<%= recipe._id%>/<%= recipe.instruction[step.stepnumber-2]._id%>" class="btn btn-primary">Previous step</a></center>
           </p>
       <%  break; } %>
+  <% } %>
+
+<% for (var l = recipe.instruction.length, i = 0; i < l; i++) { %>
+    <% step = recipe.instruction[i]%>
+    <% if(step.stepnumber == recipe.instruction.length) {%>
+        <p style="text-align: center">
+          <strong><%= step.stepnumber %></strong> - <%= step.step %>
+          <center><a href="/recipes/" class="btn btn-primary">This is the last step</a></center>
+        </p>
+    <% break; } else if (step.id === stepid) { %>
+        <p style="text-align: center">
+          <strong><%= step.stepnumber %></strong> - <%= step.step %>
+          <center><a href="/recipe/<%= recipe._id%>/<%= recipe.instruction[step.stepnumber]._id%>" class="btn btn-primary">Next step</a></center>
+        </p>
+    <%  break; } %>
 <% } %>
 
 </div>
