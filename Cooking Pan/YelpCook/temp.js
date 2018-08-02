@@ -1,3 +1,20 @@
+
+  <% recipe.instruction.forEach(function(step){ %>
+    <% if (step.stepnumber === recipe.instruction.length) { %>
+      <p style="text-align: center">
+        <strong><%= step.stepnumber %></strong> - <%= step.step %>
+        <center><a href="/recipes" class="btn btn-primary">This is the last step</a></center>
+      </p>
+  <%  } else if (step.id === stepid) { %>
+        <p style="text-align: center">
+          <strong><%= step.stepnumber %></strong> - <%= step.step %>
+          <center><a href="/recipe/<%= recipe._id%>/<%= recipe.instruction[step.stepnumber]._id%>" class="btn btn-primary">Next step</a></center>
+        </p>
+    <%  } %>
+
+  <%});%>
+
+
 /*
 
 Recipe.findOne({name: "Noodles"}, function(err,recipe){
