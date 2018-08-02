@@ -5,22 +5,40 @@
         <base href="/">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../css/landing.css">
-
+        <script src="/socket.io/socket.io.js"></script>
+        <script type='text/javascript' src='http://code.jquery.com/jquery-1.9.1.js'></script>
+        <script type="text/javascript">
+            var socket;
+            function onLoad() {
+                socket = io.connect('http://localhost:3000/');
+                socket.on('newTemp', function(data) {
+                    $('#temperature').text(data);
+                });
+            }
+        </script>
     </head>
-    <body>
-
-
+    <body onload="onLoad()">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">YelpCook</a>
             </div>
+            <div>
+            <div>
+                <ul class="navbar-nav">
+                    <p>Temperature: <span id="temperature"></span></p>
+                </ul>
+            </div>
+            </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/">Login</a></li>
                     <li><a href="/">Signup</a></li>
-                     <li><a href="/">Logout</a></li>
+                    <li><a href="/">Logout</a></li>
                 </ul>
             </div>
         </div>
     </nav>
+    <div>
+        <h1></h1>
+    </div>
