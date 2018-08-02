@@ -6,7 +6,7 @@ var express = require("express"),
     io = require('socket.io')(server);
 
 const uri = "mongodb://cooking:wsurop18@ds223268.mlab.com:23268/wsurop_cooking";
-mongoose.connect(uri, { useNewUrlParser: true });
+mongoose.connect(uri, {useNewUrlParser: true});
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
@@ -28,7 +28,7 @@ io.on('connection', function(socket) {
             }
         });
     }
-    setInterval(getTemp, 100);
+    setInterval(getTemp, 500);
 });
 
 app.get("/", function(req, res){
