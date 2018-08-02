@@ -1,22 +1,43 @@
 var express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
-    mongoose = require("mongoose");
+    mongoose = require("mongoose"),
+    server = require('http').Server(app),
+    io = require('socket.io')(server);
 
 mongoose.connect("mongodb://cooking:wsurop18@ds223268.mlab.com:23268/wsurop_cooking", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
 // SCHEMA setup
-
 var Step = require("./models/step"),
     Recipe = require("./models/recipe")
 
-//
+var tempSchema = new mongoose.Schema({
+    temperature: Number,
+    units: String
+});
 
+var Temperature = mongoose.model("Temperature", tempSchema);
 
+Temperature.on('change', function(data){
+    console.log(data);
+});
 
-//
+io.on('connection', function(socket) {
+    function getTemp() {
+        Temperature.findOne({}, {}, {sort: {"created_at": -1}}, function(err, data) {
+            if(err){
+                console.log(err);
+            }
+            else {
+                console.log(data.temperature);
+                socket.emit('newTemp', data.temperature);
+            }
+        });
+    }
+    setInterval(getTemp, 100);
+});
 
 app.get("/", function(req, res){
     res.render("landing");
@@ -65,6 +86,6 @@ app.post("/recipes", function(req,res){
     });
 });
 
-app.listen(3000, process.env.IP, function(){
+server.listen(3000, process.env.IP, function(){
     console.log("YelpCook server started");
 });
