@@ -4,6 +4,7 @@ var mongoose = require("mongoose");
 
 var stepSchema = new mongoose.Schema({
     stepnumber: Number,
+    image: String,
     step: String
 });
 
