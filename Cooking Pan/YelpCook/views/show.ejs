@@ -1,15 +1,21 @@
 <% include partials/header %>
 
-<h1><%=recipe.name%></h1>
+<div class="container">
+  <div class="row">
 
-<img src="<%=recipe.image%>">
+    <h1 style="text-align: center"><%=recipe.name%></h1>
 
-<!-- <p><%=recipe.instruction%></p> -->
+    <img src="<%=recipe.image%>">
 
-<% recipe.instruction.forEach(function(step){ %>
-    <p>
-      <strong><%= step.stepnumber %></strong> - <%= step.step %>
-    </p>
-<%});%>
+    <% recipe.instruction.forEach(function(step){ %>
+        <p>
+          <strong><%= step.stepnumber %></strong> - <%= step.step %>
+        </p>
+    <%});%>
+
+    <a href="/recipe/<%= recipe._id%>/<%= recipe.instruction[0]._id%>" class="btn btn-primary">START COOKING</a>
+
+  </div>
+</div>
 
 <% include partials/footer %>

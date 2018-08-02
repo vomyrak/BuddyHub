@@ -68,13 +68,32 @@ app.get("/recipes/:id", function(req,res){
     });
 });
 
+// SHOW STEPS - shows more info about a recipe
+app.get("/recipe/:id/:stepid", function(req,res){
+    Recipe.findById(req.params.id).populate("instruction").exec(function(err, foundRecipe){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("step", {recipe: foundRecipe, stepid: req.params.stepid});
+        }
+    });
+});
+
 app.post("/recipes", function(req,res){
     var name = req.body.name;
     var image = req.body.image;
     var instruction = req.body.instruction;
     var temperature = req.body.temperature;
     var cooking_time = req.body.cooking_time;
-    var newRecipe = {name: name, image: image, instruction: instruction, temperature: temperature, cooking_time:cooking_time};
+    var nof_steps = req.body.steps;
+    var newRecipe = {name: name, image: image, temperature: temperature, cooking_time:cooking_time, instruction: []};
+        for (var i=0;i<nof_steps;i++){
+                var tempstep = req.body['step' + i];
+                newRecipe.instruction.push({
+                  stepnumber: i+1,
+                  step: tempstep
+                });
+          };
             Recipe.create(newRecipe
         , function(err, recipe){
         if(err){
