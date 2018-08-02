@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ucicon.ico</ApplicationIcon>
+    <ApplicationIcon>Images\ucicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -119,10 +119,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="1200px-Imperial_College_London_crest.svg.ico" />
+    <Resource Include="Images\1200px-Imperial_College_London_crest.svg.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ucicon.ico" />
+    <Resource Include="Images\ucicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ButtPic.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

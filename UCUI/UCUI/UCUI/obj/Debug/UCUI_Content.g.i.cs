@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("ucicon.ico")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/buttpic.png")]
 
 

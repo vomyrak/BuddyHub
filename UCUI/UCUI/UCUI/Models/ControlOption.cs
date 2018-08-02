@@ -14,5 +14,6 @@ namespace UCUI.Models
         public string description { get; set; }
         public string imageName { get; set; }
         public Uri actualUri { get; set; }
+        public string[] buttonLabels { get; set; } 
     }
 }

@@ -17,7 +17,8 @@ using System.Windows.Shapes;
 using UCUI.Models;
 using UCUI.UserControls;
 using System.Media;
-
+using System.Windows.Controls.Primitives;
+using System.IO;
 
 namespace UCUI
 {
@@ -31,16 +32,39 @@ namespace UCUI
         public MainWindow()
         {
             InitializeComponent();
-            ControlOptions.ItemsSource = ControlSource.Options;
-            Panel.SetZIndex(MainView, 0);
-            Panel.SetZIndex(HelpView, 3);
-            Panel.SetZIndex(SettingsView, 3);
-            Panel.SetZIndex(Overlay, 1);
-            Panel.SetZIndex(Outside, 2);
             DataContext = new UCSettings();
+            try
+            {
+                ControlOptions.ItemsSource = ControlSource.Options;
+            }
+            catch (TypeInitializationException)
+            {
+                TitleBlock.Text = "Make sure the Control Options folder is set up correctly!";
+                OptionsHeader.Text = "Couldn't list options";
+            }
+            if (File.Exists("UCConfig.txt"))
+            {
+                try
+                {
+                    string lines = System.IO.File.ReadAllText("UCConfig.txt");
 
+                    string[] words = lines.Split(' ');
 
+                    for (int i = 0; i < 9; i++)
+                    {
+                        UCSettings.SetKey(words[i], i);
+                    }
+                    ((UCSettings)DataContext).IsCenter = words[9] == "True";
+                    ((UCSettings)DataContext).IsHover = words[10] == "True";
+                    ((UCSettings)DataContext).IsShake = words[11] == "True";
+                    ((UCSettings)DataContext).IsSound = words[12] == "True";
+                }
+                catch(Exception)
+                {
+                    TitleBlock.Text = "Could not load settings from UCConfig.txt";
+                }
 
+            }
 
         }
 
@@ -59,7 +83,7 @@ namespace UCUI
             Overlay.Visibility = Visibility.Visible;
             Outside.Visibility = Visibility.Visible;
             MainView.Effect = new BlurEffect();
-            CheckCenterMouse(null, null);
+            CheckCenterMouse();
         }
 
         private void Outside_Click(object sender, RoutedEventArgs e)
@@ -78,22 +102,20 @@ namespace UCUI
             if (ControlOptions.SelectedItem != null)
             {
                 ButtonArray = new Button[9];
+                ControlOption myOption = (ControlOption)ControlOptions.SelectedItem;
+                int visibleButtonCounter=0;
                 for (int i = 0; i < 9; i++)
                 {
                     ButtonArray[i] = new Button();
-                }
 
-                ControlOption myOption = (ControlOption)ControlOptions.SelectedItem;
-
-                for (int i = 0; i < 9; i++)
-                {
                     if (myOption.buttonVisible[i])
                     {
+                        
                         ButtonArray[i].Content = i.ToString();
                         string disp = i.ToString();
                         ButtonArray[i].Name = "Button" + i.ToString();
+                        ButtonArray[i].Content = myOption.buttonLabels[visibleButtonCounter];
                         ButtonArray[i].Margin = new Thickness(10, 10, 10, 10);
-                        ButtonArray[i].Click += CheckCenterMouse;
                         Grid.SetColumn(ButtonArray[i], i % 3 + 1);
                         Grid.SetRow(ButtonArray[i], i / 3 + 1);
                         ButtonGrid.Children.Add(ButtonArray[i]);
@@ -101,22 +123,24 @@ namespace UCUI
 
                         ButtonArray[i].PreviewMouseDown += delegate (object a, MouseButtonEventArgs b)
                         {
-                            if(((UCSettings)DataContext).IsSound) UCMethods.PlayMySound();
+                            if (((UCSettings)DataContext).IsSound) UCMethods.PlayMySound();
                         };
+
                         ButtonArray[i].Click += delegate (object a, RoutedEventArgs b)
                         {
-
+                            CheckCenterMouse();
                         };
 
                         ButtonArray[i].MouseEnter += delegate (object a, MouseEventArgs b)
                         {
                             if (((UCSettings)DataContext).IsHover)
                             {
-                                CheckSound(null, null);
-                                CheckCenterMouse(null, null);
+                                CheckSound();
+                                ((Button)a).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
                             }
-                           
+
                         };
+                        visibleButtonCounter++;
                     }
                 }
 
@@ -131,19 +155,22 @@ namespace UCUI
                     Grid.SetColumnSpan(myTextbox, 3);
                     ButtonGrid.Children.Add(myTextbox);
                 }
+                HeaderPic.Source = new BitmapImage(myOption.actualUri);
+                TitleBlock.Text = myOption.name;
             }
-            CheckCenterMouse(null, null);
+            CheckCenterMouse();
+
 
         }
 
-        private void CheckCenterMouse(object sender, RoutedEventArgs e)
+        private void CheckCenterMouse()
         {
-            if (((UCSettings)DataContext).IsCenter) 
+            if (((UCSettings)DataContext).IsCenter)
                 UCMethods.SetPosition(this);
 
         }
 
-        private void CheckSound(object sender, RoutedEventArgs e)
+        private void CheckSound()
         {
             if (((UCSettings)DataContext).IsSound)
                 UCMethods.PlayMySound();
@@ -151,45 +178,26 @@ namespace UCUI
 
 
 
-        private void Grid_KeyDown(object sender, KeyEventArgs e)
+        private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            UCMethods.PlayMySound();
-            switch(e.Key)
+            if (SettingsView.Visibility != Visibility.Visible)
             {
-                case (Key.NumPad7):
-                    ((UCSettings)DataContext).ButtonKey = "Button0";
-                    break;
-                case (Key.NumPad8):
-                    ((UCSettings)DataContext).ButtonKey = "Button1";
-                    break;
-                case (Key.NumPad9):
-                    ((UCSettings)DataContext).ButtonKey = "Button2";
-                    break;
-                case (Key.NumPad4):
-                    ((UCSettings)DataContext).ButtonKey = "Button3";
-                    break;
-                case (Key.NumPad5):
-                    ((UCSettings)DataContext).ButtonKey = "Button4";
-                    break;
-                case (Key.NumPad6):
-                    ((UCSettings)DataContext).ButtonKey = "Button5";
-                    break;
-                case (Key.NumPad1):
-                    ((UCSettings)DataContext).ButtonKey = "Button6";
-                    break;
-                case (Key.NumPad2):
-                    ((UCSettings)DataContext).ButtonKey = "Button7";
-                    break;
-                case (Key.NumPad3):
-                    ((UCSettings)DataContext).ButtonKey = "Button8";
-                    break;
-
+                for (int i = 0; i < 9; i++)
+                {
+                    if (UCSettings.GetKey(i) == e.Key.ToString()&& ButtonArray[i].Content != null)
+                    {
+                        ((UCSettings)DataContext).ButtonKey = "Button" + i.ToString();
+                        ButtonArray[i].RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                        CheckSound();
+                        break;
+                    }
+                }
             }
         }
 
-        private void Grid_KeyUp(object sender, KeyEventArgs e)
+        private void Window_KeyUp(object sender, KeyEventArgs e)
         {
-            ((UCSettings)DataContext).ButtonKey = "Button12";
+            ((UCSettings)DataContext).ButtonKey = "ButtonNull";
         }
     }
 

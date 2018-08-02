@@ -10,48 +10,38 @@ namespace UCUI.Models
     class ControlSource
     {
         private static List<ControlOption> _options;
-
+        
 
         static ControlSource()
         {
             _options = new List<ControlOption>();
-            _options.Add(new ControlOption
-            {
-                buttonVisible = new bool[] { true, true, true, true, true, true, true, true, true },
-                textBoxVisible = false,
-                name = "Macro",
-                description="Record and replay mouse and keyboard inputs",
-                imageName="\\images\\macro.png"
+            string[] filenames = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "\\ControlOptions");
 
-            });
-            _options.Add(new ControlOption
+            for (int i = 0; i < filenames.Length; i++)
             {
-                buttonVisible = new bool[] { false, true, false, true, false, true, false, true, false },
-                textBoxVisible = false,
-                name = "Robotic arm",
-                description="Control the movement of a Lynxmotion AL5D robotic arm",
-                imageName= "\\images\\arm.png"
+                string[] lines = System.IO.File.ReadAllLines(filenames[i]);
+                string[] boolWords = lines[0].Split(' ');
+                bool[] _buttonVisible = new bool[9];
+                string[] _buttonLabels = lines[5].Split(' ');
+                for (int j = 0; j < 9; j++)
+                {
+                    _buttonVisible[j] = boolWords[j] == "true";
+                }
+                _options.Add(new ControlOption
+                {
+                    buttonVisible = _buttonVisible,
+                    textBoxVisible = lines[1] == "true",
+                    name = lines[2],
+                    description = lines[3],
+                    imageName = lines[4],
+                    buttonLabels = _buttonLabels
 
-            });
-            _options.Add(new ControlOption
-            {
-                buttonVisible = new bool[] { false, false, false, false, true, true, false, false, false },
-                textBoxVisible = true,
-                name = "Text-to-Speech",
-                description = "Use text to speech software",
-                imageName= "\\images\\tts.png"
-            });
-            _options.Add(new ControlOption
-            {
-                buttonVisible = new bool[] { true, true, true, true, false, true, true, false, true },
-                textBoxVisible = false,
-                name = "Cooking Pan",
-                description="Interact with a recipe software",
-                imageName= "\\images\\pan.png"
-            });
+                });
 
+            }
 
-            foreach(ControlOption curOption in _options)
+            
+            foreach (ControlOption curOption in _options)
             {
                 if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + curOption.imageName))
                 {
@@ -59,7 +49,7 @@ namespace UCUI.Models
                 }
             }
 
-
+   
         }
 
         public static List<ControlOption> Options
