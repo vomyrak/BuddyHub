@@ -5,26 +5,17 @@ var express = require("express"),
     server = require('http').Server(app),
     io = require('socket.io')(server);
 
-mongoose.connect("mongodb://cooking:wsurop18@ds223268.mlab.com:23268/wsurop_cooking", { useNewUrlParser: true });
+const uri = "mongodb://cooking:wsurop18@ds223268.mlab.com:23268/wsurop_cooking";
+mongoose.connect(uri, {useNewUrlParser: true});
+
 app.use(bodyParser.urlencoded({extended: true}));
-app.set("view engine", "ejs");
-// app.use(express.static(path.join(__dirname, "static")));
 app.use(express.static(__dirname + '/public'));
+app.set("view engine", "ejs");
 
 // SCHEMA setup
 var Step = require("./models/step"),
-    Recipe = require("./models/recipe")
-
-var tempSchema = new mongoose.Schema({
-    temperature: Number,
-    units: String
-});
-
-var Temperature = mongoose.model("Temperature", tempSchema);
-
-Temperature.on('change', function(data){
-    console.log(data);
-});
+    Recipe = require("./models/recipe"),
+    Temperature = require("./models/temp");
 
 io.on('connection', function(socket) {
     function getTemp() {
@@ -33,12 +24,11 @@ io.on('connection', function(socket) {
                 console.log(err);
             }
             else {
-  //              console.log(data.temperature);
                 socket.emit('newTemp', data.temperature);
             }
         });
     }
-    setInterval(getTemp, 100);
+    setInterval(getTemp, 500);
 });
 
 app.get("/", function(req, res){
