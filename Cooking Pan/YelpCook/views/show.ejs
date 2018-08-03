@@ -9,7 +9,6 @@
 
     <% recipe.instruction.forEach(function(step){ %>
         <p>
-          <img src="<%=step.image%>">
           <strong><%= step.stepnumber %></strong> - <%= step.step %>
         </p>
     <%});%>

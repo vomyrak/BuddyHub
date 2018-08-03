@@ -67,6 +67,7 @@ app.get("/recipe/:id/:stepid", function(req,res){
             console.log(err);
         } else {
             res.render("step", {recipe: foundRecipe, stepid: req.params.stepid});
+    //        console.log(foundRecipe);
         }
     });
 });

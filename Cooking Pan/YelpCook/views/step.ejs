@@ -3,7 +3,9 @@
 <div class="container">
   <div class="row">
 
-    <h1 style="text-align: center">This is going to be the step page</h1>
+    <h1 style="text-align: center">Please follow the instructions below</h1>
+
+    <!-- The code below displays the previous step button for each step apart from the very first one -->
 
     <% for (var l = recipe.instruction.length, i = 0; i < l; i++) { %>
         <% step = recipe.instruction[i]%>
@@ -15,16 +17,24 @@
         <%  break; } %>
     <% } %>
 
+    <!-- The code below displays the next step button for each step apart from the very last one and shows instruction -->
+
   <% for (var l = recipe.instruction.length, i = 0; i < l; i++) { %>
       <% step = recipe.instruction[i]%>
       <% if(step.stepnumber == recipe.instruction.length) {%>
           <p style="text-align: center">
-            <strong><%= step.stepnumber %></strong> - <%= step.step %>
+            <img src="<%=step.image%>"> <br />
+            <strong><%= step.stepnumber %></strong> - <%= step.step %> <br />
+            <strong>Time for this step: </strong> - <%= step.time %> minutes <br />
+            <strong>Temperature of this step: </strong> - <%= step.temperature %> Celsius <br />
             <center><a href="/recipes/" class="btn btn-primary">This is the last step</a></center>
           </p>
       <% break; } else if (step.id === stepid) { %>
           <p style="text-align: center">
-            <strong><%= step.stepnumber %></strong> - <%= step.step %>
+            <img src="<%=step.image%>"> <br />
+            <strong><%= step.stepnumber %></strong> - <%= step.step %> <br />
+            <strong>Time for this step: </strong> - <%= step.time %> minutes <br />
+            <strong>Temperature of this step: </strong> - <%= step.temperature %> Celsius <br />
             <center><a href="/recipe/<%= recipe._id%>/<%= recipe.instruction[step.stepnumber]._id%>" class="btn btn-primary">Next step</a></center>
           </p>
       <%  break; } %>
