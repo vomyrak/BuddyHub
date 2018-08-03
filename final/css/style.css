@@ -1,0 +1,112 @@
+.pos-f-t a:any-link{
+    
+    color:white !important;
+}
+
+.pos-f-t {
+    
+    color:white !important;
+    text-shadow: none;
+}
+.nav {
+  margin-bottom: 18px;
+  margin-left: 0;
+  list-style: none;
+}
+
+.nav > li > a {
+  display: block;
+}
+
+.nav-tabs{
+  *zoom: 1;
+}
+
+.nav-tabs:before,
+.nav-tabs:after {
+  display: table;
+  content: "";
+}
+
+.nav-tabs:after {
+  clear: both;
+}
+
+.nav-tabs > li {
+  float: left;
+}
+
+.nav-tabs > li > a {
+  padding-right: 12px;
+  padding-left: 12px;
+  margin-right: 2px;
+  line-height: 14px;
+}
+
+.nav-tabs {
+  border-bottom: 1px solid #ddd;
+}
+
+.nav-tabs > li {
+  margin-bottom: -1px;
+}
+
+.nav-tabs > li > a {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  line-height: 18px;
+  border: 1px solid transparent;
+  -webkit-border-radius: 4px 4px 0 0;
+  -moz-border-radius: 4px 4px 0 0;
+  border-radius: 4px 4px 0 0;
+}
+
+.nav-tabs > li > a:hover {
+  border-color: #eeeeee #eeeeee #dddddd;
+}
+
+.nav-tabs > .active > a,
+.nav-tabs > .active > a:hover {
+  color: #555555;
+  cursor: default;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-bottom-color: transparent;
+}
+
+a {
+    color: black ;
+    text-shadow: none;
+    
+}
+
+li {
+  line-height: 18px;
+}
+
+.tab-content.active{
+  display: block;
+}
+
+.tab-content.hide{
+  display: none;
+}
+
+button:hover {
+  animation: shake 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
