@@ -5,7 +5,9 @@ var mongoose = require("mongoose");
 var stepSchema = new mongoose.Schema({
     stepnumber: Number,
     image: String,
-    step: String
+    step: String,
+    time: Number,
+    temperature: Number
 });
 
 module.exports = mongoose.model("Step", stepSchema);

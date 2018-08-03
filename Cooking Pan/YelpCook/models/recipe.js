@@ -5,7 +5,10 @@ var Step = require("./step");
 
 var stepSchema = new mongoose.Schema({
     stepnumber: Number,
-    step: String
+    image: String,
+    step: String,
+    time: Number,
+    temperature: Number
 });
 
 // RECIPE Schema
@@ -17,6 +20,7 @@ var recipeSchema = new mongoose.Schema({
     cooking_time: Number,
     steps: Number,
     instruction: [stepSchema
+      // Below is another way of embedding data (by reference), which is currently commented out
 /*      {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Step"

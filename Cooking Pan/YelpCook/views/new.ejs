@@ -40,7 +40,32 @@
                                                 input.className = "form-control";
                                                 input.type = "text";
                                                 input.name = "step" + i;
+                                                input.placeholder = "Text instruction";
                                                 container.appendChild(input);
+                                                // Append a line break
+                                                // Create an <input> element for the image of the step
+                                                var input2 = document.createElement("input");
+                                                input2.className = "form-control";
+                                                input2.type = "text";
+                                                input2.name = "img" + i;
+                                                input2.placeholder = "Step image url";
+                                                container.appendChild(input2);
+                                                // Append a line break
+                                                // Create an <input3> element for the temperature of the step
+                                                var input3 = document.createElement("input");
+                                                input3.className = "form-control";
+                                                input3.type = "Number";
+                                                input3.name = "temperature" + i;
+                                                input3.placeholder = "Temperature in Celsuis";
+                                                container.appendChild(input3);
+                                                // Append a line break
+                                                // Create an <input4> element for the time of the step
+                                                var input4 = document.createElement("input");
+                                                input4.className = "form-control";
+                                                input4.type = "Number";
+                                                input4.name = "time" + i;
+                                                input4.placeholder = "Step cooking time";
+                                                container.appendChild(input4);
                                                 // Append a line break
                                                 container.appendChild(document.createElement("br"));
                                             }
