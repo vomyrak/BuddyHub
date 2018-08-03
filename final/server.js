@@ -105,7 +105,7 @@ app.post('/tts', function(req, res) {
         console.log(`Audio content written to file: ${outputFile}`);
         // Execute the command to turn the response text to an mp3 file
         // See: https://cloud.google.com/text-to-speech/docs/create-audio#text-to-speech-text-protocol
-        exec('sed \'s|audioContent| |\' < ./output.txt > ./tmp-output.txt && tr -d \'\n ":{}\' < ./tmp-output.txt > ./tmp-output-2.txt && base64 ./tmp-output-2.txt --decode > ./synthesize-text-audio.mp3 && rm ./tmp-output*.txt && rm ./output.txt', (err, stdout, stderr) => {
+        exec('sed \'s|audioContent| |\' < ./output.txt > ./tmp-output.txt && tr -d \'\n ":{}\' < ./tmp-output.txt > ./tmp-output-2.txt && base64 ./tmp-output-2.txt --decode > ./public/synthesize-text-audio.mp3 && rm ./tmp-output*.txt && rm ./output.txt', (err, stdout, stderr) => {
           if (err) {
             console.error('ERROR:', err);
             // Node couldn't execute the command
@@ -123,18 +123,4 @@ app.post('/tts', function(req, res) {
   xhttp.setRequestHeader("X-Goog-Api-Key", filereader2.google);
   // Send the http request with the data
   xhttp.send(JSON.stringify(data));
-});
-
-app.get('/synthesize-text-audio.mp3', function(req, res) {
-  var filePath = "./synthesize-text-audio.mp3";
-  var stat = fs.statSync(filePath);
-
-  res.writeHead(200, {
-    'Content-Type': 'audio/mpeg',
-    'Content-Length': stat.size
-  });
-
-  var readStream = fs.createReadStream(filePath);
-  // We replaced all the event handlers with a simple call to util.pump()
-  readStream.pipe(res);
 });
