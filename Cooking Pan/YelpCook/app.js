@@ -4,6 +4,10 @@ var express = require("express"),
     mongoose = require("mongoose"),
     server = require('http').Server(app),
     io = require('socket.io')(server);
+//
+  var Timer = require('easytimer.js');
+  var timerInstance = new Timer();
+//
 
 const uri = "mongodb://cooking:wsurop18@ds223268.mlab.com:23268/wsurop_cooking";
 mongoose.connect(uri, {useNewUrlParser: true});
@@ -16,6 +20,8 @@ app.set("view engine", "ejs");
 var Step = require("./models/step"),
     Recipe = require("./models/recipe"),
     Temperature = require("./models/temp");
+
+// SOCKET setup
 
 io.on('connection', function(socket) {
     function getTemp() {
@@ -30,6 +36,8 @@ io.on('connection', function(socket) {
     }
     setInterval(getTemp, 500);
 });
+
+//ROUTS
 
 app.get("/", function(req, res){
     res.render("landing");
@@ -66,7 +74,7 @@ app.get("/recipe/:id/:stepid", function(req,res){
         if(err){
             console.log(err);
         } else {
-            res.render("step", {recipe: foundRecipe, stepid: req.params.stepid});
+            res.render("step", {recipe: foundRecipe, stepid: req.params.stepid, Timer: timerInstance});
     //        console.log(foundRecipe);
         }
     });
