@@ -1,10 +1,11 @@
+var audio = document.getElementById("play");
+
 function playSound () {
-    var audio = document.getElementById("play").play();
+    audio.play();
     
 }
 
 
-var audio = document.getElementById("play");
 function enableMute() { 
     audio.muted = true;
 } 
