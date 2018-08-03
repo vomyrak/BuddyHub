@@ -26,7 +26,7 @@ $(document).ready(function() {
         
         $('.ui-page').append("<section id=\"tab" + index + "\" class=\"tab-content active\" />" );
         $.each(getfunc, (key, value) =>{
-        $('#tab' + index).append("<button type=\"button\" style=\"padding:30px 30px; font-size : 1.0em; margin: 15px auto; width:300px\" class=\"ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check\">"+value+"</button>" );
+        $('#tab' + index).append("<button onclick=\"playSound()\" type=\"button\" style=\"padding:30px 30px; font-size : 1.0em; margin: 15px auto; width:300px\" class=\"ui-btn ui-corner-all \">"+value+"</button>" );
     
     })
         
