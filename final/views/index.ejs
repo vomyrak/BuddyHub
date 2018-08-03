@@ -3,16 +3,48 @@
 
 <head>
   <meta charset="utf-8">
+  <link rel="stylesheet" href="../css/tether.css">
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   <link href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" />
-  <link rel="stylesheet" type="text/css" href="../css/style.css" />
+  <link rel="stylesheet" title="default" type="text/css" href="../css/style.css" />
+  <link rel="alternate stylesheet" type="text/css" href="../css/style2.css" title="alternate" />
 </head>
 
-<body>
+<body id="myBody">
+
+  <!--Collapsible style changer-->
+
+  <div class="pos-f-t">
+    <nav class="navbar navbar-dark bg-dark">
+      <button onclick="playSound()" id="menu" type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    </nav>
+    <div class="collapse" id="navbarToggleExternalContent">
+      <div class="bg-dark p-4">
+        <!--Change theme-->
+        <a href="#" onclick="playSound(); setActiveStyleSheet('default'); return false;">Light</a> |
+        <a href="#" onclick="playSound(); setActiveStyleSheet('alternate'); return false;">Dark</a>
+
+        <BR></BR>
+
+        <!--Change size-->
+        <a href="javascript:void(0);" onclick="playSound(); resizeText(1)" id="plustext">+</a> | <a href="javascript:void(0);" onclick="playSound(); resizeText(-1)" id="minustext">-</a>
+        <!--Sound-->
+        <Br></Br>
+        <audio id="play" src="http://www.soundjay.com/button/beep-07.wav"></audio>
+
+        <button onclick="enableMute()" type="button">Mute sound</button>
+        <button onclick="disableMute()" type="button">Enable sound</button>
+
+      </div>
+    </div>
+
+  </div>
+
   <div class="container">
-    <Br>
-    <H1 style="text-align: center;">Universal Controller 1.0</H1>
-    <br></Br>
+    <Br></Br>
+    <H1 style="text-align: center; font-size : 2.0em; font-weight: bolder">Universal Controller 2.0</H1>
     <ul class="nav nav-tabs" role="tablist" id="home-tab">
       <li class="active">
         <a href="#tab1">Home</a>
@@ -21,24 +53,23 @@
   </div>
   <section id="tab1" class="tab-content active">
     <div class="container">
-      <div class="row">
-        <div class="col">
 
-          <!-- Select devices -->
-          <select id="device" onChange="getObject(this.value)">
-              <option value="" disabled selected>Select</option>
-              <% devices.forEach(function(device) { %>
-              <option value="<%= device.device %>"><%= device.device %></option>
-              <% }); %>
-          </select>
-          <div style="padding:30px 20px; width:300px; margin:auto">
-            <button type="button" id='create_me' class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add Device</button>
-          </div>
-        </div>
+      <!-- Select devices -->
+      <select onclick="playSound()" class="dropdown" id="device" onChange="getObject(this.value)">
+        <option value="" disabled selected >Select</option>
+        <% devices.forEach(function(device) { %>
+        <option value="<%= device.device %>"><%= device.device %></option>
+        <% }); %>
+        </select>
+
+
+      <div style="padding:30px 20px; width:300px; margin:auto">
+        <button onclick="playSound()" type="button" id='create_me' class="ui-btn ui-corner-all ui-btn-b ui-btn-icon-left ui-icon-check" style="font-size : 1.0em">Add Device</button>
       </div>
-    </div>
 
+    </div>
   </section>
+
   <!-- Create tab content for each device -->
   <% devices.forEach(function(device) { %>
     <section id="tab<%= device.device.replace(/\s/g, '') %>" class="tab-content hide">
@@ -58,18 +89,25 @@
               <input type="hidden" id="headers<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.headers %>' />
               <input type="hidden" id="callback_function<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.callback_function %>' />
               <input type="hidden" id="text_input_field<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.text_input_field %>' />
-              <button onclick="sendRequest(this)" style="padding:30px 30px; margin: 15px auto; width:300px" class="method-button ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check" type="submit" value="<%= method.method %><%= device.device.replace(/\s/g, '') %>"
+              <button onclick="sendRequest(this)" style="padding:30px 30px; margin: 15px auto; width:300px; font-size : 1.0em;" class="method-button ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check" type="submit" value="<%= method.method %><%= device.device.replace(/\s/g, '') %>"
                 id='<%= method.method %><%= device.device.replace(/\s/g, ' ') %>'><%= method.method %></button>
             </div>
             <% }); %>
     </section>
     <% }); %>
 
-      <script src="../js/bootstrap.min.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
       <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+      <script src="../js/tether.js"></script>
+      <script src="../js/bootstrap.min.js"></script>
+      <script src="../js/sound.js"></script>
       <script src="../js/index.js"></script>
       <script src="../js/http.js"></script>
+      <script src="../js/stylesheetswitcher.js"></script>
+      <script src="../js/resizetext.js"></script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js'></script>
 
 </body>
+
 </html>

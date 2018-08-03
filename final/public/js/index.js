@@ -9,8 +9,12 @@ $(document).ready(function() {
   tabs= [];
   $('body').on('click', '#create_me', function() {
     // If the device name is not defined but an device is selected
-    if (deviceName == undefined && $('#device  option:selected').text() != "Select") {
-      deviceName = $('#device  option:selected').text();
+    if (deviceName == undefined) {
+      if ($('#device  option:selected').text() == "Select") {
+        alert("Please select a Device");
+      } else {
+        deviceName = $('#device  option:selected').text();
+      }
     }
     var index = $('.nav-tabs li').length + 1;
     // Remove the space in the device name to find tab content with

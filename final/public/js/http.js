@@ -1,6 +1,7 @@
 var callback_map = {"decode_and_play_audio": decodeAndPlay};
 
 function sendRequest(button) {
+  document.getElementById("play").play();
   var http_method = document.getElementById("http_method" + button.value).value;
   var link = document.getElementById("link" + button.value).value;
   var data = document.getElementById("data" + button.value).value;

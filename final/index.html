@@ -15,33 +15,33 @@
 
   <!--Collapsible style changer-->
 
-  <div class="pos-f-t">
-    <nav class="navbar navbar-dark bg-dark">
-      <button onclick="playSound()" type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+<div class="pos-f-t">
+  <nav class="navbar navbar-dark bg-dark">
+    <button onclick="playSound()" type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
-    </nav>
-    <div class="collapse" id="navbarToggleExternalContent">
-      <div class="bg-dark p-4">
-        <!--Change theme-->
-        <a href="#" onclick="playSound(); setActiveStyleSheet('default'); return false;">Light</a> |
-        <a href="#" onclick="playSound(); setActiveStyleSheet('alternate'); return false;">Dark</a>
+  </nav>
+  <div class="collapse" id="navbarToggleExternalContent">
+    <div class="bg-dark p-4">
+      <!--Change theme-->
+      <a href="#" onclick="playSound(); setActiveStyleSheet('default'); return false;">Light</a> |
+      <a href="#" onclick="playSound(); setActiveStyleSheet('alternate'); return false;">Dark</a>
 
-        <BR></BR>
+      <BR></BR>
 
-        <!--Change size-->
-        <a href="javascript:void(0);" onclick="playSound(); resizeText(1)" id="plustext">+</a> | <a href="javascript:void(0);" onclick="playSound(); resizeText(-1)" id="minustext">-</a>
-        <!--Sound-->
-        <Br></Br>
-        <audio id="play" src="http://www.soundjay.com/button/beep-07.wav"></audio>
+      <!--Change size-->
+      <a href="javascript:void(0);" onclick="playSound(); resizeText(1)" id="plustext">+</a> | <a href="javascript:void(0);" onclick="playSound(); resizeText(-1)" id="minustext">-</a>
+      <!--Sound-->
+      <Br></Br>
+      <audio id="play" src="http://www.soundjay.com/button/beep-07.wav"></audio>
 
-        <button onclick="enableMute()" type="button">Mute sound</button>
-        <button onclick="disableMute()" type="button">Enable sound</button>
+      <button onclick="enableMute()" type="button">Mute sound</button>
+      <button onclick="disableMute()" type="button">Enable sound</button>
 
-      </div>
     </div>
-
   </div>
+
+</div>
 
 
   <!--
