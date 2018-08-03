@@ -8,10 +8,16 @@ function getObject(value) {
 $(document).ready(function() {
   tabs= [];
   $('body').on('click', '#create_me', function() {
+    // If the device name is not defined but an device is selected
+    if (deviceName == undefined && $('#device  option:selected').text() != "Select") {
+      deviceName = $('#device  option:selected').text();
+    }
     var index = $('.nav-tabs li').length + 1;
+    // Remove the space in the device name to find tab content with
+    // corresponding html id.
     var unspacedDeviceName = deviceName.replace(/\s/g, '');
-    // Create the tab when user requires it, and link it to the tab content
-
+    // If a tab of selected device had not been created,
+    // Create the tab, and link it to the tab content
     if (!tabs.includes(unspacedDeviceName)) {
       $("#home-tab").append("<li class=\"active\"><a href=\"#tab" + unspacedDeviceName + "\" id=\"#tabname" + unspacedDeviceName + "\">" + deviceName + "</a></li>");
       tabs.push(unspacedDeviceName);
