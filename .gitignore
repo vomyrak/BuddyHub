@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-﻿################################################################################
+﻿﻿################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
@@ -31,13 +30,10 @@
 /UCUI/UCUI/UCUI/bin
 /UCUI/UCUI/UCUI/CSharpServer/auth.json
 /UCUI/UCUI/UCUI/auth.json
-=======
 /Prototype
 /Misc
 /GLobalHook
 /CSharpServer
 /UCUI/UCUI/bin
 /UCUI/UCUI/csharp-usb-hid-driver
-/UCUI/UCUI/packages
 /UCUI/UCUI/obj
->>>>>>> prototype_balint
