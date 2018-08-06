@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace CSharpServer
 {
@@ -22,12 +23,37 @@ namespace CSharpServer
         public string Vid { get; set; }
         [BsonElement("pid")]
         public string Pid { get; set; }
+        [BsonElement("icon")]
+        public string Icon { get; set; }
+        [BsonElement("description")]
+        public string Description { get; set; }
+        [BsonElement("isTextboxVisible")]
+        public bool IsTextBoxVisible { get; set; }
+        [BsonElement("isButtonVisible")]
+        public List<bool> IsButtonVisible { get; set; }
+        [BsonElement("buttonLabel")]
+        public List<string> ButtonLabel { get; set; }
         [BsonElement("function")]
         public List<Function> FunctionArray { get; set; }
 
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
+        }
+
+        public void ToFile(string fileName)
+        {
+            File.WriteAllText(fileName, this.ToString());
+        }
+
+        public static DeviceInfo LoadLocalDeviceInfo(string fileName)
+        {
+            DeviceInfo deviceInfo = null;
+            if (File.Exists(fileName))
+            {
+                deviceInfo = JsonConvert.DeserializeObject<DeviceInfo>(File.ReadAllText(fileName));
+            }
+            return deviceInfo;
         }
     }
 

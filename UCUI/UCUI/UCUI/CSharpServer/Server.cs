@@ -115,6 +115,7 @@ namespace CSharpServer
             {
                 try
                 {
+                    
                     int actionType = int.Parse(parsedRequest[0]);
                     switch (actionType)
                     {

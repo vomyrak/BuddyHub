@@ -190,6 +190,7 @@ namespace UCUI
                             DeviceInfo newDeviceInfo = deviceInterface.QueryDeviceInfo(vid, pid);
                             if (newDeviceInfo != null)
                             {
+                                newDeviceInfo.ToFile("newDevice");
                                 result = newDeviceInfo.Device;
                                 deviceInterface.AddDevice(result, new DeviceInterface.ControllerDevice(newDeviceInfo, deviceId));
                                 InitialiseDevice(result);
@@ -271,13 +272,17 @@ namespace UCUI
                         ButtonArray[i].Click += delegate (object a, RoutedEventArgs b)
                         {
                             //deviceInterface.TestRoboticArm();
+                            
                             MethodInfo methodToBind = deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "RelaxAllServos");
                             ThreadStart threadStart = new ThreadStart(()=>
                             {
-                                deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "setGripper_PW")
-                                    .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, new object[] { (short)500 });
-                                deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "updateServos")
-                                    .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, null);
+                                lock (deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject)
+                                {
+                                    deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "setGripper_PW")
+                                        .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, new object[] { (short)2500 });
+                                    deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "updateServos")
+                                        .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, null);
+                                }
                             }
                                 );
 
