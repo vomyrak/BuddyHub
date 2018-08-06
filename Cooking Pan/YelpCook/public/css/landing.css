@@ -1,5 +1,6 @@
 .center {
 	margin: 0 auto;
-	background-color: blue;
+	background-color: paleturquoise;
     max-width: 600px;
+	font-family: "Lexie Readable";
 }
