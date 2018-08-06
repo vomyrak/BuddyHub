@@ -47,6 +47,7 @@ namespace UCUI
         // Threading Management
         private Thread newThread;
         private delegate void CallingDelegate();
+        private Random random = new Random();
 
         public MainWindow()
         {
@@ -279,7 +280,7 @@ namespace UCUI
                                 lock (deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject)
                                 {
                                     deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "setGripper_PW")
-                                        .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, new object[] { (short)2500 });
+                                        .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, new object[] { (short)random.Next(500, 2500) });
                                     deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "updateServos")
                                         .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, null);
                                 }
