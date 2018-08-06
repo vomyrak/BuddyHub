@@ -8,6 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+<<<<<<< HEAD:UCUI/UCUI/UCUI/obj/Debug/UCUI_Content.g.i.cs
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/buttpic.png")]
+=======
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("1200px-imperial_college_london_crest.svg.ico")]
+>>>>>>> master:UC/UCUI/UCUI/obj/Debug/UCUI_Content.g.i.cs
 
 

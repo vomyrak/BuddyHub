@@ -8,14 +8,21 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>UCUI</RootNamespace>
     <AssemblyName>UCUI</AssemblyName>
+<<<<<<< HEAD:UCUI/UCUI/UCUI/UCUI.csproj
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+=======
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+>>>>>>> master:UC/UCUI/UCUI/UCUI.csproj
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+<<<<<<< HEAD:UCUI/UCUI/UCUI/UCUI.csproj
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+=======
+>>>>>>> master:UC/UCUI/UCUI/UCUI.csproj
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,6 +44,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
+<<<<<<< HEAD:UCUI/UCUI/UCUI/UCUI.csproj
     <ApplicationIcon>Images\ucicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
@@ -72,6 +80,14 @@
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
     </Reference>
+=======
+    <ApplicationIcon>1200px-Imperial_College_London_crest.svg.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+>>>>>>> master:UC/UCUI/UCUI/UCUI.csproj
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -91,9 +107,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+<<<<<<< HEAD:UCUI/UCUI/UCUI/UCUI.csproj
     <Compile Include="Models\AnimationCondtion.cs" />
     <Compile Include="Models\UCMethods.cs" />
     <Compile Include="Models\UCSettings.cs" />
+=======
+    <Compile Include="Hook\MouseGen.cs" />
+>>>>>>> master:UC/UCUI/UCUI/UCUI.csproj
     <Compile Include="UserControls\HelpView.xaml.cs">
       <DependentUpon>HelpView.xaml</DependentUpon>
     </Compile>
@@ -141,7 +161,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+<<<<<<< HEAD:UCUI/UCUI/UCUI/UCUI.csproj
     <None Include="packages.config" />
+=======
+>>>>>>> master:UC/UCUI/UCUI/UCUI.csproj
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -151,6 +174,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD:UCUI/UCUI/UCUI/UCUI.csproj
     <Resource Include="Images\1200px-Imperial_College_London_crest.svg.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -173,4 +197,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
+=======
+    <Resource Include="1200px-Imperial_College_London_crest.svg.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+>>>>>>> master:UC/UCUI/UCUI/UCUI.csproj
 </Project>

@@ -4,7 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UCUI"
+<<<<<<< HEAD:UCUI/UCUI/UCUI/MainWindow.xaml
         xmlns:prop='clr-namespace:UCUI.Models'
+=======
+>>>>>>> master:UC/UCUI/UCUI/MainWindow.xaml
         mc:Ignorable="d"
         xmlns:views='clr-namespace:UCUI.UserControls'
         Title="Universal Controller"
@@ -12,6 +15,7 @@
         Width="800"
         WindowState='Maximized'
         FontSize='20'
+<<<<<<< HEAD:UCUI/UCUI/UCUI/MainWindow.xaml
         FontFamily='Calibri'
         KeyDown='Window_KeyDown'
         KeyUp='Window_KeyUp'>
@@ -22,11 +26,20 @@
                Visibility='Collapsed' 
                Panel.ZIndex='1'/>
 
+=======
+        FontFamily='Calibri'>
+  <Grid>
+    <Rectangle Name='Overlay'
+               Fill='#7F000000' 
+               Visibility='Collapsed'/>
+    
+>>>>>>> master:UC/UCUI/UCUI/MainWindow.xaml
     <Button Visibility='Collapsed'
             Name='Outside'
             Click='Outside_Click'
             Opacity='0'
             Background='#00000000'
+<<<<<<< HEAD:UCUI/UCUI/UCUI/MainWindow.xaml
             BorderBrush='#00000000'
             Panel.ZIndex='2'/>
 
@@ -53,6 +66,26 @@
                    Foreground='White' />
       </StackPanel>
 
+=======
+            BorderBrush='#00000000' />
+    
+    <views:HelpView x:Name='HelpView'
+                    Visibility='Collapsed' />
+    
+    <views:SettingsView x:Name='SettingsView'
+                        Visibility='Collapsed' />
+    
+    <DockPanel x:Name='MainView'>
+      <TextBlock x:Name='titleBlock'
+                 TextWrapping='Wrap'
+                 Text='   Universal Controller v0.1'
+                 FontSize='24'
+                 Background="#FF353535"
+                 FontFamily="Calibri"
+                 FontWeight="Bold"
+                 Foreground="White"
+                 DockPanel.Dock='Top' />
+>>>>>>> master:UC/UCUI/UCUI/MainWindow.xaml
       <Grid>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width='Auto' />
@@ -64,6 +97,7 @@
         </Grid.RowDefinitions>
         <Expander ExpandDirection='Right'
                   Background="#FF353535"
+<<<<<<< HEAD:UCUI/UCUI/UCUI/MainWindow.xaml
                   IsExpanded='True'>
 
           <Expander.HeaderTemplate>
@@ -72,6 +106,10 @@
             </DataTemplate>
           </Expander.HeaderTemplate>
 
+=======
+                  Padding='5'
+                  IsExpanded='True'>
+>>>>>>> master:UC/UCUI/UCUI/MainWindow.xaml
           <DockPanel Grid.Column='0'>
             <TextBlock TextWrapping='Wrap'
                        Text='      Control Options       '
@@ -80,9 +118,13 @@
                        FontFamily="Calibri"
                        FontWeight="Bold"
                        Foreground="White"
+<<<<<<< HEAD:UCUI/UCUI/UCUI/MainWindow.xaml
                        DockPanel.Dock='Top' 
                        x:Name='OptionsHeader'
                        />
+=======
+                       DockPanel.Dock='Top' />
+>>>>>>> master:UC/UCUI/UCUI/MainWindow.xaml
 
             <Grid DockPanel.Dock='Bottom'>
               <Grid.ColumnDefinitions>
@@ -90,6 +132,7 @@
                 <ColumnDefinition Width='1*' />
               </Grid.ColumnDefinitions>
               <Grid.RowDefinitions>
+<<<<<<< HEAD:UCUI/UCUI/UCUI/MainWindow.xaml
                 <RowDefinition Height='60' />
               </Grid.RowDefinitions>
               <Button Name='SettingsButton'
@@ -104,10 +147,30 @@
                       Margin='0 5 5 5'
                       Style='{StaticResource Shaker}'
                       Click='PageOpen' />
+=======
+                <RowDefinition Height='30' />
+              </Grid.RowDefinitions>
+              <Button Grid.Column='0'
+                      Margin='1 1 1 2'
+                      Content='Settings'
+                      Background="#FF353535"
+                      FontFamily="Calibri"
+                      Foreground="White"
+                      Click='SettingsOpen' />
+              <Button Grid.Column='1'
+                      Content='Help'
+                      Margin='0 1 1 2'
+                      Background="#FF353535"
+                      FontFamily="Calibri"
+                      Foreground="White"
+                      Click='HelpOpen' />
+
+>>>>>>> master:UC/UCUI/UCUI/MainWindow.xaml
             </Grid>
 
             <ListBox x:Name='ControlOptions'
                      Grid.Column='0'
+<<<<<<< HEAD:UCUI/UCUI/UCUI/MainWindow.xaml
                      SelectionChanged='SelectionChanged'
                      MaxWidth='250'
                      ScrollViewer.HorizontalScrollBarVisibility='Disabled'>
@@ -133,6 +196,18 @@
                                DockPanel.Dock='Bottom' />
 
                   </DockPanel>
+=======
+                     SelectionChanged='SelectionChanged'>
+
+              <ListBox.ItemTemplate>
+                <DataTemplate>
+                  <StackPanel Orientation='Horizontal'>
+                    <TextBlock Text='{Binding name}'
+                               HorizontalAlignment='Center'
+                               Foreground="#FF353535"
+                               Margin='9, 0, 0, 0' />
+                  </StackPanel>
+>>>>>>> master:UC/UCUI/UCUI/MainWindow.xaml
                 </DataTemplate>
               </ListBox.ItemTemplate>
 
@@ -143,13 +218,21 @@
                           Value="30" />
                 </Style>
               </ListBox.Resources>
+<<<<<<< HEAD:UCUI/UCUI/UCUI/MainWindow.xaml
 
+=======
+              
+>>>>>>> master:UC/UCUI/UCUI/MainWindow.xaml
             </ListBox>
           </DockPanel>
         </Expander>
         <Grid x:Name='ButtonGrid'
               Grid.Column='1'>
+<<<<<<< HEAD:UCUI/UCUI/UCUI/MainWindow.xaml
 
+=======
+          
+>>>>>>> master:UC/UCUI/UCUI/MainWindow.xaml
           <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
@@ -159,19 +242,64 @@
           </Grid.ColumnDefinitions>
           <Grid.RowDefinitions>
             <RowDefinition />
+<<<<<<< HEAD:UCUI/UCUI/UCUI/MainWindow.xaml
             <RowDefinition Height='2*' />
             <RowDefinition Height='2*' />
             <RowDefinition Height='2*' />
+=======
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+>>>>>>> master:UC/UCUI/UCUI/MainWindow.xaml
             <RowDefinition />
           </Grid.RowDefinitions>
 
           <Grid.Resources>
             <Style TargetType="{x:Type Button}">
+<<<<<<< HEAD:UCUI/UCUI/UCUI/MainWindow.xaml
               <Setter Property='Margin'
                       Value='10' />
             </Style>
 
           </Grid.Resources>
+=======
+              <Setter Property="Background"
+                      Value="#FF353535" />
+              <Setter Property='Margin'
+                      Value='10' />
+              <Setter Property='FontFamily'
+                      Value='Calibri' />
+              <Setter Property='Foreground'
+                      Value='White' />
+            </Style>
+
+          </Grid.Resources>
+
+          <Button x:Name='TL'
+                  Grid.Column='1'
+                  Grid.Row='1' />
+          <Button x:Name='TC'
+                  Grid.Column='2'
+                  Grid.Row='1' />
+          <Button x:Name='TR'
+                  Grid.Column='3'
+                  Grid.Row='1' />
+          <Button x:Name='ML'
+                  Grid.Column='1'
+                  Grid.Row='2' />
+          <Button x:Name='MC'
+                  Grid.Column='2'
+                  Grid.Row='2' />
+          <Button x:Name='MR'
+                  Grid.Column='3'
+                  Grid.Row='2' />
+          <Button Grid.Column='1'
+                  Grid.Row='3' />
+          <Button Grid.Column='2'
+                  Grid.Row='3' />
+          <Button Grid.Column='3'
+                  Grid.Row='3' />
+>>>>>>> master:UC/UCUI/UCUI/MainWindow.xaml
         </Grid>
       </Grid>
     </DockPanel>

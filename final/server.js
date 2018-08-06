@@ -3,10 +3,10 @@ const app = express();
 const fs = require('fs');
 const server = require('http').createServer(app);
 const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-const { exec } = require('child_process');
+const exec = require('child_process').exec;
 const mongoose = require("mongoose");
 const filereader = require("./auth.json");
-// const filereader2 = require("./keys.json");
+const filereader2 = require("./keys.json");
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // to support JSON-encoded bodies
@@ -60,7 +60,7 @@ const html_dir = __dirname + '/public/html/';
 
 app.get('/', function(req, res) {
   // Direct to home page
-  // Render the page with all output devices in the menu
+  // Render the page with all output devices in the dropdown
 
   var query = OutputDevice.find().sort('device');
   //query.select('device');
@@ -71,28 +71,6 @@ app.get('/', function(req, res) {
 
     res.render('index', {
       devices: devices
-    });
-  });
-});
-
-app.get('/device', function(req, res) {
-  // Render the page with all output devices in the menu
-  var listQuery = OutputDevice.find().sort('device');
-  listQuery.select('device');
-
-
-  listQuery.exec(function (err, devices) {
-    if (err) return handleError(err);
-
-    // Render the page with methods of the selected device
-    var query = OutputDevice.findOne({device: req.query.selected});
-    query.exec(function (error, selected) {
-      if (error) return handleError(error);
-
-      res.render('device', {
-        devices: devices,
-        methods: selected.methods
-      });
     });
   });
 });
@@ -142,7 +120,7 @@ app.post('/tts', function(req, res) {
   xhttp.open("POST", "https://texttospeech.googleapis.com/v1beta1/text:synthesize", true);
   // Set headers of the http request
   xhttp.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-  // xhttp.setRequestHeader("X-Goog-Api-Key", filereader2.google);
+  xhttp.setRequestHeader("X-Goog-Api-Key", filereader2.google);
   // Send the http request with the data
   xhttp.send(JSON.stringify(data));
 });

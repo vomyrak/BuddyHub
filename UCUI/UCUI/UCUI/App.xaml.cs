@@ -13,6 +13,9 @@ namespace UCUI
     /// </summary>
     public partial class App : Application
     {
+<<<<<<< HEAD:UCUI/UCUI/UCUI/App.xaml.cs
  
+=======
+>>>>>>> master:UC/UCUI/UCUI/App.xaml.cs
     }
 }

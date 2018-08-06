@@ -13,7 +13,11 @@
             BorderBrush='#FF353535'
             HorizontalAlignment='Center'
             VerticalAlignment='Center'
+<<<<<<< HEAD:UCUI/UCUI/UCUI/UserControls/HelpView.xaml
             CornerRadius='15'
+=======
+            CornerRadius='3'
+>>>>>>> master:UC/UCUI/UCUI/UserControls/HelpView.xaml
             Background='White'>
       <StackPanel>
       <TextBlock TextWrapping='Wrap'
@@ -25,7 +29,13 @@
                  FontFamily='Calibri'
                  Text='Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'/>
      
+<<<<<<< HEAD:UCUI/UCUI/UCUI/UserControls/HelpView.xaml
 
+=======
+        <TextBlock HorizontalAlignment='Center'
+                   Text='Click anywhere outside to return' 
+                   Margin='10'/>
+>>>>>>> master:UC/UCUI/UCUI/UserControls/HelpView.xaml
       </StackPanel>
     </Border>
   </Grid>
