@@ -1,5 +1,9 @@
+<<<<<<< HEAD
+﻿﻿################################################################################
+=======
 ﻿
 ﻿################################################################################
+>>>>>>> prototype-vk
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
@@ -37,5 +41,4 @@
 /CSharpServer
 /UCUI/UCUI/bin
 /UCUI/UCUI/csharp-usb-hid-driver
-/UCUI/UCUI/packages
 /UCUI/UCUI/obj
