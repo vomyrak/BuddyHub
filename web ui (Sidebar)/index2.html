@@ -6,15 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Collapsible sidebar using Bootstrap 4</title>
+    <title>Universal Controller 2.0</title>
 
+    <link rel= "stylesheet" type= "text/css" href= "/css/style2.css" title="alternate" />
     <link rel="stylesheet" href= "/css/tether.css">
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     
     <!-- Our Custom CSS -->
     <link rel="stylesheet" title="default" type="text/css" href="/css/style.css" />
-        <link rel= "alternate stylesheet" type= "text/css" href= "/css/style2.css" title="alternate" />
+    <link rel= "alternate stylesheet" type= "text/css" href= "/css/style2.css" title="alternate" />
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
@@ -25,8 +26,7 @@
 </head>
 
 <body>
-<!--Sound-->
-        <audio id="play" src="http://www.soundjay.com/button/beep-07.wav"></audio>
+
     
     <div class="wrapper">
         <!-- Sidebar  -->
@@ -47,26 +47,33 @@
       
 
   
- <li>
-     <!--Change theme-->
-                    <a href="#settings" onclick="playSound()"  data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Settings</a>
-                    <ul class="collapse list-unstyled" id="settings">
-                        <li>
-                             <a href="#" onclick="playSound(); setActiveStyleSheet('default'); return false;">Light</a> 
-<a href="#" onclick="playSound(); setActiveStyleSheet('alternate'); return false;">Dark</a>
-                        </li>
-                        <li>
-                              
-<a href="#" onclick="enableMute()" >Mute sound</a>
-<a href="#" onclick="disableMute() ; playSound()" >Enable sound</a>
-                        </li>
-                        <li>
-                            <!--Change size-->
-                            <a href="javascript:void(0);" onclick="playSound(); resizeText(1)" id="plustext">+</a> 
-                            <a href="javascript:void(0);" onclick="playSound(); resizeText(-1)" id="minustext">-</a>
-                        </li>
-                    </ul>
-                </li>
+    <li>
+        <!--Change theme-->
+        <a href="#settings" onclick="playSound()"  data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Settings</a>
+        <ul margin="centre" class="collapse list-unstyled" id="settings">
+        <li align:center>
+            <button onclick="playSound(); setActiveStyleSheet('default'); return false;">Light</button> | <button onclick="playSound(); setActiveStyleSheet('alternate'); return false;">Dark</button>
+        </li>
+             <br>
+        <li>
+        <!--Sound enabler-->
+            <button onclick="enableMute()" >Mute</button> | 
+            <button onclick="disableMute() ; playSound()" >Unmute</button>
+        </li>
+            <br>
+        <li>
+        <!--Change size-->
+            <button onclick="playSound(); resizeText(1)" id="plustext">+</button>  | 
+            <button onclick="playSound(); resizeText(-1)" id="minustext">-</button>
+        </li>
+            <br>
+            <li>
+        <!--Shake enabled-->
+            <button onclick="playSound(); sound1()">sound1</button>  | 
+            <button onclick="playSound(); resizeText(-1)" id="minustext">Disable shake</button>
+        </li>
+        </ul>
+    </li>
   
             </ul>
         </nav>
