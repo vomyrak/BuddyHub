@@ -18,10 +18,11 @@ namespace CSharpServer
         
         static void Main(string[] args)
         {
-            
             Server server = new Server();
             DeviceInterface deviceInterface = new DeviceInterface();
             server.Run();
+            deviceInterface.TestRoboticArm();
+
         }
 
         
@@ -39,12 +40,7 @@ namespace CSharpServer
         public Server()
         {
             connectedDeviceList = new List<DeviceInfo>();
-<<<<<<< HEAD
-            SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
-            ws = new WebServer(Server.SendResponse, "http://localhost:8080/");
-=======
             ws = new WebServer(this.SendResponse, "http://localhost:8080/");
->>>>>>> c239ddca8237d46e7c055be01ce701ce3c5e72f0
         }
 
         /// <summary>
@@ -136,22 +132,6 @@ namespace CSharpServer
         /// </summary>
         /// <param name="servo">The index of the servo to be controlled</param>
         /// <param name="param">Parameter passed to the function</param>
-<<<<<<< HEAD
-        public static void TestRoboticArm(string servo, string param)
-        {
-           
-            AL5C al5c;
-            SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
-            if (SSC32s.Length > 0)
-            {
-                al5c = new AL5C(SSC32s[0].PortName);
-                short survoIndex = short.Parse(servo);
-                short pwmVal = short.Parse(param);
-                al5c.setElbow_PW(pwmVal);
-            }
-
-        }
-=======
         //public void TestRoboticArm(string servo, string param)
         //{
            
@@ -167,7 +147,6 @@ namespace CSharpServer
         //    }
 
         //}
->>>>>>> c239ddca8237d46e7c055be01ce701ce3c5e72f0
     }
 
 

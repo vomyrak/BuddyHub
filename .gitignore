@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
@@ -20,7 +21,23 @@
 /CSharpServer/packages
 /CSharpServer/TestFunction
 /CSharpServer/TestLynxmotion
-/CSharpServer/.vs/CSharpServer/v15/Server/sqlite3
+/CSharpServer/.vs/CSharpServer
 /CSharpServer/CSharpServer/bin/Debug
 /UC
 /VoiceSynthesizer
+/UCUI/UCUI/UCUI/obj
+/CSharpServer/.vs/CSharpServer/v15
+/Misc/GlobalHook/.vs/GlobalHook
+/UCUI/UCUI/UCUI/bin
+/UCUI/UCUI/UCUI/CSharpServer/auth.json
+/UCUI/UCUI/UCUI/auth.json
+=======
+/Prototype
+/Misc
+/GLobalHook
+/CSharpServer
+/UCUI/UCUI/bin
+/UCUI/UCUI/csharp-usb-hid-driver
+/UCUI/UCUI/packages
+/UCUI/UCUI/obj
+>>>>>>> prototype_balint

@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UCUI", "UCUI\UCUI.csproj", "{EDE9DBD2-DEBB-42C7-AD21-B56F3ACDED93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpServer", "UCUI\CSharpServer\CSharpServer.csproj", "{53E9D1C4-88A6-494B-9D12-912E11BA1226}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lynxmotion", "UCUI\Plugin\Lynxmotion\Lynxmotion.csproj", "{ACC49F8E-39F8-4B75-89DB-B4B91DA15671}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDE9DBD2-DEBB-42C7-AD21-B56F3ACDED93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDE9DBD2-DEBB-42C7-AD21-B56F3ACDED93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDE9DBD2-DEBB-42C7-AD21-B56F3ACDED93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDE9DBD2-DEBB-42C7-AD21-B56F3ACDED93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53E9D1C4-88A6-494B-9D12-912E11BA1226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53E9D1C4-88A6-494B-9D12-912E11BA1226}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53E9D1C4-88A6-494B-9D12-912E11BA1226}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53E9D1C4-88A6-494B-9D12-912E11BA1226}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACC49F8E-39F8-4B75-89DB-B4B91DA15671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACC49F8E-39F8-4B75-89DB-B4B91DA15671}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACC49F8E-39F8-4B75-89DB-B4B91DA15671}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACC49F8E-39F8-4B75-89DB-B4B91DA15671}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E07350F3-6FB0-4934-857D-68FC6A886B21}
+	EndGlobalSection
+EndGlobal

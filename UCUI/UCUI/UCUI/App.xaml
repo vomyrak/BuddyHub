@@ -1,0 +1,226 @@
+﻿<Application x:Class="UCUI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:UCUI"
+             xmlns:mod="clr-namespace:UCUI.Models"
+             StartupUri="MainWindow.xaml">
+  <Application.Resources>
+    
+    <mod:AnimationCondition x:Key="ConditionKey" />
+    <!--Static resource storyboard for Pusher button-->
+    <Storyboard x:Key='PushDown'>
+      <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                          Storyboard.TargetName="_top"
+                          Duration="0:0:0.1"
+                          From="0,0,0,10"
+                          To="0,10,0,0" />
+      <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                          Storyboard.TargetName="_bottom"
+                          Duration="0:0:0.1"
+                          From="0,2,0,0"
+                          To="0,12,0,0" />
+    </Storyboard>
+    <Storyboard x:Key='PushUp'>
+      <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                          Storyboard.TargetName="_top"
+                          Duration="0:0:0.1"
+                          From="0,10,0,0"
+                          To="0,0,0,10" />
+      <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                          Storyboard.TargetName="_bottom"
+                          Duration="0:0:0.1"
+                          From="0,12,0,0"
+                          To="0,2,0,0" />
+    </Storyboard>
+
+    <!--Shaker Style-->
+    <Style TargetType="{x:Type Button}"
+           x:Key='Shaker'>
+      <Setter Property="RenderTransformOrigin"
+              Value="0.5 0.5" />
+      <Setter Property="RenderTransform">
+        <Setter.Value>
+          <RotateTransform />
+        </Setter.Value>
+      </Setter>
+
+      <Setter Property='Background'
+              Value='Gray' />
+      <Setter Property='Foreground'
+              Value='White' />
+      <Setter Property='FontFamily'
+              Value='Calibri' />
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+
+            <Grid>
+              <Rectangle Name='bg'
+                         Fill='Gray'
+                         RadiusX='6'
+                         RadiusY='6' />
+              <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Content="{TemplateBinding Content}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center" />
+            </Grid>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver"
+                       Value="True">
+                <Setter Property="Fill"
+                        TargetName="bg"
+                        Value="#FFEBCB31" />
+              </Trigger>
+              <Trigger Property='IsPressed'
+                       Value="True">
+                <Setter Property="Fill"
+                        TargetName="bg"
+                        Value="#FFD9AE2C" />
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+
+      <Style.Triggers>
+        <MultiDataTrigger>
+          <MultiDataTrigger.Conditions>
+            <Condition Binding='{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}'
+                       Value='True' />
+            <Condition Binding='{Binding IsShake}'
+                       Value='True' />
+          </MultiDataTrigger.Conditions>
+
+          <MultiDataTrigger.EnterActions>
+            <BeginStoryboard>
+              <Storyboard TargetProperty="RenderTransform.Angle">
+                <DoubleAnimation From="0"
+                                 To="5"
+                                 Duration="0:0:0.05"
+                                 AutoReverse="True"
+                                 FillBehavior="Stop" />
+                <DoubleAnimation BeginTime="0:0:0.05"
+                                 From="5"
+                                 To="-5"
+                                 Duration="0:0:0.1"
+                                 AutoReverse="True"
+                                 FillBehavior="Stop" />
+                <DoubleAnimation BeginTime="0:0:0.2"
+                                 From="-5"
+                                 To="0"
+                                 Duration="0:0:0.1"
+                                 AutoReverse="False"
+                                 FillBehavior="Stop" />
+              </Storyboard>
+            </BeginStoryboard>
+          </MultiDataTrigger.EnterActions>
+        </MultiDataTrigger>
+        <!--Jitter animation-->
+      </Style.Triggers>
+    </Style>
+
+    <!--Pusher Style-->
+    <Style TargetType="Button"
+           x:Key='Pusher'>
+      <Setter Property='Background'
+              Value='Gray' />
+      <Setter Property='Foreground'
+              Value='White' />
+      <Setter Property='FontFamily'
+              Value='Calibri' />
+
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+
+            <Grid>
+
+              <Rectangle x:Name='_bottom'
+                         Fill="#FF353535"
+                         RadiusX="20"
+                         RadiusY="20"
+                         Margin='0,2,0,0' />
+
+              <Border x:Name='_top'
+                      Margin='0,0,0,10'>
+                <Grid>
+                  <Rectangle x:Name='_color'
+                             Fill="{TemplateBinding Background}"
+                             RadiusX="20"
+                             RadiusY="20" />
+                  <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    Content="{TemplateBinding Content}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center" />
+                </Grid>
+              </Border>
+            </Grid>
+
+            <ControlTemplate.Triggers>
+              <!--Press down animation-->
+              <DataTrigger Value='True'>
+                <DataTrigger.Binding>
+                  <MultiBinding Converter="{StaticResource ConditionKey}">
+                    <Binding RelativeSource="{RelativeSource self}"
+                             Path="Name"
+                             Mode="OneWay" />
+                    <Binding Path='ButtonKey'
+                             Mode="OneWay" />
+                    <Binding RelativeSource='{RelativeSource Self}'
+                             Path='IsPressed'
+                             Mode='OneWay' />
+                    <Binding RelativeSource='{RelativeSource Self}'
+                             Path='IsMouseOver'
+                             Mode='OneWay' />
+                    <Binding Path='IsHover'
+                             Mode='OneWay' />
+
+                  </MultiBinding>
+                </DataTrigger.Binding>
+                <DataTrigger.EnterActions>
+                  <BeginStoryboard Storyboard='{StaticResource PushDown}' />
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <ColorAnimation To="#FFD9AE2C"
+                                      Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
+                                      FillBehavior='HoldEnd'
+                                      Duration="0:0:0.05" />
+                    </Storyboard>
+                  </BeginStoryboard>
+                </DataTrigger.EnterActions>
+                <DataTrigger.ExitActions>
+                  <BeginStoryboard Storyboard='{StaticResource PushUp}' />
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <ColorAnimation To="Gray"
+                                      Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
+                                      FillBehavior='HoldEnd'
+                                      Duration="0:0:0.05" />
+                    </Storyboard>
+                  </BeginStoryboard>
+                </DataTrigger.ExitActions>
+              </DataTrigger>
+
+              <Trigger Property="IsMouseOver"
+                       Value="True">
+                <Setter Property="Fill"
+                        TargetName="_color"
+                        Value="#FFEBCB31" />
+              </Trigger>
+              <Trigger Property='IsPressed'
+                       Value="True">
+                <Setter Property="Fill"
+                        TargetName="_color"
+                        Value="#FFD9AE2C" />
+              </Trigger>
+
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+  </Application.Resources>
+
+</Application>
+  
