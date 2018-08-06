@@ -8,14 +8,15 @@
 
     <title>Universal Controller 2.0</title>
 
-    <link rel= "stylesheet" type= "text/css" href= "/css/style2.css" title="alternate" />
-    <link rel="stylesheet" href= "/css/tether.css">
+
+     <link rel="stylesheet" href="/css/buttonshake.css" />
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     
     <!-- Our Custom CSS -->
     <link rel="stylesheet" title="default" type="text/css" href="/css/style.css" />
     <link rel= "alternate stylesheet" type= "text/css" href= "/css/style2.css" title="alternate" />
+    
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
@@ -23,6 +24,7 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href= "/css/tether.css">
 </head>
 
 <body>
@@ -59,6 +61,14 @@
         <!--Sound enabler-->
             <button onclick="enableMute()" >Mute</button> | 
             <button onclick="disableMute() ; playSound()" >Unmute</button>
+        </li><br>
+            <li>
+        <!--Sound choices-->
+            <button onclick="playSound1(); sound1()">1</button>  | 
+            <button onclick="playSound2(); sound2()">2</button>  | 
+            <button onclick="playSound3(); sound3()">3</button>  | 
+            <button onclick="playSound4(); sound4()">4</button>  |
+            <button onclick="playSound5(); sound5()">5</button>    
         </li>
             <br>
         <li>
@@ -66,14 +76,11 @@
             <button onclick="playSound(); resizeText(1)" id="plustext">+</button>  | 
             <button onclick="playSound(); resizeText(-1)" id="minustext">-</button>
         </li>
-            <br>
-            <li>
-        <!--Shake enabled-->
-            <button onclick="playSound1(); sound1()">1</button>  | 
-            <button onclick="playSound(); sound2()">2</button>  | 
-            <button onclick="playSound(); sound3()">3</button>  | 
-            <button onclick="playSound(); sound4()">4</button>  |
-            <button onclick="playSound(); sound5()">5</button>  |  
+             <br>
+        <li>
+        <!--Shake enabler-->
+            <button onclick="shake(); playSound()" >Shake</button> | 
+            <button onclick="noshake() ; playSound()" >No Shake</button>
         </li>
         </ul>
     </li>
@@ -132,6 +139,7 @@
 
     <script src="/js/app.js"></script>
     <script src="/js/sound.js"></script>
+    <script src="/js/buttonshake.js"></script>
     <script src="/js/stylesheetswitcher.js"></script>
     <script src= "/js/resizetext.js"></script> 
 </body>
