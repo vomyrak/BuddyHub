@@ -1,0 +1,16 @@
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\USB_Detector\bin\Debug\USB_Detector.exe.config
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\USB_Detector\bin\Debug\USB_Detector.exe
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\USB_Detector\bin\Debug\USB_Detector.pdb
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\USB_Detector\obj\Debug\USB_Detector.csprojAssemblyReference.cache
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\USB_Detector\obj\Debug\USB_Detector.Form1.resources
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\USB_Detector\obj\Debug\USB_Detector.Properties.Resources.resources
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\USB_Detector\obj\Debug\USB_Detector.csproj.GenerateResource.cache
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\USB_Detector\obj\Debug\USB_Detector.csproj.CoreCompileInputs.cache
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\USB_Detector\obj\Debug\USB_Detector.exe
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\USB_Detector\obj\Debug\USB_Detector.pdb
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\USB_Detector\bin\Debug\USBHIDDRIVER.dll
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\USB_Detector\bin\Debug\nunit.framework.dll
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\USB_Detector\bin\Debug\USBHIDDRIVER.pdb
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\USB_Detector\bin\Debug\USBHIDDRIVER.xml
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\USB_Detector\bin\Debug\nunit.framework.xml
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\USB_Detector\obj\Debug\USB_Detector.csproj.CopyComplete
