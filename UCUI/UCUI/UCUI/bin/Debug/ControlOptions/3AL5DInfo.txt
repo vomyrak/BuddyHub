@@ -1,0 +1,6 @@
+false true false true false true false true false
+false
+Robotic arm
+Control the movement of a Lynxmotion AL5D robotic arm
+\\images\\arm.png
+Forward Left Right Back
