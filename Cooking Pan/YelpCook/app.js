@@ -18,7 +18,6 @@ var Step = require("./models/step"),
     Temperature = require("./models/temp");
 
 // SOCKET setup
-
 io.on('connection', function(socket) {
     function getTemp() {
         Temperature.findOne({}, {}, {sort: {"created_at": -1}}, function(err, data) {
@@ -33,8 +32,7 @@ io.on('connection', function(socket) {
     setInterval(getTemp, 500);
 });
 
-//ROUTS
-
+//ROUTES
 app.get("/", function(req, res){
     res.render("landing");
 });
@@ -71,7 +69,6 @@ app.get("/recipe/:id/:stepid", function(req,res){
             console.log(err);
         } else {
             res.render("step", {recipe: foundRecipe, stepid: req.params.stepid});
-    //        console.log(foundRecipe);
         }
     });
 });

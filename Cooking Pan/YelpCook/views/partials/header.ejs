@@ -5,21 +5,9 @@
         <base href="/">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../css/landing.css">
-        <script src="/socket.io/socket.io.js"></script>
         <script type='text/javascript' src='http://code.jquery.com/jquery-1.9.1.js'></script>
-        <script type="text/javascript">
-            var socket;
-            function onLoad() {
-                socket = io.connect('http://localhost:3000/');
-                socket.on('connect', function() {
-                    this.on('newTemp', function(data) {
-                        $('#temperature').text(data);
-                    });
-                });
-            }
-        </script>
     </head>
-    <body onload="onLoad()">
+    <body>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">

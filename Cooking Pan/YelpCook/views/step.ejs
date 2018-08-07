@@ -1,9 +1,16 @@
 <% include partials/header %>
 
+<script type="text/javascript" src= "/timer/easytimer.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="/js/step.js"></script>
+<script type="text/javascript">
+	getTimer(120);
+</script>
+
 <div class="container">
   <div class="row">
 
-    <h1 style="text-align: center">Please follow the instructions below</h1>
+    <h1 style="text-align: center">Temperature: <span id="temperature-reading"></span></h1>
 
     <!-- The code below displays the previous step button for each step apart from the very first one -->
 
@@ -20,17 +27,13 @@
   <!-- The code below introduces the timer -->
 
     <div style="text-align: center" class="container">
-  	<p>Timer
+  	<h1>Timer
       <div id="countdownExample">
-          <div class="values"></div>
+          <h2><div class="values"></div></h2>
       </div>
   	<!-- Need this -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-  	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-  	<script type="text/javascript" src= "/timer/easytimer.min.js"></script>
-  	<script type="text/javascript" src="/timer/timer.js"></script>
-    </p>
+  	
+    </h1>
     </div>
 
     <!-- The code below displays the next step button for each step apart from the very last one and shows instruction -->
