@@ -19,3 +19,9 @@ p{
          url('fonts/lexiereadable-regular-webfont.svg#lexie_readableregular') format('svg');
     font-weight: normal;
     font-style: normal;}
+
+/* This is for the previous next step buttons */
+
+	#myCarousel {
+	margin-top:52px;
+	}
