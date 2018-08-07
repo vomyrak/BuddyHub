@@ -10,6 +10,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using Newtonsoft.Json;
+using System.Net.Http;
 
 namespace CSharpServer
 {
@@ -115,7 +116,7 @@ namespace CSharpServer
             {
                 try
                 {
-                    
+
                     int actionType = int.Parse(parsedRequest[0]);
                     switch (actionType)
                     {
@@ -127,6 +128,17 @@ namespace CSharpServer
                             return QueryDeviceInfo(parsedRequest[1], parsedRequest[2]);
                         case (int)Action.CallFunction:
                             return parsedRequest[1] + "/" + parsedRequest[2] + "/" + parsedRequest[3];
+                        case (int)Action.PostToServer:
+                            using (HttpClient client = new HttpClient())
+                            {
+                                client.BaseAddress = new Uri(parsedRequest[1]);
+                                client.DefaultRequestHeaders
+                                    .Accept
+                                    .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, parsedRequest[2]);
+                                message.Content = new StringContent("\"input\":\"hello\"", Encoding.UTF8, "aplication/json");
+                                client.SendAsync(message);
+                            }
                         default:
                             throw new InvalidActionException("Not a valid action to perform.");
 
@@ -141,6 +153,7 @@ namespace CSharpServer
                     return "";
                 }
             }
+
         }
 
 

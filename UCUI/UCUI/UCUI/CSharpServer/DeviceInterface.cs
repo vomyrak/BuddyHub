@@ -16,7 +16,8 @@ namespace CSharpServer
         Test,
         CheckName,
         CheckIds,
-        CallFunction
+        CallFunction,
+        PostToServer
     }
 
     public class DeviceInterface
