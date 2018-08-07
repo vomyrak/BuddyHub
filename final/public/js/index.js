@@ -23,21 +23,9 @@ $(document).ready(function() {
     // corresponding html id.
     // If a tab of selected device had not been created,
     // Create the tab, and link it to the tab content
-    if (!tabs.includes(unspacedDeviceName)) {
-      $("#mCSB_1_container").append("<ul class=\"list-unstyled components tabs\"><li class=\"active\"><a class=\"tabtext\" href=\"/device?selected=" + deviceName + "\" id=\"#tabname" + unspacedDeviceName + "\">" + deviceName + "</a></li></ul>");
-      tabs.push(unspacedDeviceName);
+    if (!tabs.includes(deviceName)) {
+      $(".components").append("<li><a  onclick=\"playSound()\" class=\"tabtext\" href=\"/device?selected=" + deviceName + "\" id=\"#tabname" + unspacedDeviceName + "\">" + deviceName + "</a></li>");
+      tabs.push(deviceName);
     }
   })
 });
-
-window.onload = function(e) {
-  var cookie = readCookie("tabs");
-  tabs = cookie ? cookie : [];
-  for (i = 0; i < title.length; i++) {
-    $("#mCSB_1_container").append("<ul class=\"list-unstyled components tabs\"><li class=\"active\"><a class=\"tabtext\" href=\"/device?selected=" + deviceName + "\" id=\"#tabname" + unspacedDeviceName + "\">" + deviceName + "</a></li></ul>");
-  }
-}
-
-window.onunload = function(e) {
-    // document.cookie = "tabs="+JSON.stringify(tabs)+"";
-}
