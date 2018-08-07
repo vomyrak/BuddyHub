@@ -23,7 +23,7 @@ $(document).ready(function() {
     // If a tab of selected device had not been created,
     // Create the tab, and link it to the tab content
     if (!tabs.includes(unspacedDeviceName)) {
-      $("#home-tab").append("<li class=\"active\"><a href=\"#tab" + unspacedDeviceName + "\" id=\"#tabname" + unspacedDeviceName + "\">" + deviceName + "</a></li>");
+      $("#home-tab").append("<li class=\"active\"><a class=\"tabtext\" href=\"#tab" + unspacedDeviceName + "\" id=\"#tabname" + unspacedDeviceName + "\">" + deviceName + "</a></li>");
       tabs.push(unspacedDeviceName);
     }
 

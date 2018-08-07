@@ -3,110 +3,173 @@
 
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="../css/tether.css">
-  <link rel="stylesheet" href="../css/bootstrap.min.css">
-  <link href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" />
-  <link rel="stylesheet" title="default" type="text/css" href="../css/style.css" />
-  <link rel="alternate stylesheet" type="text/css" href="../css/style2.css" title="alternate" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Universal Controller 2.0</title>
+
+
+  <link rel="stylesheet" href="./css/buttonshake.css" />
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+  <!-- <link href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" /> -->
+
+  <!-- Our Custom CSS -->
+  <link rel="stylesheet" title="default" type="text/css" href="./css/style.css" />
+  <link rel="alternate stylesheet" type="text/css" href="./css/style2.css" title="alternate" />
+
+  <!-- Scrollbar Custom CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+  <!-- Font Awesome JS -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="./css/tether.css">
 </head>
 
 <body id="myBody">
 
-  <!--Collapsible style changer-->
-
-  <div class="pos-f-t">
-    <nav class="navbar navbar-dark bg-dark">
-      <button onclick="playSound()" id="menu" type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-    </button>
+  <!-- Menu -->
+  <div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <h2>Hi, Rachel</h2>
+      </div>
+      <ul class="list-unstyled components">
+        <li>
+          <a href="#" onclick="playSound()">Home</a>
+        </li>
+      </ul>
+      <ul class="list-unstyled CTAs">
+        <li>
+          <!--Change theme-->
+          <a href="#settings" onclick="playSound()" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Settings</a>
+          <ul margin="centre" class="collapse list-unstyled" id="settings">
+            <li align:center>
+              <button onclick="playSound(); setActiveStyleSheet('default'); return false;">Light</button> | <button onclick="playSound(); setActiveStyleSheet('alternate'); return false;">Dark</button>
+            </li>
+            <br>
+            <li>
+              <!--Sound enabler-->
+              <button onclick="enableMute()">Mute</button> |
+              <button onclick="disableMute() ; playSound()">Unmute</button>
+            </li><br>
+            <li>
+              <!--Sound choices-->
+              <button onclick="playSound1(); sound1()">1</button> |
+              <button onclick="playSound2(); sound2()">2</button> |
+              <button onclick="playSound3(); sound3()">3</button> |
+              <button onclick="playSound4(); sound4()">4</button> |
+              <button onclick="playSound5(); sound5()">5</button>
+            </li>
+            <br>
+            <li>
+              <!--Change size-->
+              <button onclick="playSound(); resizeText(1)" id="plustext">+</button> |
+              <button onclick="playSound(); resizeText(-1)" id="minustext">-</button>
+            </li>
+            <br>
+            <li>
+              <!--Shake enabler-->
+              <button onclick="shake(); playSound()">Shake</button> |
+              <button onclick="noshake() ; playSound()">No Shake</button>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </nav>
-    <div class="collapse" id="navbarToggleExternalContent">
-      <div class="bg-dark p-4">
-        <!--Change theme-->
-        <a href="#" onclick="playSound(); setActiveStyleSheet('default'); return false;">Light</a> |
-        <a href="#" onclick="playSound(); setActiveStyleSheet('alternate'); return false;">Dark</a>
-
-        <BR></BR>
-
-        <!--Change size-->
-        <a href="javascript:void(0);" onclick="playSound(); resizeText(1)" id="plustext">+</a> | <a href="javascript:void(0);" onclick="playSound(); resizeText(-1)" id="minustext">-</a>
-        <!--Sound-->
-        <Br></Br>
-        <audio id="play" src="http://www.soundjay.com/button/beep-07.wav"></audio>
-
-        <button onclick="enableMute()" type="button">Mute sound</button>
-        <button onclick="disableMute()" type="button">Enable sound</button>
-
-      </div>
-    </div>
-
   </div>
 
-  <div class="container">
-    <Br></Br>
-    <H1 style="text-align: center; font-size : 2.0em; font-weight: bolder">Universal Controller 2.0</H1>
-    <ul class="nav nav-tabs" role="tablist" id="home-tab">
-      <li class="active">
-        <a href="#tab1">Home</a>
-      </li>
-    </ul>
-  </div>
-  <section id="tab1" class="tab-content active">
+  <!-- Page Content -->
+  <div id="content">
     <div class="container">
+      <!-- Button for collapsing menu -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
 
-      <!-- Select devices -->
-      <select onclick="playSound()" class="dropdown" id="device" onChange="getObject(this.value)">
-        <option value="" disabled selected >Select</option>
-        <% devices.forEach(function(device) { %>
-        <option value="<%= device.device %>"><%= device.device %></option>
-        <% }); %>
-        </select>
+          <button type="button" onclick="playSound()" id="sidebarCollapse" class="btn btn-dark">
+                <i class="fas fa-align-left"></i>
+                <span>Toggle Sidebar</span>
+            </button>
+        </div>
+      </nav>
 
-
-      <div style="padding:30px 20px; width:300px; margin:auto">
-        <button onclick="playSound()" type="button" id='create_me' class="ui-btn ui-corner-all ui-btn-b ui-btn-icon-left ui-icon-check" style="font-size : 1.0em">Add Device</button>
-      </div>
-
+      <!-- Title -->
+      <Br></Br>
+      <H1 style="text-align: center; font-size : 2.0em; font-weight: bolder">Universal Controller 2.0</H1>
+      <ul class="nav nav-tabs" role="tablist" id="home-tab">
+        <li class="active">
+          <a class="tabtext" href="#tab1">Home</a>
+        </li>
+      </ul>
     </div>
-  </section>
 
-  <!-- Create tab content for each device -->
-  <% devices.forEach(function(device) { %>
-    <section id="tab<%= device.device.replace(/\s/g, '') %>" class="tab-content hide">
-      <!-- Produce a button for each method -->
-      <% device.methods.forEach(function(method) { %>
-        <!-- If text input required, generate a text box -->
-        <%if (method.text_input_field != '') { %>
-          <div class="col-sm-12">
-            <input class="input-textbox" id="textbox<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='' />
-          </div>
-          <% } %>
-            <div>
-              <!-- Store the information for http request in the hidden input fields -->
-              <input type="hidden" id="http_method<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.http_method %>' />
-              <input type="hidden" id="link<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.link %>' />
-              <input type="hidden" id="data<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.data %>' />
-              <input type="hidden" id="headers<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.headers %>' />
-              <input type="hidden" id="callback_function<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.callback_function %>' />
-              <input type="hidden" id="text_input_field<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.text_input_field %>' />
-              <button onclick="sendRequest(this)" style="padding:30px 30px; margin: 15px auto; width:300px; font-size : 1.0em;" class="method-button ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check" type="submit" value="<%= method.method %><%= device.device.replace(/\s/g, '') %>"
-                id='<%= method.method %><%= device.device.replace(/\s/g, ' ') %>'><%= method.method %></button>
-            </div>
-            <% }); %>
+    <!-- Main tab -->
+    <section id="tab1" class="tab-content active">
+      <div class="container">
+
+        <!-- Select devices -->
+        <select onclick="playSound()" class="dropdown" id="device" onChange="getObject(this.value)">
+            <option value="" disabled selected >Select</option>
+            <% devices.forEach(function(device) { %>
+              <option value="<%= device.device %>"><%= device.device %></option>
+              <% }); %>
+          </select>
+
+
+        <div style="padding:30px 20px; width:300px; margin:auto">
+          <button onclick="playSound()" type="button" id='create_me' class="ui-btn ui-corner-all ui-btn-b ui-btn-icon-left ui-icon-check" style="font-size : 1.0em">Add Device</button>
+        </div>
+
+      </div>
     </section>
-    <% }); %>
 
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-      <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-      <script src="../js/tether.js"></script>
-      <script src="../js/bootstrap.min.js"></script>
-      <script src="../js/sound.js"></script>
-      <script src="../js/index.js"></script>
-      <script src="../js/http.js"></script>
-      <script src="../js/stylesheetswitcher.js"></script>
-      <script src="../js/resizetext.js"></script>
-      <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-      <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js'></script>
+    <!-- Create tab content for each device -->
+    <% devices.forEach(function(device) { %>
+      <section id="tab<%= device.device.replace(/\s/g, '') %>" class="tab-content hide">
+        <!-- Produce a button for each method -->
+        <% device.methods.forEach(function(method) { %>
+          <!-- If text input required, generate a text box -->
+          <%if (method.text_input_field != '') { %>
+            <div class="col-sm-12">
+              <input class="input-textbox" id="textbox<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='' />
+            </div>
+            <% } %>
+              <div>
+                <!-- Store the information for http request in the hidden input fields -->
+                <input type="hidden" id="http_method<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.http_method %>' />
+                <input type="hidden" id="link<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.link %>' />
+                <input type="hidden" id="data<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.data %>' />
+                <input type="hidden" id="headers<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.headers %>' />
+                <input type="hidden" id="callback_function<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.callback_function %>' />
+                <input type="hidden" id="text_input_field<%= method.method %><%= device.device.replace(/\s/g, '') %>" value='<%= method.text_input_field %>' />
+                <button onclick="sendRequest(this)" style="font-size : 1.0em; width: 100%;" class="method-button" type="submit" value="<%= method.method %><%= device.device.replace(/\s/g, '') %>" id='<%= method.method %><%= device.device.replace(/\s/g, ' ') %>'><%= method.method %></button>
+              </div>
+              <% }); %>
+      </section>
+      <% }); %>
+  </div>
+
+  <!-- jQuery CDN - Slim version (=without AJAX) -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <!-- Popper.JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  <!-- jQuery Custom Scroller CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+  <script src="../js/buttonshake.js"></script>
+  <script src="../js/tether.js"></script>
+  <script src="../js/sound.js"></script>
+  <script src="../js/index.js"></script>
+  <script src="../js/http.js"></script>
+  <script src="../js/stylesheetswitcher.js"></script>
+  <script src="../js/resizetext.js"></script>
+  <script src="../js/menu.js"></script>
 
 </body>
 

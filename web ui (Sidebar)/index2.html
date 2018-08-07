@@ -9,14 +9,14 @@
     <title>Universal Controller 2.0</title>
 
 
-     <link rel="stylesheet" href="/css/buttonshake.css" />
+     <link rel="stylesheet" href="./css/buttonshake.css" />
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    
+
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" title="default" type="text/css" href="/css/style.css" />
-    <link rel= "alternate stylesheet" type= "text/css" href= "/css/style2.css" title="alternate" />
-    
+    <link rel="stylesheet" title="default" type="text/css" href="./css/style.css" />
+    <link rel= "alternate stylesheet" type= "text/css" href= "./css/style2.css" title="alternate" />
+
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
@@ -24,12 +24,12 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href= "/css/tether.css">
+    <link rel="stylesheet" href= "./css/tether.css">
 </head>
 
 <body>
 
-    
+
     <div class="wrapper">
         <!-- Sidebar  -->
         <nav id="sidebar">
@@ -38,7 +38,7 @@
             </div>
 
             <ul class="list-unstyled components">
-                
+
                 <li>
                     <a href="#" onclick="playSound()" >Home</a>
                 </li>
@@ -46,9 +46,9 @@
             </ul>
 
             <ul class="list-unstyled CTAs">
-      
 
-  
+
+
     <li>
         <!--Change theme-->
         <a href="#settings" onclick="playSound()"  data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Settings</a>
@@ -59,32 +59,32 @@
              <br>
         <li>
         <!--Sound enabler-->
-            <button onclick="enableMute()" >Mute</button> | 
+            <button onclick="enableMute()" >Mute</button> |
             <button onclick="disableMute() ; playSound()" >Unmute</button>
         </li><br>
             <li>
         <!--Sound choices-->
-            <button onclick="playSound1(); sound1()">1</button>  | 
-            <button onclick="playSound2(); sound2()">2</button>  | 
-            <button onclick="playSound3(); sound3()">3</button>  | 
+            <button onclick="playSound1(); sound1()">1</button>  |
+            <button onclick="playSound2(); sound2()">2</button>  |
+            <button onclick="playSound3(); sound3()">3</button>  |
             <button onclick="playSound4(); sound4()">4</button>  |
-            <button onclick="playSound5(); sound5()">5</button>    
+            <button onclick="playSound5(); sound5()">5</button>
         </li>
             <br>
         <li>
         <!--Change size-->
-            <button onclick="playSound(); resizeText(1)" id="plustext">+</button>  | 
+            <button onclick="playSound(); resizeText(1)" id="plustext">+</button>  |
             <button onclick="playSound(); resizeText(-1)" id="minustext">-</button>
         </li>
              <br>
         <li>
         <!--Shake enabler-->
-            <button onclick="shake(); playSound()" >Shake</button> | 
+            <button onclick="shake(); playSound()" >Shake</button> |
             <button onclick="noshake() ; playSound()" >No Shake</button>
         </li>
         </ul>
     </li>
-  
+
             </ul>
         </nav>
 
@@ -100,14 +100,14 @@
                     </button>
 
 
-    
+
                 </div>
             </nav>
 
 <h1 style="text-align: center font-size: 20em">Universal Controller 2.0</h1>
                <section id="tab1" class="tab-content active">
         <div class="container" >
-            
+
 
                 <!-- Select devices -->
          <select onclick="playSound()" class="dropdown" id="device" onChange = "getObject(this.value)">
@@ -121,7 +121,7 @@
         <div style="padding:30px 20px; width:300px; margin:auto">
             <button onclick="playSound()" type="button" id='create_me' class="ui-btn ui-corner-all ui-btn-b ui-btn-icon-left ui-icon-check" style="font-size : 1.0em">Add Device</button>
         </div>
-                            
+
         </div>
     </section>
         </div>
@@ -137,11 +137,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
 
-    <script src="/js/app.js"></script>
-    <script src="/js/sound.js"></script>
-    <script src="/js/buttonshake.js"></script>
-    <script src="/js/stylesheetswitcher.js"></script>
-    <script src= "/js/resizetext.js"></script> 
+    <script src="./js/app.js"></script>
+    <script src="./js/sound.js"></script>
+    <script src="./js/buttonshake.js"></script>
+    <script src="./js/stylesheetswitcher.js"></script>
+    <script src= "./js/resizetext.js"></script>
 </body>
 
 </html>
