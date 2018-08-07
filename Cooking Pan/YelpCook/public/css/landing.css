@@ -1,6 +1,11 @@
 .center {
 	margin: 0 auto;
-	background-color: paleturquoise;
+	/*background-color: bisque;*/
     max-width: 600px;
 	font-family: "Lexie Readable";
+	text-align: center;
+}
+body {
+	background: url(https://images.pexels.com/photos/349608/pexels-photo-349608.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+	background-size: cover;
 }
