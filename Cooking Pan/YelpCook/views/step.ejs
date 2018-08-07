@@ -3,9 +3,6 @@
 <script type="text/javascript" src= "/timer/easytimer.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="/js/step.js"></script>
-<script type="text/javascript">
-	getTimer(120);
-</script>
 
 <div class="container">
   <div class="row">
@@ -25,14 +22,13 @@
     <% } %>
 
   <!-- The code below introduces the timer -->
-
+  	<script type="text/javascript">getTimer(120);</script>
     <div style="text-align: center" class="container">
   	<h1>Timer
       <div id="countdownExample">
           <h2><div class="values"></div></h2>
       </div>
   	<!-- Need this -->
-  	
     </h1>
     </div>
 
