@@ -39,3 +39,7 @@
 /UCUI/UCUI/csharp-usb-hid-driver
 /UCUI/UCUI/packages
 /UCUI/UCUI/obj
+/UCUI/UCUI/.vs/UCUI
+/UCUI/UCUI/UCUI/CSharpServer/obj/Debug
+/UCUI/UCUI/UCUI/Plugin/Lynxmotion/obj/Debug
+/UCUI/UCUI/UCUI/CSharpServer/bin/Debug
