@@ -9,20 +9,31 @@
              d:DesignWidth="800">
   <Grid>
     <Border BorderThickness='3'
-            BorderBrush='#FF353535'
+            BorderBrush='{DynamicResource ThemeBrush}'
             HorizontalAlignment='Center'
             VerticalAlignment='Center'
             CornerRadius='15'
             Background='White'>
-      <StackPanel>
+      <ScrollViewer VerticalScrollBarVisibility='Auto'>
+        <ScrollViewer.Resources>
+          <Style x:Key="{x:Type ScrollBar}"
+                 TargetType="{x:Type ScrollBar}">
+            <Setter Property="MinWidth"
+                    Value="30" />
+          </Style>
+        </ScrollViewer.Resources>
+        
+        <StackPanel>
         <Grid MinHeight='250'
-              MinWidth='350'>
+              MinWidth='500'>
           <Grid.Resources>
             <Style x:Key="{x:Type CheckBox}"
                    TargetType="{x:Type CheckBox}">
               <Setter Property='HorizontalAlignment'
                       Value='Left' />
-              <Setter Property='FontFamily'
+                <Setter Property='VerticalAlignment'
+                        Value='Center' />
+                <Setter Property='FontFamily'
                       Value='Calibri' />
               <Setter Property='Margin'
                       Value='10' />
@@ -47,8 +58,9 @@
             <RowDefinition Height='3*' />
             <RowDefinition Height='3*' />
             <RowDefinition Height='3*' />
+            <RowDefinition Height='3*' />
           </Grid.RowDefinitions>
-          
+
           <Rectangle Grid.Row='1'
                      Grid.Column='0'
                      Grid.ColumnSpan='2'
@@ -56,15 +68,14 @@
                      Margin='10'
                      RadiusX='10'
                      RadiusY='10'
-                     Grid.RowSpan='2'/>
+                     Grid.RowSpan='2' />
           <TextBlock Text='Click a button and press a key to control it with'
-                     Grid.Row='1' 
+                     Grid.Row='1'
                      Grid.ColumnSpan='2'
                      HorizontalAlignment='Center'
                      FontFamily='Calibri'
                      FontSize='20'
-                     Margin='10'
-                     />
+                     Margin='10' />
           <Grid x:Name='BindGrid'
                 Grid.Row='2'
                 Grid.Column='0'
@@ -120,9 +131,9 @@
             <Button Grid.Row='3'
                     Grid.Column='2'
                     Content='Clear'
-                    Style='{StaticResource Shaker}' 
+                    Style='{StaticResource Shaker}'
                     Margin='28 5 28 5'
-                    Click='Clear_Click'/>
+                    Click='Clear_Click' />
           </Grid>
           <TextBlock TextWrapping='Wrap'
                      VerticalAlignment='Center'
@@ -133,8 +144,8 @@
                      Text='Settings'
                      FontSize='30'
                      Grid.Row='0'
-                     Grid.ColumnSpan='2' 
-                     x:Name='SettingsBlock'/>
+                     Grid.ColumnSpan='2'
+                     x:Name='SettingsBlock' />
           <CheckBox x:Name='AudioButton'
                     Grid.Row='3'
                     Grid.Column='0'
@@ -155,8 +166,31 @@
                     Grid.Column='1'
                     Content='Click on Hover'
                     IsChecked='{Binding IsHover, UpdateSourceTrigger=PropertyChanged}' />
-          <Button Grid.Row='5'
-                  Grid.Column='0' 
+          <CheckBox x:Name='FullScreenButton'
+                    Grid.Row='5'
+                    Content='Full Screen'
+                    IsChecked='{Binding IsFull, UpdateSourceTrigger=PropertyChanged}' />
+
+          <StackPanel Grid.Row='5'
+                      Grid.Column='1'
+                      Orientation='Horizontal'
+                      HorizontalAlignment='Center'
+                      VerticalAlignment='Center'>
+            <TextBlock VerticalAlignment='Center'
+                       FontFamily='Calibri'
+                       FontSize='24'>Theme:</TextBlock>
+            <ComboBox x:Name='ThemeBox'
+                      Margin='10'
+                      MinHeight='40'
+                      Style='{StaticResource theComboBox}'
+                      SelectionChanged='ComboBox_SelectionChanged'>
+              <ComboBoxItem IsSelected='True'>Modest</ComboBoxItem>
+              <ComboBoxItem>Colorful</ComboBoxItem>
+            </ComboBox>
+          </StackPanel>
+
+          <Button Grid.Row='6'
+                  Grid.Column='0'
                   Grid.ColumnSpan='2'
                   Content='Save Settings'
                   HorizontalAlignment='Center'
@@ -165,11 +199,12 @@
                   Margin='10'
                   Click='Save_Click'
                   MinWidth='150'
-                  MinHeight='60'/>
+                  MinHeight='60' />
 
         </Grid>
 
       </StackPanel>
+      </ScrollViewer>
     </Border>
   </Grid>
 </UserControl>

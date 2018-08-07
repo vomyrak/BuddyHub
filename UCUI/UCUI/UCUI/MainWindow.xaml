@@ -16,41 +16,35 @@
         KeyDown='Window_KeyDown'
         KeyUp='Window_KeyUp'>
 
-  <Grid >
+  <Grid>
     <Rectangle Name='Overlay'
                Fill='#7F000000'
-               Visibility='Collapsed' 
-               Panel.ZIndex='1'/>
-
-    <Button Visibility='Collapsed'
-            Name='Outside'
-            Click='Outside_Click'
-            Opacity='0'
-            Background='#00000000'
-            BorderBrush='#00000000'
-            Panel.ZIndex='2'/>
+               Visibility='Collapsed'
+               Panel.ZIndex='1'
+               MouseUp='Outside_Click' />
 
     <views:HelpView x:Name='HelpView'
-                    Visibility='Collapsed' 
-                    Panel.ZIndex='3'/>
+                    Visibility='Collapsed'
+                    Panel.ZIndex='3' />
 
     <views:SettingsView x:Name='SettingsView'
-                        Visibility='Collapsed' 
-                        Panel.ZIndex='3'/>
+                        Visibility='Collapsed'
+                        Panel.ZIndex='3' />
 
     <DockPanel x:Name='MainView'
                Panel.ZIndex='0'>
-      <StackPanel Background='#FF353535'
+      <StackPanel Background='{DynamicResource ThemeBrush}'
                   DockPanel.Dock='Top'
                   Orientation='Horizontal'>
         <Image x:Name='HeaderPic'
                MaxHeight='24'
                Margin='5 0 10 0' />
         <TextBlock x:Name='TitleBlock'
-                   Background='#FF353535'
+                   Background='#00000000'
                    FontSize='26'
                    FontWeight='Bold'
-                   Foreground='White' />
+                   Foreground='White' 
+                   Text='{Binding Message}'/>
       </StackPanel>
 
       <Grid>
@@ -63,7 +57,7 @@
           <RowDefinition Height='1*' />
         </Grid.RowDefinitions>
         <Expander ExpandDirection='Right'
-                  Background="#FF353535"
+                  Background="{DynamicResource ThemeBrush}"
                   IsExpanded='True'>
 
           <Expander.HeaderTemplate>
@@ -76,13 +70,12 @@
             <TextBlock TextWrapping='Wrap'
                        Text='      Control Options       '
                        FontSize='24'
-                       Background="#FF353535"
+                       Background="{DynamicResource ThemeBrush}"
                        FontFamily="Calibri"
                        FontWeight="Bold"
                        Foreground="White"
-                       DockPanel.Dock='Top' 
-                       x:Name='OptionsHeader'
-                       />
+                       DockPanel.Dock='Top'
+                       x:Name='OptionsHeader' />
 
             <Grid DockPanel.Dock='Bottom'>
               <Grid.ColumnDefinitions>

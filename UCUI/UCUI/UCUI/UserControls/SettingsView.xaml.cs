@@ -33,6 +33,7 @@ namespace UCUI.UserControls
         {
             InitializeComponent();
 
+            //The code below saves space in the XAML for populating the grid with visuals
             ImageArray = new Image[9];
             TextBoxArray = new TextBox[9];
             for (int i = 0; i < 9; i++)
@@ -50,15 +51,39 @@ namespace UCUI.UserControls
                 TextBoxArray[i].PreviewKeyDown += Bind_PreviewKeyDown;
             }
 
-            string lines = System.IO.File.ReadAllText("UCConfig.txt");
-            string[] words = lines.Split(' ');
-            for (int j = 0; j < 9; j++)
+            if (File.Exists("UCConfig.txt"))
             {
+                try
+                {
+                    string lines = System.IO.File.ReadAllText("UCConfig.txt");
 
-                if (words[j] != "null") TextBoxArray[j].Text = words[j];
+                    string[] words = lines.Split(' ');
+
+                    for (int i = 0; i < 9; i++)
+                    {
+                        UCSettings.SetKey(words[i], i);
+                    }
+                    ((UCSettings)App.Current.MainWindow.DataContext).IsCenter = words[9] == "True";
+                    ((UCSettings)App.Current.MainWindow.DataContext).IsHover = words[10] == "True";
+                    ((UCSettings)App.Current.MainWindow.DataContext).IsShake = words[11] == "True";
+                    ((UCSettings)App.Current.MainWindow.DataContext).IsSound = words[12] == "True";
+                    ((UCSettings)App.Current.MainWindow.DataContext).IsFull = words[13] == "True";
+
+                    for (int j = 0; j < 9; j++)
+                    {
+                        if (words[j] != "null") TextBoxArray[j].Text = words[j];
+                    }
+
+                    ThemeBox.SelectedIndex = Int32.Parse(words[14]);
+                }
+                catch (Exception)
+                {
+                    ((UCSettings)App.Current.MainWindow.DataContext).Message = "Could not load settings from UCConfig.txt";
+                }
             }
         }
 
+        //For TextBoxArray.Text sometimes Key.Tostring sometimes Text[0] is used, So things like LeftShift will show up, but not Oem-s.
         private void Bind_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             TextBox myTextBox = (TextBox)sender;
@@ -86,6 +111,7 @@ namespace UCUI.UserControls
            
         }
 
+        //Saves information of current state of settings so it can be loaded during startup next time.
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder sb = new StringBuilder();
@@ -97,8 +123,10 @@ namespace UCUI.UserControls
             sb.Append(CenterMouse.IsChecked.ToString()).Append(" ");
             sb.Append(HoverButton.IsChecked.ToString()).Append(" ");
             sb.Append(ShakeButton.IsChecked.ToString()).Append(" ");
-            sb.Append(AudioButton.IsChecked.ToString());
-            if(File.Exists("UCConfig.txt"))
+            sb.Append(AudioButton.IsChecked.ToString()).Append(" ");
+            sb.Append(FullScreenButton.IsChecked.ToString()).Append(" ");
+            sb.Append(ThemeBox.SelectedIndex.ToString());
+            if (File.Exists("UCConfig.txt"))
             System.IO.File.WriteAllText("UCConfig.txt", sb.ToString());
         }
 
@@ -108,6 +136,21 @@ namespace UCUI.UserControls
             {
                 TextBoxArray[i].Text = null;
                 UCSettings.SetKey("null", i);
+            }
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch(ThemeBox.SelectedIndex)
+            {
+                case 0:
+                    Application.Current.Resources["ThemeBrush"] = new SolidColorBrush((Color)Application.Current.Resources["myGray"]);
+                    Application.Current.Resources["ButtonBrush"] = new SolidColorBrush(Colors.Gray);
+                    break;
+                case 1:
+                    Application.Current.Resources["ThemeBrush"] = new SolidColorBrush(Colors.DarkSlateBlue);
+                    Application.Current.Resources["ButtonBrush"] = new SolidColorBrush(Colors.DarkTurquoise);
+                    break;
             }
         }
     }

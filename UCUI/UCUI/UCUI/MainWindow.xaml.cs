@@ -17,12 +17,6 @@ using System.Windows.Shapes;
 using UCUI.Models;
 using UCUI.UserControls;
 using System.Media;
-using CSharpServer;
-using System.Threading;
-using System.Windows.Interop;
-using System.Management;
-using System.Reflection;
-
 using System.Windows.Controls.Primitives;
 using System.IO;
 
@@ -34,24 +28,11 @@ namespace UCUI
     public partial class MainWindow : Window
     {
         private Button[] ButtonArray;
-        private Server server;
-        private DeviceInterface deviceInterface;
-        private HwndSource windowHandle;
-
-        // USB Message Constants
-        private const int WM_DEVICECHANGE = 0x219;
-        private const int WM_DEVICEARRIVAL = 0x8000;
-        private const int WM_DEVICEREMOVECOMPLETE = 0X8004;
-
-
-        // Threading Management
-        private Thread newThread;
-        private delegate void CallingDelegate();
 
         public MainWindow()
         {
-            InitializeComponent();
             DataContext = new UCSettings();
+            InitializeComponent();
             try
             {
                 ControlOptions.ItemsSource = ControlSource.Options;
@@ -61,155 +42,15 @@ namespace UCUI
                 TitleBlock.Text = "Make sure the Control Options folder is set up correctly!";
                 OptionsHeader.Text = "Couldn't list options";
             }
-            if (File.Exists("UCConfig.txt"))
-            {
-                try
-                {
-                    string lines = System.IO.File.ReadAllText("UCConfig.txt");
-
-                    string[] words = lines.Split(' ');
-
-                    for (int i = 0; i < 9; i++)
-                    {
-                        UCSettings.SetKey(words[i], i);
-                    }
-                    ((UCSettings)DataContext).IsCenter = words[9] == "True";
-                    ((UCSettings)DataContext).IsHover = words[10] == "True";
-                    ((UCSettings)DataContext).IsShake = words[11] == "True";
-                    ((UCSettings)DataContext).IsSound = words[12] == "True";
-                }
-                catch(Exception)
-                {
-                    TitleBlock.Text = "Could not load settings from UCConfig.txt";
-                }
-
-            }
-            // Server script
-            var serverThread = new Thread(ServerRoutine);
-            serverThread.Start();
-
-            // Obtain window handle and attach system message hook
-            var handle = new WindowInteropHelper(this).EnsureHandle();
-            windowHandle = HwndSource.FromHwnd(handle);
-            windowHandle.AddHook(new HwndSourceHook(WndProc));
-
-            ObtainDeviceInfo();
-
-        }
-        
-    
-
-
-        #region
-        // Region of Code for USB device events
-        /// <summary>
-        /// Callback function for message processing
-        /// </summary>
-        /// <param name="hwnd">Window Handle</param>
-        /// <param name="msg">Message</param>
-        /// <param name="wParam">Main Message</param>
-        /// <param name="lParam">Secondary Message</param>
-        /// <param name="handled"></param>
-        /// <returns></returns>
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            switch (msg)
-            {
-                case WM_DEVICECHANGE:
-                    switch ((uint)wParam.ToInt32()) {
-                        case WM_DEVICEARRIVAL:
-                            string deviceName = ObtainDeviceInfo();
-                            if (deviceName == "") MessageBox.Show("Device Not Found");
-                            else InitialiseDevice(deviceName);
-                            break;
-                        case WM_DEVICEREMOVECOMPLETE:
-                            CheckRemovedDevice();
-                            break;
-
-                    }
-                    break;
-            }
-            return IntPtr.Zero;
+            
         }
 
-        private void CheckRemovedDevice()
-        {
-            Thread thread = new Thread(() =>
-            {
-                ManagementClass USBClass = new ManagementClass("Win32_USBHUB");
-                System.Management.ManagementObjectCollection USBCollection = USBClass.GetInstances();
+        /*---------------------------
+         
+               UIElement events
 
-                foreach (System.Management.ManagementObject usb in USBCollection)
-                {
-                    string deviceId = usb["deviceid"].ToString();
-                    
-                    foreach (string registeredDevice in deviceInterface.ConnectedDeviceList.Keys.ToArray())
-                    {
-                        if (deviceId != deviceInterface.ConnectedDeviceList[registeredDevice].DeviceId)
-                        {
-                            deviceInterface.ConnectedDeviceList.Remove(registeredDevice);
-                            MessageBox.Show("Device Removed");
-                        }
-                    }
-                }
-            });
-            thread.Start();
-            thread.Join();
-        }
-        private string ObtainDeviceInfo()
-        {
-            string result = "";
-            Thread thread = new Thread(() =>
-            {
-                ManagementClass USBClass = new ManagementClass("Win32_USBHUB");
-                System.Management.ManagementObjectCollection USBCollection = USBClass.GetInstances();
+         ---------------------------*/
 
-                foreach (System.Management.ManagementObject usb in USBCollection)
-                {
-                    try
-                    {
-                        string deviceId = usb["deviceid"].ToString();
-                        if (deviceId == null)
-                        {
-                            throw new Exception("Device not found!");
-                        }
-                        else
-                        {
-
-
-                            int vidIndex = deviceId.IndexOf("VID_");
-                            //int vidIndex = 0;
-                            string startingAtVid = deviceId.Substring(vidIndex + 4); // + 4 to remove "VID_"                    
-                            string vid = startingAtVid.Substring(0, 4); // vid is four characters long
-
-                            int pidIndex = deviceId.IndexOf("PID_");
-                            string startingAtPid = deviceId.Substring(pidIndex + 4); // + 4 to remove "PID_"                    
-                            string pid = startingAtPid.Substring(0, 4); // pid is four characters long
-
-
-                            DeviceInfo newDeviceInfo = deviceInterface.QueryDeviceInfo(vid, pid);
-                            if (newDeviceInfo != null)
-                            {
-                                result = newDeviceInfo.Device;
-                                deviceInterface.AddDevice(result, new DeviceInterface.ControllerDevice(newDeviceInfo, deviceId));
-                                InitialiseDevice(result);
-                                //MessageBox.Show("Recognised Device Pluged in");
-                            }
-                        }
-                    }
-                    catch (Exception e) { }
-                }
-            });
-            thread.Start();
-            thread.Join();
-            return result;
-        }
-
-        private void InitialiseDevice(string deviceName)
-        {
-            deviceInterface.BindDevice(deviceName);
-        }
-        #endregion
         private void PageOpen(object sender, RoutedEventArgs e)
         {
             Button myButton = (Button)sender;
@@ -223,20 +64,22 @@ namespace UCUI
                     break;
             }
             Overlay.Visibility = Visibility.Visible;
-            Outside.Visibility = Visibility.Visible;
             MainView.Effect = new BlurEffect();
             CheckCenterMouse();
+            
         }
 
         private void Outside_Click(object sender, RoutedEventArgs e)
         {
             HelpView.Visibility = System.Windows.Visibility.Collapsed;
             SettingsView.Visibility = System.Windows.Visibility.Collapsed;
-            Outside.Visibility = Visibility.Collapsed;
             Overlay.Visibility = Visibility.Collapsed;
             MainView.Effect = null;
         }
 
+
+        //Every time the selection changes in the CotrolOptions listbox the 3x3 
+        //array of buttons in ButtonGrid is repolpulated. 
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ButtonGrid.Children.Clear();
@@ -245,23 +88,22 @@ namespace UCUI
             {
                 ButtonArray = new Button[9];
                 ControlOption myOption = (ControlOption)ControlOptions.SelectedItem;
-                int visibleButtonCounter=0;
+                int visibleButtonCounter=0;                                                             //Used to iterate through label array from ControlOption
+
                 for (int i = 0; i < 9; i++)
                 {
                     ButtonArray[i] = new Button();
 
                     if (myOption.buttonVisible[i])
                     {
-                        
-                        ButtonArray[i].Content = i.ToString();
-                        string disp = i.ToString();
+                        ButtonArray[i].Style = (Style)Application.Current.Resources["Pusher"];
                         ButtonArray[i].Name = "Button" + i.ToString();
                         ButtonArray[i].Content = myOption.buttonLabels[visibleButtonCounter];
                         ButtonArray[i].Margin = new Thickness(10, 10, 10, 10);
                         Grid.SetColumn(ButtonArray[i], i % 3 + 1);
                         Grid.SetRow(ButtonArray[i], i / 3 + 1);
                         ButtonGrid.Children.Add(ButtonArray[i]);
-                        ButtonArray[i].Style = (Style)Application.Current.Resources["Pusher"];
+                        
 
                         ButtonArray[i].PreviewMouseDown += delegate (object a, MouseButtonEventArgs b)
                         {
@@ -270,22 +112,6 @@ namespace UCUI
 
                         ButtonArray[i].Click += delegate (object a, RoutedEventArgs b)
                         {
-                            //deviceInterface.TestRoboticArm();
-                            MethodInfo methodToBind = deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "RelaxAllServos");
-                            ThreadStart threadStart = new ThreadStart(()=>
-                            {
-                                deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "setGripper_PW")
-                                    .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, new object[] { (short)500 });
-                                deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "updateServos")
-                                    .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, null);
-                            }
-                                );
-
-                            newThread = new Thread(threadStart);
-                            newThread.Start();
-                            newThread.Join();
-
-
                             CheckCenterMouse();
                         };
 
@@ -321,28 +147,18 @@ namespace UCUI
 
         }
 
-        private void CheckCenterMouse()
-        {
-            if (((UCSettings)DataContext).IsCenter)
-                UCMethods.SetPosition(this);
-
-        }
-
-        private void CheckSound()
-        {
-            if (((UCSettings)DataContext).IsSound)
-                UCMethods.PlayMySound();
-        }
-
-
-
+        //In Pusher style the multibinding animationcondition fires by comparing 
+        //the name of indiviudual buttons to a stored "Button that's supposed to 
+        //be pressed" string. This function changes that string, and fires the 
+        //click event. Alternatively a new dependencyproperty could have been 
+        //delared but this was simpler. 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (SettingsView.Visibility != Visibility.Visible)
             {
                 for (int i = 0; i < 9; i++)
                 {
-                    if (UCSettings.GetKey(i) == e.Key.ToString()&& ButtonArray[i].Content != null)
+                    if (UCSettings.GetKey(i).Equals(e.Key.ToString())&& ButtonArray[i].Content != null)
                     {
                         ((UCSettings)DataContext).ButtonKey = "Button" + i.ToString();
                         ButtonArray[i].RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
@@ -358,13 +174,17 @@ namespace UCUI
             ((UCSettings)DataContext).ButtonKey = "ButtonNull";
         }
 
-        private void ServerRoutine()
+        private void CheckCenterMouse()
         {
-            server = new Server();
-            deviceInterface = new DeviceInterface();
-            server.Run();
-            //deviceInterface.TestRoboticArm();
+            if (((UCSettings)DataContext).IsCenter)
+                UCMethods.SetPosition(this);
 
+        }
+
+        private void CheckSound()
+        {
+            if (((UCSettings)DataContext).IsSound)
+                UCMethods.PlayMySound();
         }
 
     }
