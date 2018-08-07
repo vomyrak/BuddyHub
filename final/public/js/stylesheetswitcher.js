@@ -52,11 +52,19 @@ window.onload = function(e) {
   var cookie = readCookie("style");
   var title = cookie ? cookie : getPreferredStyleSheet();
   setActiveStyleSheet(title);
+  var cookie = readCookie("tabs");
+  tabs = cookie ? JSON.parse(cookie) : [];
+  for (i = 0; i < tabs.length; i++) {
+    var deviceName = tabs[i];
+    var unspacedDeviceName = deviceName.replace(/\s/g, '');
+    $("#mCSB_1_container").append("<ul class=\"list-unstyled components tabs\"><li class=\"active\"><a class=\"tabtext\" href=\"/device?selected=" + deviceName + "\" id=\"#tabname" + unspacedDeviceName + "\">" + deviceName + "</a></li></ul>");
+  }
 }
 
 window.onunload = function(e) {
   var title = getActiveStyleSheet();
   createCookie("style", title, 365);
+  document.cookie = "tabs="+JSON.stringify(tabs)+"";
 }
 
 var cookie = readCookie("style");

@@ -15,30 +15,36 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
 }));
 
 // Config and connect to mongo database
-var options = {useNewUrlParser: true, auth: {authdb: "admin"}};
+var options = {
+  useNewUrlParser: true,
+  auth: {
+    authdb: "admin"
+  }
+};
 options.user = filereader.user;
 options.pass = filereader.pass;
-var connectString = "mongodb://"+filereader.dns+":27017/uc";
+var connectString = "mongodb://" + filereader.dns + ":27017/uc";
 mongoose.connect(connectString, options)
-    .then(() => console.log('Connected to MongoDB...'))
-    .catch(error => console.error('Failed to connect',error));
+  .then(() => console.log('Connected to MongoDB...'))
+  .catch(error => console.error('Failed to connect', error));
 
 // Model for mongo database
 const outputSchema = new mongoose.Schema({
-    device: String,
-    methods: [{
-      method: String,
-      description: String,
-      http_method: String,
-      link: String,
-      data: String,
-      headers: String,
-      callback_function: String,
-      text_input_field:String,
-      params: [{
-        param_field: String,
-        param_choices: [Number]}]
+  device: String,
+  methods: [{
+    method: String,
+    description: String,
+    http_method: String,
+    link: String,
+    data: String,
+    headers: String,
+    callback_function: String,
+    text_input_field: String,
+    params: [{
+      param_field: String,
+      param_choices: [Number]
     }]
+  }]
 });
 
 const OutputDevice = mongoose.model('outputDevices', outputSchema, 'outputDevices');
@@ -66,7 +72,7 @@ app.get('/', function(req, res) {
   //query.select('device');
 
 
-  query.exec(function (err, devices) {
+  query.exec(function(err, devices) {
     if (err) return handleError(err);
 
     res.render('index', {
@@ -75,20 +81,35 @@ app.get('/', function(req, res) {
   });
 });
 
+app.get('/device', function(req, res) {
+  // Render the page with all output devices in the menu
+  // Render the page with methods of the selected device
+  var query = OutputDevice.findOne({
+    device: req.query.selected
+  });
+  query.exec(function(error, selected) {
+    if (error) return handleError(error);
+
+    res.render('device', {
+      methods: selected.methods
+    });
+  });
+});
+
 app.post('/tts', function(req, res) {
   var input = req.body.input
   // Config json object to be send to the google tts API
   var data = {
-    input :{
+    input: {
       text: input
     },
-    voice :{
-      languageCode:'en-gb',
-      name:'en-GB-Standard-A',
-      ssmlGender:'FEMALE'
+    voice: {
+      languageCode: 'en-gb',
+      name: 'en-GB-Standard-A',
+      ssmlGender: 'FEMALE'
     },
-    audioConfig:{
-      audioEncoding:'MP3'
+    audioConfig: {
+      audioEncoding: 'MP3'
     }
   }
   xhttp = new XMLHttpRequest();
