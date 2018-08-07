@@ -2,7 +2,7 @@
 	margin: 0 auto;
 	/*background-color: bisque;*/
     max-width: 600px;
-	font-family: "Lexie Readable";
+	font-family: "lexie_readableregular";
 	text-align: center;
 }
 body {
@@ -11,9 +11,11 @@ body {
 }
 @font-face {
     font-family: 'lexie_readableregular';
-    src: url('lexiereadable-regular-webfont.woff2') format('woff2'),
-         url('lexiereadable-regular-webfont.woff') format('woff');
+    src: url('fonts/lexiereadable-regular-webfont.eot');
+    src: url('fonts/lexiereadable-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/lexiereadable-regular-webfont.woff2') format('woff2'),
+         url('fonts/lexiereadable-regular-webfont.woff') format('woff'),
+         url('fonts/lexiereadable-regular-webfont.ttf') format('truetype'),
+         url('fonts/lexiereadable-regular-webfont.svg#lexie_readableregular') format('svg');
     font-weight: normal;
     font-style: normal;
-
-}
