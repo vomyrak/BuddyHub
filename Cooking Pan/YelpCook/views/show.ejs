@@ -5,7 +5,7 @@
 
     <h1 style="text-align: center"><%=recipe.name%></h1>
 
-    <center><img src="<%=recipe.image%>"></center>
+    <center><img src="<%=recipe.image%>" width="40%"></center>
 
     <% recipe.instruction.forEach(function(step){ %>
         <p style="text-align: center">
@@ -17,5 +17,8 @@
 
   </div>
 </div>
+
+<link rel="stylesheet" type="text/css" href="/css/step.css">
+
 
 <% include partials/footer %>
