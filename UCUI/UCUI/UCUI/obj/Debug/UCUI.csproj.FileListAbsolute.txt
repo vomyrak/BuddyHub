@@ -40,3 +40,17 @@ C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\obj\Debug\UCUI.csproj.Genera
 C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\obj\Debug\UCUI.csproj.CoreCompileInputs.cache
 C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\obj\Debug\UCUI.exe
 C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\obj\Debug\UCUI.pdb
+C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\bin\Debug\CSharpServer.exe
+C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\bin\Debug\MongoDB.Bson.dll
+C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\bin\Debug\MongoDB.Driver.dll
+C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\bin\Debug\Newtonsoft.Json.dll
+C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\bin\Debug\MongoDB.Driver.Core.dll
+C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\bin\Debug\DnsClient.dll
+C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\bin\Debug\CSharpServer.pdb
+C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\bin\Debug\CSharpServer.exe.config
+C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\bin\Debug\MongoDB.Bson.xml
+C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\bin\Debug\MongoDB.Driver.xml
+C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\bin\Debug\Newtonsoft.Json.xml
+C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\bin\Debug\MongoDB.Driver.Core.xml
+C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\bin\Debug\DnsClient.xml
+C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\obj\Debug\UCUI.csproj.CopyComplete
