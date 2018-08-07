@@ -54,13 +54,22 @@ window.onload = function(e) {
   var cookiestyle = readCookie("style");
   var title = cookiestyle ? cookiestyle : getPreferredStyleSheet();
   setActiveStyleSheet(title);
+
   var cookietab = readCookie("tabs");
   tabs = cookietab ? JSON.parse(cookietab) : [];
+
   var cookiesound = readCookie("sound");
   audiolink = cookiesound ? cookiesound : 'http://www.soundjay.com/button/beep-07.wav';
   audio = new Audio(audiolink);
+  var cookiemuted = readCookie("muted");
+  audio.muted = cookiemuted ? JSON.parse(cookiemuted) : false;
+
+  var cookieshake = readCookie("shake");
+  stylesheet.disabled = cookieshake ? JSON.parse(cookieshake) : false;
+
   var cookiefontsize = readCookie("fontsize");
   document.body.style.fontSize = cookiefontsize ? cookiefontsize : "1.0em";
+
   for (i = 0; i < tabs.length; i++) {
     var deviceName = tabs[i];
     var unspacedDeviceName = deviceName.replace(/\s/g, '');
@@ -74,6 +83,8 @@ window.onunload = function(e) {
   document.cookie = "tabs=" + JSON.stringify(tabs) + "";
   document.cookie = "sound=" + audiolink + "";
   document.cookie = "fontsize=" + document.body.style.fontSize + "";
+  document.cookie = "muted=" + audio.muted + "";
+  document.cookie = "shake=" + stylesheet.disabled + "";
 }
 
 var cookie = readCookie("style");
