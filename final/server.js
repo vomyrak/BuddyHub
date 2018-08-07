@@ -89,9 +89,9 @@ app.get('/device', function(req, res) {
   });
   query.exec(function(error, selected) {
     if (error) return handleError(error);
-
+    console.log(selected);
     res.render('device', {
-      methods: selected.methods
+      device: selected
     });
   });
 });
