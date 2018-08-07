@@ -14,6 +14,6 @@ function getTimer(stepTime) {
 	    $('#countdownExample .values').html(timer.getTimeValues().toString());
 	});
 	timer.addEventListener('targetAchieved', function (e) {
-	    $('#countdownExample .values').html('KABOOM!!');
+	    setInterval($('#countdownExample .values').toggleClass("alert"), 1000);
 	});
 }
