@@ -9,3 +9,11 @@ body {
 	background: url(https://images.pexels.com/photos/349608/pexels-photo-349608.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
 	background-size: cover;
 }
+@font-face {
+    font-family: 'lexie_readableregular';
+    src: url('lexiereadable-regular-webfont.woff2') format('woff2'),
+         url('lexiereadable-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
