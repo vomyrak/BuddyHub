@@ -5,15 +5,15 @@
 
     <h1 style="text-align: center"><%=recipe.name%></h1>
 
-    <img src="<%=recipe.image%>">
+    <center><img src="<%=recipe.image%>"></center>
 
     <% recipe.instruction.forEach(function(step){ %>
-        <p>
+        <p style="text-align: center">
           <strong><%= step.stepnumber %></strong> - <%= step.step %>
         </p>
     <%});%>
 
-    <a href="/recipe/<%= recipe._id%>/<%= recipe.instruction[0]._id%>" class="btn btn-primary">START COOKING</a>
+    <center><a href="/recipe/<%= recipe._id%>/<%= recipe.instruction[0]._id%>" class="btn btn-primary">START COOKING</a></center>
 
   </div>
 </div>
