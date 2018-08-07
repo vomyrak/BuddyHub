@@ -10,6 +10,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using Newtonsoft.Json;
+using System.Net.Http;
 
 namespace CSharpServer
 {
@@ -17,6 +18,8 @@ namespace CSharpServer
     {
         private static List<DeviceInfo> connectedDeviceList;
         private static WebServer ws;
+        private static HttpClient client;
+        public DeviceInterface DeviceInterface { get; set; }
 
         /// <summary>
         /// Constructor Server class
@@ -25,6 +28,7 @@ namespace CSharpServer
         {
             connectedDeviceList = new List<DeviceInfo>();
             ws = new WebServer(this.SendResponse, "http://localhost:8080/");
+            client = new HttpClient();
         }
 
         /// <summary>
@@ -108,6 +112,7 @@ namespace CSharpServer
         /// <returns>A string corresponding to the status of the operation</returns>
         public string SendResponse(HttpListenerRequest request)
         {
+            
             // Parse the request string and return requested result as a string
             string[] parsedRequest = request.RawUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
             if (parsedRequest.Length == 0) return "";
@@ -115,7 +120,7 @@ namespace CSharpServer
             {
                 try
                 {
-                    
+
                     int actionType = int.Parse(parsedRequest[0]);
                     switch (actionType)
                     {
@@ -127,6 +132,16 @@ namespace CSharpServer
                             return QueryDeviceInfo(parsedRequest[1], parsedRequest[2]);
                         case (int)Action.CallFunction:
                             return parsedRequest[1] + "/" + parsedRequest[2] + "/" + parsedRequest[3];
+                        case (int)Action.PostToServer:
+                            
+                            var message = new Dictionary<string, string> { { "input", "thanks" } };
+                            var content = new StringContent(JsonConvert.SerializeObject(message));
+                            content.Headers.Clear();
+                            content.Headers.Add("Content-Type", "application/json");
+                            
+                            var result = PostToRemoteServerAsync(parsedRequest[1] + "/" + parsedRequest[2], content);
+                            return result.Result;
+                   
                         default:
                             throw new InvalidActionException("Not a valid action to perform.");
 
@@ -140,6 +155,23 @@ namespace CSharpServer
                     Console.WriteLine(e);
                     return "";
                 }
+            }
+
+        }
+
+        private async Task<string> PostToRemoteServerAsync(string host, StringContent message)
+        {
+            try
+            {
+                var response = await client.PostAsync("https://wsurop18-universal-controller.herokuapp.com/tts", message);
+
+                var responseString = await response.Content.ReadAsStringAsync();
+                return responseString;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return "";
             }
         }
 

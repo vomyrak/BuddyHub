@@ -35,7 +35,7 @@ namespace UCUI
     {
         private Button[] ButtonArray;
         private Server server;
-        private DeviceInterface deviceInterface;
+
         private HwndSource windowHandle;
 
         // USB Message Constants
@@ -144,11 +144,11 @@ namespace UCUI
                 {
                     string deviceId = usb["deviceid"].ToString();
                     
-                    foreach (string registeredDevice in deviceInterface.ConnectedDeviceList.Keys.ToArray())
+                    foreach (string registeredDevice in server.DeviceInterface.ConnectedDeviceList.Keys.ToArray())
                     {
-                        if (deviceId != deviceInterface.ConnectedDeviceList[registeredDevice].DeviceId)
+                        if (deviceId != server.DeviceInterface.ConnectedDeviceList[registeredDevice].DeviceId)
                         {
-                            deviceInterface.ConnectedDeviceList.Remove(registeredDevice);
+                            server.DeviceInterface.ConnectedDeviceList.Remove(registeredDevice);
                             MessageBox.Show("Device Removed");
                         }
                     }
@@ -188,12 +188,12 @@ namespace UCUI
                             string pid = startingAtPid.Substring(0, 4); // pid is four characters long
 
 
-                            DeviceInfo newDeviceInfo = deviceInterface.QueryDeviceInfo(vid, pid);
+                            DeviceInfo newDeviceInfo = server.DeviceInterface.QueryDeviceInfo(vid, pid);
                             if (newDeviceInfo != null)
                             {
                                 newDeviceInfo.ToFile("newDevice");
                                 result = newDeviceInfo.Device;
-                                deviceInterface.AddDevice(result, new DeviceInterface.ControllerDevice(newDeviceInfo, deviceId));
+                                server.DeviceInterface.AddDevice(result, new DeviceInterface.ControllerDevice(newDeviceInfo, deviceId));
                                 InitialiseDevice(result);
                                 //MessageBox.Show("Recognised Device Pluged in");
                             }
@@ -209,7 +209,7 @@ namespace UCUI
 
         private void InitialiseDevice(string deviceName)
         {
-            deviceInterface.BindDevice(deviceName);
+            server.DeviceInterface.BindDevice(deviceName);
         }
         #endregion
         private void PageOpen(object sender, RoutedEventArgs e)
@@ -274,16 +274,17 @@ namespace UCUI
                         {
                             //deviceInterface.TestRoboticArm();
                             
-                            MethodInfo methodToBind = deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "RelaxAllServos");
+                            //MethodInfo methodToBind = deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "RelaxAllServos");
                             ThreadStart threadStart = new ThreadStart(()=>
                             {
-                                lock (deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject)
-                                {
-                                    deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "setGripper_PW")
-                                        .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, new object[] { (short)random.Next(500, 2500) });
-                                    deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "updateServos")
-                                        .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, null);
-                                }
+                                //lock (deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject)
+                                //{
+                                //    deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "setGripper_PW")
+                                //        .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, new object[] { (short)random.Next(500, 2500) });
+                                //    deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "updateServos")
+                                //        .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, null);
+                                //}
+                                server.DeviceInterface.AccessingRemoteApi("wsurop18-universal-controller.herokuapp.com/tts");
                             }
                                 );
 
@@ -367,7 +368,7 @@ namespace UCUI
         private void ServerRoutine()
         {
             server = new Server();
-            deviceInterface = new DeviceInterface();
+            server.DeviceInterface = new DeviceInterface();
             server.Run();
             //deviceInterface.TestRoboticArm();
 

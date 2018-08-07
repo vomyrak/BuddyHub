@@ -16,7 +16,8 @@ namespace CSharpServer
         Test,
         CheckName,
         CheckIds,
-        CallFunction
+        CallFunction,
+        PostToServer
     }
 
     public class DeviceInterface
@@ -96,6 +97,21 @@ namespace CSharpServer
                 Console.WriteLine(e);
             }
             return JsonConvert.DeserializeObject<DeviceInfo>(result);
+        }
+
+        public string AccessingRemoteApi(string hostName)
+        {
+            string QueryUrl = QueryUrlBuilder(ServerAddress, Action.PostToServer, hostName);
+            string result = "";
+            try
+            {
+                result = getResponse(QueryUrl).GetAwaiter().GetResult();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return result;
         }
         #region
         // For testing only
