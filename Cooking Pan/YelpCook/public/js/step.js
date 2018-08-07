@@ -1,14 +1,21 @@
 $("#start-step").on("click", function() {
 	var time = ($(this).attr("value"));
-	console.log(time);
 	getTimer(time * 60);
 })
 
 var socket;
+var reading;
+var tempLimit = Number($("#temperature-reading").attr("value"));
+console.log(tempLimit);
+
 socket = io.connect("http://localhost:3000/");
 socket.on("connect", function() {
 	this.on("newTemp", (data) => {
 		$("#temperature-reading").text(data);
+		reading = data;
+		if(reading > tempLimit) {
+			$("#temperature-reading").toggleClass("alert");
+		}
 	})
 })
 

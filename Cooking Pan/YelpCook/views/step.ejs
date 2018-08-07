@@ -3,8 +3,6 @@
 <div class="container">
   <div class="row">
 
-    <h1 style="text-align: center">Temperature: <span id="temperature-reading"></span></h1>
-
     <!-- The code below displays the previous step button for each step apart from the very first one -->
 
     <% for (var l = recipe.instruction.length, i = 0; i < l; i++) { %>
@@ -22,9 +20,9 @@
   <% for (var l = recipe.instruction.length, i = 0; i < l; i++) { %>
       <% step = recipe.instruction[i]%>
       <!-- The code below introduces the timer -->
-	    
       <% if(step.stepnumber == recipe.instruction.length) {%>
 	      <div style="text-align: center" class="container">
+	      	<h1 style="text-align: center">Temperature: <span id="temperature-reading" value="<%= step.temperature %>"></span></h1>
 		  	<h1>Timer
 		      	<div id="countdownExample">
 		      		<button class="btn btn-lg" id="start-step" value="<%= step.time %>">Start</button>
@@ -41,12 +39,13 @@
           </p>
       <% break; } else if (step.id === stepid) { %>
       	<div style="text-align: center" class="container">
-	  	<h1>Timer
-	      	<div id="countdownExample">
-	      		<button class="btn btn-lg" id="start-step" value="<%= step.time %>">Start</button>
-	          	<h2><div class="values"></div></h2>
-	      	</div>
-	    </h1>
+      		<h1 style="text-align: center">Temperature: <span id="temperature-reading" value="<%= step.temperature %>"></span></h1>
+		  	<h1>Timer
+		      	<div id="countdownExample">
+		      		<button class="btn btn-lg" id="start-step" value="<%= step.time %>">Start</button>
+		          	<h2><div class="values"></div></h2>
+		      	</div>
+		    </h1>
 	    </div>
           <p style="text-align: center">
             <img src="<%=step.image%>"> <br />
