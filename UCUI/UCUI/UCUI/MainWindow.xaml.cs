@@ -94,7 +94,7 @@ namespace UCUI
             windowHandle = HwndSource.FromHwnd(handle);
             windowHandle.AddHook(new HwndSourceHook(WndProc));
 
-            ObtainDeviceInfo();
+            server.ObtainDeviceInfo();
 
         }
         
@@ -119,12 +119,12 @@ namespace UCUI
                 case WM_DEVICECHANGE:
                     switch ((uint)wParam.ToInt32()) {
                         case WM_DEVICEARRIVAL:
-                            string deviceName = ObtainDeviceInfo();
+                            string deviceName = server.ObtainDeviceInfo();
                             if (deviceName == "") MessageBox.Show("Device Not Found");
-                            else InitialiseDevice(deviceName);
+                            else server.BindDevice(deviceName);
                             break;
                         case WM_DEVICEREMOVECOMPLETE:
-                            CheckRemovedDevice();
+                            server.CheckRemovedDevice();
                             break;
 
                     }
@@ -133,84 +133,8 @@ namespace UCUI
             return IntPtr.Zero;
         }
 
-        private void CheckRemovedDevice()
-        {
-            Thread thread = new Thread(() =>
-            {
-                ManagementClass USBClass = new ManagementClass("Win32_USBHUB");
-                System.Management.ManagementObjectCollection USBCollection = USBClass.GetInstances();
-
-                foreach (System.Management.ManagementObject usb in USBCollection)
-                {
-                    string deviceId = usb["deviceid"].ToString();
-                    
-                    foreach (string registeredDevice in server.DeviceInterface.ConnectedDeviceList.Keys.ToArray())
-                    {
-                        if (deviceId != server.DeviceInterface.ConnectedDeviceList[registeredDevice].DeviceId)
-                        {
-                            server.DeviceInterface.ConnectedDeviceList.Remove(registeredDevice);
-                            MessageBox.Show("Device Removed");
-                        }
-                    }
-                }
-            });
-            thread.Start();
-            thread.Join();
-        }
-        private string ObtainDeviceInfo()
-        {
-            string result = "";
-            Thread thread = new Thread(() =>
-            {
-                ManagementClass USBClass = new ManagementClass("Win32_USBHUB");
-                System.Management.ManagementObjectCollection USBCollection = USBClass.GetInstances();
-
-                foreach (System.Management.ManagementObject usb in USBCollection)
-                {
-                    try
-                    {
-                        string deviceId = usb["deviceid"].ToString();
-                        if (deviceId == null)
-                        {
-                            throw new Exception("Device not found!");
-                        }
-                        else
-                        {
-
-
-                            int vidIndex = deviceId.IndexOf("VID_");
-                            //int vidIndex = 0;
-                            string startingAtVid = deviceId.Substring(vidIndex + 4); // + 4 to remove "VID_"                    
-                            string vid = startingAtVid.Substring(0, 4); // vid is four characters long
-
-                            int pidIndex = deviceId.IndexOf("PID_");
-                            string startingAtPid = deviceId.Substring(pidIndex + 4); // + 4 to remove "PID_"                    
-                            string pid = startingAtPid.Substring(0, 4); // pid is four characters long
-
-
-                            DeviceInfo newDeviceInfo = server.DeviceInterface.QueryDeviceInfo(vid, pid);
-                            if (newDeviceInfo != null)
-                            {
-                                newDeviceInfo.ToFile("newDevice");
-                                result = newDeviceInfo.Device;
-                                server.DeviceInterface.AddDevice(result, new DeviceInterface.ControllerDevice(newDeviceInfo, deviceId));
-                                InitialiseDevice(result);
-                                //MessageBox.Show("Recognised Device Pluged in");
-                            }
-                        }
-                    }
-                    catch (Exception e) { }
-                }
-            });
-            thread.Start();
-            thread.Join();
-            return result;
-        }
-
-        private void InitialiseDevice(string deviceName)
-        {
-            server.DeviceInterface.BindDevice(deviceName);
-        }
+        
+        
         #endregion
         private void PageOpen(object sender, RoutedEventArgs e)
         {
@@ -284,7 +208,7 @@ namespace UCUI
                                 //    deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "updateServos")
                                 //        .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, null);
                                 //}
-                                server.DeviceInterface.AccessingRemoteApi("wsurop18-universal-controller.herokuapp.com/tts");
+                                
                             }
                                 );
 
@@ -368,7 +292,6 @@ namespace UCUI
         private void ServerRoutine()
         {
             server = new Server();
-            server.DeviceInterface = new DeviceInterface();
             server.Run();
             //deviceInterface.TestRoboticArm();
 
