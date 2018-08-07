@@ -4,10 +4,6 @@ var express = require("express"),
     mongoose = require("mongoose"),
     server = require('http').Server(app),
     io = require('socket.io')(server);
-//
-  var Timer = require('easytimer.js');
-  var timerInstance = new Timer();
-//
 
 const uri = "mongodb://cooking:wsurop18@ds223268.mlab.com:23268/wsurop_cooking";
 mongoose.connect(uri, {useNewUrlParser: true});
@@ -74,7 +70,7 @@ app.get("/recipe/:id/:stepid", function(req,res){
         if(err){
             console.log(err);
         } else {
-            res.render("step", {recipe: foundRecipe, stepid: req.params.stepid, Timer: timerInstance});
+            res.render("step", {recipe: foundRecipe, stepid: req.params.stepid});
     //        console.log(foundRecipe);
         }
     });
