@@ -1,3 +1,9 @@
+$("#start-step").on("click", function() {
+	var time = ($(this).attr("value"));
+	console.log(time);
+	getTimer(time * 60);
+})
+
 var socket;
 socket = io.connect("http://localhost:3000/");
 socket.on("connect", function() {
@@ -14,6 +20,8 @@ function getTimer(stepTime) {
 	    $('#countdownExample .values').html(timer.getTimeValues().toString());
 	});
 	timer.addEventListener('targetAchieved', function (e) {
-	    setInterval($('#countdownExample .values').toggleClass("alert"), 1000);
+	    setInterval(function() {
+	    	$('#countdownExample .values').toggleClass("alert");
+	    }, 1000);
 	});
 }

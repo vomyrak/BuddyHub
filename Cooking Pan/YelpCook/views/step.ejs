@@ -1,10 +1,5 @@
 <% include partials/header %>
 
-<link rel="stylesheet" type="text/css" href="/css/step.css">
-<script type="text/javascript" src= "/timer/easytimer.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script type="text/javascript" src="/js/step.js"></script>
-
 <div class="container">
   <div class="row">
 
@@ -22,22 +17,21 @@
         <%  break; } %>
     <% } %>
 
-  <!-- The code below introduces the timer -->
-  	<script type="text/javascript">getTimer(5)</script>
-    <div style="text-align: center" class="container">
-  	<h1>Timer
-      <div id="countdownExample">
-          <h2><div class="values"></div></h2>
-      </div>
-  	<!-- Need this -->
-    </h1>
-    </div>
-
     <!-- The code below displays the next step button for each step apart from the very last one and shows instruction -->
 
   <% for (var l = recipe.instruction.length, i = 0; i < l; i++) { %>
       <% step = recipe.instruction[i]%>
-      <% if(step.stepnumber == recipe.instruction.length) {%>c
+      <!-- The code below introduces the timer -->
+	    
+      <% if(step.stepnumber == recipe.instruction.length) {%>
+	      <div style="text-align: center" class="container">
+		  	<h1>Timer
+		      	<div id="countdownExample">
+		      		<button class="btn btn-lg" id="start-step" value="<%= step.time %>">Start</button>
+		          	<h2><div class="values"></div></h2>
+		      	</div>
+		    </h1>
+		    </div>
           <p style="text-align: center">
             <img src="<%=step.image%>"> <br />
             <strong><%= step.stepnumber %></strong> - <%= step.step %> <br />
@@ -46,6 +40,14 @@
             <center><a href="/recipes/" class="btn btn-primary">This is the last step</a></center>
           </p>
       <% break; } else if (step.id === stepid) { %>
+      	<div style="text-align: center" class="container">
+	  	<h1>Timer
+	      	<div id="countdownExample">
+	      		<button class="btn btn-lg" id="start-step" value="<%= step.time %>">Start</button>
+	          	<h2><div class="values"></div></h2>
+	      	</div>
+	    </h1>
+	    </div>
           <p style="text-align: center">
             <img src="<%=step.image%>"> <br />
             <strong><%= step.stepnumber %></strong> - <%= step.step %> <br />
@@ -57,5 +59,10 @@
   <% } %>
   </div>
 </div>
+
+<link rel="stylesheet" type="text/css" href="/css/step.css">
+<script type="text/javascript" src= "/timer/easytimer.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="/js/step.js"></script>
 
 <% include partials/footer %>
