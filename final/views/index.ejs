@@ -100,11 +100,7 @@
       <!-- Title -->
   
       <H1 style="text-align: center; font-size : 2.0em; font-weight: bolder">Universal Controller 2.0</H1>
-      <!-- <ul class="nav nav-tabs" role="tablist" id="home-tab">
-        <li class="active">
-          <a class="tabtext" href="#tab1">Home</a>
-        </li>
-      </ul> -->
+
     </div>
 
     <!-- Main tab -->
@@ -113,7 +109,7 @@
 <br>
         <!-- Select devices -->
         <select onclick="playSound()" class="form-control" id="device" onChange="getObject(this.value)">
-            <option value="" disabled selected >Select</option>
+            <option value="" disabled selected >Select device</option>
             <% devices.forEach(function(device) { %>
               <option value="<%= device.device %>"><%= device.device %></option>
               <% }); %>
