@@ -357,6 +357,13 @@ li {
     font-size: inherit;
 }
 
+.form-control{
+    font-size:inherit;
+    width:50% !important;
+    margin: auto;
+    display: block;
+}
+
 
 /* Accessible font */
 @font-face {

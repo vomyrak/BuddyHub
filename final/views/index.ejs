@@ -110,21 +110,20 @@
     <!-- Main tab -->
     <section id="tab1" class="tab-content active">
       <div class="container">
-
+<br>
         <!-- Select devices -->
-        <select onclick="playSound()" class="dropdown" id="device" onChange="getObject(this.value)">
+        <select onclick="playSound()" class="form-control" id="device" onChange="getObject(this.value)">
             <option value="" disabled selected >Select</option>
             <% devices.forEach(function(device) { %>
               <option value="<%= device.device %>"><%= device.device %></option>
               <% }); %>
           </select>
-
+          </div>
 
         <div style="padding:30px 20px; width:300px; margin:auto">
           <button onclick="playSound()" type="button" id='create_me' class="method-button" style="font-size : 1.0em">Add Device</button>
         </div>
 
-      </div>
     </section>
   </div>
 
