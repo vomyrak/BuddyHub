@@ -29,7 +29,7 @@ $(document).ready(function() {
     }
   })
 });
-=======
+
 var deviceName, btn, tabs;
 
 function getObject(value) {
