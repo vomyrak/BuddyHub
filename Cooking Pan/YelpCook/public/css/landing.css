@@ -1,3 +1,7 @@
+@import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css);
+/*@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);*/
+
+
 .welcome {
    /* background: bisque; */
     max-width: 800px;
@@ -14,31 +18,11 @@ h1{
 } 
 
 
-
-/*.center {
-    height: 300px;
-    line-height: 300px;
-    text-align: center;
-	margin: 0 auto;
-	background-color: bisque;
-    max-width: 600px;
-	font-family: "lexie_readableregular";
-	text-align: center;
-    line-height: 400px;  
-} */
-/*span {
-  display: inline-block;
-  vertical-align: middle; <doesnt seem to work
-  line-height: normal;
-}*/
 body {
 	background: url(https://images.pexels.com/photos/349608/pexels-photo-349608.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
 	background-size: cover;
+    
 }
-
-
-
-
 
 @font-face {
     font-family: 'lexie_readableregular';
@@ -50,3 +34,86 @@ body {
          url('fonts/lexiereadable-regular-webfont.svg#lexie_readableregular') format('svg');
     font-weight: normal;
     font-style: normal;
+}
+
+a.animated-button:link, a.animated-button:visited {
+  position: relative;
+  display: block;
+ /* margin: 30px auto 0;*/
+  padding: 14px 15px;
+  color: #fff;
+  font-size:14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  letter-spacing: .08em;
+  border-radius: 0;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+  font-family: "lexie_readableregular";
+  margin: 0 auto;
+}
+a.animated-button:link:after, a.animated-button:visited:after {
+  content: "";
+  position: absolute;
+  height: 0%;
+  left: 50%;
+  top: 50%;
+  width: 150%;
+  z-index: -1;
+  -webkit-transition: all 0.75s ease 0s;
+  -moz-transition: all 0.75s ease 0s;
+  -o-transition: all 0.75s ease 0s;
+  transition: all 0.75s ease 0s;
+  margin: 0 auto;
+}
+a.animated-button:link:hover, a.animated-button:visited:hover {
+  color: #fff;
+  text-shadow: none;
+}
+a.animated-button:link:hover:after, a.animated-button:visited:hover:after {
+  height: 450%;
+}
+a.animated-button:link, a.animated-button:visited {
+  position: relative;
+  display: block;
+/*  margin: 30px auto 0;*/
+  padding: 14px 15px;
+  color: #367722;
+  font-size:14px;
+  border-radius: 0;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  letter-spacing: .08em;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+  margin: 0 auto;
+}
+
+
+a.animated-button.victoria-two {
+  border: 2px solid #367722;
+  width: 130%;
+  margin-left: 158%;
+  margin-right: 30%
+
+  
+}
+a.animated-button.victoria-two:after {
+  background: #367722;
+  -moz-transform: translateX(-50%) translateY(-50%) rotate(25deg);
+  -ms-transform: translateX(-50%) translateY(-50%) rotate(25deg);
+  -webkit-transform: translateX(-50%) translateY(-50%) rotate(25deg);
+  transform: translateX(-50%) translateY(-50%) rotate(25deg);
+}
