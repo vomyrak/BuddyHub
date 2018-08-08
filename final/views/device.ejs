@@ -90,7 +90,7 @@
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
 
-          <button type="button" onclick="playSound()" id="sidebarCollapse" class="btn btn-dark">
+          <button type="button" onclick="playSound()" id="sidebarCollapse" class="settingsbtn">
                 <i class="fas fa-align-left"></i>
                 <span>Toggle Sidebar</span>
             </button>
@@ -99,7 +99,7 @@
 
       <!-- Title -->
       <Br></Br>
-      <H1 style="text-align: center; font-size : 2.0em; font-weight: bolder">Universal Controller 2.0</H1>
+      <H1 style="text-align: center; font-size : 1.5em; font-weight: bolder">Universal Controller 2.0</H1>
       <Br></Br>
     </div>
 
@@ -109,9 +109,10 @@
         <!-- If text input required, generate a text box -->
         <%if (method.text_input_field != '') { %>
           <div class="col-sm-12">
-            <input class="input-textbox" id="textbox<%= method.method %>" value='' />
+            <input placeholder="Enter text here" class="form-control" id="textbox<%= method.method %>" value='' />
           </div>
           <% } %>
+        <Br></Br>
             <div>
               <!-- Store the information for http request in the hidden input fields -->
               <input type="hidden" id="http_method<%= method.method %>" value='<%= method.http_method %>' />

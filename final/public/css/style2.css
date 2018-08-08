@@ -270,12 +270,6 @@ li {
   display: none;
 }
 
-#create_me {
-  background-color: #fff;
-  color: #000;
-  border: 1px solid #ddd;
-  border-bottom-color: transparent;
-}
 
 .dropdown {
   text-shadow: none;
@@ -329,7 +323,7 @@ li {
 /*Button styles*/
 .settingsbtn {
     background-color: #000;
-    border-color: #000;
+    border-color: #fff;
     color: #fff;
     padding: 5px 10px;
     text-align: center;
@@ -347,7 +341,7 @@ li {
 
 .method-button{
     background-color: #000;
-    border-color: #000;
+    border-color: #fff;
     color: #fff;
     padding: 15px;
     text-align: center;
