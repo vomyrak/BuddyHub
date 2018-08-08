@@ -10,7 +10,7 @@
         <% if(step.id === stepid && step.stepnumber === 1) {%>
         <% break; } else if (step.id === stepid) { %>
             <p style="text-align: center">
-             <a class="carousel-control left" role="button" href="/recipe/<%= recipe._id%>/<%= recipe.instruction[step.stepnumber-2]._id%>" class="btn btn-primary">
+             <a id="myCarousel" class="carousel-control left" role="button" href="/recipe/<%= recipe._id%>/<%= recipe.instruction[step.stepnumber-2]._id%>" class="btn btn-primary">
                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                <span class="sr-only">Previous</span>
              </a>
@@ -39,7 +39,7 @@
             <strong>Time for this step: </strong> - <%= step.time %> minutes <br />
             <strong>Temperature of this step: </strong> - <%= step.temperature %> Celsius <br />
             </p>
-            <a class="carousel-control right" role="button" href="/recipes/" class="btn btn-primary">
+            <a id="myCarousel" class="carousel-control right" role="button" href="/recipes/" class="btn btn-primary">
               <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               <span class="sr-only">This is the last step</span>
             </a>
@@ -59,8 +59,8 @@
             <strong>Time for this step: </strong> - <%= step.time %> minutes <br />
             <strong>Temperature of this step: </strong> - <%= step.temperature %> Celsius <br />
           </p>
-          <a class="carousel-control right" role="button" href="/recipe/<%= recipe._id%>/<%= recipe.instruction[step.stepnumber]._id%>" class="btn btn-primary">
-            <span class=class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+          <a id="myCarousel" class="carousel-control right" role="button" href="/recipe/<%= recipe._id%>/<%= recipe.instruction[step.stepnumber]._id%>" class="btn btn-primary">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
             <span class="sr-only">Next step</span>
           </a>
       <%  break; } %>
