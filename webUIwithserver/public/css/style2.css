@@ -94,7 +94,7 @@ a:focus {
 }
 
 #sidebar ul li a:hover {
-    color: #484848;
+    color: #000;
     background: #fff;
 }
 
@@ -141,7 +141,7 @@ a.download {
 
 a.article,
 a.article:hover {
-    background: #484848 !important;
+    background: #000 !important;
     color: #fff !important;
 }
 
@@ -281,10 +281,7 @@ li {
   text-shadow: none;
 }
 
-.tabtext {
-  color: white !important;
-  text-shadow: none;
-}
+
 
 @keyframes shake {
   0% {
