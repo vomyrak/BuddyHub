@@ -20,11 +20,12 @@ var Step = require("./models/step"),
 // SOCKET setup
 io.on('connection', function(socket) {
     function getTemp() {
-        Temperature.findOne({}, {}, {sort: {"created_at": -1}}, function(err, data) {
+        Temperature.findOne({}, {}, {sort: {"_id": -1}}, function(err, data) {
             if(err){
                 console.log(err);
             }
             else {
+                console.log(data.temperature);
                 socket.emit('newTemp', data.temperature);
             }
         });

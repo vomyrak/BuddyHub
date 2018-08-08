@@ -6,6 +6,8 @@ $("#start-step").on("click", function() {
 var socket;
 var reading = 0;
 var tempLimit = Number($("#temperature-reading").attr("value"));
+var tempPlayed = false;
+var tempAudio = new SpeechSynthesisUtterance("The pan is too hot, turn the heat down!");
 
 socket = io.connect("http://localhost:3000/");
 socket.on("connect", function() {
@@ -16,9 +18,14 @@ socket.on("connect", function() {
 		$("#temperature-reading").text(reading);
 		if(reading > tempLimit) {
 			$("#temperature-reading").toggleClass("alert");
+			if (!tempPlayed) {
+				window.speechSynthesis.speak(tempAudio);
+				tempPlayed = true;
+			}
 		}
 		else {
 			$("#temperature-reading").removeClass("alert");
+			tempPlayed = false;
 		}
 	})
 })
