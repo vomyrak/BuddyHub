@@ -4,17 +4,21 @@ $("#start-step").on("click", function() {
 })
 
 var socket;
-var reading;
+var reading = 0;
 var tempLimit = Number($("#temperature-reading").attr("value"));
-console.log(tempLimit);
 
 socket = io.connect("http://localhost:3000/");
 socket.on("connect", function() {
 	this.on("newTemp", (data) => {
-		$("#temperature-reading").text(data);
-		reading = data;
+		if (data !== reading) {
+			reading = data;
+		}
+		$("#temperature-reading").text(reading);
 		if(reading > tempLimit) {
 			$("#temperature-reading").toggleClass("alert");
+		}
+		else {
+			$("#temperature-reading").removeClass("alert");
 		}
 	})
 })
@@ -27,6 +31,8 @@ function getTimer(stepTime) {
 	    $('#countdownExample .values').html(timer.getTimeValues().toString());
 	});
 	timer.addEventListener('targetAchieved', function (e) {
+		var msg = new SpeechSynthesisUtterance("Well done! Time's up, go to the next step!");
+		window.speechSynthesis.speak(msg);
 	    setInterval(function() {
 	    	$('#countdownExample .values').toggleClass("alert");
 	    }, 1000);
