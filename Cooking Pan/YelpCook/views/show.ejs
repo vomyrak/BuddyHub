@@ -1,4 +1,5 @@
 <% include partials/header %>
+<link rel="stylesheet" type="text/css" href="/css/step.css">
 
 <div class="container">
   <div class="row">
@@ -13,12 +14,9 @@
         </p>
     <%});%>
 
-    <center><a href="/recipe/<%= recipe._id%>/<%= recipe.instruction[0]._id%>" class="btn btn-primary">START COOKING</a></center>
+    <center><a href="/recipe/<%= recipe._id%>/<%= recipe.instruction[0]._id%>" class="btn btn-primary" style="margin-bottom: 20px">START COOKING</a></center>
 
   </div>
 </div>
-
-<link rel="stylesheet" type="text/css" href="/css/step.css">
-
 
 <% include partials/footer %>
