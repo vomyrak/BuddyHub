@@ -1,50 +1,96 @@
 <!DOCTYPE html>
 <html>
-  <head>
-      <link rel="stylesheet" href="public/css/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<link href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet"/>
-<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-      <script src="public/js/app.js"></script>
-    </head>
 
- <body>
-<div>
-  <ul class="nav nav-tabs" role ="tablist" id="home-tab">
-    <li class="active">
-      <a href="#tab1">Home</a>
-    </li>
-  </ul>
-</div>
-<section id="tab1" class="tab-content active">
-  <div>
-     <H1>Universal Controller 1.0
- </H1>
-<div>
-<!-- Select devices -->
-  <select id="device" onChange = "getObject(this.value)">
-    <option value="" disabled selected>Select</option>
-    <option value="RobotArm">Robot Arm</option>
-    <option value="AlexaCommands">Alexa Commands</option>
-    <option value="RoomLights">Room Lights</option>
-</select>
-</div>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="./css/tether.css">
+  <link rel="stylesheet" href="./public/css/bootstrap.min.css">
+  <link href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" />
+  <link rel="stylesheet" title="default" type="text/css" href="./css/style.css" />
+  <link rel="alternate stylesheet" type="text/css" href="./css/style2.css" title="alternate" />
 
-<!--
-<ul id="functions"></ul>
-<p id="demo"></p>
+</head>
 
-<button onclick = "createButtons()">Done</button>
+<body id="myBody">
 
-<p id="buttons"></p>
--->
-      <div style="padding:10px 20px;width:150px; margin:auto;">
-     <button type="button" id='create_me' class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add Device</button>
-      </div>
+  <!--Collapsible style changer-->
+
+<div class="pos-f-t">
+  <nav class="navbar navbar-dark bg-dark">
+    <button onclick="playSound()" type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
+  <div class="collapse" id="navbarToggleExternalContent">
+    <div class="bg-dark p-4">
+      <!--Change theme-->
+      <a href="#" onclick="playSound(); setActiveStyleSheet('default'); return false;">Light</a> |
+      <a href="#" onclick="playSound(); setActiveStyleSheet('alternate'); return false;">Dark</a>
+
+      <BR></BR>
+
+      <!--Change size-->
+      <a href="javascript:void(0);" onclick="playSound(); resizeText(1)" id="plustext">+</a> | <a href="javascript:void(0);" onclick="playSound(); resizeText(-1)" id="minustext">-</a>
+      <!--Sound-->
+      <Br></Br>
+      <audio id="play" src="http://www.soundjay.com/button/beep-07.wav"></audio>
+
+      <button onclick="enableMute()" type="button">Mute sound</button>
+      <button onclick="disableMute()" type="button">Enable sound</button>
+
+    </div>
   </div>
 
-</section>
+</div>
 
 
-   </body>
+  <!--
+         <div class="col-sm-5">
+      <button type="button" class="btn btn-lg btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off" >
+        <div class="handle"></div>
+      </button>
+    </div>
+-->
+
+  <div class="container">
+    <Br></Br>
+    <H1 style="text-align: center; font-size : 2.0em; font-weight: bolder">Universal Controller 2.0</H1>
+    <ul class="nav nav-tabs" role="tablist" id="home-tab">
+      <li class="active">
+        <a href="#tab1">Home</a>
+      </li>
+    </ul>
+  </div>
+  <section id="tab1" class="tab-content active">
+    <div class="container">
+
+      <!-- Select devices -->
+      <select onclick="playSound()" class="dropdown" id="device" onChange="getObject(this.value)">
+            <option value="" disabled selected>Select</option>
+            <option value="RobotArm">Robot Arm</option>
+            <option value="AlexaCommands">Alexa Commands</option>
+            <option value="RoomLights">Room Lights</option>
+        </select>
+
+
+      <div style="padding:30px 20px; width:300px; margin:auto">
+        <button onclick="playSound()" type="button" id='create_me' class="ui-btn ui-corner-all ui-btn-b ui-btn-icon-left ui-icon-check" style="font-size : 1.0em">Add Device</button>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <script src="./js/tether.js"></script>
+  <script src="./public/js/bootstrap.min.js"></script>
+  <script src="./js/sound.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="./js/stylesheetswitcher.js"></script>
+  <script src="./js/resizetext.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js'></script>
+
+</body>
+
 </html>

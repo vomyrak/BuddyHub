@@ -1,11 +1,9 @@
-/*
-    DEMO STYLE
-*/
+
 
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 body {
     font-family: 'Poppins', sans-serif;
-    background: #fafafa;
+    background: #000;
 }
 
 p {
@@ -14,6 +12,10 @@ p {
     font-weight: 300;
     line-height: 1.7em;
     color: #999;
+}
+
+h1{
+    color: white;
 }
 
 a,
@@ -34,6 +36,7 @@ a:focus {
 }
 
 .navbar-btn {
+    color: black;
     box-shadow: none;
     outline: none !important;
     border: none;
@@ -62,8 +65,8 @@ a:focus {
     left: 0;
     height: 100vh;
     z-index: 999;
-    background: #fcf2ee;
-    color: #000;
+    background: #484848;
+    color: #fff;
     transition: all 0.3s;
 }
 
@@ -73,12 +76,12 @@ a:focus {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #f6e1d7;
+    background: #181818;
 }
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #fbdacc;
+    border-bottom: 1px solid #181818;
 }
 
 #sidebar ul p {
@@ -93,14 +96,14 @@ a:focus {
 }
 
 #sidebar ul li a:hover {
-    color: #fba27c;
+    color: #484848;
     background: #fff;
 }
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-    background: #fba27c;
+    background: #484848;
 }
 
 a[data-toggle="collapse"] {
@@ -118,14 +121,12 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #fba27c;
+    background: #484848;
 }
 
 ul.CTAs {
     padding: 20px;
 }
-
-
 
 ul.CTAs a {
     text-align: center;
@@ -137,12 +138,12 @@ ul.CTAs a {
 
 a.download {
     background: #fff;
-    color: #fba27c;
+    color: #7386D5;
 }
 
 a.article,
 a.article:hover {
-    background: #fba27c !important;
+    background: #484848 !important;
     color: #fff !important;
 }
 
@@ -189,9 +190,6 @@ a.article:hover {
 /* ---------------------------------------------------
     TABS STYLE
 ----------------------------------------------------- */
-.pos-f-t a:any-link {
-  color: white !important;
-}
 
 .pos-f-t {
   color: white !important;
@@ -233,7 +231,7 @@ a.article:hover {
 }
 
 .nav-tabs {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #fff;
 }
 
 .nav-tabs>li {
@@ -257,14 +255,9 @@ a.article:hover {
 .nav-tabs>.active>a, .nav-tabs>.active>a:hover {
   color: #555555;
   cursor: default;
-  background-color: #fff;
+  background-color: #000;
   border: 1px solid #ddd;
   border-bottom-color: transparent;
-}
-
-.tabtext {
-  color: black;
-  text-shadow: none;
 }
 
 li {
@@ -277,6 +270,22 @@ li {
 
 .tab-content.hide {
   display: none;
+}
+
+#create_me {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ddd;
+  border-bottom-color: transparent;
+}
+
+.dropdown {
+  text-shadow: none;
+}
+
+.tabtext {
+  color: white !important;
+  text-shadow: none;
 }
 
 @keyframes shake {

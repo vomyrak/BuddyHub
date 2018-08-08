@@ -100,31 +100,29 @@
       <!-- Title -->
       <Br></Br>
       <H1 style="text-align: center; font-size : 2.0em; font-weight: bolder">Universal Controller 2.0</H1>
-      <!-- <ul class="nav nav-tabs" role="tablist" id="home-tab">
-        <li class="active">
-          <a class="tabtext" href="#tab1">Home</a>
-        </li>
-      </ul> -->
+      <Br></Br>
     </div>
 
-    <!-- Main tab -->
-    <section id="tab1" class="tab-content active">
-      <div class="container">
-
-        <!-- Select devices -->
-        <select onclick="playSound()" class="dropdown" id="device" onChange="getObject(this.value)">
-            <option value="" disabled selected >Select</option>
-            <% devices.forEach(function(device) { %>
-              <option value="<%= device.device %>"><%= device.device %></option>
-              <% }); %>
-          </select>
-
-
-        <div style="padding:30px 20px; width:300px; margin:auto">
-          <button onclick="playSound()" type="button" id='create_me' class="ui-btn ui-corner-all ui-btn-b ui-btn-icon-left ui-icon-check" style="font-size : 1.0em">Add Device</button>
-        </div>
-
-      </div>
+    <section class="tab-content">
+      <!-- Produce a button for each method -->
+      <% device.methods.forEach(function(method) { %>
+        <!-- If text input required, generate a text box -->
+        <%if (method.text_input_field != '') { %>
+          <div class="col-sm-12">
+            <input class="input-textbox" id="textbox<%= method.method %>" value='' />
+          </div>
+          <% } %>
+            <div>
+              <!-- Store the information for http request in the hidden input fields -->
+              <input type="hidden" id="http_method<%= method.method %>" value='<%= method.http_method %>' />
+              <input type="hidden" id="link<%= method.method %>" value='<%= method.link %>' />
+              <input type="hidden" id="data<%= method.method %>" value='<%= method.data %>' />
+              <input type="hidden" id="headers<%= method.method %>" value='<%= method.headers %>' />
+              <input type="hidden" id="callback_function<%= method.method %>" value='<%= method.callback_function %>' />
+              <input type="hidden" id="text_input_field<%= method.method %>" value='<%= method.text_input_field %>' />
+              <button onclick="sendRequest(this)" style="font-size : 1.0em; width: 100%;" class="method-button" type="submit" value="<%= method.method %>" id='<%= method.method %>'><%= method.method %></button>
+            </div>
+        <% }); %>
     </section>
   </div>
 
