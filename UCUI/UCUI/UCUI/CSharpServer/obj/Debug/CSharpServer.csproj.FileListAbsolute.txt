@@ -50,3 +50,5 @@ C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\UCUI\CSharpServer\obj\
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\UCUI\CSharpServer\obj\Debug\CSharpServer.pdb
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\UCUI\CSharpServer\bin\Debug\System.Net.Http.Formatting.dll
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\UCUI\CSharpServer\bin\Debug\System.Net.Http.Formatting.xml
+D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\CSharpServer\bin\Debug\System.Net.Http.Formatting.dll
+D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\CSharpServer\bin\Debug\System.Net.Http.Formatting.xml

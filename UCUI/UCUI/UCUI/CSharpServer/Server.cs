@@ -263,7 +263,7 @@ namespace CSharpServer
             // Establish connection
             var mongo = new MongoClient(connectionString.ToMongoUrl());
             var db = mongo.GetDatabase("uc");
-            var coll = db.GetCollection<DeviceInfo>("outputData");
+            var coll = db.GetCollection<DeviceInfo>("outputDevices");
             var outputDevice = coll
                 .Find(new FilterDefinitionBuilder<DeviceInfo>().Eq(x => x.ApiType, "Http"))
                 .ToListAsync()
@@ -514,12 +514,12 @@ namespace CSharpServer
             return result;
         }
 
-        public void ObtaiRemoteDeviceInfo()
+        public void ObtainRemoteDeviceInfo()
         {
             List<DeviceInfo> remoteDeviceList = QueryRemoteDeviceInfo();
             foreach (DeviceInfo deviceInfo in remoteDeviceList)
             {
-
+                AddDevice(deviceInfo.Device, new ControllerDevice(deviceInfo, deviceInfo.Device));
             }
 
         }

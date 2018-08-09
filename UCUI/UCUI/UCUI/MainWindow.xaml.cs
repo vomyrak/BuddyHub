@@ -99,6 +99,7 @@ namespace UCUI
 
             new Thread(new ThreadStart(()=> 
             {
+                serverThread.Join();
                 server.ObtainUSBDeviceInfo();
                 server.ObtainRemoteDeviceInfo();
             }

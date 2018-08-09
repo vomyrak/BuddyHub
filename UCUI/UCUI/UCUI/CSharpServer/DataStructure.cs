@@ -92,6 +92,8 @@ namespace CSharpServer
         public string CallbackFunction { get; set; }
         [BsonElement("text_input_field")]
         public string TextInputField { get; set; }
+        [BsonElement("params")]
+        public List<string> Params { get; set; }
     }
 
     /// <summary>
