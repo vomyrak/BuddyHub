@@ -376,6 +376,10 @@ namespace CSharpServer
                         case (int)Notif.CallFunction:
                             return parsedRequest[1] + "/" + parsedRequest[2] + "/" + parsedRequest[3];
                         case (int)Notif.PostToServer:
+                            byte[] buffer = new byte[100];
+                            request.InputStream.Read(buffer, 0, 100);
+                            Dictionary<string, string> body = JsonConvert.DeserializeObject<Dictionary<string, string>>(buffer.ToString());
+                            
                             return "";
                         case (int)Notif.DeviceDetected:
                             string deviceName = ObtainUSBDeviceInfo();
@@ -407,7 +411,8 @@ namespace CSharpServer
 
         }
 
-        
+ 
+
         /// <summary>
         /// Post data to remote server
         /// </summary>

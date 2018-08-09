@@ -57,7 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AL5D.cs" />
-    <Compile Include="AL5DExtend.cs" />
+    <Compile Include="AL5DExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servo.cs" />
     <Compile Include="SSC32.cs" />

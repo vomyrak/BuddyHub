@@ -26,6 +26,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Controls.Primitives;
 using System.Net.Http;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace UCUI
 {
@@ -220,30 +221,34 @@ namespace UCUI
                             Button sourceButton = (Button)a;
                             string buttonName = sourceButton.Name;
                             int buttonIndex = Int32.Parse(buttonName.Substring(6));
-                            ControllerDevice currentDevice = server.ConnectedDeviceList["AL5D"];
+
+                            // To replace "AL5D" with reference from the selected menu or button
+                            ControllerDevice currentDevice = server.ConnectedDeviceList["smart lamp"];
                             DeviceInfo currentDeviceInfo = currentDevice.DeviceInfo;
-                            //deviceInterface.TestRoboticArm();
-                            int count = currentDeviceInfo.FunctionArray.Count;
-                            if (buttonIndex > count - 1) { }
-                            else
+
+                            if (currentDeviceInfo.ApiType == "LocalLib")
                             {
-                                //MethodInfo methodToBind = deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "RelaxAllServos");
-                                Task.Run(() =>
+                                
+                                int count = currentDeviceInfo.FunctionArray.Count;
+                                if (buttonIndex > count - 1) { }
+                                else
                                 {
-                                    currentDevice.DeviceObject.IncreaseGripper_F();
-                                    //MethodInfo methodToBind = server.GetMethodInfo(currentDevice, currentDeviceInfo.FunctionArray[buttonIndex].Name);
-                                    //methodToBind.Invoke(currentDevice.DeviceObject, null);
-                                    //lock (deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject)
-                                    //{
-                                    //    deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "setGripper_PW")
-                                    //        .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, new object[] { (short)random.Next(500, 2500) });
-                                    //    deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "updateServos")
-                                    //        .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, null);
-                                    //}
-
-                                });
+                                    Task.Run(() =>
+                                    {
+                                        MethodInfo methodToBind = server.GetMethodInfo(currentDevice, currentDeviceInfo.FunctionArray[buttonIndex].Name);
+                                        methodToBind.Invoke(currentDevice.DeviceObject, null);
+                                    });
+                                }
                             }
+                            else if (currentDeviceInfo.ApiType == "Http")
+                            {
+                                Dictionary<string, string> messageDict = new Dictionary<string, string>
+                                {
+                                    ["name"] = "smart lamp",
+                                };
 
+                                NotifyServer(SERVER_ADDRESS + Notif.PostToServer, JsonConvert.SerializeObject(messageDict));
+                            }
                             CheckCenterMouse();
                         };
 
