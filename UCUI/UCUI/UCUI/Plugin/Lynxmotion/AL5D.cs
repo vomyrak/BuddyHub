@@ -29,15 +29,15 @@ namespace Lynxmotion
     /// Class definition of an AL5C robot arm driven by a SSC32 board
     /// <remarks>This requires the whole arm has been mounted and wired following the Lynxmotion manual. See <see cref="http://www.lynxmotion.com/images/html/build142.htm"/> for mounting details.</remarks>
     /// </summary>
-    public class AL5C : SSC32, IDevice
+    public class AL5D : SSC32, IDevice
     {
 
-        public AL5C()
+        public AL5D()
         {        }
 
 
         public string GetSerialPort() {
-            SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
+            SSC32ENumerationResult[] SSC32s = AL5D.EnumerateConnectedSSC32(9600);
             if (SSC32s.Length > 0)
             {
                 return SSC32s[0].PortName;
@@ -69,7 +69,7 @@ namespace Lynxmotion
         /// Creates an AL5C robot arm
         /// </summary>
         /// <param name="portName">Port name to access the AL5C arm (i.e. the SSC32 board)</param>
-        public AL5C(string portName)
+        public AL5D(string portName)
             : base(portName, 9600, 6)
         {
             Initialize(0, 1, 2, 3, 4, 5);
@@ -85,7 +85,7 @@ namespace Lynxmotion
         /// <param name="wristServoChannel">Wrist servo channel</param>
         /// <param name="gripperServoChannel">Gripper servo channel</param>
         /// <param name="wristRotateServoChannel">Wrist rotate servo channel</param>
-        public AL5C(string portName, byte shoulderBaseServoChannel, byte shoulderServoChannel, byte elbowServoChannel,
+        public AL5D(string portName, byte shoulderBaseServoChannel, byte shoulderServoChannel, byte elbowServoChannel,
             byte wristServoChannel, byte gripperServoChannel, byte wristRotateServoChannel)
             : base(portName, 9600, 6)
         {
@@ -327,7 +327,7 @@ namespace Lynxmotion
         public object ConnectDevice(string serialPort)
         {
             
-            return new AL5C(serialPort);
+            return new AL5D(serialPort);
         }
     }
 }

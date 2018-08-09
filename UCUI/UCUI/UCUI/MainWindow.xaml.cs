@@ -22,8 +22,9 @@ using System.Threading;
 using System.Windows.Interop;
 using System.Management;
 using System.Reflection;
-
+using System.Runtime.InteropServices;
 using System.Windows.Controls.Primitives;
+using System.Net.Http;
 using System.IO;
 
 namespace UCUI
@@ -35,8 +36,10 @@ namespace UCUI
     {
         private Button[] ButtonArray;
         private Server server;
-
+        private HttpClient client;
         private HwndSource windowHandle;
+
+        private const string SERVER_ADDRESS = "http://localhost:8080/";
 
         // USB Message Constants
         private const int WM_DEVICECHANGE = 0x219;
@@ -58,6 +61,7 @@ namespace UCUI
             try
             {
                 ControlOptions.ItemsSource = ControlSource.Options;
+                
                 
             }
             catch (TypeInitializationException)
@@ -91,23 +95,31 @@ namespace UCUI
             // Server script
             var serverThread = new Thread(ServerRoutine);
             serverThread.Start();
+            client = new HttpClient()
+            {
+                BaseAddress = new Uri(SERVER_ADDRESS)
+            };
 
             // Obtain window handle and attach system message hook
             var handle = new WindowInteropHelper(this).EnsureHandle();
             windowHandle = HwndSource.FromHwnd(handle);
             windowHandle.AddHook(new HwndSourceHook(WndProc));
 
-            new Thread(new ThreadStart(()=> 
+            Task.Run(() =>
             {
                 serverThread.Join();
                 server.ObtainUSBDeviceInfo();
                 server.ObtainRemoteDeviceInfo();
-            }
-            )).Start();
-
+            });
+            server.RaiseUINotifEvent += Server_RaiseUINotifEvent;
         }
-        
-    
+
+        private void Server_RaiseUINotifEvent(object sender, string e)
+        {
+            MessageBox.Show(e);
+        }
+
+
 
 
         #region
@@ -128,12 +140,10 @@ namespace UCUI
                 case WM_DEVICECHANGE:
                     switch ((uint)wParam.ToInt32()) {
                         case WM_DEVICEARRIVAL:
-                            string deviceName = server.ObtainUSBDeviceInfo();
-                            if (deviceName == "") MessageBox.Show("Device Not Found");
-                            else server.BindDevice(deviceName);
+                            NotifyServer(SERVER_ADDRESS + Notif.DeviceDetected, "");
                             break;
                         case WM_DEVICEREMOVECOMPLETE:
-                            server.CheckRemovedDevice();
+                            NotifyServer(SERVER_ADDRESS + Notif.DeviceDisconnected, "");
                             break;
 
                     }
@@ -208,7 +218,7 @@ namespace UCUI
                             //deviceInterface.TestRoboticArm();
                             
                             //MethodInfo methodToBind = deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "RelaxAllServos");
-                            ThreadStart threadStart = new ThreadStart(()=>
+                            Task.Run(()=>
                             {
                                 //lock (deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject)
                                 //{
@@ -218,11 +228,7 @@ namespace UCUI
                                 //        .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, null);
                                 //}
                                 
-                            }
-                                );
-
-                            newThread = new Thread(threadStart);
-                            newThread.Start();
+                            });
 
 
                             CheckCenterMouse();
@@ -299,12 +305,29 @@ namespace UCUI
 
         private void ServerRoutine()
         {
-            server = new Server();
+            server = new Server(SERVER_ADDRESS);
             server.Run();
             //deviceInterface.TestRoboticArm();
 
         }
 
+        private void NotifyServer(string url, string content)
+        {
+            Task.Run(() =>
+            {
+                HttpRequestMessage message = new HttpRequestMessage()
+                {
+                    Method = new HttpMethod("POST"),
+                    Content = new StringContent(content),
+                    RequestUri = new Uri(url)
+                };
+                message.Headers.Add("Content-Type", "application/json");
+                client.SendAsync(message);
+            });
+        }
+        
+
     }
+    
 
 }

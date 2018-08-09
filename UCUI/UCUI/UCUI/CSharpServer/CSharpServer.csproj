@@ -39,9 +39,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataStructure.cs" />
-    <Compile Include="DeviceInterface.cs" />
+    <Compile Include="ControllerDevice.cs" />
     <Compile Include="IDevice.cs" />
-    <Compile Include="ProgrammeException.cs" />
+    <Compile Include="ServerException.cs" />
     <Compile Include="Programme.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="WebServer.cs" />

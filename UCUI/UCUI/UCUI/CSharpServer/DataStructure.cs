@@ -17,6 +17,8 @@ namespace CSharpServer
     {
         [BsonRepresentation(BsonType.ObjectId)]
         public string _id { get; set; }
+        [BsonElement("assembly")]
+        public string Assembly { get; set; }
         [BsonElement("device")]
         public string Device { get; set; }
         [BsonElement("icon")]

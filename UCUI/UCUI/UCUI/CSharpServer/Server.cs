@@ -17,34 +17,36 @@ using System.Management;
 
 namespace CSharpServer
 {
+    public enum Notif
+    {
+        Test,
+        CheckName,
+        CheckIds,
+        CallFunction,
+        PostToServer,
+        DeviceDetected,
+        DeviceDisconnected
+    }
+
     public class Server
     {
         /// <summary>
         /// Enumerations that defines action code for the server
         /// </summary>
-        public enum Action
-        {
-            Test,
-            CheckName,
-            CheckIds,
-            CallFunction,
-            PostToServer
-        }
+        
         private static WebServer ws;
         private static HttpClient client;
         public Dictionary<string, ControllerDevice> ConnectedDeviceList { get; set; }
-        public event EventHandler<string> RaiseServerRequestEvent;
+        public event EventHandler<string> RaiseUINotifEvent;
 
         /// <summary>
         /// Constructor Server class
         /// </summary>
-        public Server()
+        public Server(string hostAddress)
         {
             ConnectedDeviceList = new Dictionary<string, ControllerDevice>();
-            ws = new WebServer(this.SendResponse, "http://localhost:8080/");
+            ws = new WebServer(this.SendResponse, hostAddress);
             client = new HttpClient();
-            RaiseServerRequestEvent?.Invoke(this, "a");
-            
         }
 
         /// <summary>
@@ -85,7 +87,7 @@ namespace CSharpServer
                 {
                     DeviceInfo = resultDeviceInfo
                 };
-                BindDevice(deviceName);
+                BindDevice(deviceName, resultDeviceInfo.Assembly);
             }
             else throw new InvalidDeviceException("Device Not Recognised by System", 0);
         }
@@ -104,7 +106,7 @@ namespace CSharpServer
                 {
                     DeviceInfo = resultDeviceInfo
                 };
-                BindDevice(deviceName);
+                BindDevice(deviceName, resultDeviceInfo.Assembly);
             }
             else throw new InvalidDeviceException("Device Not Recognised by System", 0);
         }
@@ -113,9 +115,9 @@ namespace CSharpServer
         /// Link device library and instantiate device object
         /// </summary>
         /// <param name="deviceName">The friendly name of device</param>
-        public void BindDevice(string deviceName)
+        public void BindDevice(string deviceName, string assemblyName)
         {
-            var dll = Assembly.LoadFile(Directory.GetCurrentDirectory() + "\\" + "Lynxmotion" + ".dll");
+            var dll = Assembly.LoadFile(Directory.GetCurrentDirectory() + "\\" + assemblyName + ".dll");
             ConnectedDeviceList[deviceName].Library = dll;
             IDevice newDevice = null;
             foreach (Type type in dll.GetTypes())
@@ -322,7 +324,7 @@ namespace CSharpServer
                                 Array.Copy(parsedRequest, 2, parameters, 0, fieldSize - 2);
 
                                 method.Invoke(device.DeviceObject, parameters);
-                                RaiseServerRequestEvent?.Invoke(this, "method invoked");
+                                RaiseUINotifEvent?.Invoke(this, "method invoked");
                             });
                             Thread newThread = new Thread(threadStart);
                             newThread.Start();
@@ -356,46 +358,50 @@ namespace CSharpServer
             }
             // Parse the request string and return requested result as a string
 
+            // POST request corresponds to internal signaling message from UI thread
+            else if (request.HttpMethod == "POST")
+            {
+                try
+                {
+                
+                    int actionType = int.Parse(parsedRequest[0]);
+                    switch (actionType)
+                    {
+                        case (int)Notif.Test:
+                            return string.Format("<HTML><BODY>My web page.<br>{0}</BODY></HTML>", DateTime.Now);
+                        case (int)Notif.CheckName:
+                            return QueryDeviceInfo(parsedRequest[1]);
+                        case (int)Notif.CheckIds:
+                            return QueryDeviceInfo(parsedRequest[1], parsedRequest[2]);
+                        case (int)Notif.CallFunction:
+                            return parsedRequest[1] + "/" + parsedRequest[2] + "/" + parsedRequest[3];
+                        case (int)Notif.PostToServer:
+                            return "";
+                        case (int)Notif.DeviceDetected:
+                            string deviceName = ObtainUSBDeviceInfo();
+                            if (deviceName == "") RaiseUINotifEvent?.Invoke(this, "Device Not Found");
+                            return "";
+                        case (int)Notif.DeviceDisconnected:
+                            CheckRemovedDevice();
+                            return "";
+                        default:
+                            throw new InvalidActionException("Not a valid action to perform.");
+                
+                    }
+                
+                
+                
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    return "";
+                }
+            }
 
             else
             {
-                //try
-                //{
-                //
-                //    int actionType = int.Parse(parsedRequest[0]);
-                //    switch (actionType)
-                //    {
-                //        case (int)Action.Test:
-                //            return string.Format("<HTML><BODY>My web page.<br>{0}</BODY></HTML>", DateTime.Now);
-                //        case (int)Action.CheckName:
-                //            return QueryDeviceInfo(parsedRequest[1]);
-                //        case (int)Action.CheckIds:
-                //            return QueryDeviceInfo(parsedRequest[1], parsedRequest[2]);
-                //        case (int)Action.CallFunction:
-                //            return parsedRequest[1] + "/" + parsedRequest[2] + "/" + parsedRequest[3];
-                //        case (int)Action.PostToServer:
-                //            
-                //            var message = new Dictionary<string, string> { { "input", "thanks" } };
-                //            var content = new StringContent(JsonConvert.SerializeObject(message));
-                //            content.Headers.Clear();
-                //            content.Headers.Add("Content-Type", "application/json");
-                //            
-                //            var result = SendToRemoteServerAsync(parsedRequest[1] + "/" + parsedRequest[2], content);
-                //            return result.Result;
-                //   
-                //        default:
-                //            throw new InvalidActionException("Not a valid action to perform.");
-                //
-                //    }
-                //
-                //
-                //
-                //}
-                //catch (Exception e)
-                //{
-                //    Console.WriteLine(e);
-                //    return "";
-                //}
+                
                 return "";
             }
 
@@ -440,7 +446,7 @@ namespace CSharpServer
         /// </summary>
         public void CheckRemovedDevice()
         {
-            Thread thread = new Thread(() =>
+            Task.Run(() =>
             {
                 ManagementClass USBClass = new ManagementClass("Win32_USBHUB");
                 System.Management.ManagementObjectCollection USBCollection = USBClass.GetInstances();
@@ -459,8 +465,6 @@ namespace CSharpServer
                     }
                 }
             });
-            thread.Start();
-            thread.Join();
         }
 
         /// <summary>
@@ -502,7 +506,7 @@ namespace CSharpServer
                                 newDeviceInfo.ToFile("newDevice");
                                 result = newDeviceInfo.Device;
                                 AddDevice(result, new ControllerDevice(newDeviceInfo, deviceId));
-                                BindDevice(result);
+                                BindDevice(result, newDeviceInfo.Assembly);
                             }
                         }
                     }

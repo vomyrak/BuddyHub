@@ -17,12 +17,14 @@ namespace CSharpServer
         public dynamic Library { get; set; }
         public dynamic DeviceObject { get; set; }
         public string DeviceId { get; set; }
+        public readonly object _lock;
 
         public ControllerDevice() { }
         public ControllerDevice(DeviceInfo deviceInfo, string deviceId)
         {
             DeviceInfo = deviceInfo;
             DeviceId = deviceId;
+            _lock = new object();
         }
     }
 

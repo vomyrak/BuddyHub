@@ -56,7 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AL5C.cs" />
+    <Compile Include="AL5D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servo.cs" />
     <Compile Include="SSC32.cs" />
