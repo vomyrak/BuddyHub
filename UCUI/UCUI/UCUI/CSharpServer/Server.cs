@@ -280,12 +280,12 @@ namespace CSharpServer
         /// <param name="controllerDevice">Device object corresponding to the function</param>
         /// <param name="funcName">Known function name</param>
         /// <returns></returns>
-        public MethodInfo BindFunction(ControllerDevice controllerDevice, string funcName)
+        public MethodInfo GetMethodInfo(ControllerDevice controllerDevice, string funcName)
         {
             Assembly dll = controllerDevice.Library;
             dynamic deviceInstance = controllerDevice.DeviceObject;
             //Type deviceType = dll.GetType(controllerDevice.DeviceInfo.Device);
-            Type deviceType = dll.GetType(dll.GetName().Name + ".AL5C");
+            Type deviceType = dll.GetType(dll.GetName().Name + "." + controllerDevice.DeviceInfo.Device);
             
             return deviceType.GetMethod(funcName);
 
@@ -314,7 +314,7 @@ namespace CSharpServer
                     if (device.DeviceInfo.ApiType == "LocalLib")
                     {
                         string functionRequested = parsedRequest[1];
-                        MethodInfo method = BindFunction(device, functionRequested);
+                        MethodInfo method = GetMethodInfo(device, functionRequested);
                         if (method == null) throw new InvalidMethodException("Method Not Found!");
                         else
                         {

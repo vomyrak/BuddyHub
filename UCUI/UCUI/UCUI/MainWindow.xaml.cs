@@ -197,7 +197,8 @@ namespace UCUI
 
                     if (myOption.buttonVisible[i])
                     {
-                        
+
+
                         ButtonArray[i].Content = i.ToString();
                         string disp = i.ToString();
                         ButtonArray[i].Name = "Button" + i.ToString();
@@ -215,21 +216,33 @@ namespace UCUI
 
                         ButtonArray[i].Click += delegate (object a, RoutedEventArgs b)
                         {
+                            // Get DeviceInfo Object
+                            Button sourceButton = (Button)a;
+                            string buttonName = sourceButton.Name;
+                            int buttonIndex = Int32.Parse(buttonName.Substring(6));
+                            ControllerDevice currentDevice = server.ConnectedDeviceList["AL5D"];
+                            DeviceInfo currentDeviceInfo = currentDevice.DeviceInfo;
                             //deviceInterface.TestRoboticArm();
-                            
-                            //MethodInfo methodToBind = deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "RelaxAllServos");
-                            Task.Run(()=>
+                            int count = currentDeviceInfo.FunctionArray.Count;
+                            if (buttonIndex > count - 1) { }
+                            else
                             {
-                                //lock (deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject)
-                                //{
-                                //    deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "setGripper_PW")
-                                //        .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, new object[] { (short)random.Next(500, 2500) });
-                                //    deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "updateServos")
-                                //        .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, null);
-                                //}
-                                
-                            });
+                                //MethodInfo methodToBind = deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "RelaxAllServos");
+                                Task.Run(() =>
+                                {
+                                    currentDevice.DeviceObject.IncreaseGripper_F();
+                                    //MethodInfo methodToBind = server.GetMethodInfo(currentDevice, currentDeviceInfo.FunctionArray[buttonIndex].Name);
+                                    //methodToBind.Invoke(currentDevice.DeviceObject, null);
+                                    //lock (deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject)
+                                    //{
+                                    //    deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "setGripper_PW")
+                                    //        .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, new object[] { (short)random.Next(500, 2500) });
+                                    //    deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "updateServos")
+                                    //        .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, null);
+                                    //}
 
+                                });
+                            }
 
                             CheckCenterMouse();
                         };
