@@ -33,6 +33,7 @@ namespace CSharpServer
         private static WebServer ws;
         private static HttpClient client;
         public Dictionary<string, ControllerDevice> ConnectedDeviceList { get; set; }
+        public event EventHandler<string> RaiseServerRequestEvent;
 
         /// <summary>
         /// Constructor Server class
@@ -42,6 +43,8 @@ namespace CSharpServer
             ConnectedDeviceList = new Dictionary<string, ControllerDevice>();
             ws = new WebServer(this.SendResponse, "http://localhost:8080/");
             client = new HttpClient();
+            RaiseServerRequestEvent?.Invoke(this, "a");
+            
         }
 
         /// <summary>
@@ -97,8 +100,10 @@ namespace CSharpServer
             if (resultDeviceInfo != null)
             {
                 string deviceName = resultDeviceInfo.Device;
-                ConnectedDeviceList[deviceName] = new ControllerDevice();
-                ConnectedDeviceList[deviceName].DeviceInfo = resultDeviceInfo;
+                ConnectedDeviceList[deviceName] = new ControllerDevice
+                {
+                    DeviceInfo = resultDeviceInfo
+                };
                 BindDevice(deviceName);
             }
             else throw new InvalidDeviceException("Device Not Recognised by System", 0);
@@ -143,10 +148,12 @@ namespace CSharpServer
                 json = sr.ReadToEnd();
             }
             Auth auth = JsonConvert.DeserializeObject<Auth>(json);
-            var connectionString = new MongoUrlBuilder();
-            connectionString.Server = new MongoServerAddress(auth.Dns, 27017);
-            connectionString.Username = auth.User;
-            connectionString.Password = auth.Pass;
+            var connectionString = new MongoUrlBuilder
+            {
+                Server = new MongoServerAddress(auth.Dns, 27017),
+                Username = auth.User,
+                Password = auth.Pass
+            };
             // Establish connection
             var mongo = new MongoClient(connectionString.ToMongoUrl());
             var db = mongo.GetDatabase("uc");
@@ -179,20 +186,90 @@ namespace CSharpServer
                 json = sr.ReadToEnd();
             }
             Auth auth = JsonConvert.DeserializeObject<Auth>(json);
-            var connectionString = new MongoUrlBuilder();
-            connectionString.Server = new MongoServerAddress(auth.Dns, 27017);
-            connectionString.Username = auth.User;
-            connectionString.Password = auth.Pass;
+            var connectionString = new MongoUrlBuilder
+            {
+                Server = new MongoServerAddress(auth.Dns, 27017),
+                Username = auth.User,
+                Password = auth.Pass
+            };
             // Establish connection
             var mongo = new MongoClient(connectionString.ToMongoUrl());
             var db = mongo.GetDatabase("uc");
             var coll = db.GetCollection<DeviceInfo>("outputData");
             var outputDevice = coll
-                .Find(new FilterDefinitionBuilder<DeviceInfo>().Eq(x => x.Vid, vid) 
-                    & new FilterDefinitionBuilder<DeviceInfo>().Eq(x => x.Pid, pid))
+                .Find(new FilterDefinitionBuilder<DeviceInfo>().Eq(x => x.Vid, vid)
+                    & new FilterDefinitionBuilder<DeviceInfo>().Eq(x => x.Pid, pid)
+                    & new FilterDefinitionBuilder<DeviceInfo>().Eq(x => x.ApiType, "LocalLib"))
                 .ToListAsync()
                 .Result;
             return outputDevice[0].ToString();
+        }
+
+        public string QueryRemoteDeviceInfo(string deviceName)
+        {
+            // Generate database connection string from auth.json
+            string path;
+            if (Debugger.IsAttached)
+                path = "..\\..\\auth.json";
+            else
+                path = "auth.json";
+
+            string json = "";
+            using (StreamReader sr = File.OpenText(path))
+            {
+                json = sr.ReadToEnd();
+            }
+            Auth auth = JsonConvert.DeserializeObject<Auth>(json);
+            var connectionString = new MongoUrlBuilder
+            {
+                Server = new MongoServerAddress(auth.Dns, 27017),
+                Username = auth.User,
+                Password = auth.Pass
+            };
+            // Establish connection
+            var mongo = new MongoClient(connectionString.ToMongoUrl());
+            var db = mongo.GetDatabase("uc");
+            var coll = db.GetCollection<DeviceInfo>("outputData");
+            var outputDevice = coll
+                .Find(new FilterDefinitionBuilder<DeviceInfo>().Eq(x => x.ApiType, "Http")
+                    & new FilterDefinitionBuilder<DeviceInfo>().Eq(x => x.Device, deviceName))
+                .ToListAsync()
+                .Result;
+            return outputDevice[0].ToString();
+
+        }
+
+        public List<DeviceInfo> QueryRemoteDeviceInfo()
+        {
+            // Generate database connection string from auth.json
+            string path;
+            if (Debugger.IsAttached)
+                path = "..\\..\\auth.json";
+            else
+                path = "auth.json";
+
+            string json = "";
+            using (StreamReader sr = File.OpenText(path))
+            {
+                json = sr.ReadToEnd();
+            }
+            Auth auth = JsonConvert.DeserializeObject<Auth>(json);
+            var connectionString = new MongoUrlBuilder
+            {
+                Server = new MongoServerAddress(auth.Dns, 27017),
+                Username = auth.User,
+                Password = auth.Pass
+            };
+            // Establish connection
+            var mongo = new MongoClient(connectionString.ToMongoUrl());
+            var db = mongo.GetDatabase("uc");
+            var coll = db.GetCollection<DeviceInfo>("outputData");
+            var outputDevice = coll
+                .Find(new FilterDefinitionBuilder<DeviceInfo>().Eq(x => x.ApiType, "Http"))
+                .ToListAsync()
+                .Result;
+            return outputDevice;
+
         }
 
         /// <summary>
@@ -207,6 +284,7 @@ namespace CSharpServer
             dynamic deviceInstance = controllerDevice.DeviceObject;
             //Type deviceType = dll.GetType(controllerDevice.DeviceInfo.Device);
             Type deviceType = dll.GetType(dll.GetName().Name + ".AL5C");
+            
             return deviceType.GetMethod(funcName);
 
         }
@@ -218,64 +296,123 @@ namespace CSharpServer
         /// <returns>A string corresponding to the status of the operation</returns>
         public string SendResponse(HttpListenerRequest request)
         {
-            
-            // Parse the request string and return requested result as a string
             string[] parsedRequest = request.RawUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+            int fieldSize = parsedRequest.Length;
             if (parsedRequest.Length == 0) return "";
+            else if (request.HttpMethod == "GET")
+            {
+                string deviceRequested = parsedRequest[0];
+                ControllerDevice device = IsDeviceConnected(deviceRequested);
+                if (device == null)
+                {
+                    throw new InvalidDeviceException("Device Not Found!");
+                }
+                else
+                {
+                    if (device.DeviceInfo.ApiType == "LocalLib")
+                    {
+                        string functionRequested = parsedRequest[1];
+                        MethodInfo method = BindFunction(device, functionRequested);
+                        if (method == null) throw new InvalidMethodException("Method Not Found!");
+                        else
+                        {
+                            ThreadStart threadStart = new ThreadStart(() =>
+                            {
+                                string[] parameters = new string[fieldSize - 2];
+                                Array.Copy(parsedRequest, 2, parameters, 0, fieldSize - 2);
+
+                                method.Invoke(device.DeviceObject, parameters);
+                                RaiseServerRequestEvent?.Invoke(this, "method invoked");
+                            });
+                            Thread newThread = new Thread(threadStart);
+                            newThread.Start();
+                            return "";
+                        }
+                    }
+                    else if (device.DeviceInfo.ApiType == "Http")
+                    {
+                        string functionRequested = parsedRequest[1];
+                        DeviceInfo deviceInfo = device.DeviceInfo;
+                        foreach (RemoteDeviceMethod method in deviceInfo.Methods)
+                        {
+                            if (method.Method == functionRequested)
+                            {
+                                HttpRequestMessage message = new HttpRequestMessage();
+                                message.Content = new StringContent(method.Link);
+                                message.Headers.Clear();
+                                message.Headers.Add("Content-Type", "application/json");
+                                message.Method = new HttpMethod(method.HttpMethod);
+                                message.RequestUri = new Uri(method.Link);
+                                var result = SendToRemoteServerAsync(message);
+                            }
+                            else throw new InvalidMethodException("Method not found!");
+                            
+                        }
+                        return "";
+                    }
+                    else throw new InvalidDeviceException("Invalid device API type");
+                    
+                }
+            }
+            // Parse the request string and return requested result as a string
+
+
             else
             {
-                try
-                {
-
-                    int actionType = int.Parse(parsedRequest[0]);
-                    switch (actionType)
-                    {
-                        case (int)Action.Test:
-                            return string.Format("<HTML><BODY>My web page.<br>{0}</BODY></HTML>", DateTime.Now);
-                        case (int)Action.CheckName:
-                            return QueryDeviceInfo(parsedRequest[1]);
-                        case (int)Action.CheckIds:
-                            return QueryDeviceInfo(parsedRequest[1], parsedRequest[2]);
-                        case (int)Action.CallFunction:
-                            return parsedRequest[1] + "/" + parsedRequest[2] + "/" + parsedRequest[3];
-                        case (int)Action.PostToServer:
-                            
-                            var message = new Dictionary<string, string> { { "input", "thanks" } };
-                            var content = new StringContent(JsonConvert.SerializeObject(message));
-                            content.Headers.Clear();
-                            content.Headers.Add("Content-Type", "application/json");
-                            
-                            var result = PostToRemoteServerAsync(parsedRequest[1] + "/" + parsedRequest[2], content);
-                            return result.Result;
-                   
-                        default:
-                            throw new InvalidActionException("Not a valid action to perform.");
-
-                    }
-
-
-
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    return "";
-                }
+                //try
+                //{
+                //
+                //    int actionType = int.Parse(parsedRequest[0]);
+                //    switch (actionType)
+                //    {
+                //        case (int)Action.Test:
+                //            return string.Format("<HTML><BODY>My web page.<br>{0}</BODY></HTML>", DateTime.Now);
+                //        case (int)Action.CheckName:
+                //            return QueryDeviceInfo(parsedRequest[1]);
+                //        case (int)Action.CheckIds:
+                //            return QueryDeviceInfo(parsedRequest[1], parsedRequest[2]);
+                //        case (int)Action.CallFunction:
+                //            return parsedRequest[1] + "/" + parsedRequest[2] + "/" + parsedRequest[3];
+                //        case (int)Action.PostToServer:
+                //            
+                //            var message = new Dictionary<string, string> { { "input", "thanks" } };
+                //            var content = new StringContent(JsonConvert.SerializeObject(message));
+                //            content.Headers.Clear();
+                //            content.Headers.Add("Content-Type", "application/json");
+                //            
+                //            var result = SendToRemoteServerAsync(parsedRequest[1] + "/" + parsedRequest[2], content);
+                //            return result.Result;
+                //   
+                //        default:
+                //            throw new InvalidActionException("Not a valid action to perform.");
+                //
+                //    }
+                //
+                //
+                //
+                //}
+                //catch (Exception e)
+                //{
+                //    Console.WriteLine(e);
+                //    return "";
+                //}
+                return "";
             }
 
         }
 
+        
         /// <summary>
         /// Post data to remote server
         /// </summary>
         /// <param name="host">Remote host address</param>
         /// <param name="message">Message to be post</param>
         /// <returns></returns>
-        private async Task<string> PostToRemoteServerAsync(string host, StringContent message)
+        private async Task<string> SendToRemoteServerAsync(HttpRequestMessage message)
         {
             try
             {
-                var response = await client.PostAsync("https://wsurop18-universal-controller.herokuapp.com/tts", message);
+                var response = await client.SendAsync(message);
                 var responseString = await response.Content.ReadAsStringAsync();
                 return responseString;
             }
@@ -284,6 +421,18 @@ namespace CSharpServer
                 Console.WriteLine(e);
                 return "";
             }
+        }
+
+        private ControllerDevice IsDeviceConnected(string deviceName)
+        {
+            foreach (ControllerDevice device in ConnectedDeviceList.Values)
+            {
+                if (device.DeviceInfo.Device == deviceName)
+                {
+                    return device;
+                }
+            }
+            return null;
         }
 
         /// <summary>
@@ -318,15 +467,15 @@ namespace CSharpServer
         /// Check for the validity of USB devices connected to the machine
         /// </summary>
         /// <returns></returns>
-        public string ObtainDeviceInfo()
+        public string ObtainUSBDeviceInfo()
         {
             string result = "";
             Thread thread = new Thread(() =>
             {
                 ManagementClass USBClass = new ManagementClass("Win32_USBHUB");
-                System.Management.ManagementObjectCollection USBCollection = USBClass.GetInstances();
+                ManagementObjectCollection USBCollection = USBClass.GetInstances();
 
-                foreach (System.Management.ManagementObject usb in USBCollection)
+                foreach (ManagementObject usb in USBCollection)
                 {
                     try
                     {
@@ -340,14 +489,12 @@ namespace CSharpServer
 
 
                             int vidIndex = deviceId.IndexOf("VID_");
-                            //int vidIndex = 0;
                             string startingAtVid = deviceId.Substring(vidIndex + 4); // + 4 to remove "VID_"                    
                             string vid = startingAtVid.Substring(0, 4); // vid is four characters long
 
                             int pidIndex = deviceId.IndexOf("PID_");
                             string startingAtPid = deviceId.Substring(pidIndex + 4); // + 4 to remove "PID_"                    
                             string pid = startingAtPid.Substring(0, 4); // pid is four characters long
-
 
                             DeviceInfo newDeviceInfo = JsonConvert.DeserializeObject<DeviceInfo>(QueryDeviceInfo(vid, pid));
                             if (newDeviceInfo != null)
@@ -356,16 +503,25 @@ namespace CSharpServer
                                 result = newDeviceInfo.Device;
                                 AddDevice(result, new ControllerDevice(newDeviceInfo, deviceId));
                                 BindDevice(result);
-                                //MessageBox.Show("Recognised Device Pluged in");
                             }
                         }
                     }
-                    catch (Exception e) { }
+                    catch (Exception e) { Console.WriteLine(e); }
                 }
             });
             thread.Start();
             thread.Join();
             return result;
+        }
+
+        public void ObtaiRemoteDeviceInfo()
+        {
+            List<DeviceInfo> remoteDeviceList = QueryRemoteDeviceInfo();
+            foreach (DeviceInfo deviceInfo in remoteDeviceList)
+            {
+
+            }
+
         }
     }
 

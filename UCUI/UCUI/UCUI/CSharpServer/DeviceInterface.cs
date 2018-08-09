@@ -11,10 +11,6 @@ using System.IO;
 namespace CSharpServer
 {
 
-
-
-    
-
     public class ControllerDevice
     {
         public DeviceInfo DeviceInfo { get; set; }

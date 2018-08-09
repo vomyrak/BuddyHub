@@ -1,5 +1,4 @@
-﻿
-﻿################################################################################
+﻿﻿################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
@@ -31,15 +30,8 @@
 /UCUI/UCUI/UCUI/bin
 /UCUI/UCUI/UCUI/CSharpServer/auth.json
 /UCUI/UCUI/UCUI/auth.json
-/Prototype
-/Misc
-/GLobalHook
-/CSharpServer
-/UCUI/UCUI/bin
-/UCUI/UCUI/csharp-usb-hid-driver
-/UCUI/UCUI/packages
-/UCUI/UCUI/obj
-/UCUI/UCUI/.vs/UCUI
-/UCUI/UCUI/UCUI/CSharpServer/obj/Debug
-/UCUI/UCUI/UCUI/Plugin/Lynxmotion/obj/Debug
-/UCUI/UCUI/UCUI/CSharpServer/bin/Debug
+/UCUI/UCUI/Test
+/UCUI/UCUI/Hue-master
+/UCUI/UCUI/UCUI/Hue
+/UCUI/UCUI/UCUI/HueTests
+/UCUI/UCUI/.vs

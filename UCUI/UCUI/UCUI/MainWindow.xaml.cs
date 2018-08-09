@@ -49,13 +49,16 @@ namespace UCUI
         private delegate void CallingDelegate();
         private Random random = new Random();
 
+
         public MainWindow()
         {
+
             InitializeComponent();
             DataContext = new UCSettings();
             try
             {
                 ControlOptions.ItemsSource = ControlSource.Options;
+                
             }
             catch (TypeInitializationException)
             {
@@ -94,7 +97,12 @@ namespace UCUI
             windowHandle = HwndSource.FromHwnd(handle);
             windowHandle.AddHook(new HwndSourceHook(WndProc));
 
-            server.ObtainDeviceInfo();
+            new Thread(new ThreadStart(()=> 
+            {
+                server.ObtainUSBDeviceInfo();
+                server.ObtainRemoteDeviceInfo();
+            }
+            )).Start();
 
         }
         
@@ -119,7 +127,7 @@ namespace UCUI
                 case WM_DEVICECHANGE:
                     switch ((uint)wParam.ToInt32()) {
                         case WM_DEVICEARRIVAL:
-                            string deviceName = server.ObtainDeviceInfo();
+                            string deviceName = server.ObtainUSBDeviceInfo();
                             if (deviceName == "") MessageBox.Show("Device Not Found");
                             else server.BindDevice(deviceName);
                             break;
@@ -214,7 +222,6 @@ namespace UCUI
 
                             newThread = new Thread(threadStart);
                             newThread.Start();
-                            newThread.Join();
 
 
                             CheckCenterMouse();
