@@ -1,7 +1,7 @@
 var audio, audiolink;
 
 
-$("button, a, select").not("#sound1, #sound2, #sound3, #sound4, #sound5").click(function() {
+$("button, a, select").not("#sound1, #sound2, #sound3, #sound4, #sound5").on('click', function() {
   audio.play();
 });
 
