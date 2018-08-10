@@ -1,13 +1,4 @@
-.alert {
-	color: #FF0000;
-	padding: 0;
-	margin: 0;
-}
-
-*{
-	font-size: 30px !important;
-	font-family: "lexie_readableregular";
-}
+/* FONT FAMILY FOR LEXIA READABLE */
 
 @font-face {
     font-family: 'lexie_readableregular';
@@ -18,9 +9,11 @@
          url('fonts/lexiereadable-regular-webfont.ttf') format('truetype'),
          url('fonts/lexiereadable-regular-webfont.svg#lexie_readableregular') format('svg');
     font-weight: normal;
-    font-style: normal;}
+    font-style: normal;
+}
 
 
-	#myCarousel {
-	margin-top:52px;
-	}
+body {
+	background: url(aromatic-board-bread-349608-50-percent-opacity.jpg);
+	background-size: cover;
+}

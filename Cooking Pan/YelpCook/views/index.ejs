@@ -1,13 +1,14 @@
 <% include partials/header %>
-<link rel="stylesheet" type="text/css" href="/css/step.css">
+<link rel="stylesheet" type="text/css" href="/css/index.css">
 
     <div class = "container">
     <header class="jumbotron">
         <div class="container">
-            <h1>Welcome to YelpCook!</h1>
-            <p>View our hand-picked recipes from all over the world!</p>
+            <h1>Welcome to YelpCook's Recipe page!</h1>
+            <p>Click on any of the recipes to find a step by step guide on how to make them safely and successfully!</p>
                 <p>
-                    <a class="btn btn-primary btn-lg" href="/recipes/new">Add New Recipe</a>
+                    <!-- <a class="btn btn-primary btn-lg" href="/recipes/new">Add New Recipe</a> -->
+                        <div class="col-md-3 col-sm-3 col-xs-6"> <a href="/recipes/new" class="btn btn-sm animated-button add-new-recipe">Add New Recipe</a> </div>
                 </p>
         </div>
     </header>
@@ -25,7 +26,8 @@
                           <h4><%= recipe.name %></h4>
                         </div>
                         <p>
-                            <a href="/recipes/<%= recipe._id%>" class="btn btn-primary">Choose recipe</a>
+                            <!-- <a href="/recipes/<%= recipe._id%>" class="btn btn-primary">Choose recipe</a> -->
+                            <div class="col-md-3 col-sm-3 col-xs-6"> <a href="/recipes/<%= recipe._id%>" class="btn btn-sm animated-button choose-recipe">Choose Recipe</a> </div>
                         </p>
                 </div>
             <%});%>
