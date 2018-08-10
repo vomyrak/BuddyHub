@@ -340,7 +340,7 @@ namespace CSharpServer
                             if (method.Method == functionRequested)
                             {
                                 HttpRequestMessage message = new HttpRequestMessage();
-                                message.Content = new StringContent(method.Link);
+                                message.Content = new StringContent(method.Data);
                                 message.Headers.Clear();
                                 message.Headers.Add("Content-Type", "application/json");
                                 message.Method = new HttpMethod(method.HttpMethod);
@@ -378,8 +378,21 @@ namespace CSharpServer
                         case (int)Notif.PostToServer:
                             byte[] buffer = new byte[100];
                             request.InputStream.Read(buffer, 0, 100);
-                            Dictionary<string, string> body = JsonConvert.DeserializeObject<Dictionary<string, string>>(buffer.ToString());
                             
+                            string content = System.Text.Encoding.UTF8.GetString(TrimNull(buffer));
+                            Dictionary<string, string> body = JsonConvert.DeserializeObject<Dictionary<string, string>>(content);
+                            ControllerDevice requestedDevice = ConnectedDeviceList[body["name"]];
+                            DeviceInfo requestedDeviceInfo = requestedDevice.DeviceInfo;
+                            RemoteDeviceMethod requestedDeviceMethod = requestedDevice.DeviceInfo.Methods.Where(s => s.Method == "on").ToList()[0];
+                            HttpRequestMessage message = new HttpRequestMessage()
+                            {
+
+                                Method = new HttpMethod(requestedDeviceMethod.HttpMethod),
+                                RequestUri = new Uri(requestedDeviceMethod.Link),
+                                Content = new StringContent(requestedDeviceMethod.Data)
+                            };
+                            message.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                            client.SendAsync(message);
                             return "";
                         case (int)Notif.DeviceDetected:
                             string deviceName = ObtainUSBDeviceInfo();
@@ -411,7 +424,15 @@ namespace CSharpServer
 
         }
 
- 
+        private byte[] TrimNull(byte[] input)
+        {
+            int i = input.Length - 1;
+            while (input[i] == 0)
+                --i;
+            byte[] temp = new byte[i + 1];
+            Array.Copy(input, temp, i + 1);
+            return temp;
+        }
 
         /// <summary>
         /// Post data to remote server

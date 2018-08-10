@@ -245,9 +245,10 @@ namespace UCUI
                                 Dictionary<string, string> messageDict = new Dictionary<string, string>
                                 {
                                     ["name"] = "smart lamp",
+                                    ["method"] = "off"
                                 };
 
-                                NotifyServer(SERVER_ADDRESS + Notif.PostToServer, JsonConvert.SerializeObject(messageDict));
+                                NotifyServer(SERVER_ADDRESS + (int)Notif.PostToServer, JsonConvert.SerializeObject(messageDict));
                             }
                             CheckCenterMouse();
                         };
@@ -339,7 +340,8 @@ namespace UCUI
                     Content = new StringContent(content),
                     RequestUri = new Uri(url)
                 };
-                message.Headers.Add("Content-Type", "application/json");
+                message.Content.Headers.Clear();
+                message.Content.Headers.Add("Content-Type", "application/json");
                 client.SendAsync(message);
             });
         }
