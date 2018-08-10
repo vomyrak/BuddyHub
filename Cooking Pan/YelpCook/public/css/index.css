@@ -108,3 +108,8 @@ body {
 	background: url(aromatic-board-bread-349608-50-percent-opacity.jpg);
 	background-size: cover;
 }
+
+.jumbotron {
+	background: none;
+
+}
