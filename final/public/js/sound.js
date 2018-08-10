@@ -50,10 +50,10 @@ function playSound5() {
   audio1.play();
 }
 
-function playSound() {
+$("button, a, select").click(function() {
   audio.play();
+});
 
-}
 
 function enableMute() {
   audio.muted = true;

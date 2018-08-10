@@ -22,6 +22,8 @@
   <!-- Scrollbar Custom CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
+
+    
   <!-- Font Awesome JS -->
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
@@ -40,22 +42,23 @@
       </div>
       <ul class="list-unstyled components">
         <li>
-          <a href="/" onclick="playSound()">Home</a>
+          <a href="/">Home</a>
         </li>
       </ul>
       <ul class="list-unstyled CTAs">
         <li>
           <!--Change theme-->
-          <a href="#settings" onclick="playSound()" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Settings</a>
+          <a href="#settings"   data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Settings</a>
           <ul margin="centre" class="collapse list-unstyled" id="settings">
-            <li align:center>
-              <button class="settingsbtn" onclick="playSound(); setActiveStyleSheet('default'); return false;">Light</button> | <button class="settingsbtn" onclick="playSound(); setActiveStyleSheet('alternate'); return false;">Dark</button>
+              <li>
+                
+              <button class="settingsbtn" onclick=" setActiveStyleSheet('default'); return false;">Light</button> | <button class="settingsbtn" onclick=" ; setActiveStyleSheet('alternate'); return false;">Dark</button>
             </li>
             <br>
             <li>
               <!--Sound enabler-->
               <button class="settingsbtn" onclick="enableMute()">Mute</button> |
-              <button class="settingsbtn" onclick="disableMute() ; playSound()">Unmute</button>
+              <button class="settingsbtn" onclick="disableMute()  ">Unmute</button>
             </li><br>
             <li>
               <!--Sound choices-->
@@ -68,14 +71,14 @@
             <br>
             <li>
               <!--Change size-->
-              <button class="settingsbtn" onclick="playSound(); resizeText(1)" id="plustext">+</button> |
-              <button class="settingsbtn" onclick="playSound(); resizeText(-1)" id="minustext">-</button>
+              <button class="settingsbtn" onclick="resizeText(1)" id="plustext">+</button> |
+              <button class="settingsbtn" onclick="resizeText(-1)" id="minustext">-</button>
             </li>
             <br>
             <li>
               <!--Shake enabler-->
-              <button class="settingsbtn" onclick="shake(); playSound()">Shake</button> |
-              <button class="settingsbtn" onclick="noshake() ; playSound()">No Shake</button>
+              <button class="settingsbtn" onclick="shake( ">Shake</button> |
+              <button class="settingsbtn" onclick="noshake() ">No Shake</button>
             </li>
           </ul>
         </li>
@@ -90,7 +93,7 @@
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
 
-          <button type="button" onclick="playSound()" id="sidebarCollapse" class="settingsbtn">
+          <button type="button"   id="sidebarCollapse" class="settingsbtn">
                 <i class="fas fa-align-left"></i>
                 <span>Toggle Sidebar</span>
             </button>
