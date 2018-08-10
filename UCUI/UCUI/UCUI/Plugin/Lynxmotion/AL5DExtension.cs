@@ -28,7 +28,8 @@ namespace Lynxmotion
             float angle = GetGripper_F();
             if (angle <= 0.95)
                 setGripper_F(angle + 0.1f);
-            setGripper_PW(Servo.MAX_PULSE_WIDTH);
+            else
+                setGripper_PW(Servo.MAX_PULSE_WIDTH);
             updateServos();
         }
 

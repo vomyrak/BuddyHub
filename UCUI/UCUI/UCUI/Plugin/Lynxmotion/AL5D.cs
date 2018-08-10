@@ -73,6 +73,8 @@ namespace Lynxmotion
             : base(portName, 9600, 6)
         {
             Initialize(0, 1, 2, 3, 4, 5);
+            GoToIdlePosition(false);
+            updateServos();
         }
 
         /// <summary>
@@ -322,6 +324,7 @@ namespace Lynxmotion
             setShoulder_PW(1983);
             setElbow_PW(2106);
             setWrist_PW(1112);
+            setGripper_PW(500);
             
         }
         public object ConnectDevice(string serialPort)
