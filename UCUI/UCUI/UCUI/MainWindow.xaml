@@ -58,11 +58,13 @@
         </Grid.RowDefinitions>
         <Expander ExpandDirection='Right'
                   Background="{DynamicResource ThemeBrush}"
-                  IsExpanded='True'>
+                  IsExpanded='True'
+                                       FocusVisualStyle="{StaticResource GlowFocus}">
 
           <Expander.HeaderTemplate>
             <DataTemplate>
-              <TextBlock Width="30" />
+              <TextBlock Width="30" 
+                         />
             </DataTemplate>
           </Expander.HeaderTemplate>
 

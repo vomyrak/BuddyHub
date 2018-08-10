@@ -85,6 +85,20 @@ namespace UCUI.Models
             }
         }
 
+        private bool isOpen;
+        public bool IsOpen
+        {
+            get { return isOpen; }
+            set
+            {
+                if (value != isOpen)
+                {
+                    isOpen = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private bool isFull;
         public bool IsFull
         {

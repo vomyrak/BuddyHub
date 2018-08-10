@@ -6,12 +6,54 @@
              StartupUri="MainWindow.xaml">
   <Application.Resources>
     <Color x:Key='myGray'>#FF353535</Color>
-    
     <SolidColorBrush x:Key='ButtonBrush'
                      Color='Gray' />
     <SolidColorBrush x:Key='ThemeBrush'
                      Color='#FF353535' />
+
     <mod:AnimationCondition x:Key="ConditionKey" />
+
+    <Style TargetType="{x:Type Rectangle}"
+                       x:Key='Glower'>
+      <Setter Property="RenderTransformOrigin"
+              Value="0.5 0.5" />
+      <Setter Property="RenderTransform">
+        <Setter.Value>
+          <RotateTransform />
+        </Setter.Value>
+      </Setter>
+      <Style.Triggers>
+        <EventTrigger RoutedEvent="Rectangle.Loaded"> 
+          <BeginStoryboard>
+              <Storyboard>
+              <ColorAnimation To="#FFEBCB31"
+                                      Storyboard.TargetProperty="(Rectangle.Stroke).(SolidColorBrush.Color)"
+                                      FillBehavior='HoldEnd'
+                                AutoReverse="True"
+                                      Duration="0:0:0.75" 
+                                RepeatBehavior="Forever"/>
+              </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+      </Style.Triggers>
+    </Style>
+
+    
+    <Style x:Key="GlowFocus">
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Rectangle x:Name="Highlight"
+              Margin="-6" 
+                       StrokeThickness="7" 
+                       Stroke="#FFD9AE2C"
+                       RadiusX="20"
+                       RadiusY="20"
+                       Style="{StaticResource Glower}"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
     <!--Static resource storyboard for Pusher button-->
     <Storyboard x:Key='PushDown'>
       <ThicknessAnimation Storyboard.TargetProperty="Margin"
@@ -43,6 +85,8 @@
            x:Key='Shaker'>
       <Setter Property="RenderTransformOrigin"
               Value="0.5 0.5" />
+      <Setter Property="FocusVisualStyle"
+              Value="{StaticResource GlowFocus}"/>
       <Setter Property="RenderTransform">
         <Setter.Value>
           <RotateTransform />
@@ -133,6 +177,8 @@
               Value='White' />
       <Setter Property='FontFamily'
               Value='Calibri' />
+      <Setter Property='FocusVisualStyle'
+              Value='{StaticResource GlowFocus}' />
 
       <Setter Property="Template">
         <Setter.Value>
@@ -206,6 +252,24 @@
                 </DataTrigger.ExitActions>
               </DataTrigger>
 
+              <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                  <Binding Path='IsOpen'
+                             Mode="OneWay" />
+                </DataTrigger.Binding>
+                <Setter Property="Focusable"
+                        Value="False"/>
+              </DataTrigger>
+
+              <DataTrigger Value="False">
+                <DataTrigger.Binding>
+                  <Binding Path='IsOpen'
+                             Mode="OneWay" />
+                </DataTrigger.Binding>
+                <Setter Property="Focusable"
+                        Value="True"/>
+              </DataTrigger>
+
               <Trigger Property="IsMouseOver"
                        Value="True">
                 <Setter Property="Fill"
@@ -225,7 +289,7 @@
       </Setter>
     </Style>
 
-    
+
     <!--Combobox template used:-->
     <Style x:Key="ComboBoxToggleButton"
            TargetType="ToggleButton">
@@ -256,7 +320,7 @@
         </Setter.Value>
       </Setter>
     </Style>
-    
+
     <ControlTemplate x:Key="ComboBoxTextBox"
                      TargetType="TextBox">
       <Border x:Name="PART_ContentHost"
@@ -326,7 +390,7 @@
         </Setter.Value>
       </Setter>
     </Style>
-    
+
     <Style x:Key="theComboBoxItem"
            TargetType="{x:Type ComboBoxItem}">
       <Setter Property="HorizontalAlignment"

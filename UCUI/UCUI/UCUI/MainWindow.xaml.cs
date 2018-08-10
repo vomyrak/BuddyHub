@@ -66,6 +66,7 @@ namespace UCUI
             Overlay.Visibility = Visibility.Visible;
             MainView.Effect = new BlurEffect();
             CheckCenterMouse();
+            ((UCSettings)DataContext).IsOpen = true;
             
         }
 
@@ -75,6 +76,7 @@ namespace UCUI
             SettingsView.Visibility = System.Windows.Visibility.Collapsed;
             Overlay.Visibility = Visibility.Collapsed;
             MainView.Effect = null;
+            ((UCSettings)DataContext).IsOpen = false;
         }
 
 
