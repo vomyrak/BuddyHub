@@ -54,7 +54,7 @@
           <!--Change theme-->
           <a href="#settings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Settings</a>
           <ul margin="centre" class="collapse list-unstyled" id="settings">
-            <li align:center>
+            <li >
               <button class="settingsbtn" onclick=" setActiveStyleSheet('default'); return false;">Light</button> | <button class="settingsbtn" onclick=" setActiveStyleSheet('alternate'); return false;">Dark</button>
             </li>
             <br>
@@ -65,11 +65,12 @@
             </li><br>
             <li>
               <!--Sound choices-->
-              <button class="settingsbtn" onclick="playSound1(); sound1()">1</button> |
-              <button class="settingsbtn" onclick="playSound2(); sound2()">2</button> |
-              <button class="settingsbtn" onclick="playSound3(); sound3()">3</button> |
-              <button class="settingsbtn" onclick="playSound4(); sound4()">4</button> |
-              <button class="settingsbtn" onclick="playSound5(); sound5()">5</button>
+                <button class="settingsbtn" id="sound1">1</button> |
+              <button class="settingsbtn" id="sound2">2</button> |
+              <button class="settingsbtn" id="sound3">3</button> |
+              <button class="settingsbtn" id="sound4">4</button> |
+              <button class="settingsbtn" id="sound5">5</button>
+
             </li>
             <br>
             <li>
