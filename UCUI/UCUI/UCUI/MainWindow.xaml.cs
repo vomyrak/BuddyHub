@@ -223,7 +223,7 @@ namespace UCUI
                             int buttonIndex = Int32.Parse(buttonName.Substring(6));
 
                             // To replace "AL5D" with reference from the selected menu or button
-                            ControllerDevice currentDevice = server.ConnectedDeviceList["smart lamp"];
+                            ControllerDevice currentDevice = server.ConnectedDeviceList["AL5D"];
                             DeviceInfo currentDeviceInfo = currentDevice.DeviceInfo;
 
                             if (currentDeviceInfo.ApiType == "LocalLib")

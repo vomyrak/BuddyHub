@@ -127,6 +127,8 @@ namespace CSharpServer
                     newDevice = Activator.CreateInstance(type) as IDevice;
                 }
             }
+
+
             string portName = newDevice.GetSerialPort();
             ConnectedDeviceList[deviceName].DeviceObject = newDevice.ConnectDevice(portName);
         }
