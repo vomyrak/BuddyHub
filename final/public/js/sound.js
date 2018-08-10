@@ -36,10 +36,12 @@ $("#sound5").click(function(){
 });
 
 
-function enableMute() {
-  audio.muted = true;
-}
-
-function disableMute() {
-  audio.muted = false;
-}
+$("#mutefxn").click( function (){
+    if(audio.muted===false ) {
+          audio.muted=true;
+        $("#mutefxn").text("Mute sound - Yes");
+    } else {
+     audio.muted=false;
+        $("#mutefxn").text("Mute sound - No");
+    }
+  });

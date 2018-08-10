@@ -8,7 +8,7 @@
 
   <title>Universal Controller 2.0</title>
 
-
+<!--Button shake (Has to remain the first stylesheet - refer buttonshake.js)-->
   <link rel="stylesheet" href="./css/buttonshake.css" />
   <!-- Bootstrap CSS CDN -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -60,8 +60,7 @@
             <br>
             <li>
               <!--Sound enabler-->
-              <button class="settingsbtn" onclick="enableMute()">Mute</button> |
-              <button class="settingsbtn" onclick="disableMute() ">Unmute</button>
+              <button class="settingsbtn" id="mutefxn" >Mute sound - No</button> 
             </li><br>
             <li>
               <!--Sound choices-->
@@ -81,8 +80,7 @@
             <br>
             <li>
               <!--Shake enabler-->
-              <button class="settingsbtn" onclick="shake())">Shake</button> |
-              <button class="settingsbtn" onclick="noshake()">No Shake</button>
+              <button class="settingsbtn" id="shake">Shake - No</button> 
             </li>
           </ul>
         </li>
