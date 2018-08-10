@@ -2,14 +2,13 @@
     DEMO STYLE
 */
 
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: "lexie_readableregular", sans-serif;
     background: #fafafa;
 }
 
 p {
-    font-family: 'Poppins', sans-serif;
+    font-family: "lexie_readableregular",  sans-serif;
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
@@ -19,7 +18,7 @@ p {
 a,
 a:hover,
 a:focus {
-    color: inherit;
+    color: black !important;
     text-decoration: none;
     transition: all 0.3s;
 }
@@ -62,7 +61,7 @@ a:focus {
     left: 0;
     height: 100vh;
     z-index: 999;
-    background: #fcf2ee;
+    background: #e7e7e7;
     color: #000;
     transition: all 0.3s;
 }
@@ -73,12 +72,12 @@ a:focus {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #f6e1d7;
+    background: #e7e7e7;
 }
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #fbdacc;
+    border-bottom: 1px solid #e7e7e7;
 }
 
 #sidebar ul p {
@@ -93,14 +92,14 @@ a:focus {
 }
 
 #sidebar ul li a:hover {
-    color: #fba27c;
+    color: #e7e7e7;
     background: #fff;
 }
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-    background: #fba27c;
+    background: #e7e7e7;
 }
 
 a[data-toggle="collapse"] {
@@ -118,7 +117,7 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #fba27c;
+    background: #e7e7e7;
 }
 
 ul.CTAs {
@@ -137,13 +136,13 @@ ul.CTAs a {
 
 a.download {
     background: #fff;
-    color: #fba27c;
+    color: #e7e7e7;
 }
 
 a.article,
 a.article:hover {
-    background: #fba27c !important;
-    color: #fff !important;
+    background: #e7e7e7 !important;
+    color: #000 !important;
 }
 
 /* ---------------------------------------------------
@@ -251,11 +250,11 @@ a.article:hover {
 }
 
 .nav-tabs>li>a:hover {
-  border-color: #eeeeee #eeeeee #dddddd;
+  border-color: #000 #000 #000;
 }
 
 .nav-tabs>.active>a, .nav-tabs>.active>a:hover {
-  color: #555555;
+  color: #000;
   cursor: default;
   background-color: #fff;
   border: 1px solid #ddd;
@@ -321,3 +320,33 @@ li {
   margin-bottom: 10px;
   width: 100%;
 }
+
+.settingsbtn {
+    background-color: #fff;
+    border-color: #e7e7e7;
+    color: #000;
+    padding: 5px 10px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    font-size: inherit;
+}
+
+.settingsbtn:hover {
+  background: #000;
+  color: white;
+}
+
+/* Accessible font */
+@font-face {
+    font-family: 'lexie_readableregular';
+    src: url('fonts/lexiereadable-regular-webfont.eot');
+    src: url('fonts/lexiereadable-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/lexiereadable-regular-webfont.woff2') format('woff2'),
+         url('fonts/lexiereadable-regular-webfont.woff') format('woff'),
+         url('fonts/lexiereadable-regular-webfont.ttf') format('truetype'),
+         url('fonts/lexiereadable-regular-webfont.svg#lexie_readableregular') format('svg');
+    font-weight: normal;
+    font-style: normal;

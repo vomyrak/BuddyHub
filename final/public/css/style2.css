@@ -1,13 +1,11 @@
 
-
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: "lexie_readableregular", sans-serif;
     background: #000;
 }
 
 p {
-    font-family: 'Poppins', sans-serif;
+    font-family: "lexie_readableregular",  sans-serif;
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
@@ -96,7 +94,7 @@ a:focus {
 }
 
 #sidebar ul li a:hover {
-    color: #484848;
+    color: #000;
     background: #fff;
 }
 
@@ -143,7 +141,7 @@ a.download {
 
 a.article,
 a.article:hover {
-    background: #484848 !important;
+    background: #000 !important;
     color: #fff !important;
 }
 
@@ -283,10 +281,7 @@ li {
   text-shadow: none;
 }
 
-.tabtext {
-  color: white !important;
-  text-shadow: none;
-}
+
 
 @keyframes shake {
   0% {
@@ -330,3 +325,34 @@ li {
   margin-bottom: 10px;
   width: 100%;
 }
+
+
+.settingsbtn {
+    background-color: #000;
+    border-color: #000;
+    color: #fff;
+    padding: 5px 10px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    font-size: inherit;
+}
+
+.settingsbtn:hover {
+  background: #fff;
+  color: black;
+}
+
+/* Accessible font */
+@font-face {
+    font-family: 'lexie_readableregular';
+    src: url('fonts/lexiereadable-regular-webfont.eot');
+    src: url('fonts/lexiereadable-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/lexiereadable-regular-webfont.woff2') format('woff2'),
+         url('fonts/lexiereadable-regular-webfont.woff') format('woff'),
+         url('fonts/lexiereadable-regular-webfont.ttf') format('truetype'),
+         url('fonts/lexiereadable-regular-webfont.svg#lexie_readableregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
