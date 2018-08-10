@@ -1,5 +1,4 @@
-﻿
-﻿################################################################################
+﻿﻿################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
@@ -25,11 +24,37 @@
 /CSharpServer/CSharpServer/bin/Debug
 /UC
 /VoiceSynthesizer
-/UCUI/UCUI/UCUI/obj
 /CSharpServer/.vs/CSharpServer/v15
 /Misc/GlobalHook/.vs/GlobalHook
 /UCUI/UCUI/UCUI/CSharpServer/auth.json
 /UCUI/UCUI/UCUI/auth.json
+/UCUI/UCUI/Test
+/UCUI/UCUI/Hue-master
+/UCUI/UCUI/UCUI/Hue
+/UCUI/UCUI/UCUI/HueTests
+/UCUI/UCUI/.vs
+/UCUI/UCUI/UCUI/obj/Release
+/UCUI/UCUI/UCUI/obj/Debug
+/UCUI/UCUI/UCUI/bin/Debug/System.Runtime.InteropServices.RuntimeInformation.dll
+/UCUI/UCUI/UCUI/bin/Debug/System.Net.Http.Primitives.xml
+/UCUI/UCUI/UCUI/bin/Debug/System.Net.Http.Primitives.dll
+/UCUI/UCUI/UCUI/bin/Debug/System.Net.Http.Extensions.xml
+/UCUI/UCUI/UCUI/bin/Debug/System.Net.Http.Extensions.dll
+/UCUI/UCUI/UCUI/bin/Debug/System.Buffers.xml
+/UCUI/UCUI/UCUI/bin/Debug/System.Buffers.dll
+/UCUI/UCUI/UCUI/bin/Debug/Newtonsoft.Json.xml
+/UCUI/UCUI/UCUI/bin/Debug/Newtonsoft.Json.dll
+/UCUI/UCUI/UCUI/bin/Debug/MongoDB.Driver.xml
+/UCUI/UCUI/UCUI/bin/Debug/MongoDB.Driver.dll
+/UCUI/UCUI/UCUI/bin/Debug/MongoDB.Driver.Core.xml
+/UCUI/UCUI/UCUI/bin/Debug/MongoDB.Driver.Core.dll
+/UCUI/UCUI/UCUI/bin/Debug/MongoDB.Bson.xml
+/UCUI/UCUI/UCUI/bin/Debug/MongoDB.Bson.dll
+/UCUI/UCUI/UCUI/bin/Debug/DnsClient.xml
+/UCUI/UCUI/UCUI/bin/Debug/DnsClient.dll
+/UCUI/UCUI/UCUI/bin/Debug/CSharpServer.pdb
+/UCUI/UCUI/UCUI/bin/Debug/CSharpServer.exe.config
+/UCUI/UCUI/UCUI/bin/Debug/CSharpServer.exe
 /Prototype
 /Misc
 /GLobalHook
