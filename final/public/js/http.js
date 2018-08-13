@@ -16,9 +16,9 @@ function sendRequest(button) {
     var strarr = text_input.split(".");
     console.log(text_input.split("."));
     if (!text_input.includes(".")) {
-      json[text_input] = input
+      json[text_input] += input
     } else if (strarr.length = 2) {
-      json[strarr[0]][strarr[1]] = input;
+      json[strarr[0]][strarr[1]] += input;
     }
     data = JSON.stringify(json);
     console.log(data);

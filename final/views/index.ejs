@@ -37,7 +37,7 @@
 
 <body id="myBody">
 
-  <!-- Menu -->
+ <!-- Menu -->
   <div class="wrapper">
     <!-- Sidebar  -->
     <nav id="sidebar">
@@ -49,11 +49,38 @@
           <a href="/">Home</a>
         </li>
       </ul>
-      <ul class="list-unstyled CTAs">
-        <li>
-          <!--Change theme-->
-          <a href="#settings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Settings</a>
-          <ul margin="centre" class="collapse list-unstyled" id="settings">
+    </nav>
+  </div>
+
+  <!-- Page Content -->
+  <div id="content">
+    <div class="container">
+      <!-- Button for collapsing menu -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+
+          <button type="button" id="sidebarCollapse" class="settingsbtn">
+                <i class="fas fa-align-left"></i>
+                <span>Toggle Sidebar</span>
+            </button>
+                      <!-- Button trigger modal -->
+<button type="button" class="settingsbtn" data-toggle="modal" data-target="#exampleModal">
+Settings
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--Change theme-->
+        
             <li >
               <button class="settingsbtn" onclick=" setActiveStyleSheet('default'); return false;">Light</button> | <button class="settingsbtn" onclick=" setActiveStyleSheet('alternate'); return false;">Dark</button>
             </li>
@@ -77,28 +104,18 @@
               <button class="settingsbtn" onclick="resizeText(1)" id="plustext">+</button> |
               <button class="settingsbtn" onclick="resizeText(-1)" id="minustext">-</button>
             </li>
-            <br>
+              <br>
             <li>
               <!--Shake enabler-->
               <button class="settingsbtn" id="shake">Shake - No</button> 
             </li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="settingsbtn" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
-
-  <!-- Page Content -->
-  <div id="content">
-    <div class="container">
-      <!-- Button for collapsing menu -->
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-
-          <button type="button" id="sidebarCollapse" class="settingsbtn">
-                <i class="fas fa-align-left"></i>
-                <span>Toggle Sidebar</span>
-            </button>
+</div>
         </div>
       </nav>
 
