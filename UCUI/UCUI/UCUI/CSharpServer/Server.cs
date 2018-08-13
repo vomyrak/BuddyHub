@@ -304,6 +304,7 @@ namespace CSharpServer
         /// <returns>A string corresponding to the status of the operation</returns>
         public string SendResponse(HttpListenerRequest request)
         {
+            RaiseUINotifEvent.Invoke(null, "Test");
             string[] parsedRequest = request.RawUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
             int fieldSize = parsedRequest.Length;
             if (parsedRequest.Length == 0) return "";
@@ -574,13 +575,17 @@ namespace CSharpServer
                             string startingAtPid = deviceId.Substring(pidIndex + 4); // + 4 to remove "PID_"                    
                             string pid = startingAtPid.Substring(0, 4); // pid is four characters long
 
-                            DeviceInfo newDeviceInfo = JsonConvert.DeserializeObject<DeviceInfo>(QueryDeviceInfo(vid, pid));
-                            if (newDeviceInfo != null)
+                            if (vidIndex < 0 || pidIndex < 0) { }
+                            else
                             {
-                                newDeviceInfo.ToFile("newDevice");
-                                result = newDeviceInfo.Device;
-                                AddDevice(result, new ControllerDevice(newDeviceInfo, deviceId));
-                                BindDevice(result, newDeviceInfo.Assembly);
+                                DeviceInfo newDeviceInfo = JsonConvert.DeserializeObject<DeviceInfo>(QueryDeviceInfo(vid, pid));
+                                if (newDeviceInfo != null)
+                                {
+                                    newDeviceInfo.ToFile("newDevice");
+                                    result = newDeviceInfo.Device;
+                                    AddDevice(result, new ControllerDevice(newDeviceInfo, deviceId));
+                                    BindDevice(result, newDeviceInfo.Assembly);
+                                }
                             }
                         }
                     }

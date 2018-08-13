@@ -36,7 +36,7 @@ namespace UCUI
     public partial class MainWindow : Window
     {
         private Button[] ButtonArray;
-        //private Server server;
+        private Server server;
         private HttpClient client;
         private HwndSource windowHandle;
 
@@ -94,8 +94,8 @@ namespace UCUI
 
             }
             // Server script
-            //var serverThread = new Thread(ServerRoutine);
-            //serverThread.Start();
+            var serverThread = new Thread(ServerRoutine);
+            serverThread.Start();
             client = new HttpClient()
             {
                 BaseAddress = new Uri(SERVER_ADDRESS)
@@ -106,12 +106,12 @@ namespace UCUI
             windowHandle = HwndSource.FromHwnd(handle);
             windowHandle.AddHook(new HwndSourceHook(WndProc));
 
-            //Task.Run(() =>
-            //{
-            //    serverThread.Join();
-            //    server.ObtainUSBDeviceInfo();
-            //    server.ObtainRemoteDeviceInfo();
-            //});
+            Task.Run(() =>
+            {
+                serverThread.Join();
+                server.ObtainUSBDeviceInfo();
+                server.ObtainRemoteDeviceInfo();
+            });
 
             currentDevice = null;
             currentDeviceInfo = null;
@@ -341,13 +341,13 @@ namespace UCUI
             ((UCSettings)DataContext).ButtonKey = "ButtonNull";
         }
 
-        //private void ServerRoutine()
-        //{
-        //    server = new Server(SERVER_ADDRESS);
-        //    server.Run();
-        //    //deviceInterface.TestRoboticArm();
-        //
-        //}
+        private void ServerRoutine()
+        {
+            server = new Server(SERVER_ADDRESS);
+            server.Run();
+            //deviceInterface.TestRoboticArm();
+        
+        }
 
         private void NotifyServer(string url, string content)
         {

@@ -50,7 +50,7 @@ namespace CSharpServer
                                 ctx.Response.ContentLength64 = buf.Length;
                                 ctx.Response.OutputStream.Write(buf, 0, buf.Length);
                             }
-                            catch { }
+                            catch (Exception e){ Console.WriteLine(e); }
                             finally
                             {
                                 ctx.Response.OutputStream.Close();
