@@ -33,6 +33,8 @@ namespace UCUI
         {
             DataContext = new UCSettings();
             InitializeComponent();
+            ButtonArray = new Button[9];
+            SettingsView.ExecuteMethod += new EventHandler(UserControlHandler);
             try
             {
                 ControlOptions.ItemsSource = ControlSource.Options;
@@ -50,7 +52,7 @@ namespace UCUI
                UIElement events
 
          ---------------------------*/
-
+        #region Navigating usercontrols
         private void PageOpen(object sender, RoutedEventArgs e)
         {
             Button myButton = (Button)sender;
@@ -66,19 +68,23 @@ namespace UCUI
             Overlay.Visibility = Visibility.Visible;
             MainView.Effect = new BlurEffect();
             CheckCenterMouse();
+            OptionsExpander.Focusable = false;
+            ControlOptions.IsTabStop = false;
             ((UCSettings)DataContext).IsOpen = true;
             
         }
 
-        private void Outside_Click(object sender, RoutedEventArgs e)
+        public void Outside_Click(object sender, RoutedEventArgs e)
         {
             HelpView.Visibility = System.Windows.Visibility.Collapsed;
             SettingsView.Visibility = System.Windows.Visibility.Collapsed;
             Overlay.Visibility = Visibility.Collapsed;
             MainView.Effect = null;
+            ControlOptions.Focusable = true;
+            OptionsExpander.IsTabStop = true;
             ((UCSettings)DataContext).IsOpen = false;
         }
-
+        #endregion
 
         //Every time the selection changes in the CotrolOptions listbox the 3x3 
         //array of buttons in ButtonGrid is repolpulated. 
@@ -88,7 +94,6 @@ namespace UCUI
 
             if (ControlOptions.SelectedItem != null)
             {
-                ButtonArray = new Button[9];
                 ControlOption myOption = (ControlOption)ControlOptions.SelectedItem;
                 int visibleButtonCounter=0;                                                             //Used to iterate through label array from ControlOption
 
@@ -115,6 +120,7 @@ namespace UCUI
                         ButtonArray[i].Click += delegate (object a, RoutedEventArgs b)
                         {
                             CheckCenterMouse();
+
                         };
 
                         ButtonArray[i].MouseEnter += delegate (object a, MouseEventArgs b)
@@ -149,45 +155,106 @@ namespace UCUI
 
         }
 
+        protected void UserControlHandler(object sender, EventArgs e)
+        {
+            Outside_Click(null, null);
+        }
+
+        #region Detecting keystrokes for keybinds and animating it
         //In Pusher style the multibinding animationcondition fires by comparing 
         //the name of indiviudual buttons to a stored "Button that's supposed to 
         //be pressed" string. This function changes that string, and fires the 
         //click event. Alternatively a new dependencyproperty could have been 
         //delared but this was simpler. 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (SettingsView.Visibility != Visibility.Visible)
+
+            if (!((UCSettings)DataContext).IsOpen)
             {
+                if (e.Key == Key.Return)
+                {
+                    for (int i = 0; i < 9; i++)
+                    {
+                        if ((ButtonArray?[i]?.Content) != null && ButtonArray[i].IsFocused)
+                        {
+                            ((UCSettings)DataContext).ButtonKey = "Button" + i.ToString();
+                            CheckSound();
+                            return;
+                        }
+                    }
+                }
+
                 for (int i = 0; i < 9; i++)
                 {
-                    if (UCSettings.GetKey(i).Equals(e.Key.ToString())&& ButtonArray[i].Content != null)
+                    if (UCSettings.GetKey(i).Equals(e.Key.ToString()) && (ButtonArray?[i]?.Content) != null) //if content is null the button is not visible, so checksound shouldn't be played
                     {
                         ((UCSettings)DataContext).ButtonKey = "Button" + i.ToString();
                         ButtonArray[i].RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
                         CheckSound();
-                        break;
+                        e.Handled = true;
+                        return;
                     }
                 }
+                if (UCSettings.GetKey(9).Equals(e.Key.ToString()))  //key 9 is the key bound to the sidebar
+                {
+                    OptionsExpander.IsExpanded = !OptionsExpander.IsExpanded;
+                    e.Handled = true;
+                }
             }
+            else if (e.Key == Key.Escape) Outside_Click(null, null);
         }
+
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             ((UCSettings)DataContext).ButtonKey = "ButtonNull";
         }
+        #endregion
 
+        #region Checks for settings
         private void CheckCenterMouse()
         {
             if (((UCSettings)DataContext).IsCenter)
                 UCMethods.SetPosition(this);
 
         }
-
+        
         private void CheckSound()
         {
             if (((UCSettings)DataContext).IsSound)
                 UCMethods.PlayMySound();
         }
+        #endregion
+
+        #region Switch Control functions
+        private void OptionsExpander_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Expander myExpander = (Expander)sender;
+            myExpander.Background = (Brush)Application.Current.Resources["ThemeBrush"];
+            OptionsHeader.Background = (Brush)Application.Current.Resources["ThemeBrush"];
+        }
+
+        private void OptionsExpander_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Expander myExpander = (Expander)sender;
+
+            if (!myExpander.IsMouseOver)
+            {
+                myExpander.Background = (Brush)Application.Current.Resources["GoldBrush"];
+                OptionsHeader.Background = (Brush)Application.Current.Resources["GoldBrush"];
+            }
+        }
+
+        private void ControlOptions_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Tab)
+            {
+                if (ControlOptions.SelectedIndex >= ControlSource.Options.Count - 1) ControlOptions.SelectedIndex = 0;
+                else ControlOptions.SelectedIndex++;
+            }
+        }
+
+        #endregion
 
     }
 

@@ -34,8 +34,8 @@ namespace UCUI.UserControls
             InitializeComponent();
 
             //The code below saves space in the XAML for populating the grid with visuals
-            ImageArray = new Image[9];
-            TextBoxArray = new TextBox[9];
+            ImageArray = new Image[10];
+            TextBoxArray = new TextBox[10];
             for (int i = 0; i < 9; i++)
             {
                 ImageArray[i] = new Image();
@@ -50,6 +50,14 @@ namespace UCUI.UserControls
                 TextBoxArray[i].PreviewTextInput += Bind_PreviewTextInput;
                 TextBoxArray[i].PreviewKeyDown += Bind_PreviewKeyDown;
             }
+            ImageArray[9] = new Image();
+            TextBoxArray[9] = new TextBox();
+            SidebarGrid.Children.Add(ImageArray[9]);
+            SidebarGrid.Children.Add(TextBoxArray[9]);
+
+            TextBoxArray[9].PreviewTextInput += Bind_PreviewTextInput;
+            TextBoxArray[9].PreviewKeyDown += Bind_PreviewKeyDown;
+
 
             if (File.Exists("UCConfig.txt"))
             {
@@ -59,22 +67,22 @@ namespace UCUI.UserControls
 
                     string[] words = lines.Split(' ');
 
-                    for (int i = 0; i < 9; i++)
+                    for (int i = 0; i < 10; i++)
                     {
                         UCSettings.SetKey(words[i], i);
                     }
-                    ((UCSettings)App.Current.MainWindow.DataContext).IsCenter = words[9] == "True";
-                    ((UCSettings)App.Current.MainWindow.DataContext).IsHover = words[10] == "True";
-                    ((UCSettings)App.Current.MainWindow.DataContext).IsShake = words[11] == "True";
-                    ((UCSettings)App.Current.MainWindow.DataContext).IsSound = words[12] == "True";
-                    ((UCSettings)App.Current.MainWindow.DataContext).IsFull = words[13] == "True";
+                    ((UCSettings)App.Current.MainWindow.DataContext).IsCenter = words[10] == "True";
+                    ((UCSettings)App.Current.MainWindow.DataContext).IsHover = words[11] == "True";
+                    ((UCSettings)App.Current.MainWindow.DataContext).IsShake = words[12] == "True";
+                    ((UCSettings)App.Current.MainWindow.DataContext).IsSound = words[13] == "True";
+                    ((UCSettings)App.Current.MainWindow.DataContext).IsFull = words[14] == "True";
 
-                    for (int j = 0; j < 9; j++)
+                    for (int j = 0; j < 10; j++)
                     {
                         if (words[j] != "null") TextBoxArray[j].Text = words[j];
                     }
 
-                    ThemeBox.SelectedIndex = Int32.Parse(words[14]);
+                    ThemeBox.SelectedIndex = Int32.Parse(words[15]);
                 }
                 catch (Exception)
                 {
@@ -86,11 +94,11 @@ namespace UCUI.UserControls
         //For TextBoxArray.Text sometimes Key.Tostring sometimes Text[0] is used, So things like LeftShift will show up, but not Oem-s.
         private void Bind_PreviewKeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.Tab || e.Key==Key.Escape) return;
             TextBox myTextBox = (TextBox)sender;
             myTextBox.Text = null;
 
-            if (e.Key == Key.Tab) return;
-            if(e.Key==Key.Back)
+            if (e.Key==Key.Back)
             {
                 UCSettings.SetKey("null", Array.IndexOf(TextBoxArray, myTextBox));
                 return;
@@ -100,7 +108,7 @@ namespace UCUI.UserControls
             {
                 if (e.Key.ToString()[2] != 'm') myTextBox.Text = e.Key.ToString();
             }
-            else if(e.Key.ToString().Length==1) myTextBox.Text = e.Key.ToString();
+            else myTextBox.Text = e.Key.ToString();
             UCSettings.SetKey(e.Key.ToString(), Array.IndexOf(TextBoxArray, myTextBox));
         }
 
@@ -115,7 +123,7 @@ namespace UCUI.UserControls
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder sb = new StringBuilder();
-            for(int i=0; i<9; i++)
+            for(int i=0; i<10; i++)
             {
                 if(UCSettings.GetKey(i).Length!=0)sb.Append(UCSettings.GetKey(i)).Append(" ");
                 else sb.Append("null ");
@@ -132,13 +140,13 @@ namespace UCUI.UserControls
 
         private void Clear_Click(object sender, RoutedEventArgs e)
         {
-            for(int i=0; i<9; i++)
+            for (int i=0; i<10; i++)
             {
                 TextBoxArray[i].Text = null;
                 UCSettings.SetKey("null", i);
             }
         }
-
+        
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             switch(ThemeBox.SelectedIndex)
@@ -152,6 +160,18 @@ namespace UCUI.UserControls
                     Application.Current.Resources["ButtonBrush"] = new SolidColorBrush(Colors.DarkTurquoise);
                     break;
             }
+        }
+
+        public event EventHandler ExecuteMethod;
+
+        protected virtual void OnExecuteMethod()
+        {
+            if (ExecuteMethod != null) ExecuteMethod(this, EventArgs.Empty);
+        }
+
+        public void Return_Click(object sender, EventArgs e)
+        {
+            OnExecuteMethod();
         }
     }
 }

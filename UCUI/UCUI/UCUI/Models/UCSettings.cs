@@ -14,7 +14,7 @@ namespace UCUI.Models
     {
 
         //KeyBinds stored in string instead of Key so it can be more easily read from text file (No backwards conversion needed). Alternatively it could be read binary mode.
-        static private string[] keyBinds = new string[9];
+        static private string[] keyBinds = new string[10];
        
         static public void SetKey(string keyIn, int i)
         {
@@ -26,7 +26,9 @@ namespace UCUI.Models
 
         static public string GetKey(int i)
         {
-            return keyBinds[i];
+            if (keyBinds[i] != null)
+                return keyBinds[i];
+            else return "null";
         }
 
         private  bool isShake;

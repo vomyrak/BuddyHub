@@ -22,46 +22,48 @@
                     Value="30" />
           </Style>
         </ScrollViewer.Resources>
-        
+
         <StackPanel>
-        <Grid MinHeight='250'
+          <Grid MinHeight='250'
               MinWidth='500'>
-          <Grid.Resources>
-            <Style x:Key="{x:Type CheckBox}"
+            <Grid.Resources>
+              <Style x:Key="{x:Type CheckBox}"
                    TargetType="{x:Type CheckBox}">
-              <Setter Property='HorizontalAlignment'
+                <Setter Property='HorizontalAlignment'
                       Value='Left' />
                 <Setter Property='VerticalAlignment'
                         Value='Center' />
                 <Setter Property='FontFamily'
                       Value='Calibri' />
-              <Setter Property='Margin'
+                <Setter Property='Margin'
                       Value='10' />
-              <Setter Property='FontSize'
+                <Setter Property='FontSize'
                       Value='12' />
-              <Setter Property='LayoutTransform'>
-                <Setter.Value>
-                  <ScaleTransform ScaleX='2'
+                <Setter Property='KeyboardNavigation.AcceptsReturn'
+                      Value='True' />
+                <Setter Property='LayoutTransform'>
+                  <Setter.Value>
+                    <ScaleTransform ScaleX='2'
                                   ScaleY='2' />
-                </Setter.Value>
-              </Setter>
-            </Style>
-          </Grid.Resources>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-          </Grid.ColumnDefinitions>
-          <Grid.RowDefinitions>
-            <RowDefinition Height='6*' />
-            <RowDefinition Height='Auto' />
-            <RowDefinition Height='Auto' />
-            <RowDefinition Height='3*' />
-            <RowDefinition Height='3*' />
-            <RowDefinition Height='3*' />
-            <RowDefinition Height='3*' />
-          </Grid.RowDefinitions>
+                  </Setter.Value>
+                </Setter>
+              </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition />
+              <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition Height='6*' />
+              <RowDefinition Height='Auto' />
+              <RowDefinition Height='Auto' />
+              <RowDefinition Height='3*' />
+              <RowDefinition Height='3*' />
+              <RowDefinition Height='3*' />
+              <RowDefinition Height='3*' />
+            </Grid.RowDefinitions>
 
-          <Rectangle Grid.Row='1'
+            <Rectangle Grid.Row='1'
                      Grid.Column='0'
                      Grid.ColumnSpan='2'
                      Fill='LightGray'
@@ -69,73 +71,82 @@
                      RadiusX='10'
                      RadiusY='10'
                      Grid.RowSpan='2' />
-          <TextBlock Text='Click a button and press a key to control it with'
+            <TextBlock Text='Click a button and press a key to control it with'
                      Grid.Row='1'
                      Grid.ColumnSpan='2'
                      HorizontalAlignment='Center'
                      FontFamily='Calibri'
                      FontSize='20'
                      Margin='10' />
-          <Grid x:Name='BindGrid'
+            <Grid x:Name='BindGrid'
                 Grid.Row='2'
                 Grid.Column='0'
                 Grid.ColumnSpan='2'
                 Margin='15'>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition />
-              <ColumnDefinition />
-              <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-              <RowDefinition />
-              <RowDefinition />
-              <RowDefinition />
-              <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.Resources>
-              <Style x:Key="{x:Type Image}"
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+              </Grid.RowDefinitions>
+              <Grid.Resources>
+                <Style x:Key="{x:Type Image}"
                      TargetType="{x:Type Image}">
-                <Setter Property='Source'
+                  <Setter Property='Source'
                         Value="pack://application:,,,/Images/ButtPic.png" />
-                <Setter Property='MaxHeight'
+                  <Setter Property='MaxHeight'
                         Value="60" />
-                <Setter Property='HorizontalAlignment'
+                  <Setter Property='HorizontalAlignment'
                         Value='Stretch' />
-                <Setter Property='VerticalAlignment'
+                  <Setter Property='VerticalAlignment'
                         Value='Stretch' />
-                <Setter Property='Margin'
+                  <Setter Property='Margin'
                         Value="5" />
-              </Style>
+                </Style>
 
-              <Style x:Key="{x:Type TextBox}"
+                <Style x:Key="{x:Type TextBox}"
                      TargetType="{x:Type TextBox}">
-                <Setter Property='MaxHeight'
+                  <Setter Property='MaxHeight'
                         Value="30" />
-                <Setter Property='MaxWidth'
+                  <Setter Property='MaxWidth'
                         Value='60' />
-                <Setter Property='FontFamily'
+                  <Setter Property='FontFamily'
                         Value='Calibri' />
-                <Setter Property='TextAlignment'
+                  <Setter Property='TextAlignment'
                         Value='Center' />
-                <Setter Property='FontSize'
+                  <Setter Property='FontSize'
                         Value='16' />
-                <Setter Property='Background'
+                  <Setter Property='Background'
                         Value='Gray' />
-                <Setter Property='Foreground'
+                  <Setter Property='Foreground'
                         Value='White' />
-                <Setter Property='Cursor'
+                  <Setter Property='Cursor'
                         Value='Hand' />
 
-              </Style>
-            </Grid.Resources>
-            <Button Grid.Row='3'
+                </Style>
+              </Grid.Resources>
+              <Button Grid.Row='3'
                     Grid.Column='2'
                     Content='Clear'
                     Style='{StaticResource Shaker}'
                     Margin='28 5 28 5'
                     Click='Clear_Click' />
-          </Grid>
-          <TextBlock TextWrapping='Wrap'
+              <StackPanel Grid.Row="3"
+                   Grid.Column="0"
+                          Orientation="Horizontal">
+                <TextBlock Text="Open Sidebar:"
+                           VerticalAlignment="Center"
+                           FontFamily="Calibri"
+                           FontSize="16"/>
+                <Grid x:Name="SidebarGrid"/>
+              </StackPanel>
+            </Grid>
+            <TextBlock TextWrapping='Wrap'
                      VerticalAlignment='Center'
                      HorizontalAlignment='Center'
                      Background='White'
@@ -146,50 +157,50 @@
                      Grid.Row='0'
                      Grid.ColumnSpan='2'
                      x:Name='SettingsBlock' />
-          <CheckBox x:Name='AudioButton'
+            <CheckBox x:Name='AudioButton'
                     Grid.Row='3'
                     Grid.Column='0'
                     Content='Audio Feedback'
                     IsChecked='{Binding IsSound, UpdateSourceTrigger=PropertyChanged}' />
-          <CheckBox x:Name='CenterMouse'
+            <CheckBox x:Name='CenterMouse'
                     Grid.Row='4'
                     Grid.Column='0'
                     Content='Center Mouse'
                     IsChecked='{Binding IsCenter, UpdateSourceTrigger=PropertyChanged}' />
-          <CheckBox x:Name='ShakeButton'
+            <CheckBox x:Name='ShakeButton'
                     Grid.Row='3'
                     Grid.Column='1'
                     Content='Visual Feedback'
                     IsChecked='{Binding IsShake, UpdateSourceTrigger=PropertyChanged}' />
-          <CheckBox x:Name='HoverButton'
+            <CheckBox x:Name='HoverButton'
                     Grid.Row='4'
                     Grid.Column='1'
                     Content='Click on Hover'
                     IsChecked='{Binding IsHover, UpdateSourceTrigger=PropertyChanged}' />
-          <CheckBox x:Name='FullScreenButton'
+            <CheckBox x:Name='FullScreenButton'
                     Grid.Row='5'
                     Content='Full Screen'
                     IsChecked='{Binding IsFull, UpdateSourceTrigger=PropertyChanged}' />
 
-          <StackPanel Grid.Row='5'
+            <StackPanel Grid.Row='5'
                       Grid.Column='1'
                       Orientation='Horizontal'
                       HorizontalAlignment='Center'
                       VerticalAlignment='Center'>
-            <TextBlock VerticalAlignment='Center'
+              <TextBlock VerticalAlignment='Center'
                        FontFamily='Calibri'
                        FontSize='24'>Theme:</TextBlock>
-            <ComboBox x:Name='ThemeBox'
+              <ComboBox x:Name='ThemeBox'
                       Margin='10'
                       MinHeight='40'
                       Style='{StaticResource theComboBox}'
                       SelectionChanged='ComboBox_SelectionChanged'>
-              <ComboBoxItem IsSelected='True'>Modest</ComboBoxItem>
-              <ComboBoxItem>Colorful</ComboBoxItem>
-            </ComboBox>
-          </StackPanel>
+                <ComboBoxItem IsSelected='True'>Modest</ComboBoxItem>
+                <ComboBoxItem>Colorful</ComboBoxItem>
+              </ComboBox>
+            </StackPanel>
 
-          <Button Grid.Row='6'
+            <Button Grid.Row='6'
                   Grid.Column='0'
                   Grid.ColumnSpan='2'
                   Content='Save Settings'
@@ -200,10 +211,20 @@
                   Click='Save_Click'
                   MinWidth='150'
                   MinHeight='60' />
+            <Button Grid.Row='6'
+                  Grid.Column='1'
+                  Content='Return'
+                  HorizontalAlignment='Center'
+                  FontSize='20'
+                  Style='{StaticResource Shaker}'
+                    Click="Return_Click"
+                  Margin='90 20 10 20'
+                  MinWidth='80'
+                  MinHeight='40' />
 
-        </Grid>
+          </Grid>
 
-      </StackPanel>
+        </StackPanel>
       </ScrollViewer>
     </Border>
   </Grid>

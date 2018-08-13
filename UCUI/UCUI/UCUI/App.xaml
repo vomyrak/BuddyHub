@@ -6,6 +6,9 @@
              StartupUri="MainWindow.xaml">
   <Application.Resources>
     <Color x:Key='myGray'>#FF353535</Color>
+    <Color x:Key='myGold'>#FFEBCB31</Color>
+    <SolidColorBrush x:Key='GoldBrush'
+                     Color='{StaticResource myGold}' />
     <SolidColorBrush x:Key='ButtonBrush'
                      Color='Gray' />
     <SolidColorBrush x:Key='ThemeBrush'
@@ -13,6 +16,7 @@
 
     <mod:AnimationCondition x:Key="ConditionKey" />
 
+    <!--Used in GlowFocus-->
     <Style TargetType="{x:Type Rectangle}"
                        x:Key='Glower'>
       <Setter Property="RenderTransformOrigin"
@@ -37,8 +41,7 @@
         </EventTrigger>
       </Style.Triggers>
     </Style>
-
-    
+<!--Custom FocusVisualStyle-->
     <Style x:Key="GlowFocus">
       <Setter Property="Control.Template">
         <Setter.Value>
@@ -54,6 +57,8 @@
         </Setter.Value>
       </Setter>
     </Style>
+    
+    
     <!--Static resource storyboard for Pusher button-->
     <Storyboard x:Key='PushDown'>
       <ThicknessAnimation Storyboard.TargetProperty="Margin"

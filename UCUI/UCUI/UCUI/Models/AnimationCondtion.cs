@@ -9,6 +9,7 @@ namespace UCUI.Models
 {
     class AnimationCondition : IMultiValueConverter
     {
+        //[0]:Name, [1]:ButtonKey, [2]:IsPressed, [3]:IsMouseOver, [4]:IsHover
         public object Convert(object[] values, Type targetType,
                object parameter, System.Globalization.CultureInfo culture)
         {
