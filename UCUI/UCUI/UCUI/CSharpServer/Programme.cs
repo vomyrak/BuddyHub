@@ -8,10 +8,13 @@ namespace CSharpServer
     {
         static void Main(string[] args)
         {
-            Server server = new Server("http://localhost:8080");
+            Server server = new Server("http://localhost:8080/");
             //DeviceInterface deviceInterface = new DeviceInterface();
             server.Run();
+            server.ObtainUSBDeviceInfo();
+            server.ObtainRemoteDeviceInfo();
             //deviceInterface.TestRoboticArm();
+            while (true) { }
         }
     }
 }

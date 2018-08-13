@@ -36,7 +36,7 @@ namespace UCUI
     public partial class MainWindow : Window
     {
         private Button[] ButtonArray;
-        private Server server;
+        //private Server server;
         private HttpClient client;
         private HwndSource windowHandle;
 
@@ -47,11 +47,11 @@ namespace UCUI
         private const int WM_DEVICEARRIVAL = 0x8000;
         private const int WM_DEVICEREMOVECOMPLETE = 0X8004;
 
+        ControllerDevice currentDevice;
+        DeviceInfo currentDeviceInfo;
 
-        // Threading Management
-        private Thread newThread;
-        private delegate void CallingDelegate();
-        private Random random = new Random();
+
+
 
 
         public MainWindow()
@@ -94,8 +94,8 @@ namespace UCUI
 
             }
             // Server script
-            var serverThread = new Thread(ServerRoutine);
-            serverThread.Start();
+            //var serverThread = new Thread(ServerRoutine);
+            //serverThread.Start();
             client = new HttpClient()
             {
                 BaseAddress = new Uri(SERVER_ADDRESS)
@@ -106,13 +106,28 @@ namespace UCUI
             windowHandle = HwndSource.FromHwnd(handle);
             windowHandle.AddHook(new HwndSourceHook(WndProc));
 
-            Task.Run(() =>
-            {
-                serverThread.Join();
-                server.ObtainUSBDeviceInfo();
-                server.ObtainRemoteDeviceInfo();
-            });
-            server.RaiseUINotifEvent += Server_RaiseUINotifEvent;
+            //Task.Run(() =>
+            //{
+            //    serverThread.Join();
+            //    server.ObtainUSBDeviceInfo();
+            //    server.ObtainRemoteDeviceInfo();
+            //});
+
+            currentDevice = null;
+            currentDeviceInfo = null;
+            Server.RaiseUINotifEvent += Server_RaiseUINotifEvent;
+            Server.RaiseControllerDeviceEvent += Server_RaiseControllerDeviceEvent;
+            Server.RaiseDeviceInfoEvent += Server_RaiseDeviceInfoEvent;
+        }
+
+        private void Server_RaiseDeviceInfoEvent(object sender, DeviceInfo e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Server_RaiseControllerDeviceEvent(object sender, ControllerDevice e)
+        {
+            throw new NotImplementedException();
         }
 
         private void Server_RaiseUINotifEvent(object sender, string e)
@@ -221,35 +236,39 @@ namespace UCUI
                             Button sourceButton = (Button)a;
                             string buttonName = sourceButton.Name;
                             int buttonIndex = Int32.Parse(buttonName.Substring(6));
+                            NotifyServer(SERVER_ADDRESS + (int)Notif.InvokeMethod + "/" + buttonIndex + "/" + "AL5D", "");
 
+                            #region
+                            // To be moved to Server class
                             // To replace "AL5D" with reference from the selected menu or button
-                            ControllerDevice currentDevice = server.ConnectedDeviceList["AL5D"];
-                            DeviceInfo currentDeviceInfo = currentDevice.DeviceInfo;
-
-                            if (currentDeviceInfo.ApiType == "LocalLib")
-                            {
-                                
-                                int count = currentDeviceInfo.FunctionArray.Count;
-                                if (buttonIndex > count - 1) { }
-                                else
-                                {
-                                    Task.Run(() =>
-                                    {
-                                        MethodInfo methodToBind = server.GetMethodInfo(currentDevice, currentDeviceInfo.FunctionArray[buttonIndex].Name);
-                                        methodToBind.Invoke(currentDevice.DeviceObject, null);
-                                    });
-                                }
-                            }
-                            else if (currentDeviceInfo.ApiType == "Http")
-                            {
-                                Dictionary<string, string> messageDict = new Dictionary<string, string>
-                                {
-                                    ["name"] = "smart lamp",
-                                    ["method"] = "off"
-                                };
-
-                                NotifyServer(SERVER_ADDRESS + (int)Notif.PostToServer, JsonConvert.SerializeObject(messageDict));
-                            }
+                            //ControllerDevice currentDevice = server.ConnectedDeviceList["AL5D"];
+                            //DeviceInfo currentDeviceInfo = currentDevice.DeviceInfo;
+                            //
+                            //if (currentDeviceInfo.ApiType == "LocalLib")
+                            //{
+                            //    
+                            //    int count = currentDeviceInfo.FunctionArray.Count;
+                            //    if (buttonIndex > count - 1) { }
+                            //    else
+                            //    {
+                            //        Task.Run(() =>
+                            //        {
+                            //            MethodInfo methodToBind = server.GetMethodInfo(currentDevice, currentDeviceInfo.FunctionArray[buttonIndex].Name);
+                            //            methodToBind.Invoke(currentDevice.DeviceObject, null);
+                            //        });
+                            //    }
+                            //}
+                            //else if (currentDeviceInfo.ApiType == "Http")
+                            //{
+                            //    Dictionary<string, string> messageDict = new Dictionary<string, string>
+                            //    {
+                            //        ["name"] = "smart lamp",
+                            //        ["method"] = "off"
+                            //    };
+                            //
+                            //    NotifyServer(SERVER_ADDRESS + (int)Notif.PostToServer, JsonConvert.SerializeObject(messageDict));
+                            //}
+                            #endregion
                             CheckCenterMouse();
                         };
 
@@ -322,13 +341,13 @@ namespace UCUI
             ((UCSettings)DataContext).ButtonKey = "ButtonNull";
         }
 
-        private void ServerRoutine()
-        {
-            server = new Server(SERVER_ADDRESS);
-            server.Run();
-            //deviceInterface.TestRoboticArm();
-
-        }
+        //private void ServerRoutine()
+        //{
+        //    server = new Server(SERVER_ADDRESS);
+        //    server.Run();
+        //    //deviceInterface.TestRoboticArm();
+        //
+        //}
 
         private void NotifyServer(string url, string content)
         {

@@ -22,10 +22,12 @@ namespace CSharpServer
         Test,
         CheckName,
         CheckIds,
-        CallFunction,
+        InvokeMethod,
         PostToServer,
         DeviceDetected,
-        DeviceDisconnected
+        DeviceDisconnected,
+        GetControllerDevice,
+        GetDeviceInfo
     }
 
     public class Server
@@ -37,7 +39,9 @@ namespace CSharpServer
         private static WebServer ws;
         private static HttpClient client;
         public Dictionary<string, ControllerDevice> ConnectedDeviceList { get; set; }
-        public event EventHandler<string> RaiseUINotifEvent;
+        public static event EventHandler<string> RaiseUINotifEvent;
+        public static event EventHandler<DeviceInfo> RaiseDeviceInfoEvent;
+        public static event EventHandler<ControllerDevice> RaiseControllerDeviceEvent;
 
         /// <summary>
         /// Constructor Server class
@@ -375,26 +379,68 @@ namespace CSharpServer
                             return QueryDeviceInfo(parsedRequest[1]);
                         case (int)Notif.CheckIds:
                             return QueryDeviceInfo(parsedRequest[1], parsedRequest[2]);
-                        case (int)Notif.CallFunction:
-                            return parsedRequest[1] + "/" + parsedRequest[2] + "/" + parsedRequest[3];
+                        case (int)Notif.InvokeMethod:
+                            int buttonIndex = Int32.Parse(parsedRequest[1]);
+                            ControllerDevice currentDevice = ConnectedDeviceList[parsedRequest[2]];
+                            DeviceInfo currentDeviceInfo = currentDevice.DeviceInfo;
+
+                            if (currentDeviceInfo.ApiType == "LocalLib")
+                            {
+
+                                int count = currentDeviceInfo.FunctionArray.Count;
+                                if (buttonIndex > count - 1) { }
+                                else
+                                {
+                                    Task.Run(() =>
+                                    {
+                                        MethodInfo methodToBind = GetMethodInfo(currentDevice, currentDeviceInfo.FunctionArray[buttonIndex].Name);
+                                        methodToBind.Invoke(currentDevice.DeviceObject, null);
+                                    });
+                                }
+                            }
+                            else if (currentDeviceInfo.ApiType == "Http")
+                            {
+                                Dictionary<string, string> body = new Dictionary<string, string>
+                                {
+                                    ["name"] = "smart lamp",
+                                    ["method"] = "off"
+                                };
+                                RemoteDeviceMethod requestedDeviceMethod = currentDevice.DeviceInfo.Methods.Where(s => s.Method == "on").ToList()[0];
+                                HttpRequestMessage message = new HttpRequestMessage()
+                                {
+
+                                    Method = new HttpMethod(requestedDeviceMethod.HttpMethod),
+                                    RequestUri = new Uri(requestedDeviceMethod.Link),
+                                    Content = new StringContent(requestedDeviceMethod.Data)
+                                };
+                                message.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                                client.SendAsync(message);
+
+                            }
+                            return "";
+                        case (int)Notif.GetDeviceInfo:
+                            RaiseDeviceInfoEvent?.Invoke(this, ConnectedDeviceList[parsedRequest[1]].DeviceInfo);
+                            return "";
+                        case (int)Notif.GetControllerDevice:
+                            RaiseControllerDeviceEvent?.Invoke(this, ConnectedDeviceList[parsedRequest[1]]);
+                            return "";
                         case (int)Notif.PostToServer:
                             byte[] buffer = new byte[100];
                             request.InputStream.Read(buffer, 0, 100);
-                            
                             string content = System.Text.Encoding.UTF8.GetString(TrimNull(buffer));
-                            Dictionary<string, string> body = JsonConvert.DeserializeObject<Dictionary<string, string>>(content);
-                            ControllerDevice requestedDevice = ConnectedDeviceList[body["name"]];
-                            DeviceInfo requestedDeviceInfo = requestedDevice.DeviceInfo;
-                            RemoteDeviceMethod requestedDeviceMethod = requestedDevice.DeviceInfo.Methods.Where(s => s.Method == "on").ToList()[0];
-                            HttpRequestMessage message = new HttpRequestMessage()
-                            {
-
-                                Method = new HttpMethod(requestedDeviceMethod.HttpMethod),
-                                RequestUri = new Uri(requestedDeviceMethod.Link),
-                                Content = new StringContent(requestedDeviceMethod.Data)
-                            };
-                            message.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                            client.SendAsync(message);
+                            //Dictionary<string, string> body = JsonConvert.DeserializeObject<Dictionary<string, string>>(content);
+                            //ControllerDevice requestedDevice = ConnectedDeviceList[body["name"]];
+                            //DeviceInfo requestedDeviceInfo = requestedDevice.DeviceInfo;
+                            //RemoteDeviceMethod requestedDeviceMethod = requestedDevice.DeviceInfo.Methods.Where(s => s.Method == "on").ToList()[0];
+                            //HttpRequestMessage message = new HttpRequestMessage()
+                            //{
+                            //
+                            //    Method = new HttpMethod(requestedDeviceMethod.HttpMethod),
+                            //    RequestUri = new Uri(requestedDeviceMethod.Link),
+                            //    Content = new StringContent(requestedDeviceMethod.Data)
+                            //};
+                            //message.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                            //client.SendAsync(message);
                             return "";
                         case (int)Notif.DeviceDetected:
                             string deviceName = ObtainUSBDeviceInfo();
