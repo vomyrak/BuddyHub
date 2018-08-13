@@ -31,9 +31,14 @@ window.onload = function(e) {
   audio = new Audio(audiolink);
   var cookiemuted = readCookie("muted");
   audio.muted = cookiemuted ? JSON.parse(cookiemuted) : false;
+  var mutebuttontext = audio.muted ? "Mute sound - Yes" : "Mute sound - No";
+  $("#mutefxn").text(mutebuttontext);
 
   var cookieshake = readCookie("shake");
   stylesheet.disabled = cookieshake ? JSON.parse(cookieshake) : false;
+  var shakebuttontext = stylesheet.disabled ? "Shake - No" : "Shake - Yes";
+  $("#shake").text(shakebuttontext);
+
 
   var cookiefontsize = readCookie("fontsize");
   document.body.style.fontSize = cookiefontsize ? cookiefontsize : "1.0em";
