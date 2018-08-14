@@ -368,7 +368,7 @@
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Left" />
               <Popup Name="Popup"
-                     Placement='Right'
+                     Placement='Bottom'
                      IsOpen="{TemplateBinding IsDropDownOpen}"
                      AllowsTransparency="True"
                      Focusable="False"
@@ -394,9 +394,16 @@
           </ControlTemplate>
         </Setter.Value>
       </Setter>
+      <Style.Triggers>
+        <Trigger Property="IsKeyboardFocusWithin"
+                 Value="True">
+          <Setter Property="IsDropDownOpen"
+                  Value="True"/>
+        </Trigger>
+      </Style.Triggers>
     </Style>
 
-    <Style x:Key="theComboBoxItem"
+    <Style x:Key="{x:Type ComboBoxItem}"
            TargetType="{x:Type ComboBoxItem}">
       <Setter Property="HorizontalAlignment"
               Value="Stretch" />
@@ -405,14 +412,15 @@
       <Setter Property="FontSize"
               Value="13" />
       <Setter Property="OverridesDefaultStyle"
-              Value="true" />
+              Value="True" />
+      <Setter Property="IsTabStop" Value="True" />
       <Setter Property="Template">
         <Setter.Value>
           <ControlTemplate TargetType="ComboBoxItem">
             <Border Name="Border"
                     Padding="5"
                     Margin="2"
-                    BorderThickness="10"
+                    BorderThickness="2"
                     CornerRadius="5"
                     Background="Transparent"
                     BorderBrush="Transparent">
@@ -424,11 +432,8 @@
               <Trigger Property="IsHighlighted"
                        Value="true">
                 <Setter TargetName="Border"
-                        Property="BorderBrush"
-                        Value="#B3CB37" />
-                <Setter TargetName="Border"
                         Property="Background"
-                        Value="#F8FAEB" />
+                        Value="#FFE4E4E4" />
               </Trigger>
             </ControlTemplate.Triggers>
           </ControlTemplate>

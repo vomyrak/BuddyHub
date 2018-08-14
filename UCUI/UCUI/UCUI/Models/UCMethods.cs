@@ -5,6 +5,7 @@ using System.Linq;
 using System.Media;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -14,6 +15,7 @@ namespace UCUI.Models
 {
     class UCMethods
     {
+
         [DllImport("User32.dll")]
         private static extern bool SetCursorPos(int X, int Y);
 
@@ -49,6 +51,19 @@ namespace UCUI.Models
 
 
         }
+
+        static public void NextTab()
+        {
+            TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Next);
+
+            // Gets the element with keyboard focus.
+            UIElement elementWithFocus = Keyboard.FocusedElement as UIElement;
+
+            // Change keyboard focus.
+            if (elementWithFocus != null) elementWithFocus.MoveFocus(request);
+            
+        }
+
 
 
         static public void SetPosition(Window win)

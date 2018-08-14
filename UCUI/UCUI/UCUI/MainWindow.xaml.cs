@@ -34,7 +34,7 @@ namespace UCUI
             DataContext = new UCSettings();
             InitializeComponent();
             ButtonArray = new Button[9];
-            SettingsView.ExecuteMethod += new EventHandler(UserControlHandler);
+            SettingsView.ExecuteMethod += new EventHandler(UserControlHandler); //Handling when a button from SettingsView is pressed
             try
             {
                 ControlOptions.ItemsSource = ControlSource.Options;
@@ -83,6 +83,7 @@ namespace UCUI
             ControlOptions.Focusable = true;
             OptionsExpander.IsTabStop = true;
             ((UCSettings)DataContext).IsOpen = false;
+            SettingsView.SaveButton.Content = "Save Settings";
         }
         #endregion
 
@@ -155,11 +156,6 @@ namespace UCUI
 
         }
 
-        protected void UserControlHandler(object sender, EventArgs e)
-        {
-            Outside_Click(null, null);
-        }
-
         #region Detecting keystrokes for keybinds and animating it
         //In Pusher style the multibinding animationcondition fires by comparing 
         //the name of indiviudual buttons to a stored "Button that's supposed to 
@@ -227,11 +223,11 @@ namespace UCUI
         #endregion
 
         #region Switch Control functions
-        private void OptionsExpander_LostFocus(object sender, RoutedEventArgs e)
+       private void OptionsExpander_LostFocus(object sender, RoutedEventArgs e)
         {
             Expander myExpander = (Expander)sender;
-            myExpander.Background = (Brush)Application.Current.Resources["ThemeBrush"];
-            OptionsHeader.Background = (Brush)Application.Current.Resources["ThemeBrush"];
+            myExpander.SetResourceReference(Expander.BackgroundProperty, "ThemeBrush");
+            OptionsHeader.SetResourceReference(TextBlock.BackgroundProperty, "ThemeBrush");
         }
 
         private void OptionsExpander_GotFocus(object sender, RoutedEventArgs e)
@@ -244,10 +240,10 @@ namespace UCUI
                 OptionsHeader.Background = (Brush)Application.Current.Resources["GoldBrush"];
             }
         }
-
+        
         private void ControlOptions_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key != Key.Tab)
+            if (e.Key == Key.Return)
             {
                 if (ControlOptions.SelectedIndex >= ControlSource.Options.Count - 1) ControlOptions.SelectedIndex = 0;
                 else ControlOptions.SelectedIndex++;
@@ -256,6 +252,12 @@ namespace UCUI
 
         #endregion
 
-    }
+        protected void UserControlHandler(object sender, EventArgs e)
+        {
+            Outside_Click(null, null); //Mainwindow has access to this method
+        }
+
+       
+}
 
 }

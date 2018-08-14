@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -164,6 +165,22 @@ namespace UCUI.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public static int AutoTabTime;
+        public static bool IsAuto;
 
+        static public void AutoTab()
+        {
+
+            while (IsAuto)
+            {
+                Thread.Sleep(AutoTabTime);
+                Application.Current.Dispatcher.Invoke((Action)delegate {
+                    UCMethods.NextTab();
+                });
+                
+            }
+            Thread.CurrentThread.Abort();
+
+        }
     }
 }

@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UCUI.Models;
 using System.IO;
+using System.Threading;
 
 namespace UCUI.UserControls
 {
@@ -34,16 +35,17 @@ namespace UCUI.UserControls
             InitializeComponent();
 
             //The code below saves space in the XAML for populating the grid with visuals
+            #region poulating BindGrid
             ImageArray = new Image[10];
             TextBoxArray = new TextBox[10];
             for (int i = 0; i < 9; i++)
             {
                 ImageArray[i] = new Image();
                 TextBoxArray[i] = new TextBox();
-                Grid.SetColumn(ImageArray[i], i % 3 );
-                Grid.SetRow(ImageArray[i], i / 3 );
-                Grid.SetColumn(TextBoxArray[i], i % 3 );
-                Grid.SetRow(TextBoxArray[i], i / 3 );
+                Grid.SetColumn(ImageArray[i], i % 3);
+                Grid.SetRow(ImageArray[i], i / 3);
+                Grid.SetColumn(TextBoxArray[i], i % 3);
+                Grid.SetRow(TextBoxArray[i], i / 3);
                 BindGrid.Children.Add(ImageArray[i]);
                 BindGrid.Children.Add(TextBoxArray[i]);
 
@@ -57,8 +59,9 @@ namespace UCUI.UserControls
 
             TextBoxArray[9].PreviewTextInput += Bind_PreviewTextInput;
             TextBoxArray[9].PreviewKeyDown += Bind_PreviewKeyDown;
+            #endregion
 
-
+            //Loading settings:
             if (File.Exists("UCConfig.txt"))
             {
                 try
@@ -91,20 +94,21 @@ namespace UCUI.UserControls
             }
         }
 
-        //For TextBoxArray.Text sometimes Key.Tostring sometimes Text[0] is used, So things like LeftShift will show up, but not Oem-s.
+        //For TextBoxArray.Text sometimes Key.Tostring sometimes Text[0] is used, So things like LeftShift will show up, but not Oem-s. Hence the two events.
+        #region Handling key events for binding
         private void Bind_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Tab || e.Key==Key.Escape) return;
+            if (e.Key == Key.Tab || e.Key == Key.Escape) return;
             TextBox myTextBox = (TextBox)sender;
             myTextBox.Text = null;
 
-            if (e.Key==Key.Back)
+            if (e.Key == Key.Back)
             {
                 UCSettings.SetKey("null", Array.IndexOf(TextBoxArray, myTextBox));
                 return;
             }
-            
-            if(e.Key.ToString().Length>2)
+
+            if (e.Key.ToString().Length > 2)
             {
                 if (e.Key.ToString()[2] != 'm') myTextBox.Text = e.Key.ToString();
             }
@@ -114,64 +118,129 @@ namespace UCUI.UserControls
 
         private void Bind_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if(!Char.IsNumber(e.Text[0])&& !Char.IsPunctuation(e.Text[0]) && !Char.IsSymbol(e.Text[0]))
-            e.Handled = true;
-           
+            if (!Char.IsNumber(e.Text[0]) && !Char.IsPunctuation(e.Text[0]) && !Char.IsSymbol(e.Text[0]))
+                e.Handled = true;
+
+        }
+        #endregion
+
+        public void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            switch (((Button)sender).Content)
+            {
+                case "Save Settings":  //Saves information of current state of settings so it can be loaded during startup next time.
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < 10; i++)
+                    {
+                        if (UCSettings.GetKey(i).Length != 0) sb.Append(UCSettings.GetKey(i)).Append(" ");
+                        else sb.Append("null ");
+                    }
+                    sb.Append(CenterMouse.IsChecked.ToString()).Append(" ");
+                    sb.Append(HoverButton.IsChecked.ToString()).Append(" ");
+                    sb.Append(ShakeButton.IsChecked.ToString()).Append(" ");
+                    sb.Append(AudioButton.IsChecked.ToString()).Append(" ");
+                    sb.Append(FullScreenButton.IsChecked.ToString()).Append(" ");
+                    sb.Append(ThemeBox.SelectedIndex.ToString());
+                    if (File.Exists("UCConfig.txt"))
+                    {
+                        System.IO.File.WriteAllText("UCConfig.txt", sb.ToString());
+                        SaveButton.Content = "Saved!";
+                    }
+                    break;
+
+                case "Clear":
+                    for (int i = 0; i < 10; i++)
+                    {
+                        TextBoxArray[i].Text = null;
+                        UCSettings.SetKey("null", i);
+                    }
+                    break;
+
+                case "Return":
+                    OnExecuteMethod();
+                    break;
+            }
         }
 
-        //Saves information of current state of settings so it can be loaded during startup next time.
-        private void Save_Click(object sender, RoutedEventArgs e)
-        {
-            StringBuilder sb = new StringBuilder();
-            for(int i=0; i<10; i++)
-            {
-                if(UCSettings.GetKey(i).Length!=0)sb.Append(UCSettings.GetKey(i)).Append(" ");
-                else sb.Append("null ");
-            }
-            sb.Append(CenterMouse.IsChecked.ToString()).Append(" ");
-            sb.Append(HoverButton.IsChecked.ToString()).Append(" ");
-            sb.Append(ShakeButton.IsChecked.ToString()).Append(" ");
-            sb.Append(AudioButton.IsChecked.ToString()).Append(" ");
-            sb.Append(FullScreenButton.IsChecked.ToString()).Append(" ");
-            sb.Append(ThemeBox.SelectedIndex.ToString());
-            if (File.Exists("UCConfig.txt"))
-            System.IO.File.WriteAllText("UCConfig.txt", sb.ToString());
-        }
 
-        private void Clear_Click(object sender, RoutedEventArgs e)
-        {
-            for (int i=0; i<10; i++)
-            {
-                TextBoxArray[i].Text = null;
-                UCSettings.SetKey("null", i);
-            }
-        }
-        
+        #region Methods for changing UI theme, and doing so with switches and controlling Autotabbing
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            switch(ThemeBox.SelectedIndex)
+            switch (((ComboBox)sender).Name)
             {
-                case 0:
-                    Application.Current.Resources["ThemeBrush"] = new SolidColorBrush((Color)Application.Current.Resources["myGray"]);
-                    Application.Current.Resources["ButtonBrush"] = new SolidColorBrush(Colors.Gray);
+                case "ThemeBox":
+                    switch (ThemeBox.SelectedIndex)
+                    {
+                        case 0:
+                            Application.Current.Resources["ThemeBrush"] = new SolidColorBrush((Color)Application.Current.Resources["myGray"]);
+                            Application.Current.Resources["ButtonBrush"] = new SolidColorBrush(Colors.Gray);
+                            break;
+                        case 1:
+                            Application.Current.Resources["ThemeBrush"] = new SolidColorBrush(Colors.DarkSlateBlue);
+                            Application.Current.Resources["ButtonBrush"] = new SolidColorBrush(Colors.DarkTurquoise);
+                            break;
+                    }
                     break;
-                case 1:
-                    Application.Current.Resources["ThemeBrush"] = new SolidColorBrush(Colors.DarkSlateBlue);
-                    Application.Current.Resources["ButtonBrush"] = new SolidColorBrush(Colors.DarkTurquoise);
+
+                case "TimerBox":
+                    Thread thread = new Thread(UCSettings.AutoTab);
+                    thread.IsBackground = true;
+                    switch (TimerBox.SelectedIndex)
+                    {
+                        case 0:
+                            UCSettings.IsAuto = false;
+                            break;
+                        case 1:
+                            UCSettings.IsAuto = true;
+                            UCSettings.AutoTabTime = 1000;
+                            if (!thread.IsAlive) thread.Start();
+                            break;
+                        case 2:
+                            UCSettings.IsAuto = true;
+                            UCSettings.AutoTabTime = 1500;
+                            if (!thread.IsAlive)
+                            {
+                                thread.Start();
+                                ((UCSettings)App.Current.MainWindow.DataContext).Message = "Oh shit";
+                            }
+                            break;
+                        case 3:
+                            UCSettings.IsAuto = true;
+                            UCSettings.AutoTabTime = 2000;
+                            if (!thread.IsAlive) thread.Start();
+                            break;
+                    }
                     break;
             }
         }
 
-        public event EventHandler ExecuteMethod;
+        private void ComboBox_KeyDown(object sender, KeyEventArgs e) //For some reason tab didn't highlight items (only focused) so this was added for switch control
+        {
+            if (e.Key == Key.Return)
+            {
+                ComboBox myComboBox = (ComboBox)sender;
+                for (int i = 0; i < myComboBox.Items.Count; i++)
+                {
+                    if (((ComboBoxItem)myComboBox.Items[i]).IsFocused)
+                    {
+                        myComboBox.SelectedIndex = i;
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region Creating return button event the mainwindow can subscribe to
+        public event EventHandler ExecuteMethod; //I couldn't set the visibility of the overlay to collapsed, since I couldn't access it from this namespace. So I'm using the Mianwindow's Outside_Click method with an event
 
         protected virtual void OnExecuteMethod()
         {
             if (ExecuteMethod != null) ExecuteMethod(this, EventArgs.Empty);
         }
 
-        public void Return_Click(object sender, EventArgs e)
-        {
-            OnExecuteMethod();
-        }
+
+        #endregion
+
+
     }
 }

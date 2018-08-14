@@ -32,7 +32,7 @@
                 <Setter Property='HorizontalAlignment'
                       Value='Left' />
                 <Setter Property='VerticalAlignment'
-                        Value='Center' />
+                        Value="Stretch" />
                 <Setter Property='FontFamily'
                       Value='Calibri' />
                 <Setter Property='Margin'
@@ -50,38 +50,33 @@
               </Style>
             </Grid.Resources>
             <Grid.ColumnDefinitions>
-              <ColumnDefinition />
-              <ColumnDefinition />
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-              <RowDefinition Height='6*' />
+              <RowDefinition Height='2*' />
+              <RowDefinition Height='2*' />
               <RowDefinition Height='Auto' />
-              <RowDefinition Height='Auto' />
-              <RowDefinition Height='3*' />
-              <RowDefinition Height='3*' />
-              <RowDefinition Height='3*' />
-              <RowDefinition Height='3*' />
+              <RowDefinition Height='1*' />
             </Grid.RowDefinitions>
 
             <Rectangle Grid.Row='1'
                      Grid.Column='0'
-                     Grid.ColumnSpan='2'
+                       Grid.RowSpan="2"
                      Fill='LightGray'
                      Margin='10'
                      RadiusX='10'
-                     RadiusY='10'
-                     Grid.RowSpan='2' />
+                     RadiusY='10' />
             <TextBlock Text='Click a button and press a key to control it with'
                      Grid.Row='1'
-                     Grid.ColumnSpan='2'
                      HorizontalAlignment='Center'
+                       VerticalAlignment="Center"
                      FontFamily='Calibri'
                      FontSize='20'
-                     Margin='10' />
+                     Margin='15 15' />
             <Grid x:Name='BindGrid'
                 Grid.Row='2'
                 Grid.Column='0'
-                Grid.ColumnSpan='2'
                 Margin='15'>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -134,15 +129,16 @@
                     Grid.Column='2'
                     Content='Clear'
                     Style='{StaticResource Shaker}'
-                    Margin='28 5 28 5'
-                    Click='Clear_Click' />
+                    Margin='28 28 28 28'
+                    Click='SettingsButton_Click' />
               <StackPanel Grid.Row="3"
                    Grid.Column="0"
-                          Orientation="Horizontal">
+                          Orientation="Vertical">
                 <TextBlock Text="Open Sidebar:"
                            VerticalAlignment="Center"
                            FontFamily="Calibri"
-                           FontSize="16"/>
+                           FontSize="16"
+                           HorizontalAlignment="Center"/>
                 <Grid x:Name="SidebarGrid"/>
               </StackPanel>
             </Grid>
@@ -155,69 +151,104 @@
                      Text='Settings'
                      FontSize='30'
                      Grid.Row='0'
-                     Grid.ColumnSpan='2'
+                     Grid.ColumnSpan='4'
                      x:Name='SettingsBlock' />
-            <CheckBox x:Name='AudioButton'
-                    Grid.Row='3'
+            <Grid Grid.Column="2"
+                  Grid.Row="2">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition MinHeight="50"/>
+              </Grid.RowDefinitions>
+              <CheckBox x:Name='AudioButton'
+                    Grid.Row='0'
                     Grid.Column='0'
                     Content='Audio Feedback'
                     IsChecked='{Binding IsSound, UpdateSourceTrigger=PropertyChanged}' />
-            <CheckBox x:Name='CenterMouse'
-                    Grid.Row='4'
+              <CheckBox x:Name='CenterMouse'
+                    Grid.Row='1'
                     Grid.Column='0'
                     Content='Center Mouse'
                     IsChecked='{Binding IsCenter, UpdateSourceTrigger=PropertyChanged}' />
-            <CheckBox x:Name='ShakeButton'
-                    Grid.Row='3'
-                    Grid.Column='1'
+              <CheckBox x:Name='ShakeButton'
+                    Grid.Row='2'
+                    Grid.Column='0'
                     Content='Visual Feedback'
                     IsChecked='{Binding IsShake, UpdateSourceTrigger=PropertyChanged}' />
-            <CheckBox x:Name='HoverButton'
-                    Grid.Row='4'
-                    Grid.Column='1'
-                    Content='Click on Hover'
-                    IsChecked='{Binding IsHover, UpdateSourceTrigger=PropertyChanged}' />
-            <CheckBox x:Name='FullScreenButton'
-                    Grid.Row='5'
-                    Content='Full Screen'
-                    IsChecked='{Binding IsFull, UpdateSourceTrigger=PropertyChanged}' />
-
-            <StackPanel Grid.Row='5'
-                      Grid.Column='1'
-                      Orientation='Horizontal'
-                      HorizontalAlignment='Center'
-                      VerticalAlignment='Center'>
-              <TextBlock VerticalAlignment='Center'
+              <StackPanel Grid.Row='3'
+                      Grid.Column='0'
+                      Orientation='Horizontal'>
+                <TextBlock VerticalAlignment='Center'
                        FontFamily='Calibri'
                        FontSize='24'>Theme:</TextBlock>
-              <ComboBox x:Name='ThemeBox'
+                <ComboBox x:Name='ThemeBox'
                       Margin='10'
                       MinHeight='40'
                       Style='{StaticResource theComboBox}'
-                      SelectionChanged='ComboBox_SelectionChanged'>
-                <ComboBoxItem IsSelected='True'>Modest</ComboBoxItem>
-                <ComboBoxItem>Colorful</ComboBoxItem>
-              </ComboBox>
-            </StackPanel>
+                      SelectionChanged='ComboBox_SelectionChanged'
+                          PreviewKeyDown="ComboBox_KeyDown">
+                  <ComboBoxItem IsSelected='True'
+                                >Modest</ComboBoxItem>
+                  <ComboBoxItem >Colorful</ComboBoxItem>
+                </ComboBox>
+              </StackPanel>
+              <CheckBox x:Name='HoverButton'
+                    Grid.Row='0'
+                    Grid.Column='1'
+                    Content='Click on Hover'
+                    IsChecked='{Binding IsHover, UpdateSourceTrigger=PropertyChanged}' />
+              <CheckBox x:Name='FullScreenButton'
+                    Grid.Row='1'
+                      Grid.Column="1"
+                    Content='Full Screen'
+                    IsChecked='{Binding IsFull, UpdateSourceTrigger=PropertyChanged}' />
 
+              
+              <StackPanel Grid.Row='3'
+                      Grid.Column='1'
+                      Orientation='Horizontal'>
+                <TextBlock VerticalAlignment='Center'
+                       FontFamily='Calibri'
+                       FontSize='24'>Auto Tab:</TextBlock>
+                <ComboBox x:Name='TimerBox'
+                      Margin='10'
+                      MinHeight='40'
+                      Style='{StaticResource theComboBox}'
+                      SelectionChanged='ComboBox_SelectionChanged'
+                          PreviewKeyDown="ComboBox_KeyDown">
+                  <ComboBoxItem IsSelected='True'
+                                >None</ComboBoxItem>
+                  <ComboBoxItem >1s</ComboBoxItem>
+                  <ComboBoxItem >1.5s</ComboBoxItem>
+                  <ComboBoxItem >2s</ComboBoxItem>
+                </ComboBox>
+              </StackPanel>
+            </Grid>
             <Button Grid.Row='6'
                   Grid.Column='0'
-                  Grid.ColumnSpan='2'
+                  Grid.ColumnSpan='4'
                   Content='Save Settings'
+                    x:Name="SaveButton"
                   HorizontalAlignment='Center'
                   FontSize='20'
                   Style='{StaticResource Shaker}'
                   Margin='10'
-                  Click='Save_Click'
+                  Click='SettingsButton_Click'
                   MinWidth='150'
                   MinHeight='60' />
             <Button Grid.Row='6'
-                  Grid.Column='1'
+                  Grid.Column='3'
                   Content='Return'
                   HorizontalAlignment='Center'
                   FontSize='20'
                   Style='{StaticResource Shaker}'
-                    Click="Return_Click"
+                    Click="SettingsButton_Click"
                   Margin='90 20 10 20'
                   MinWidth='80'
                   MinHeight='40' />
