@@ -53,6 +53,8 @@ function sendRequest(button) {
 
 function decodeAndPlay(encodedMP3) {
   // Play the audio on the server
-  var audio = new Audio('/synthesize-text-audio.mp3');
+  var url = "/synthesize-text-audio.mp3?cb=" + new Date().getTime();
+  var audio = new Audio(url);
+  audio.load();
   audio.play();
 }

@@ -24,7 +24,7 @@ $(document).ready(function() {
     // If a tab of selected device had not been created,
     // Create the tab, and link it to the tab content
     if (!tabs.includes(deviceName)) {
-      $(".components").append("<li><a onclick=\"playSound()\" class=\"tabtext\" href=\"/device?selected=" + deviceName + "\" id=\"#tabname" + unspacedDeviceName + "\">" + deviceName + "</a></li>");
+      $(".components").append("<li><a class=\"tabtext\" href=\"/device?selected=" + deviceName + "\" id=\"#tabname" + unspacedDeviceName + "\">" + deviceName + "</a></li>");
       tabs.push(deviceName);
     }
   })

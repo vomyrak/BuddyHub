@@ -46,7 +46,7 @@ window.onload = function(e) {
   for (i = 0; i < tabs.length; i++) {
     var deviceName = tabs[i];
     var unspacedDeviceName = deviceName.replace(/\s/g, '');
-    $(".components").append("<li><a  onclick=\"playSound()\" class=\"tabtext\" href=\"/device?selected=" + deviceName + "\" id=\"#tabname" + unspacedDeviceName + "\">" + deviceName + "</a></li>");
+    $(".components").append("<li><a class=\"tabtext\" href=\"/device?selected=" + deviceName + "\" id=\"#tabname" + unspacedDeviceName + "\">" + deviceName + "</a></li>");
   }
 }
 
