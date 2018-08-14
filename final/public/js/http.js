@@ -27,17 +27,11 @@ function sendRequest(button) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      // If the http request is successful
-      console.log("success");
       // If there is a callback function,
       // find the coresponding function in the callback_map and apply.
       if (callback_function != '') {
-        // console.log(this.responseText);
-        console.log(this.responseText);
         callback_map[callback_function](this.response);
       }
-    } else {
-      console.log(this.responseText);
     }
   };
   // Open Connection
@@ -53,8 +47,6 @@ function sendRequest(button) {
 
 function decodeAndPlay(link) {
   // Play the audio on the server
-  // console.log(link);
-  // var url = link + "?cb=" + new Date().getTime();
   var audio = new Audio(link);
   audio.load();
   audio.play();

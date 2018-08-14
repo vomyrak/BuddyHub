@@ -134,8 +134,8 @@ app.post('/tts', function(req, res) {
             // Node couldn't execute the command
             return;
           }
+          // Send the path of the generated mp3 as response
           res.send('/audio/synthesize-text-audio' + number + '.mp3');
-          // res.sendStatus(200);
         });
       });
     }
