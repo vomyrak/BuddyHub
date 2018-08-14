@@ -12,6 +12,10 @@
 	
 }
 
+#myCarousel {
+margin-top:52px;
+}
+
 @font-face {
     font-family: 'lexie_readableregular';
     src: url('fonts/lexiereadable-regular-webfont.eot');
