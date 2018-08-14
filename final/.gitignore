@@ -3,4 +3,4 @@ auth.json
 keys.json
 output.txt
 .DS_STORE
-public/audio/*
+public/audio/*.mp3
