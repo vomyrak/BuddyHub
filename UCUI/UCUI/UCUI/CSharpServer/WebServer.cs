@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CSharpServer
 {
-    class WebServer
+    public class WebServer
     {
         //Variables declared with "readonly" keyword is a runtime constant
         private readonly HttpListener _listener = new HttpListener();
@@ -17,13 +17,10 @@ namespace CSharpServer
             if (!HttpListener.IsSupported) throw new NotSupportedException("Needs Windows XP SP2, Server 2003 or later.");
 
             if (prefixes == null || prefixes.Length == 0) throw new ArgumentException("Prefixes");
-
-            if (method == null) throw new ArgumentException("Method");
-
             foreach (string s in prefixes)
                 _listener.Prefixes.Add(s);
 
-            _respondMethod = method;
+            _respondMethod = method ?? throw new ArgumentException("Method");
             _listener.Start();
         }
 

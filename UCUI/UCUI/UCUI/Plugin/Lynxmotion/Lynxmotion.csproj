@@ -63,9 +63,9 @@
     <Compile Include="SSC32.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CSharpServer\CSharpServer.csproj">
-      <Project>{53e9d1c4-88a6-494b-9d12-912e11ba1226}</Project>
-      <Name>CSharpServer</Name>
+    <ProjectReference Include="..\..\..\Server\Server.csproj">
+      <Project>{23dd9750-8150-40ec-9a75-043b8a53a589}</Project>
+      <Name>Server</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

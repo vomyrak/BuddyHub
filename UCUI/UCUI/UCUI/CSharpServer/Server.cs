@@ -37,12 +37,13 @@ namespace CSharpServer
         /// </summary>
         
         private static WebServer ws;
-        private static HttpClient client;
+        public static HttpClient client;
         public Dictionary<string, ControllerDevice> ConnectedDeviceList { get; set; }
         public static event EventHandler<string> RaiseUINotifEvent;
         public static event EventHandler<DeviceInfo> RaiseDeviceInfoEvent;
         public static event EventHandler<ControllerDevice> RaiseControllerDeviceEvent;
 
+        private const string INTERNAL_ADDRESS = "http://localhost:8192/";
         /// <summary>
         /// Constructor Server class
         /// </summary>
@@ -135,6 +136,8 @@ namespace CSharpServer
 
             string portName = newDevice.GetSerialPort();
             ConnectedDeviceList[deviceName].DeviceObject = newDevice.ConnectDevice(portName);
+
+            
         }
 
         /// <summary>
@@ -304,11 +307,13 @@ namespace CSharpServer
         /// <returns>A string corresponding to the status of the operation</returns>
         public string SendResponse(HttpListenerRequest request)
         {
-            RaiseUINotifEvent.Invoke(null, "Test");
-            string[] parsedRequest = request.RawUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+
+            string rawUrl = request.RawUrl.Replace("%20", " ");
+            string[] parsedRequest = rawUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+            
             int fieldSize = parsedRequest.Length;
             if (parsedRequest.Length == 0) return "";
-            else if (request.HttpMethod == "GET")
+            else if (request.HttpMethod == "POST")
             {
                 string deviceRequested = parsedRequest[0];
                 ControllerDevice device = IsDeviceConnected(deviceRequested);
@@ -340,23 +345,49 @@ namespace CSharpServer
                     }
                     else if (device.DeviceInfo.ApiType == "Http")
                     {
+                        
                         string functionRequested = parsedRequest[1];
                         DeviceInfo deviceInfo = device.DeviceInfo;
                         foreach (RemoteDeviceMethod method in deviceInfo.Methods)
                         {
                             if (method.Method == functionRequested)
                             {
-                                HttpRequestMessage message = new HttpRequestMessage();
-                                message.Content = new StringContent(method.Data);
-                                message.Headers.Clear();
-                                message.Headers.Add("Content-Type", "application/json");
-                                message.Method = new HttpMethod(method.HttpMethod);
-                                message.RequestUri = new Uri(method.Link);
-                                var result = SendToRemoteServerAsync(message);
+                                //HttpRequestMessage message = new HttpRequestMessage();
+                                //message.Content = new StringContent(method.Data);
+                                //message.Headers.Clear();
+                                //message.Headers.Add("Content-Type", "application/json");
+                                //message.Method = new HttpMethod(method.HttpMethod);
+                                //message.RequestUri = new Uri(method.Link);
+                                //var result = SendToRemoteServerAsync(message);
+                                HttpRequestMessage message;
+                                if (device.DeviceInfo.Device == "Alexa")
+                                {
+
+                                    byte[] buffer = new byte[5000];
+                                    request.InputStream.Read(buffer, 0, 5000);
+                                    string content = System.Text.Encoding.UTF8.GetString(TrimNull(buffer));
+                                    message = FormRequestMessage(
+                                        method.HttpMethod,
+                                        method.Link,
+                                        content
+                                    );
+                                    var result = SendToRemoteServerAsync(message);
+                                }
+                                else
+                                {
+                                    message = FormRequestMessage(
+                                        method.HttpMethod,
+                                        method.Link,
+                                        method.Data,
+                                        "application/json"
+                                    );
+                                    var result = SendToRemoteServerAsync(message);
+                                }
                             }
                             else throw new InvalidMethodException("Method not found!");
-                            
+
                         }
+                        
                         return "";
                     }
                     else throw new InvalidDeviceException("Invalid device API type");
@@ -366,7 +397,7 @@ namespace CSharpServer
             // Parse the request string and return requested result as a string
 
             // POST request corresponds to internal signaling message from UI thread
-            else if (request.HttpMethod == "POST")
+            else if (request.HttpMethod == "GET")
             {
                 try
                 {
@@ -407,14 +438,19 @@ namespace CSharpServer
                                     ["method"] = "off"
                                 };
                                 RemoteDeviceMethod requestedDeviceMethod = currentDevice.DeviceInfo.Methods.Where(s => s.Method == "on").ToList()[0];
-                                HttpRequestMessage message = new HttpRequestMessage()
-                                {
-
-                                    Method = new HttpMethod(requestedDeviceMethod.HttpMethod),
-                                    RequestUri = new Uri(requestedDeviceMethod.Link),
-                                    Content = new StringContent(requestedDeviceMethod.Data)
-                                };
-                                message.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                                //HttpRequestMessage message = new HttpRequestMessage()
+                                //{
+                                //
+                                //    Method = new HttpMethod(requestedDeviceMethod.HttpMethod),
+                                //    RequestUri = new Uri(requestedDeviceMethod.Link),
+                                //    Content = new StringContent(requestedDeviceMethod.Data)
+                                //};
+                                //message.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                                HttpRequestMessage message = FormRequestMessage(
+                                    requestedDeviceMethod.HttpMethod,
+                                    requestedDeviceMethod.Link,
+                                    requestedDeviceMethod.Data,
+                                    "application/json");
                                 client.SendAsync(message);
 
                             }
@@ -483,6 +519,11 @@ namespace CSharpServer
             return temp;
         }
 
+
+        public async void SendAsync(HttpRequestMessage message)
+        {
+            var response = await SendToRemoteServerAsync(message);
+        }
         /// <summary>
         /// Post data to remote server
         /// </summary>
@@ -524,9 +565,9 @@ namespace CSharpServer
             Task.Run(() =>
             {
                 ManagementClass USBClass = new ManagementClass("Win32_USBHUB");
-                System.Management.ManagementObjectCollection USBCollection = USBClass.GetInstances();
+                ManagementObjectCollection USBCollection = USBClass.GetInstances();
 
-                foreach (System.Management.ManagementObject usb in USBCollection)
+                foreach (ManagementObject usb in USBCollection)
                 {
                     string deviceId = usb["deviceid"].ToString();
 
@@ -605,6 +646,18 @@ namespace CSharpServer
                 AddDevice(deviceInfo.Device, new ControllerDevice(deviceInfo, deviceInfo.Device));
             }
 
+        }
+
+        public HttpRequestMessage FormRequestMessage(string method, string url, string data, string mediaType = "application/json")
+        {
+            HttpRequestMessage message = new HttpRequestMessage
+            {
+                Method = new HttpMethod(method),
+                RequestUri = new Uri(url),
+                Content = new StringContent(data)
+            };
+            message.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(mediaType);
+            return message;
         }
     }
 

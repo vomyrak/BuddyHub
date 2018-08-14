@@ -5,28 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Effects;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using UCUI.Models;
 using UCUI.UserControls;
-using System.Media;
-using CSharpServer;
-using System.Threading;
 using System.Windows.Interop;
-using System.Management;
-using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Windows.Controls.Primitives;
 using System.Net.Http;
+using System.Net;
 using System.IO;
 using Newtonsoft.Json;
+using AppServer;
 
 namespace UCUI
 {
@@ -36,23 +26,16 @@ namespace UCUI
     public partial class MainWindow : Window
     {
         private Button[] ButtonArray;
-        private Server server;
+        //private Server server;
         private HttpClient client;
-        private HwndSource windowHandle;
+        private WebServer internalServer;
 
         private const string SERVER_ADDRESS = "http://localhost:8080/";
-
+        private const string INTERNAL_ADDRESS = "http://localhost:8192/";
         // USB Message Constants
         private const int WM_DEVICECHANGE = 0x219;
         private const int WM_DEVICEARRIVAL = 0x8000;
         private const int WM_DEVICEREMOVECOMPLETE = 0X8004;
-
-        ControllerDevice currentDevice;
-        DeviceInfo currentDeviceInfo;
-
-
-
-
 
         public MainWindow()
         {
@@ -62,8 +45,6 @@ namespace UCUI
             try
             {
                 ControlOptions.ItemsSource = ControlSource.Options;
-                
-                
             }
             catch (TypeInitializationException)
             {
@@ -93,84 +74,20 @@ namespace UCUI
                 }
 
             }
-            // Server script
-            var serverThread = new Thread(ServerRoutine);
-            serverThread.Start();
+            
             client = new HttpClient()
             {
                 BaseAddress = new Uri(SERVER_ADDRESS)
             };
 
-            // Obtain window handle and attach system message hook
-            var handle = new WindowInteropHelper(this).EnsureHandle();
-            windowHandle = HwndSource.FromHwnd(handle);
-            windowHandle.AddHook(new HwndSourceHook(WndProc));
 
+            internalServer = new WebServer(ProcessUINotif, INTERNAL_ADDRESS);
             Task.Run(() =>
             {
-                serverThread.Join();
-                server.ObtainUSBDeviceInfo();
-                server.ObtainRemoteDeviceInfo();
+                internalServer.Run();
             });
-
-            currentDevice = null;
-            currentDeviceInfo = null;
-            Server.RaiseUINotifEvent += Server_RaiseUINotifEvent;
-            Server.RaiseControllerDeviceEvent += Server_RaiseControllerDeviceEvent;
-            Server.RaiseDeviceInfoEvent += Server_RaiseDeviceInfoEvent;
         }
 
-        private void Server_RaiseDeviceInfoEvent(object sender, DeviceInfo e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Server_RaiseControllerDeviceEvent(object sender, ControllerDevice e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Server_RaiseUINotifEvent(object sender, string e)
-        {
-            MessageBox.Show(e);
-        }
-
-
-
-
-        #region
-        // Region of Code for USB device events
-        /// <summary>
-        /// Callback function for message processing
-        /// </summary>
-        /// <param name="hwnd">Window Handle</param>
-        /// <param name="msg">Message</param>
-        /// <param name="wParam">Main Message</param>
-        /// <param name="lParam">Secondary Message</param>
-        /// <param name="handled"></param>
-        /// <returns></returns>
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            switch (msg)
-            {
-                case WM_DEVICECHANGE:
-                    switch ((uint)wParam.ToInt32()) {
-                        case WM_DEVICEARRIVAL:
-                            NotifyServer(SERVER_ADDRESS + Notif.DeviceDetected, "");
-                            break;
-                        case WM_DEVICEREMOVECOMPLETE:
-                            NotifyServer(SERVER_ADDRESS + Notif.DeviceDisconnected, "");
-                            break;
-
-                    }
-                    break;
-            }
-            return IntPtr.Zero;
-        }
-
-        
-        
-        #endregion
         private void PageOpen(object sender, RoutedEventArgs e)
         {
             Button myButton = (Button)sender;
@@ -191,8 +108,8 @@ namespace UCUI
 
         private void Outside_Click(object sender, RoutedEventArgs e)
         {
-            HelpView.Visibility = System.Windows.Visibility.Collapsed;
-            SettingsView.Visibility = System.Windows.Visibility.Collapsed;
+            HelpView.Visibility = Visibility.Collapsed;
+            SettingsView.Visibility = Visibility.Collapsed;
             Outside.Visibility = Visibility.Collapsed;
             Overlay.Visibility = Visibility.Collapsed;
             MainView.Effect = null;
@@ -205,6 +122,7 @@ namespace UCUI
             if (ControlOptions.SelectedItem != null)
             {
                 ButtonArray = new Button[9];
+                TextBox myTextbox = null;
                 ControlOption myOption = (ControlOption)ControlOptions.SelectedItem;
                 int visibleButtonCounter=0;
                 for (int i = 0; i < 9; i++)
@@ -236,39 +154,13 @@ namespace UCUI
                             Button sourceButton = (Button)a;
                             string buttonName = sourceButton.Name;
                             int buttonIndex = Int32.Parse(buttonName.Substring(6));
-                            NotifyServer(SERVER_ADDRESS + (int)Notif.InvokeMethod + "/" + buttonIndex + "/" + "AL5D", "");
 
-                            #region
-                            // To be moved to Server class
-                            // To replace "AL5D" with reference from the selected menu or button
-                            //ControllerDevice currentDevice = server.ConnectedDeviceList["AL5D"];
-                            //DeviceInfo currentDeviceInfo = currentDevice.DeviceInfo;
-                            //
-                            //if (currentDeviceInfo.ApiType == "LocalLib")
-                            //{
-                            //    
-                            //    int count = currentDeviceInfo.FunctionArray.Count;
-                            //    if (buttonIndex > count - 1) { }
-                            //    else
-                            //    {
-                            //        Task.Run(() =>
-                            //        {
-                            //            MethodInfo methodToBind = server.GetMethodInfo(currentDevice, currentDeviceInfo.FunctionArray[buttonIndex].Name);
-                            //            methodToBind.Invoke(currentDevice.DeviceObject, null);
-                            //        });
-                            //    }
-                            //}
-                            //else if (currentDeviceInfo.ApiType == "Http")
-                            //{
-                            //    Dictionary<string, string> messageDict = new Dictionary<string, string>
-                            //    {
-                            //        ["name"] = "smart lamp",
-                            //        ["method"] = "off"
-                            //    };
-                            //
-                            //    NotifyServer(SERVER_ADDRESS + (int)Notif.PostToServer, JsonConvert.SerializeObject(messageDict));
-                            //}
-                            #endregion
+
+                            NotifyServer(SERVER_ADDRESS + "Alexa" + "/" + "Text To Speech",
+                                JsonConvert.SerializeObject(new Dictionary<string, string>() { ["input"] = myTextbox.Text }), 
+                                "POST");
+                            
+                            
                             CheckCenterMouse();
                         };
 
@@ -287,7 +179,7 @@ namespace UCUI
 
                 if (myOption.textBoxVisible)
                 {
-                    TextBox myTextbox = new TextBox();
+                    myTextbox = new TextBox();
                     myTextbox.TextWrapping = TextWrapping.Wrap;
                     myTextbox.Name = "TextInput";
                     myTextbox.FontSize = 36;
@@ -295,6 +187,7 @@ namespace UCUI
                     Grid.SetRow(myTextbox, 1);
                     Grid.SetColumnSpan(myTextbox, 3);
                     ButtonGrid.Children.Add(myTextbox);
+
                 }
                 HeaderPic.Source = new BitmapImage(myOption.actualUri);
                 TitleBlock.Text = myOption.name;
@@ -341,21 +234,13 @@ namespace UCUI
             ((UCSettings)DataContext).ButtonKey = "ButtonNull";
         }
 
-        private void ServerRoutine()
-        {
-            server = new Server(SERVER_ADDRESS);
-            server.Run();
-            //deviceInterface.TestRoboticArm();
-        
-        }
-
-        private void NotifyServer(string url, string content)
+        private void NotifyServer(string url, string content, string method)
         {
             Task.Run(() =>
             {
                 HttpRequestMessage message = new HttpRequestMessage()
                 {
-                    Method = new HttpMethod("POST"),
+                    Method = new HttpMethod(method),
                     Content = new StringContent(content),
                     RequestUri = new Uri(url)
                 };
@@ -365,6 +250,16 @@ namespace UCUI
             });
         }
         
+        private string ProcessUINotif(HttpListenerRequest request)
+        {
+            string rawUrl = request.RawUrl.Replace("%20", " ");
+            string[] parsedRequest = rawUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+            if (request.HttpMethod == "POST")
+            {
+                MessageBox.Show(parsedRequest[0]);
+            }
+            return "";
+        }
 
     }
     

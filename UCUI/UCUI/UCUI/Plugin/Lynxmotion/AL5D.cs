@@ -19,12 +19,12 @@
 //  All trademarks, service marks, trade names, product names are the property of their respective owners.
 using System.ComponentModel;
 using System.ComponentModel.Composition;
-using CSharpServer;
+using AppServer;
 
 namespace Lynxmotion
 {
 
-    [Export(typeof(CSharpServer.IDevice))]
+    [Export(typeof(AppServer.IDevice))]
     /// <summary>
     /// Class definition of an AL5C robot arm driven by a SSC32 board
     /// <remarks>This requires the whole arm has been mounted and wired following the Lynxmotion manual. See <see cref="http://www.lynxmotion.com/images/html/build142.htm"/> for mounting details.</remarks>
