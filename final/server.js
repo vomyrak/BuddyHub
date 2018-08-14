@@ -89,7 +89,7 @@ app.get('/device', function(req, res) {
   });
   query.exec(function(error, selected) {
     if (error) return handleError(error);
-  
+
     res.render('device', {
       device: selected
     });
@@ -117,7 +117,9 @@ app.post('/tts', function(req, res) {
     if (this.readyState == 4 && this.status == 200) {
       // If the http request is successful
       // Write the response text to the output file
-      const outputFile = './output.txt';
+      // Generate a random number between 10,000,000 and 99,999,999 to name the output files
+      var number = Math.floor(Math.random()*90000000) + 10000000;
+      const outputFile = './output'+ number + '.txt';
       fs.writeFile(outputFile, this.responseText, 'binary', err => {
         if (err) {
           console.error('ERROR:', err);
@@ -126,13 +128,14 @@ app.post('/tts', function(req, res) {
         console.log(`Audio content written to file: ${outputFile}`);
         // Execute the command to turn the response text to an mp3 file
         // See: https://cloud.google.com/text-to-speech/docs/create-audio#text-to-speech-text-protocol
-        exec('sed \'s|audioContent| |\' < ./output.txt > ./tmp-output.txt && tr -d \'\n ":{}\' < ./tmp-output.txt > ./tmp-output-2.txt && base64 ./tmp-output-2.txt --decode > ./public/synthesize-text-audio.mp3 && rm ./tmp-output*.txt && rm ./output.txt', (err, stdout, stderr) => {
+        exec('sed \'s|audioContent| |\' < ./output' + number + '.txt > ./tmp-output' + number + '.txt && tr -d \'\n ":{}\' < ./tmp-output' + number + '.txt > ./tmp-output-2' + number + '.txt && base64 ./tmp-output-2' + number + '.txt --decode > ./public/audio/synthesize-text-audio' + number + '.mp3 && rm ./tmp-output*.txt && rm ./output' + number + '.txt', (err, stdout, stderr) => {
           if (err) {
             console.error('ERROR:', err);
             // Node couldn't execute the command
             return;
           }
-          res.sendStatus(200);
+          res.send('/audio/synthesize-text-audio' + number + '.mp3');
+          // res.sendStatus(200);
         });
       });
     }

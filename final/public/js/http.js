@@ -51,10 +51,11 @@ function sendRequest(button) {
   xhttp.send(data);
 }
 
-function decodeAndPlay(encodedMP3) {
+function decodeAndPlay(link) {
   // Play the audio on the server
-  var url = "/synthesize-text-audio.mp3?cb=" + new Date().getTime();
-  var audio = new Audio(url);
+  // console.log(link);
+  // var url = link + "?cb=" + new Date().getTime();
+  var audio = new Audio(link);
   audio.load();
   audio.play();
 }
