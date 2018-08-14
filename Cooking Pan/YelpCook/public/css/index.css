@@ -1,7 +1,30 @@
 @import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css);
 
-/*ANIMATED BUTTON CODE */
+.alert {
+	color: #FF0000;
+	padding: 0;
+	margin: 0;
+}
 
+*{
+	font-size: 23px !important;
+	font-family: "lexie_readableregular";
+	
+}
+
+@font-face {
+    font-family: 'lexie_readableregular';
+    src: url('fonts/lexiereadable-regular-webfont.eot');
+    src: url('fonts/lexiereadable-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/lexiereadable-regular-webfont.woff2') format('woff2'),
+         url('fonts/lexiereadable-regular-webfont.woff') format('woff'),
+         url('fonts/lexiereadable-regular-webfont.ttf') format('truetype'),
+         url('fonts/lexiereadable-regular-webfont.svg#lexie_readableregular') format('svg');
+    font-weight: normal;
+    font-style: normal;}
+
+
+/*ANIMATED BUTTON CODE */
 
 a.animated-button:link, a.animated-button:visited {
   position: relative;
@@ -9,7 +32,7 @@ a.animated-button:link, a.animated-button:visited {
  /* margin: 30px auto 0;*/
   padding: 14px 15px;
   color: #fff;
-  font-size:10 px;
+  font-size: 10px;
   font-weight: bold;
   text-align: center;
   text-decoration: none;
@@ -87,9 +110,9 @@ a.animated-button.add-new-recipe:after {
 
 a.animated-button.choose-recipe {
   border: 2px solid #367722;
-  width: 900%;
-  margin-left: 120%;
-  margin-right: 30%
+  width: 700%;
+  margin-left: 0%;
+  margin-right: 0%
 
 
   
