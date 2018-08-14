@@ -9,7 +9,7 @@ var tempLimit = Number($("#temperature-reading").attr("value"));
 var tempPlayed = false;
 var tempAudio = new SpeechSynthesisUtterance("The pan is too hot, turn the heat down!");
 
-socket = io.connect("http://localhost:3000/");
+socket = io.connect("https://localhost:3000");
 socket.on("connect", function() {
 	this.on("newTemp", (data) => {
 		if (data !== reading) {
