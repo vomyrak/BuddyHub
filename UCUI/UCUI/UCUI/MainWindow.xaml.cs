@@ -1,3 +1,4 @@
+﻿
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,11 @@ using System.Threading;
 using System.Windows.Interop;
 using System.Management;
 using System.Reflection;
-
+using System.Runtime.InteropServices;
 using System.Windows.Controls.Primitives;
+using System.Net.Http;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace UCUI
 {
@@ -35,8 +38,10 @@ namespace UCUI
     {
         private Button[] ButtonArray;
         private Server server;
-        private DeviceInterface deviceInterface;
+        private HttpClient client;
         private HwndSource windowHandle;
+
+        private const string SERVER_ADDRESS = "http://localhost:8080/";
 
         // USB Message Constants
         private const int WM_DEVICECHANGE = 0x219;
@@ -49,13 +54,17 @@ namespace UCUI
         private delegate void CallingDelegate();
         private Random random = new Random();
 
+
         public MainWindow()
         {
+
             InitializeComponent();
             DataContext = new UCSettings();
             try
             {
                 ControlOptions.ItemsSource = ControlSource.Options;
+                
+                
             }
             catch (TypeInitializationException)
             {
@@ -88,17 +97,31 @@ namespace UCUI
             // Server script
             var serverThread = new Thread(ServerRoutine);
             serverThread.Start();
+            client = new HttpClient()
+            {
+                BaseAddress = new Uri(SERVER_ADDRESS)
+            };
 
             // Obtain window handle and attach system message hook
             var handle = new WindowInteropHelper(this).EnsureHandle();
             windowHandle = HwndSource.FromHwnd(handle);
             windowHandle.AddHook(new HwndSourceHook(WndProc));
 
-            ObtainDeviceInfo();
-
+            Task.Run(() =>
+            {
+                serverThread.Join();
+                server.ObtainUSBDeviceInfo();
+                server.ObtainRemoteDeviceInfo();
+            });
+            server.RaiseUINotifEvent += Server_RaiseUINotifEvent;
         }
-        
-    
+
+        private void Server_RaiseUINotifEvent(object sender, string e)
+        {
+            MessageBox.Show(e);
+        }
+
+
 
 
         #region
@@ -119,12 +142,10 @@ namespace UCUI
                 case WM_DEVICECHANGE:
                     switch ((uint)wParam.ToInt32()) {
                         case WM_DEVICEARRIVAL:
-                            string deviceName = ObtainDeviceInfo();
-                            if (deviceName == "") MessageBox.Show("Device Not Found");
-                            else InitialiseDevice(deviceName);
+                            NotifyServer(SERVER_ADDRESS + Notif.DeviceDetected, "");
                             break;
                         case WM_DEVICEREMOVECOMPLETE:
-                            CheckRemovedDevice();
+                            NotifyServer(SERVER_ADDRESS + Notif.DeviceDisconnected, "");
                             break;
 
                     }
@@ -133,84 +154,8 @@ namespace UCUI
             return IntPtr.Zero;
         }
 
-        private void CheckRemovedDevice()
-        {
-            Thread thread = new Thread(() =>
-            {
-                ManagementClass USBClass = new ManagementClass("Win32_USBHUB");
-                System.Management.ManagementObjectCollection USBCollection = USBClass.GetInstances();
-
-                foreach (System.Management.ManagementObject usb in USBCollection)
-                {
-                    string deviceId = usb["deviceid"].ToString();
-                    
-                    foreach (string registeredDevice in deviceInterface.ConnectedDeviceList.Keys.ToArray())
-                    {
-                        if (deviceId != deviceInterface.ConnectedDeviceList[registeredDevice].DeviceId)
-                        {
-                            deviceInterface.ConnectedDeviceList.Remove(registeredDevice);
-                            MessageBox.Show("Device Removed");
-                        }
-                    }
-                }
-            });
-            thread.Start();
-            thread.Join();
-        }
-        private string ObtainDeviceInfo()
-        {
-            string result = "";
-            Thread thread = new Thread(() =>
-            {
-                ManagementClass USBClass = new ManagementClass("Win32_USBHUB");
-                System.Management.ManagementObjectCollection USBCollection = USBClass.GetInstances();
-
-                foreach (System.Management.ManagementObject usb in USBCollection)
-                {
-                    try
-                    {
-                        string deviceId = usb["deviceid"].ToString();
-                        if (deviceId == null)
-                        {
-                            throw new Exception("Device not found!");
-                        }
-                        else
-                        {
-
-
-                            int vidIndex = deviceId.IndexOf("VID_");
-                            //int vidIndex = 0;
-                            string startingAtVid = deviceId.Substring(vidIndex + 4); // + 4 to remove "VID_"                    
-                            string vid = startingAtVid.Substring(0, 4); // vid is four characters long
-
-                            int pidIndex = deviceId.IndexOf("PID_");
-                            string startingAtPid = deviceId.Substring(pidIndex + 4); // + 4 to remove "PID_"                    
-                            string pid = startingAtPid.Substring(0, 4); // pid is four characters long
-
-
-                            DeviceInfo newDeviceInfo = deviceInterface.QueryDeviceInfo(vid, pid);
-                            if (newDeviceInfo != null)
-                            {
-                                newDeviceInfo.ToFile("newDevice");
-                                result = newDeviceInfo.Device;
-                                deviceInterface.AddDevice(result, new DeviceInterface.ControllerDevice(newDeviceInfo, deviceId));
-                                InitialiseDevice(result);
-                                //MessageBox.Show("Recognised Device Pluged in");
-                            }
-                        }
-                    }
-                    catch (Exception e) { }
-                }
-            });
-            thread.Start();
-            thread.Join();
-            return result;
-        }
-
-        private void InitialiseDevice(string deviceName)
-        {
-            deviceInterface.BindDevice(deviceName);
-        }
+        
+        
         #endregion
         private void PageOpen(object sender, RoutedEventArgs e)
         {
@@ -254,7 +199,8 @@ namespace UCUI
 
                     if (myOption.buttonVisible[i])
                     {
-                        
+
+
                         ButtonArray[i].Content = i.ToString();
                         string disp = i.ToString();
                         ButtonArray[i].Name = "Button" + i.ToString();
@@ -272,26 +218,39 @@ namespace UCUI
 
                         ButtonArray[i].Click += delegate (object a, RoutedEventArgs b)
                         {
-                            //deviceInterface.TestRoboticArm();
-                            
-                            MethodInfo methodToBind = deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "RelaxAllServos");
-                            ThreadStart threadStart = new ThreadStart(()=>
+                            // Get DeviceInfo Object
+                            Button sourceButton = (Button)a;
+                            string buttonName = sourceButton.Name;
+                            int buttonIndex = Int32.Parse(buttonName.Substring(6));
+
+                            // To replace "AL5D" with reference from the selected menu or button
+                            ControllerDevice currentDevice = server.ConnectedDeviceList["AL5D"];
+                            DeviceInfo currentDeviceInfo = currentDevice.DeviceInfo;
+
+                            if (currentDeviceInfo.ApiType == "LocalLib")
                             {
-                                lock (deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject)
+                                
+                                int count = currentDeviceInfo.FunctionArray.Count;
+                                if (buttonIndex > count - 1) { }
+                                else
                                 {
-                                    deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "setGripper_PW")
-                                        .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, new object[] { (short)random.Next(500, 2500) });
-                                    deviceInterface.BindFunction(deviceInterface.ConnectedDeviceList["robotic_arm"], "updateServos")
-                                        .Invoke(deviceInterface.ConnectedDeviceList["robotic_arm"].DeviceObject, null);
+                                    Task.Run(() =>
+                                    {
+                                        MethodInfo methodToBind = server.GetMethodInfo(currentDevice, currentDeviceInfo.FunctionArray[buttonIndex].Name);
+                                        methodToBind.Invoke(currentDevice.DeviceObject, null);
+                                    });
                                 }
                             }
-                                );
+                            else if (currentDeviceInfo.ApiType == "Http")
+                            {
+                                Dictionary<string, string> messageDict = new Dictionary<string, string>
+                                {
+                                    ["name"] = "smart lamp",
+                                    ["method"] = "off"
+                                };
 
-                            newThread = new Thread(threadStart);
-                            newThread.Start();
-                            newThread.Join();
-
-
+                                NotifyServer(SERVER_ADDRESS + (int)Notif.PostToServer, JsonConvert.SerializeObject(messageDict));
+                            }
                             CheckCenterMouse();
                         };
 
@@ -366,13 +325,30 @@ namespace UCUI
 
         private void ServerRoutine()
         {
-            server = new Server();
-            deviceInterface = new DeviceInterface();
+            server = new Server(SERVER_ADDRESS);
             server.Run();
             //deviceInterface.TestRoboticArm();
 
         }
 
+        private void NotifyServer(string url, string content)
+        {
+            Task.Run(() =>
+            {
+                HttpRequestMessage message = new HttpRequestMessage()
+                {
+                    Method = new HttpMethod("POST"),
+                    Content = new StringContent(content),
+                    RequestUri = new Uri(url)
+                };
+                message.Content.Headers.Clear();
+                message.Content.Headers.Add("Content-Type", "application/json");
+                client.SendAsync(message);
+            });
+        }
+        
+
     }
+    
 
 }

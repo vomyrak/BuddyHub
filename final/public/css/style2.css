@@ -46,6 +46,14 @@ a:focus {
     margin: 40px 0;
 }
 
+#namebox {
+	width: 100%;
+    color: black;
+    text-align: center;
+	padding: 13px 13px 13px 13px;
+    margin: 0px 0px 20px 0px;
+}
+
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
