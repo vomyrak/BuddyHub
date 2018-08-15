@@ -25,16 +25,16 @@ socket.on("connect", function() {
 			//	tempPlayed = true;
 			}
 		}
-		else if (reading < tempLimit) {
-			$("#temperature-reading").toggleClass("alert");
+		else if (reading < tempLimit) {	
+		//	$("#temperature-reading").toggleClass("alert");
 			if (!tempPlayed) {
 				window.speechSynthesis.speak(tempAudio2);
 			//	tempPlayed = true;
 			}
 				else {
-			$("#temperature-reading").removeClass("alert");
+		//	$("#temperature-reading").removeClass("alert");
 				window.speechSynthesis.speak(tempAudio3);
-			tempPlayed = true;
+			//  tempPlayed = true;
 			}
 
 		}
