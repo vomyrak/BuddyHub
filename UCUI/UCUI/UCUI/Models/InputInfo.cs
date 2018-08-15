@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UCUI.Models
 {
-    //These structs are used in SendInput from user32.dll. These were found at https://stackoverflow.com/questions/12761169/send-keys-through-sendinput-in-user32-dll
+    //These structs are used in SendInput from user32.dll. These were stolen from https://stackoverflow.com/questions/12761169/send-keys-through-sendinput-in-user32-dll
     class InputInfo
     {
         /// <summary>

@@ -11,7 +11,7 @@
         Height="450"
         Width="800"
         WindowState='Maximized'
-        FontSize='20'
+        FontSize='22'
         FontFamily='Calibri'
         KeyUp='Window_KeyUp'
         PreviewKeyDown="Window_PreviewKeyDown">
@@ -127,7 +127,7 @@
                                HorizontalAlignment='Left'
                                Foreground="Gray"
                                Margin='9, 0, 0, 10'
-                               FontSize='15'
+                               FontSize='16 '
                                TextWrapping='Wrap'
                                DockPanel.Dock='Bottom' />
 

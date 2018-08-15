@@ -68,8 +68,6 @@ namespace UCUI.Models
             
         }
 
-
-
         static public void SetPosition(Window win)
         {
             Matrix m = PresentationSource.FromVisual(System.Windows.Application.Current.MainWindow).CompositionTarget.TransformToDevice;
@@ -80,8 +78,7 @@ namespace UCUI.Models
             SetCursorPos(left, top);
         }
 
-
-        public static void SendKeyPress(KeyCode keyCode) //found at https://stackoverflow.com/questions/12761169/send-keys-through-sendinput-in-user32-dll
+        public static void SendKeyPress(KeyCode keyCode) //stolen from https://stackoverflow.com/questions/12761169/send-keys-through-sendinput-in-user32-dll
         {
             INPUT input = new INPUT
             {

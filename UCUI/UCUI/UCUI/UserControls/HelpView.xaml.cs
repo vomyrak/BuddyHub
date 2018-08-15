@@ -25,5 +25,17 @@ namespace UCUI.UserControls
         {
             InitializeComponent();
         }
+
+        public event EventHandler ExecuteMethod; //I couldn't set the visibility of the overlay to collapsed, since I couldn't access it from this namespace. So I'm using the Mianwindow's Outside_Click method with an event
+
+        protected virtual void OnExecuteMethod()
+        {
+            if (ExecuteMethod != null) ExecuteMethod(this, EventArgs.Empty);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            OnExecuteMethod();
+        }
     }
 }

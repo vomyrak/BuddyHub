@@ -35,6 +35,7 @@ namespace UCUI
             InitializeComponent();
             ButtonArray = new Button[9];
             SettingsView.ExecuteMethod += new EventHandler(UserControlHandler); //Handling when a button from SettingsView is pressed
+            HelpView.ExecuteMethod += new EventHandler(UserControlHandler);
             try
             {
                 ControlOptions.ItemsSource = ControlSource.Options;
