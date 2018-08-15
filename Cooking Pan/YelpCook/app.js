@@ -76,11 +76,11 @@ app.get("/recipe/:id/:stepid", function(req,res){
 app.post("/recipes", function(req,res){
     var name = req.body.name;
     var image = req.body.image;
+    var servings = req.body.servings;
     var instruction = req.body.instruction;
-    var temperature = req.body.temperature;
     var cooking_time = req.body.cooking_time;
     var nof_steps = req.body.steps;
-    var newRecipe = {name: name, image: image, temperature: temperature, cooking_time:cooking_time, instruction: []};
+    var newRecipe = {name: name, image: image, cooking_time: cooking_time, servings: servings, instruction: []};
         for (var i=0;i<nof_steps;i++){
                 var tempstep = req.body['step' + i];
                 var tempimg = req.body['img' + i];
@@ -105,6 +105,6 @@ app.post("/recipes", function(req,res){
     });
 });
 
-server.listen(3000, process.env.IP, function(){
+server.listen(process.env.PORT, process.env.IP, function(){
     console.log("YelpCook server started");
 });
