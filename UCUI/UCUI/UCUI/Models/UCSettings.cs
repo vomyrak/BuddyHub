@@ -15,8 +15,7 @@ namespace UCUI.Models
     {
 
         //KeyBinds stored in string instead of Key so it can be more easily read from text file (No backwards conversion needed). Alternatively it could be read binary mode.
-        static private string[] keyBinds = new string[10];
-       
+        static private string[] keyBinds = new string[10];    
         static public void SetKey(string keyIn, int i)
         {
             if (keyIn != keyBinds[i])
@@ -24,7 +23,6 @@ namespace UCUI.Models
                 keyBinds[i] = keyIn;
             }
         }
-
         static public string GetKey(int i)
         {
             if (keyBinds[i] != null)
@@ -32,7 +30,7 @@ namespace UCUI.Models
             else return "null";
         }
 
-        private  bool isShake;
+        private  bool isShake; //Increased visual feedback animation for shaker buttons
         public bool IsShake
         {
             get { return isShake;}
@@ -46,7 +44,7 @@ namespace UCUI.Models
             }
         }
 
-        private bool isCenter;
+        private bool isCenter; //Mouse centering
         public bool IsCenter
         {
             get { return isCenter; }
@@ -60,7 +58,7 @@ namespace UCUI.Models
             }
         }
 
-        private bool isHover;
+        private bool isHover; //CLicking on hover
         public bool IsHover
         {
             get { return isHover; }
@@ -74,7 +72,7 @@ namespace UCUI.Models
             }
         }
 
-        private bool isSound;
+        private bool isSound; //Audio Feedback
         public bool IsSound
         {
             get { return isSound; }
@@ -88,7 +86,7 @@ namespace UCUI.Models
             }
         }
 
-        private bool isOpen;
+        private bool isOpen; //If any view (i.e. SettingsView or HelpView) is visible, this is true
         public bool IsOpen
         {
             get { return isOpen; }
@@ -102,7 +100,7 @@ namespace UCUI.Models
             }
         }
 
-        private bool isFull;
+        private bool isFull; //Fullscreen
         public bool IsFull
         {
             get { return isFull; }
@@ -130,7 +128,7 @@ namespace UCUI.Models
             }
         }
 
-        private string message;
+        private string message; //Displayed on TitleBlock in MainWindow
         public string Message
         {
             get { return message; }
@@ -165,6 +163,7 @@ namespace UCUI.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        #region AutoTabbing
         public static int AutoTabTime;
         public static bool IsAuto;
 
@@ -179,8 +178,10 @@ namespace UCUI.Models
                 });
                 
             }
-            Thread.CurrentThread.Abort();
+            if(Thread.CurrentThread.IsBackground)Thread.CurrentThread.Abort();
 
         }
+        #endregion
+
     }
 }

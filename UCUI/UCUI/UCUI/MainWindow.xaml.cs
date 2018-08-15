@@ -121,7 +121,6 @@ namespace UCUI
                         ButtonArray[i].Click += delegate (object a, RoutedEventArgs b)
                         {
                             CheckCenterMouse();
-
                         };
 
                         ButtonArray[i].MouseEnter += delegate (object a, MouseEventArgs b)
