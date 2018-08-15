@@ -14,7 +14,7 @@ var tempAudio3 = new SpeechSynthesisUtterance("The required temperature has been
 socket = io.connect("http://localhost:3000");
 socket.on("connect", function() {
 	this.on("newTemp", (data) => {
-		if (data !== reading) {
+		if (data) {
 			reading = data;
 			$("#temperature-reading").text(reading);
 			if(reading < tempLimit) {

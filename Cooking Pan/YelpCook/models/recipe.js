@@ -18,6 +18,7 @@ var recipeSchema = new mongoose.Schema({
     image: String,
     cooking_time: Number,
     steps: Number,
+    ingredients: String,
     servings: Number,
     instruction: [stepSchema
       // Below is another way of embedding data (by reference), which is currently commented out

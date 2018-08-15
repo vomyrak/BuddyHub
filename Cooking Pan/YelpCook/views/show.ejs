@@ -7,6 +7,12 @@
 
     <center><img src="<%=recipe.image%>" width="40%"></center>
 
+    <% if (recipe.ingredients){ %>
+        <p style="text-align: center">
+          <strong>Ingredients: </strong><%= recipe.ingredients %>
+        </p>
+    <%};%>
+
     <% recipe.instruction.forEach(function(step){ %>
         <p style="text-align: center">
           <strong><%= step.stepnumber %></strong> - <%= step.step %>
