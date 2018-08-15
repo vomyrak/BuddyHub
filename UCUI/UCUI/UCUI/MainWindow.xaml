@@ -13,44 +13,38 @@
         WindowState='Maximized'
         FontSize='20'
         FontFamily='Calibri'
-        KeyDown='Window_KeyDown'
-        KeyUp='Window_KeyUp'>
+        KeyUp='Window_KeyUp'
+        PreviewKeyDown="Window_PreviewKeyDown">
 
-  <Grid >
+  <Grid>
     <Rectangle Name='Overlay'
                Fill='#7F000000'
-               Visibility='Collapsed' 
-               Panel.ZIndex='1'/>
-
-    <Button Visibility='Collapsed'
-            Name='Outside'
-            Click='Outside_Click'
-            Opacity='0'
-            Background='#00000000'
-            BorderBrush='#00000000'
-            Panel.ZIndex='2'/>
+               Visibility='Collapsed'
+               Panel.ZIndex='1'
+               MouseUp='Outside_Click' />
 
     <views:HelpView x:Name='HelpView'
-                    Visibility='Collapsed' 
-                    Panel.ZIndex='3'/>
+                    Visibility='Collapsed'
+                    Panel.ZIndex='3' />
 
     <views:SettingsView x:Name='SettingsView'
-                        Visibility='Collapsed' 
-                        Panel.ZIndex='3'/>
+                        Visibility='Collapsed'
+                        Panel.ZIndex='3' />
 
     <DockPanel x:Name='MainView'
                Panel.ZIndex='0'>
-      <StackPanel Background='#FF353535'
+      <StackPanel Background='{DynamicResource ThemeBrush}'
                   DockPanel.Dock='Top'
                   Orientation='Horizontal'>
         <Image x:Name='HeaderPic'
                MaxHeight='24'
                Margin='5 0 10 0' />
         <TextBlock x:Name='TitleBlock'
-                   Background='#FF353535'
+                   Background='#00000000'
                    FontSize='26'
                    FontWeight='Bold'
-                   Foreground='White' />
+                   Foreground='White' 
+                   Text='{Binding Message}'/>
       </StackPanel>
 
       <Grid>
@@ -62,27 +56,30 @@
         <Grid.RowDefinitions>
           <RowDefinition Height='1*' />
         </Grid.RowDefinitions>
-        <Expander ExpandDirection='Right'
-                  Background="#FF353535"
-                  IsExpanded='True'>
-
+        <Expander x:Name="OptionsExpander"
+                  ExpandDirection='Right'
+                  Background="{DynamicResource ThemeBrush}"
+                  IsExpanded='True'
+                  PreviewGotKeyboardFocus="OptionsExpander_GotFocus"
+                  LostFocus="OptionsExpander_LostFocus">
           <Expander.HeaderTemplate>
             <DataTemplate>
-              <TextBlock Width="30" />
+              <TextBlock Width="30" 
+                        Focusable="False" />
             </DataTemplate>
           </Expander.HeaderTemplate>
 
-          <DockPanel Grid.Column='0'>
+          <DockPanel Grid.Column='0'
+                     >
             <TextBlock TextWrapping='Wrap'
                        Text='      Control Options       '
                        FontSize='24'
-                       Background="#FF353535"
+                       Background="{DynamicResource ThemeBrush}"
                        FontFamily="Calibri"
                        FontWeight="Bold"
                        Foreground="White"
-                       DockPanel.Dock='Top' 
-                       x:Name='OptionsHeader'
-                       />
+                       DockPanel.Dock='Top'
+                       x:Name='OptionsHeader' />
 
             <Grid DockPanel.Dock='Bottom'>
               <Grid.ColumnDefinitions>
@@ -110,15 +107,17 @@
                      Grid.Column='0'
                      SelectionChanged='SelectionChanged'
                      MaxWidth='250'
-                     ScrollViewer.HorizontalScrollBarVisibility='Disabled'>
+                     ScrollViewer.HorizontalScrollBarVisibility='Disabled'   
+                     KeyDown="ControlOptions_KeyDown"
+                     >
 
-              <ListBox.ItemTemplate>
+              <ListBox.ItemTemplate >
                 <DataTemplate>
                   <DockPanel>
                     <Image DockPanel.Dock='Left'
                            Source='{Binding actualUri}'
                            MaxWidth='64'
-                           MaxHeight='64' />
+                           MaxHeight='64'/>
                     <TextBlock Text='{Binding name}'
                                HorizontalAlignment='Left'
                                Foreground="#FF353535"

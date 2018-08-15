@@ -4,15 +4,18 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace UCUI.Models 
 {
     class UCSettings : INotifyPropertyChanged
     {
-        static private string[] keyBinds = new string[9];
 
+        //KeyBinds stored in string instead of Key so it can be more easily read from text file (No backwards conversion needed). Alternatively it could be read binary mode.
+        static private string[] keyBinds = new string[10];
        
         static public void SetKey(string keyIn, int i)
         {
@@ -24,7 +27,9 @@ namespace UCUI.Models
 
         static public string GetKey(int i)
         {
-            return keyBinds[i];
+            if (keyBinds[i] != null)
+                return keyBinds[i];
+            else return "null";
         }
 
         private  bool isShake;
@@ -83,7 +88,63 @@ namespace UCUI.Models
             }
         }
 
-        private string buttonKey;
+        private bool isOpen;
+        public bool IsOpen
+        {
+            get { return isOpen; }
+            set
+            {
+                if (value != isOpen)
+                {
+                    isOpen = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool isFull;
+        public bool IsFull
+        {
+            get { return isFull; }
+            set
+            {
+                if (value != isFull)
+                {
+                    isFull = value;
+                    OnPropertyChanged();
+                    if (isFull)
+                    {
+                        App.Current.MainWindow.WindowState = WindowState.Normal;
+                        App.Current.MainWindow.WindowStyle = WindowStyle.ToolWindow;
+                        App.Current.MainWindow.ResizeMode = ResizeMode.NoResize;
+                        App.Current.MainWindow.WindowState = WindowState.Maximized;
+                        
+                    }
+                    else
+                    {
+                        App.Current.MainWindow.WindowState = WindowState.Normal;
+                        App.Current.MainWindow.ResizeMode = ResizeMode.CanResize;
+                        App.Current.MainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
+                    }
+                }
+            }
+        }
+
+        private string message;
+        public string Message
+        {
+            get { return message; }
+            set
+            {
+                if (value != message)
+                {
+                    message = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string buttonKey; //ToString() of the current key down in the main window. Compared with e.Key is compared with keybinds[i] to determine its value. Fires the pressdown animation.
         public string ButtonKey
         {
             get { return buttonKey; }
@@ -104,6 +165,22 @@ namespace UCUI.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public static int AutoTabTime;
+        public static bool IsAuto;
 
+        static public void AutoTab()
+        {
+
+            while (IsAuto)
+            {
+                Thread.Sleep(AutoTabTime);
+                Application.Current.Dispatcher.Invoke((Action)delegate {
+                    UCMethods.NextTab();
+                });
+                
+            }
+            Thread.CurrentThread.Abort();
+
+        }
     }
 }

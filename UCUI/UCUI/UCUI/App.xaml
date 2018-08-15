@@ -5,8 +5,60 @@
              xmlns:mod="clr-namespace:UCUI.Models"
              StartupUri="MainWindow.xaml">
   <Application.Resources>
-    
+    <Color x:Key='myGray'>#FF353535</Color>
+    <Color x:Key='myGold'>#FFEBCB31</Color>
+    <SolidColorBrush x:Key='GoldBrush'
+                     Color='{StaticResource myGold}' />
+    <SolidColorBrush x:Key='ButtonBrush'
+                     Color='Gray' />
+    <SolidColorBrush x:Key='ThemeBrush'
+                     Color='#FF353535' />
+
     <mod:AnimationCondition x:Key="ConditionKey" />
+
+    <!--Used in GlowFocus-->
+    <Style TargetType="{x:Type Rectangle}"
+                       x:Key='Glower'>
+      <Setter Property="RenderTransformOrigin"
+              Value="0.5 0.5" />
+      <Setter Property="RenderTransform">
+        <Setter.Value>
+          <RotateTransform />
+        </Setter.Value>
+      </Setter>
+      <Style.Triggers>
+        <EventTrigger RoutedEvent="Rectangle.Loaded"> 
+          <BeginStoryboard>
+              <Storyboard>
+              <ColorAnimation To="#FFEBCB31"
+                                      Storyboard.TargetProperty="(Rectangle.Stroke).(SolidColorBrush.Color)"
+                                      FillBehavior='HoldEnd'
+                                AutoReverse="True"
+                                      Duration="0:0:0.75" 
+                                RepeatBehavior="Forever"/>
+              </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+      </Style.Triggers>
+    </Style>
+<!--Custom FocusVisualStyle-->
+    <Style x:Key="GlowFocus">
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Rectangle x:Name="Highlight"
+              Margin="-6" 
+                       StrokeThickness="7" 
+                       Stroke="#FFD9AE2C"
+                       RadiusX="20"
+                       RadiusY="20"
+                       Style="{StaticResource Glower}"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    
+    
     <!--Static resource storyboard for Pusher button-->
     <Storyboard x:Key='PushDown'>
       <ThicknessAnimation Storyboard.TargetProperty="Margin"
@@ -38,6 +90,8 @@
            x:Key='Shaker'>
       <Setter Property="RenderTransformOrigin"
               Value="0.5 0.5" />
+      <Setter Property="FocusVisualStyle"
+              Value="{StaticResource GlowFocus}"/>
       <Setter Property="RenderTransform">
         <Setter.Value>
           <RotateTransform />
@@ -45,7 +99,7 @@
       </Setter>
 
       <Setter Property='Background'
-              Value='Gray' />
+              Value='{DynamicResource ButtonBrush}' />
       <Setter Property='Foreground'
               Value='White' />
       <Setter Property='FontFamily'
@@ -56,7 +110,7 @@
 
             <Grid>
               <Rectangle Name='bg'
-                         Fill='Gray'
+                         Fill='{TemplateBinding Background}'
                          RadiusX='6'
                          RadiusY='6' />
               <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -123,11 +177,13 @@
     <Style TargetType="Button"
            x:Key='Pusher'>
       <Setter Property='Background'
-              Value='Gray' />
+              Value='{DynamicResource ButtonBrush}' />
       <Setter Property='Foreground'
               Value='White' />
       <Setter Property='FontFamily'
               Value='Calibri' />
+      <Setter Property='FocusVisualStyle'
+              Value='{StaticResource GlowFocus}' />
 
       <Setter Property="Template">
         <Setter.Value>
@@ -136,7 +192,7 @@
             <Grid>
 
               <Rectangle x:Name='_bottom'
-                         Fill="#FF353535"
+                         Fill="{DynamicResource ThemeBrush}"
                          RadiusX="20"
                          RadiusY="20"
                          Margin='0,2,0,0' />
@@ -194,11 +250,29 @@
                     <Storyboard>
                       <ColorAnimation To="Gray"
                                       Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
-                                      FillBehavior='HoldEnd'
+                                      FillBehavior='Stop'
                                       Duration="0:0:0.05" />
                     </Storyboard>
                   </BeginStoryboard>
                 </DataTrigger.ExitActions>
+              </DataTrigger>
+
+              <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                  <Binding Path='IsOpen'
+                             Mode="OneWay" />
+                </DataTrigger.Binding>
+                <Setter Property="Focusable"
+                        Value="False"/>
+              </DataTrigger>
+
+              <DataTrigger Value="False">
+                <DataTrigger.Binding>
+                  <Binding Path='IsOpen'
+                             Mode="OneWay" />
+                </DataTrigger.Binding>
+                <Setter Property="Focusable"
+                        Value="True"/>
               </DataTrigger>
 
               <Trigger Property="IsMouseOver"
@@ -220,6 +294,152 @@
       </Setter>
     </Style>
 
+
+    <!--Combobox template used:-->
+    <Style x:Key="ComboBoxToggleButton"
+           TargetType="ToggleButton">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="ToggleButton">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="32" />
+              </Grid.ColumnDefinitions>
+              <Border x:Name="Border"
+                      Grid.ColumnSpan="2"
+                      CornerRadius="8"
+                      Background="{TemplateBinding Background}"
+                      BorderBrush="#F6F6F6"
+                      BorderThickness="1" />
+
+              <Path x:Name="Arrow"
+                    Grid.Column="1"
+                    Fill="{TemplateBinding Foreground}"
+                    Stroke="{TemplateBinding Foreground}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Data="M 0 0 L 4 4 L 8 0 Z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="ComboBoxTextBox"
+                     TargetType="TextBox">
+      <Border x:Name="PART_ContentHost"
+              Focusable="True" />
+    </ControlTemplate>
+
+    <Style x:Key="theComboBox"
+           TargetType="{x:Type ComboBox}">
+      <Setter Property="Foreground"
+              Value="Black" />
+      <Setter Property="BorderBrush"
+              Value="LightGray" />
+      <Setter Property="FontSize"
+              Value="20" />
+      <Setter Property="MinWidth"
+              Value="150" />
+      <Setter Property="MinHeight"
+              Value="35" />
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="ComboBox">
+            <Grid>
+              <ToggleButton Cursor="Hand"
+                            Name="ToggleButton"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Background="{TemplateBinding Background}"
+                            Foreground="{TemplateBinding Foreground}"
+                            Style="{StaticResource ComboBoxToggleButton}"
+                            Grid.Column="2"
+                            Focusable="false"
+                            IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                            ClickMode='Press' />
+
+              <ContentPresenter Name="ContentSite"
+                                IsHitTestVisible="False"
+                                Content="{TemplateBinding SelectionBoxItem}"
+                                ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                Margin="10,3,30,3"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left" />
+              <Popup Name="Popup"
+                     Placement='Bottom'
+                     IsOpen="{TemplateBinding IsDropDownOpen}"
+                     AllowsTransparency="True"
+                     Focusable="False"
+                     PopupAnimation='Fade'>
+                <Grid Name="DropDown"
+                      SnapsToDevicePixels="True"
+                      MinWidth="{TemplateBinding ActualWidth}"
+                      MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                  <Border CornerRadius="8"
+                          x:Name="DropDownBorder"
+                          Background="White"
+                          BorderThickness="2"
+                          BorderBrush="LightGray">
+                    <ScrollViewer Margin="4,6,4,6"
+                                  SnapsToDevicePixels="True">
+                      <StackPanel IsItemsHost="True"
+                                  KeyboardNavigation.DirectionalNavigation='Contained' />
+                    </ScrollViewer>
+                  </Border>
+                </Grid>
+              </Popup>
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+      <Style.Triggers>
+        <Trigger Property="IsKeyboardFocusWithin"
+                 Value="True">
+          <Setter Property="IsDropDownOpen"
+                  Value="True"/>
+        </Trigger>
+      </Style.Triggers>
+    </Style>
+
+    <Style x:Key="{x:Type ComboBoxItem}"
+           TargetType="{x:Type ComboBoxItem}">
+      <Setter Property="HorizontalAlignment"
+              Value="Stretch" />
+      <Setter Property="VerticalAlignment"
+              Value="Stretch" />
+      <Setter Property="FontSize"
+              Value="13" />
+      <Setter Property="OverridesDefaultStyle"
+              Value="True" />
+      <Setter Property="IsTabStop" Value="True" />
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="ComboBoxItem">
+            <Border Name="Border"
+                    Padding="5"
+                    Margin="2"
+                    BorderThickness="2"
+                    CornerRadius="5"
+                    Background="Transparent"
+                    BorderBrush="Transparent">
+              <TextBlock TextAlignment="Left">
+                            <ContentPresenter />
+              </TextBlock>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsHighlighted"
+                       Value="true">
+                <Setter TargetName="Border"
+                        Property="Background"
+                        Value="#FFE4E4E4" />
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
   </Application.Resources>
 
 </Application>
