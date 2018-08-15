@@ -7,10 +7,14 @@
 }
 
 *{
-	font-size: 23px !important;
+	font-size: 23px;
 	font-family: "lexie_readableregular";
 	
 }
+
+h3{font-size:24px} 
+
+h4{font-size:20px}
 
 #myCarousel {
 margin-top:52px;
@@ -36,7 +40,7 @@ a.animated-button:link, a.animated-button:visited {
  /* margin: 30px auto 0;*/
   padding: 14px 15px;
   color: #fff;
-  font-size: 10px;
+  font-size: 20px;
   font-weight: bold;
   text-align: center;
   text-decoration: none;
@@ -79,7 +83,7 @@ a.animated-button:link, a.animated-button:visited {
 /*  margin: 30px auto 0;*/
   padding: 14px 15px;
   color: #367722;
-  font-size:10 px;
+  font-size:17 px;
   border-radius: 0;
   font-weight: bold;
   text-align: center;
