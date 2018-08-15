@@ -16,8 +16,20 @@ socket.on("connect", function() {
 	this.on("newTemp", (data) => {
 		if (data !== reading) {
 			reading = data;
+			$("#temperature-reading").text(reading);
+			if(reading < tempLimit) {
+				$("temperature-reading").toggleClass("alert");
+				window.speechSynthesis.speak(tempAudio2);
+			}
+			else if(reading > tempLimit) {
+				$("temperature-reading").removeClass("alert");
+				window.speechSynthesis.speak(tempAudio);
+			}
+			else {
+				window.speechSynthesis.speak(tempAudio3);	
+			}
 		}
-		$("#temperature-reading").text(reading);
+		/*$("#temperature-reading").text(reading);
 		if(reading > tempLimit) {
 			$("#temperature-reading").toggleClass("alert");
 			if (!tempPlayed) {
@@ -37,7 +49,7 @@ socket.on("connect", function() {
 			//  tempPlayed = true;
 			}
 
-		}
+		}*/
 	})
 })
 
