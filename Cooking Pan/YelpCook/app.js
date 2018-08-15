@@ -29,7 +29,7 @@ io.on('connection', function(socket) {
             }
         });
     }
-    setInterval(getTemp, 500);
+    setInterval(getTemp, 1000);
 });
 
 //ROUTES
@@ -105,6 +105,6 @@ app.post("/recipes", function(req,res){
     });
 });
 
-server.listen(process.env.PORT, process.env.IP, function(){
+server.listen(3000, process.env.IP, function(){
     console.log("YelpCook server started");
 });
