@@ -43,6 +43,10 @@ window.onload = function(e) {
   var cookiefontsize = readCookie("fontsize");
   document.body.style.fontSize = cookiefontsize ? cookiefontsize : "1.0em";
 
+  var cookiename = readCookie("name");
+  var greeting = cookiename ? cookiename : "<h2>Welcome!</h2>";
+  $("h2").html(greeting);
+
   for (i = 0; i < tabs.length; i++) {
     var deviceName = tabs[i];
     var unspacedDeviceName = deviceName.replace(/\s/g, '');
@@ -58,4 +62,5 @@ window.onunload = function(e) {
   document.cookie = "fontsize=" + document.body.style.fontSize + "";
   document.cookie = "muted=" + audio.muted + "";
   document.cookie = "shake=" + stylesheet.disabled + "";
+  document.cookie = "name=" + $("h2").html() + "";
 }
