@@ -5,7 +5,8 @@
   "main": "arduino.js",
   "dependencies": {
     "johnny-five": "^0.15.0",
-    "mongoose": "^5.2.4"
+    "mongoose": "^5.2.4",
+    "request": "^2.87.0"
   },
   "devDependencies": {},
   "scripts": {
