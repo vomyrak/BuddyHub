@@ -22,12 +22,21 @@ socket.on("connect", function() {
 			$("#temperature-reading").toggleClass("alert");
 			if (!tempPlayed) {
 				window.speechSynthesis.speak(tempAudio);
-				tempPlayed = true;
+			//	tempPlayed = true;
 			}
 		}
-		else {
+		else if (reading < tempLimit) {
+			$("#temperature-reading").toggleClass("alert");
+			if (!tempPlayed) {
+				window.speechSynthesis.speak(tempAudio2);
+			//	tempPlayed = true;
+			}
+				else {
 			$("#temperature-reading").removeClass("alert");
-			tempPlayed = false;
+				window.speechSynthesis.speak(tempAudio3);
+			tempPlayed = true;
+			}
+
 		}
 	})
 })
