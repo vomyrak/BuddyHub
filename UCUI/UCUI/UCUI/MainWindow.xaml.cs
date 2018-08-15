@@ -18,6 +18,7 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json;
 using AppServer;
+using System.Windows.Media;
 
 namespace UCUI
 {
@@ -123,14 +124,9 @@ namespace UCUI
 
         public void Outside_Click(object sender, RoutedEventArgs e)
         {
-<<<<<<< HEAD
-            HelpView.Visibility = Visibility.Collapsed;
-            SettingsView.Visibility = Visibility.Collapsed;
-            Outside.Visibility = Visibility.Collapsed;
-=======
+
             HelpView.Visibility = System.Windows.Visibility.Collapsed;
             SettingsView.Visibility = System.Windows.Visibility.Collapsed;
->>>>>>> prototype_balint
             Overlay.Visibility = Visibility.Collapsed;
             MainView.Effect = null;
             ControlOptions.Focusable = true;
@@ -148,13 +144,10 @@ namespace UCUI
 
             if (ControlOptions.SelectedItem != null)
             {
-<<<<<<< HEAD
                 ButtonArray = new Button[9];
                 TextBox myTextbox = null;
-=======
->>>>>>> prototype_balint
                 ControlOption myOption = (ControlOption)ControlOptions.SelectedItem;
-                int visibleButtonCounter=0;                                                             //Used to iterate through label array from ControlOption
+                int visibleButtonCounter=0;          //Used to iterate through label array from ControlOption
 
                 for (int i = 0; i < 9; i++)
                 {
@@ -162,14 +155,7 @@ namespace UCUI
 
                     if (myOption.buttonVisible[i])
                     {
-<<<<<<< HEAD
-
-
-                        ButtonArray[i].Content = i.ToString();
-                        string disp = i.ToString();
-=======
                         ButtonArray[i].Style = (Style)Application.Current.Resources["Pusher"];
->>>>>>> prototype_balint
                         ButtonArray[i].Name = "Button" + i.ToString();
                         ButtonArray[i].Content = myOption.buttonLabels[visibleButtonCounter];
                         ButtonArray[i].Margin = new Thickness(10, 10, 10, 10);
@@ -192,7 +178,7 @@ namespace UCUI
 
 
                             NotifyServer(SERVER_ADDRESS + "Alexa" + "/" + "Text To Speech",
-                                JsonConvert.SerializeObject(new Dictionary<string, string>() { ["input"] = myTextbox.Text }), 
+                                JsonConvert.SerializeObject(new Dictionary<string, string>() { ["input"] = "Alexa, " + myTextbox.Text }), 
                                 "POST");
                             
                             

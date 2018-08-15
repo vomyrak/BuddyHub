@@ -14,15 +14,15 @@ namespace AppServer
     /// </summary>
     public partial class MainWindow : Window
     {
+        // USB Event Constants
         private const int WM_DEVICECHANGE = 0x219;
         private const int WM_DEVICEARRIVAL = 0x8000;
         private const int WM_DEVICEREMOVECOMPLETE = 0X8004;
 
+        // Server Addresses
         private const string SERVER_ADDRESS = "http://localhost:8080/";
         private const string INTERNAL_ADDRESS = "http://localhost:8192/";
-
-        private Server server = new Server("http://localhost:8080/");
-
+        private Server server;
         private HwndSource windowHandle;
 
         public MainWindow()
@@ -32,17 +32,14 @@ namespace AppServer
             windowHandle = HwndSource.FromHwnd(handle);
             windowHandle.AddHook(new HwndSourceHook(WndProc));
             this.Hide();
+            server = new Server(SERVER_ADDRESS);
             server.Run();
             server.ObtainUSBDeviceInfo();
             server.ObtainRemoteDeviceInfo();
 
         }
 
-
-
-
-        #region
-        // Region of Code for USB device events
+        #region USB Device Events
         /// <summary>
         /// Callback function for message processing
         /// </summary>

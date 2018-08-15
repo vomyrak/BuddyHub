@@ -1,19 +1,19 @@
-﻿Server
+﻿AppServer
 
 
 winexe
 C#
 .cs
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\Server\obj\Debug\
-Server
+AppServer
 none
 false
 DEBUG;TRACE
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\Server\App.xaml
 11151548125
 
-11-2141719909
-751497702194
+12-896104593
+76-397711209
 MainWindow.xaml;
 
 False

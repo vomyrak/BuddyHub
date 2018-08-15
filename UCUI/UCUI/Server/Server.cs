@@ -11,6 +11,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading;
 using System.Management;
@@ -44,6 +45,7 @@ namespace AppServer
         public static event EventHandler<ControllerDevice> RaiseControllerDeviceEvent;
 
         private const string INTERNAL_ADDRESS = "http://localhost:8192/";
+        private const string ALEXA_AUDIO_NAME = "audio.mp3";
         /// <summary>
         /// Constructor Server class
         /// </summary>
@@ -52,6 +54,7 @@ namespace AppServer
             ConnectedDeviceList = new Dictionary<string, ControllerDevice>();
             ws = new WebServer(this.SendResponse, hostAddress);
             client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         /// <summary>
@@ -299,7 +302,7 @@ namespace AppServer
             return deviceType.GetMethod(funcName);
 
         }
-
+        
         /// <summary>
         /// Send response to the client according to request information
         /// </summary>
@@ -363,7 +366,15 @@ namespace AppServer
                                         method.Link,
                                         content
                                     );
-                                    var result = SendToRemoteServerAsync(message);
+                                    var response = SendToRemoteServerAsync(message).Result;
+                                    string result = response.Content.ReadAsStringAsync().Result;
+                                    result = method.Link.Substring(0, method.Link.Length - 4) + result;
+                                    
+                                    Task.Run(() =>
+                                    {
+                                        AudioPlayer.Play(result);   
+                                    });
+
                                 }
                                 else
                                 {
@@ -430,13 +441,14 @@ namespace AppServer
                                     ["method"] = "off"
                                 };
                                 RemoteDeviceMethod requestedDeviceMethod = currentDevice.DeviceInfo.Methods.Where(s => s.Method == "on").ToList()[0];
-                                
+
                                 HttpRequestMessage message = FormRequestMessage(
                                     requestedDeviceMethod.HttpMethod,
                                     requestedDeviceMethod.Link,
                                     requestedDeviceMethod.Data,
                                     "application/json");
-                                client.SendAsync(message);
+                                var result = SendAsync(message);
+
 
                             }
                             return "";
@@ -466,7 +478,11 @@ namespace AppServer
                             return "";
                         case (int)Notif.DeviceDetected:
                             string deviceName = ObtainUSBDeviceInfo();
-                            if (deviceName == "") RaiseUINotifEvent?.Invoke(this, "Device Not Found");
+                            if (deviceName == "")
+                                SendAsync(FormRequestMessage(
+                                    "POST",
+                                    INTERNAL_ADDRESS + "Device Not Found",
+                                    ""));
                             return "";
                         case (int)Notif.DeviceDisconnected:
                             CheckRemovedDevice();
@@ -505,9 +521,10 @@ namespace AppServer
         }
 
 
-        public async void SendAsync(HttpRequestMessage message)
+        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage message)
         {
             var response = await SendToRemoteServerAsync(message);
+            return response;
         }
         /// <summary>
         /// Post data to remote server
@@ -515,18 +532,18 @@ namespace AppServer
         /// <param name="host">Remote host address</param>
         /// <param name="message">Message to be post</param>
         /// <returns></returns>
-        private async Task<string> SendToRemoteServerAsync(HttpRequestMessage message)
+        private async Task<HttpResponseMessage> SendToRemoteServerAsync(HttpRequestMessage message)
         {
             try
             {
                 var response = await client.SendAsync(message);
                 var responseString = await response.Content.ReadAsStringAsync();
-                return responseString;
+                return response;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return "";
+                return null;
             }
         }
 

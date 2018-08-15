@@ -1,4 +1,4 @@
-﻿Server
+﻿AppServer
 
 
 winexe
@@ -16,5 +16,5 @@ C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\Server\App.xaml
 76-397711209
 MainWindow.xaml;
 
-False
+True
 
