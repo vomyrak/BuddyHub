@@ -1,10 +1,16 @@
 @import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css);
 /*@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);*/
 
+.jumbotron {
+	background: none;
+
+}
+
 
 .navbar, .navbar-brand {
   font-size: 30px !important;
-  font-family: "lexie_readableregular";
+  font-family: "lexie_readableregular"
+  /*background-color: bisque;*/
 }
 
 .welcome {
@@ -20,15 +26,24 @@
 h1{
     /*line-height: 300px; */
     font-size: 5em;
+    font-family: 'lexie_readableregular';
 } 
 
+h4{
+	color: black;
+    font-family: 'lexie_readableregular';
+    font-size: 20px;
+}
 
 body {
 	/*background: url(https://images.pexels.com/photos/349608/pexels-photo-349608.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);*/
-	background-color: red;
+	background-color: bisque;
 	background-size: cover;
-    
+	color: black;
+    font-family: 'lexie_readableregular';
+    font-size: 18px;
 }
+
 
 @font-face {
     font-family: 'lexie_readableregular';
@@ -47,7 +62,7 @@ a.animated-button:link, a.animated-button:visited {
   display: block;
  /* margin: 30px auto 0;*/
   padding: 14px 15px;
-  color: #fff;
+  color: bisque;
   font-size:14px;
   font-weight: bold;
   text-align: center;
@@ -79,22 +94,27 @@ a.animated-button:link:after, a.animated-button:visited:after {
   margin: 0 auto;
 }
 a.animated-button:link:hover, a.animated-button:visited:hover {
-  color: #fff;
+  color: #0066ff;
   text-shadow: none;
+  border-color: #0066ff;
+  font-weight: bold; 
 }
 a.animated-button:link:hover:after, a.animated-button:visited:hover:after {
   height: 450%;
 }
+/*'Choose recipe' buttons*/
 a.animated-button:link, a.animated-button:visited {
   position: relative;
-  display: block;
+  display: inline-block;
 /*  margin: 30px auto 0;*/
-  padding: 14px 15px;
-  color: #367722;
-  font-size:14px;
-  border-radius: 0;
-  font-weight: bold;
+font-family: 'lexie_readableregular';
+  padding: 15px;
+  color: black;
+  font-size:15px;
+  border: 2px solid	black; 	
+  font-weight: normal;
   text-align: center;
+  margin: 0 auto;
   text-decoration: none;
   text-transform: uppercase;
   overflow: hidden;
@@ -104,7 +124,9 @@ a.animated-button:link, a.animated-button:visited {
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;
   transition: all 1s ease;
-  margin: 0 auto;
+  /*margin: 0 auto;*/
+  /*margin: 10px;*/
+  left: 50px;
 }
 
 
