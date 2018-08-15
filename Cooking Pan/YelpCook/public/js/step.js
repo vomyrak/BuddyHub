@@ -68,3 +68,17 @@ function getTimer(stepTime) {
 	    }, 1000);
 	});
 }
+
+
+function enableMute() { 
+    
+    tempAudio2.volume = 0;
+    
+} 
+
+function disableMute() { 
+	
+    tempAudio2.volume = 1;
+    
+} 
+
