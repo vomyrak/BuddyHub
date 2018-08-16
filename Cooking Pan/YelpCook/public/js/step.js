@@ -72,13 +72,18 @@ function getTimer(stepTime) {
 
 function enableMute() { 
     
+    tempAudio.volume = 0;
     tempAudio2.volume = 0;
+    tempAudio3.volume = 0;
     
 } 
 
 function disableMute() { 
 	
+    tempAudio.volume = 1;
     tempAudio2.volume = 1;
+    tempAudio3.volume = 1;
+
     
 } 
 
