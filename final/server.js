@@ -31,8 +31,11 @@ mongoose.connect(connectString, options)
 // Model for mongo database
 const outputSchema = new mongoose.Schema({
   device: String,
+  device_en: String,
+  device_zh: String,
   methods: [{
     method: String,
+    method_zh: String,
     description: String,
     http_method: String,
     link: String,
@@ -47,7 +50,7 @@ const outputSchema = new mongoose.Schema({
   }]
 });
 
-const OutputDevice = mongoose.model('outputDevices', outputSchema, 'outputDevices');
+const OutputDevice = mongoose.model('outputDevices2', outputSchema, 'outputDevices2');
 
 // A dictionary of online users
 const users = {};
@@ -69,11 +72,11 @@ app.get('/', function(req, res) {
   // Render the page with all output devices in the dropdown
 
   var query = OutputDevice.find().sort('device');
-  //query.select('device');
-
 
   query.exec(function(err, devices) {
     if (err) return handleError(err);
+
+    console.log(devices);
 
     res.render('index', {
       devices: devices
@@ -84,14 +87,21 @@ app.get('/', function(req, res) {
 app.get('/device', function(req, res) {
   // Render the page with all output devices in the menu
   // Render the page with methods of the selected device
-  var query = OutputDevice.findOne({
-    device: req.query.selected
-  });
-  query.exec(function(error, selected) {
-    if (error) return handleError(error);
+  var query = OutputDevice.find().sort('device');
 
-    res.render('device', {
-      device: selected
+  query.exec(function(err, devices) {
+    if (err) return handleError(err);
+
+    var query2 = OutputDevice.findOne({
+      device: req.query.selected
+    });
+    query2.exec(function(error, selected) {
+      if (error) return handleError(error);
+
+      res.render('device', {
+        devices: devices, 
+        device: selected
+      });
     });
   });
 });
