@@ -6,9 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title>Universal Controller 2.0</title>
+  <title class="lang en">Universal Controller 2.0</title>
+  <title class="land zh">通用控制器 2.0</title>
 
-<!--Button shake (Has to remain the first stylesheet - refer buttonshake.js)-->
+  <!--Button shake (Has to remain the first stylesheet - refer buttonshake.js)-->
   <link rel="stylesheet" href="./css/buttonshake.css" />
   <!-- Bootstrap CSS CDN -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -22,11 +23,8 @@
   <!-- Scrollbar Custom CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
-    <!--  jQuery-->
-    <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
+  <!--  jQuery-->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
   <!-- Font Awesome JS -->
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -37,7 +35,7 @@
 
 <body id="myBody">
 
- <!-- Menu -->
+  <!-- Menu -->
   <div class="wrapper">
     <!-- Sidebar  -->
     <nav id="sidebar">
@@ -46,7 +44,8 @@
       </div>
       <ul class="list-unstyled components">
         <li>
-          <a href="/">Home</a>
+          <a href="/" class="lang en">Home</a>
+          <a href="/" class="lang zh">主頁</a>
         </li>
       </ul>
     </nav>
@@ -61,89 +60,123 @@
 
           <button type="button" id="sidebarCollapse" class="settingsbtn">
                 <i class="fas fa-align-left"></i>
-                <span>Toggle Sidebar</span>
+                <span class="lang en">Toggle Sidebar</span>
+                <span class="lang zh">工具欄</span>
             </button>
-                      <!-- Button trigger modal -->
-<button type="button" class="settingsbtn" data-toggle="modal" data-target="#exampleModal">
-Settings
-</button>
+          <!-- Button trigger modal -->
+          <button type="button" class="settingsbtn lang en" data-toggle="modal" data-target="#exampleModal">Settings</button>
+          <button type="button" class="settingsbtn lang zh" data-toggle="modal" data-target="#exampleModal">設定</button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!--Change theme-->
-        <input type="text" id="namebox" placeholder="Enter your name">
-          <br>
-            <li >
-              <button class="settingsbtn" onclick=" setActiveStyleSheet('default'); return false;">Light</button> | <button class="settingsbtn" onclick=" setActiveStyleSheet('alternate'); return false;">Dark</button>
-            </li>
-            <br>
-            <li>
-              <!--Sound enabler-->
-              <button class="settingsbtn" id="mutefxn" >Mute sound - No</button>
-            </li><br>
-            <li>
-              <!--Sound choices-->
-                <button class="settingsbtn" id="sound1">1</button> |
-              <button class="settingsbtn" id="sound2">2</button> |
-              <button class="settingsbtn" id="sound3">3</button> |
-              <button class="settingsbtn" id="sound4">4</button> |
-              <button class="settingsbtn" id="sound5">5</button>
 
-            </li>
-            <br>
-            <li>
-              <!--Change size-->
-              <button class="settingsbtn" onclick="resizeText(1)" id="plustext">+</button> |
-              <button class="settingsbtn" onclick="resizeText(-1)" id="minustext">-</button>
-            </li>
-              <br>
-            <li>
-              <!--Shake enabler-->
-              <button class="settingsbtn" id="shake">Shake - No</button>
-            </li>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="settingsbtn" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title lang en" id="exampleModalLabel">Settings</h5>
+                  <h5 class="modal-title lang zh" id="exampleModalLabel">設定</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <input class="lang en" type="text" id="namebox" placeholder="Enter your name">
+                  <input class="lang zh" type="text" id="namebox-zh" placeholder="輸入你的名字">
+                  <br>
+                  <!--Change theme-->
+                  <li>
+                    <div class="lang en">
+                      <button class="settingsbtn lang en" onclick=" setActiveStyleSheet('default'); return false;">Light</button> | <button class="settingsbtn lang en" onclick=" setActiveStyleSheet('alternate'); return false;">Dark</button>
+                    </div>
+                    <div class="lang zh">
+                      <button class="settingsbtn lang zh" onclick=" setActiveStyleSheet('default'); return false;">淺色</button> | <button class="settingsbtn lang zh" onclick=" setActiveStyleSheet('alternate'); return false;">深色</button>
+                    </div>
+                  </li>
+                  <br>
+                  <li>
+                    <!--Sound enabler-->
+                    <button class="settingsbtn lang en" id="mutefxn">Mute sound - No</button>
+                    <button class="settingsbtn lang zh" id="mutefxn-zh">靜音模式 - 關閉</button>
+                  </li><br>
+                  <li>
+                    <!--Sound choices-->
+                    <button class="settingsbtn" id="sound1">1</button> |
+                    <button class="settingsbtn" id="sound2">2</button> |
+                    <button class="settingsbtn" id="sound3">3</button> |
+                    <button class="settingsbtn" id="sound4">4</button> |
+                    <button class="settingsbtn" id="sound5">5</button>
+
+                  </li>
+                  <br>
+                  <li>
+                    <!--Change size-->
+                    <button class="settingsbtn" onclick="resizeText(1)" id="plustext">+</button> |
+                    <button class="settingsbtn" onclick="resizeText(-1)" id="minustext">-</button>
+                  </li>
+                  <br>
+                  <li>
+                    <!--Shake enabler-->
+                    <button class="settingsbtn lang en" id="shake">Shake - No</button>
+                    <button class="settingsbtn lang zh" id="shake-zh">震動模式 - 關閉</button>
+                  </li>
+                  <br>
+                  <li>
+                    <!--Language Chooser-->
+                    <button class="settingsbtn" onclick="changeLanguage('en')">English</button>
+                    <button class="settingsbtn" onclick="changeLanguage('zh')">繁體中文</button>
+                  </li>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="settingsbtn lang en" data-dismiss="modal">Close</button>
+                  <button type="button" class="settingsbtn lang zh" data-dismiss="modal">關閉</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </nav>
 
       <!-- Title -->
 
-      <H1 style="text-align: center; font-size : 2.0em; font-weight: bolder">Universal Controller 2.0</H1>
+      <H1 class="lang en" style="text-align: center; font-size : 1.5em; font-weight: bolder">Universal Controller 2.0</H1>
+      <H1 class="lang zh" style="text-align: center; font-size : 1.5em; font-weight: bolder">通用控制器 2.0</H1>
 
     </div>
 
     <!-- Main tab -->
     <section id="tab1" class="tab-content active">
       <div class="container">
-<br>
+        <br>
         <!-- Select devices -->
-        <select class="form-control" id="device" onChange="getObject(this.value)">
+        <select class="form-control lang en" id="device" onChange="getObject(this.value, this.text)">
             <option value="" disabled selected >Select device</option>
             <% devices.forEach(function(device) { %>
-              <option value="<%= device.device %>"><%= device.device %></option>
-              <% }); %>
+            <option value="<%= device.device %>"><%= device.device_en %></option>
+            <% }); %>
           </select>
-          </div>
+        <select class="form-control lang zh" id="device-zh" onChange="getObject(this.value, this.text)">
+            <option value="" disabled selected >選擇設備</option>
+            <% devices.forEach(function(device) { %>
+            <option value="<%= device.device %>"><%= device.device_zh %></option>
+            <% }); %>
+          </select>
+      </div>
 
-        <div style="padding:30px 20px; width:300px; margin:auto">
-          <button id='create_me' class="method-button" style="font-size : 1.0em">Add Device</button>
-        </div>
+
+      <div style="padding:30px 20px; width:300px; margin:auto">
+        <button id='create_me' class="method-button lang en" style="font-size : 1.0em">Add Device</button>
+        <button id='create_me-zh' class="method-button lang zh" style="font-size : 1.0em">加至選項</button>
+      </div>
 
     </section>
+  </div>
+
+  <!-- Stores the mapping of unspaced device name to display name in different language -->
+  <div>
+    <% devices.forEach(function(device) { %>
+      <input type="hidden" id="<%= device.device.replace(/\s/g, '') %>en" value='<%= device.device_en %>' />
+      <input type="hidden" id="<%= device.device.replace(/\s/g, '') %>zh" value='<%= device.device_zh %>' />
+      <% }); %>
   </div>
 
   <!-- jQuery CDN - Slim version (=without AJAX) -->
@@ -159,10 +192,11 @@ Settings
   <script src="../js/tether.js"></script>
   <script src="../js/sound.js"></script>
   <script src="../js/index.js"></script>
-    <script src="../js/name.js"></script>
+  <script src="../js/language.js"></script>
+  <script src="../js/name.js"></script>
   <script src="../js/http.js"></script>
   <script src="../js/cookies.js"></script>
-<script src="../js/stylesheetswitcher.js"></script>
+  <script src="../js/stylesheetswitcher.js"></script>
   <script src="../js/resizetext.js"></script>
   <script src="../js/menu.js"></script>
 

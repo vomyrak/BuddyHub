@@ -33,24 +33,42 @@ window.onload = function(e) {
   audio.muted = cookiemuted ? JSON.parse(cookiemuted) : false;
   var mutebuttontext = audio.muted ? "Mute sound - Yes" : "Mute sound - No";
   $("#mutefxn").text(mutebuttontext);
+  var mutebuttontextzh = audio.muted ? "靜音模式 - 啓動" : "靜音模式 - 關閉";
+  $("#mutefxn-zh").text(mutebuttontextzh);
 
   var cookieshake = readCookie("shake");
   stylesheet.disabled = cookieshake ? JSON.parse(cookieshake) : false;
   var shakebuttontext = stylesheet.disabled ? "Shake - No" : "Shake - Yes";
   $("#shake").text(shakebuttontext);
+  var shakebuttontextzh = stylesheet.disabled ? "震動模式 - 關閉" : "震動模式 - 啓動";
+  $("#shake-zh").text(shakebuttontextzh);
 
 
   var cookiefontsize = readCookie("fontsize");
   document.body.style.fontSize = cookiefontsize ? cookiefontsize : "1.0em";
 
-  var cookiename = readCookie("name");
-  var greeting = cookiename ? cookiename : "<h2>Welcome!</h2>";
+  var cookielang = readCookie("lang");
+  var lang = cookielang ? cookielang : "en";
+  changeLanguage(lang);
+
+  username = readCookie("name");
+  var greeting;
+  if (lang == "en") {
+    greeting = username ? "<span>Hi</span> " + username + "!" : "<h2>Welcome!</h2>";
+  } else if (lang == "zh") {
+    greeting = username ? "<span>你好</span> " + username + "!" : "<h2>歡迎!</h2>";
+  }
   $("h2").html(greeting);
 
   for (i = 0; i < tabs.length; i++) {
-    var deviceName = tabs[i];
-    var unspacedDeviceName = deviceName.replace(/\s/g, '');
-    $(".components").append("<li><a class=\"tabtext\" href=\"/device?selected=" + deviceName + "\" id=\"#tabname" + unspacedDeviceName + "\">" + deviceName + "</a></li>");
+    // Create tabs for eah device stored in tabs array
+    var device = tabs[i];
+    var unspacedDeviceName = device.replace(/\s/g, '');
+    var deviceName_en = $("#" + unspacedDeviceName + "en").val();
+    var deviceName_zh = $("#" + unspacedDeviceName + "zh").val();
+    $(".components").append("<li><a class=\"tabtext lang zh\" href=\"/device?selected=" + device + "\" id=\"#tabname" + unspacedDeviceName + "\">" + deviceName_zh + "</a></li>");
+    $(".components").append("<li><a class=\"tabtext lang en\" href=\"/device?selected=" + device + "\" id=\"#tabname" + unspacedDeviceName + "\">" + deviceName_en + "</a></li>");
+    changeLanguage(lang);
   }
 }
 
@@ -62,5 +80,6 @@ window.onunload = function(e) {
   document.cookie = "fontsize=" + document.body.style.fontSize + "";
   document.cookie = "muted=" + audio.muted + "";
   document.cookie = "shake=" + stylesheet.disabled + "";
-  document.cookie = "name=" + $("h2").html() + "";
+  document.cookie = "name=" + username + "";
+  document.cookie = "lang=" + lang + "";
 }
