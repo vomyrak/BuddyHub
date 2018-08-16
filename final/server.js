@@ -76,8 +76,6 @@ app.get('/', function(req, res) {
   query.exec(function(err, devices) {
     if (err) return handleError(err);
 
-    console.log(devices);
-
     res.render('index', {
       devices: devices
     });
@@ -99,7 +97,7 @@ app.get('/device', function(req, res) {
       if (error) return handleError(error);
 
       res.render('device', {
-        devices: devices, 
+        devices: devices,
         device: selected
       });
     });

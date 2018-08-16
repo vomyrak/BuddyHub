@@ -5,6 +5,12 @@ function changeLanguage(code) {
   $('.lang').hide();
   // Show the elements with the given language code.
   $('.' + code).show();
+  // Change greeting on side bar
+  if (lang == "en") {
+    $("h2").html("<span>Hi</span> " + username + "!");
+  } else if (lang == "zh") {
+    $("h2").html("<span>你好</span> " + username + "!");
+  }
   // Store the language code.
   lang = code;
 }
