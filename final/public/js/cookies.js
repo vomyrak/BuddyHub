@@ -51,12 +51,12 @@ window.onload = function(e) {
   var lang = cookielang ? cookielang : "en";
   changeLanguage(lang);
 
-  var cookiename = readCookie("name");
+  username = readCookie("name");
   var greeting;
   if (lang == "en") {
-    greeting = cookiename ? "<span>Hi</span> " + cookiename + "!" : "<h2>Welcome!</h2>";
+    greeting = username ? "<span>Hi</span> " + username + "!" : "<h2>Welcome!</h2>";
   } else if (lang == "zh") {
-    greeting = cookiename ? "<span>你好</span> " + cookiename + "!" : "<h2>歡迎!</h2>";
+    greeting = username ? "<span>你好</span> " + username + "!" : "<h2>歡迎!</h2>";
   }
   $("h2").html(greeting);
 
@@ -80,8 +80,6 @@ window.onunload = function(e) {
   document.cookie = "fontsize=" + document.body.style.fontSize + "";
   document.cookie = "muted=" + audio.muted + "";
   document.cookie = "shake=" + stylesheet.disabled + "";
-  if (username) {
-    document.cookie = "name=" + username + "";
-  }
+  document.cookie = "name=" + username + "";
   document.cookie = "lang=" + lang + "";
 }
