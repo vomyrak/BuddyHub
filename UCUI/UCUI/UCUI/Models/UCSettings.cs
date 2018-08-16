@@ -188,7 +188,6 @@ namespace UCUI.Models
         {
             Thread.CurrentThread.IsBackground = true;
             SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
-            Message = "cool";
             AL5C al5c = new AL5C(SSC32s[0].PortName);
             al5c.RelaxAllServos();
             al5c.updateServos();
