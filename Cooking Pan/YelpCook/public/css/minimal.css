@@ -1,49 +1,24 @@
 @import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css);
-/*@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);*/
 
-.jumbotron {
-	background: none;
-
+.alert {
+	color: #FF0000;
+	padding: 0;
+	margin: 0;
 }
 
-
-.navbar, .navbar-brand {
-  font-size: 30px !important;
-  font-family: "lexie_readableregular"
-  /*background-color: bisque;*/
+*{
+	font-size: 23px;
+	font-family: "lexie_readableregular";
+	
 }
 
-.welcome {
-   /* background: bisque; */
-    max-width: 800px;
-    text-align: center;
-    margin: auto;
-    font-family: "lexie_readableregular";
-    padding: 200px 0;
-    height: 500px;
+h3{font-size:24px} 
+
+h4{font-size:20px}
+
+#myCarousel {
+margin-top:52px;
 }
-
-h1{
-    /*line-height: 300px; */
-    font-size: 5em;
-    font-family: 'lexie_readableregular';
-} 
-
-h4{
-	color: black;
-    font-family: 'lexie_readableregular';
-    font-size: 20px;
-}
-
-body {
-	/*background: url(https://images.pexels.com/photos/349608/pexels-photo-349608.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);*/
-	background-color: bisque;
-	background-size: cover;
-	color: black;
-    font-family: 'lexie_readableregular';
-    font-size: 18px;
-}
-
 
 @font-face {
     font-family: 'lexie_readableregular';
@@ -54,28 +29,31 @@ body {
          url('fonts/lexiereadable-regular-webfont.ttf') format('truetype'),
          url('fonts/lexiereadable-regular-webfont.svg#lexie_readableregular') format('svg');
     font-weight: normal;
-    font-style: normal;
-}
+    font-style: normal;}
+
+
+/*ANIMATED BUTTON CODE */
 
 a.animated-button:link, a.animated-button:visited {
   position: relative;
   display: block;
  /* margin: 30px auto 0;*/
   padding: 14px 15px;
-  color: bisque;
-  font-size:14px;
-  font-weight: bold;
+  color: #fff;
+  font-size: 20px;
+  font-weight: normal;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
   overflow: hidden;
   letter-spacing: .08em;
   border-radius: 0;
-  text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+  /*Controls text shadow of buttons*/
+  /*text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
   -webkit-transition: all 1s ease;
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;
-  transition: all 1s ease;
+  transition: all 1s ease;*/
   font-family: "lexie_readableregular";
   margin: 0 auto;
 }
@@ -93,55 +71,83 @@ a.animated-button:link:after, a.animated-button:visited:after {
   transition: all 0.75s ease 0s;
   margin: 0 auto;
 }
+/*Hover features*/
 a.animated-button:link:hover, a.animated-button:visited:hover {
   color: #0066ff;
   text-shadow: none;
   border-color: #0066ff;
-  font-weight: bold; 
-}
+  font-weight: bold;
+  }
 a.animated-button:link:hover:after, a.animated-button:visited:hover:after {
   height: 450%;
 }
-/*'Choose recipe' buttons*/
 a.animated-button:link, a.animated-button:visited {
   position: relative;
-  display: inline-block;
+  display: block;
 /*  margin: 30px auto 0;*/
-font-family: 'lexie_readableregular';
-  padding: 15px;
+  padding: 14px 15px;
   color: black;
-  font-size:15px;
-  border: 2px solid	black; 	
-  font-weight: normal;
+  font-size:17 px;
+  border-radius: 0;
+  font-weight: weight;
   text-align: center;
-  margin: 0 auto;
   text-decoration: none;
   text-transform: uppercase;
   overflow: hidden;
   letter-spacing: .08em;
-  text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+  /*Also controls text shadow of buttons*/
+  /*text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
   -webkit-transition: all 1s ease;
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;
-  transition: all 1s ease;
-  /*margin: 0 auto;*/
-  /*margin: 10px;*/
-  left: 50px;
+  transition: all 1s ease;*/
+  margin: 0 auto;
 }
 
 
-a.animated-button.victoria-two {
-  border: 2px solid #367722;
-  width: 130%;
-  margin-left: 158%;
+a.animated-button.add-new-recipe {
+  border: 2px solid black;
+  width: 200%;
+  margin-left: 120%;
   margin-right: 30%
 
   
 }
-a.animated-button.victoria-two:after {
-  background: #367722;
+a.animated-button.add-new-recipe:after {
+  background: none;
+  font-weight: bold;
   -moz-transform: translateX(-50%) translateY(-50%) rotate(25deg);
   -ms-transform: translateX(-50%) translateY(-50%) rotate(25deg);
   -webkit-transform: translateX(-50%) translateY(-50%) rotate(25deg);
   transform: translateX(-50%) translateY(-50%) rotate(25deg);
+}
+
+a.animated-button.choose-recipe {
+  border: 2px solid black;
+  width: 700%;
+  margin-left: 0%;
+  margin-right: 0%
+
+
+  
+}
+a.animated-button.choose-recipe:after {
+  background: none;
+  font-weight: bold;
+  -moz-transform: translateX(-50%) translateY(-50%) rotate(25deg);
+  -ms-transform: translateX(-50%) translateY(-50%) rotate(25deg);
+  -webkit-transform: translateX(-50%) translateY(-50%) rotate(25deg);
+  transform: translateX(-50%) translateY(-50%) rotate(25deg);
+}
+/*END OF ANIMATED BUTTON CODE */
+
+
+body {
+	background-color: bisque;
+	background-size: cover;
+}
+
+.jumbotron {
+	background: none;
+
 }
