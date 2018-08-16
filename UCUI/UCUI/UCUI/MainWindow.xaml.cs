@@ -112,15 +112,29 @@ namespace UCUI
                     {
                         ButtonArray[i].Style = (Style)Application.Current.Resources["Pusher"];
                         ButtonArray[i].Name = "Button" + i.ToString();
-                        ButtonArray[i].Content = myOption.buttonLabels[visibleButtonCounter];
+
                         ButtonArray[i].Margin = new Thickness(10, 10, 10, 10);
+
+                        StackPanel ButtonContent = new StackPanel();
+                        ButtonContent.HorizontalAlignment = HorizontalAlignment.Center;
+                        ButtonContent.Orientation = Orientation.Vertical;
+                        if (myOption.buttonUris[visibleButtonCounter] != null)
+                        {
+                            Image ContentImage = new Image();
+                            ContentImage.Source = new BitmapImage(myOption.buttonUris[visibleButtonCounter]);
+                            ContentImage.MaxWidth = 50;
+                            ButtonContent.Children.Add(ContentImage);
+                        }
+                        TextBlock ContentText = new TextBlock();
+                        ContentText.Text = myOption.buttonLabels[visibleButtonCounter];
+                        ButtonContent.Children.Add(ContentText);
+
+                        ButtonArray[i].Content = ButtonContent;
                         Grid.SetColumn(ButtonArray[i], i % 3 + 1);
                         Grid.SetRow(ButtonArray[i], i / 3 + 1);
-
-                        StackPanel ButtonContent
-
                         ButtonGrid.Children.Add(ButtonArray[i]);
-                        
+
+
 
                         ButtonArray[i].PreviewMouseDown += delegate (object a, MouseButtonEventArgs b)
                         {
