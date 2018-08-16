@@ -1,0 +1,3 @@
+ps aux | grep 'dsfinal.py'
+
+sudo kill 440
