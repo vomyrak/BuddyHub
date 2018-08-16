@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lynxmotion;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -142,7 +143,7 @@ namespace UCUI.Models
             }
         }
 
-        private string buttonKey; //ToString() of the current key down in the main window. Compared with e.Key is compared with keybinds[i] to determine its value. Fires the pressdown animation.
+        private string buttonKey = "ButtonNull"; //ToString() of the current key down in the main window. Compared with e.Key is compared with keybinds[i] to determine its value. Fires the pressdown animation.
         public string ButtonKey
         {
             get { return buttonKey; }
@@ -183,5 +184,35 @@ namespace UCUI.Models
         }
         #endregion
 
+        public void ControlThread()
+        {
+            Thread.CurrentThread.IsBackground = true;
+            SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
+            Message = "cool";
+            AL5C al5c = new AL5C(SSC32s[0].PortName);
+            al5c.RelaxAllServos();
+            al5c.updateServos();
+            while(true)
+            {
+                switch(ButtonKey)
+                {
+                    case "Button1":
+                        ArmControl.MoveForward(al5c);
+                        break;
+                    case "Button3":
+                        ArmControl.TurnLeft(al5c);
+                        break;
+                    case "Button5":
+                        ArmControl.TurnRight(al5c);
+                        break;
+                    case "Button7":
+                        ArmControl.MoveBackward(al5c);
+                        break;
+                    default:
+                        break;
+                }
+                Thread.Sleep(20);
+            }
+        }
     }
 }

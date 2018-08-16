@@ -19,6 +19,7 @@ using UCUI.UserControls;
 using System.Media;
 using System.Windows.Controls.Primitives;
 using System.IO;
+using System.Threading;
 
 namespace UCUI
 {
@@ -36,6 +37,10 @@ namespace UCUI
             ButtonArray = new Button[9];
             SettingsView.ExecuteMethod += new EventHandler(UserControlHandler); //Handling when a button from SettingsView is pressed
             HelpView.ExecuteMethod += new EventHandler(UserControlHandler);
+
+            Thread RoboThread = new Thread(((UCSettings)DataContext).ControlThread);
+            RoboThread.Start();
+
             try
             {
                 ControlOptions.ItemsSource = ControlSource.Options;
@@ -111,28 +116,43 @@ namespace UCUI
                         ButtonArray[i].Margin = new Thickness(10, 10, 10, 10);
                         Grid.SetColumn(ButtonArray[i], i % 3 + 1);
                         Grid.SetRow(ButtonArray[i], i / 3 + 1);
+
+                        StackPanel ButtonContent
+
                         ButtonGrid.Children.Add(ButtonArray[i]);
                         
 
                         ButtonArray[i].PreviewMouseDown += delegate (object a, MouseButtonEventArgs b)
                         {
-                            if (((UCSettings)DataContext).IsSound) UCMethods.PlayMySound();
+                            CheckSound();
+                            ((UCSettings)DataContext).ButtonKey = ((Button)a).Name;
                         };
 
-                        ButtonArray[i].Click += delegate (object a, RoutedEventArgs b)
+                        ButtonArray[i].PreviewMouseUp += delegate (object a, MouseButtonEventArgs b)
                         {
-                            CheckCenterMouse();
+                            ((UCSettings)DataContext).ButtonKey = "ButtonNull";
                         };
+
+
 
                         ButtonArray[i].MouseEnter += delegate (object a, MouseEventArgs b)
                         {
                             if (((UCSettings)DataContext).IsHover)
                             {
                                 CheckSound();
-                                ((Button)a).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                                CheckCenterMouse();
+                                ((UCSettings)DataContext).ButtonKey = ((Button)a).Name;
                             }
-
                         };
+
+                        ButtonArray[i].MouseLeave += delegate (object a, MouseEventArgs b)
+                        {
+                            if (((UCSettings)DataContext).IsHover)
+                            {                               
+                                ((UCSettings)DataContext).ButtonKey = "ButtonNull";
+                            }
+                        };
+
                         visibleButtonCounter++;
                     }
                 }
@@ -149,7 +169,7 @@ namespace UCUI
                     ButtonGrid.Children.Add(myTextbox);
                 }
                 HeaderPic.Source = new BitmapImage(myOption.actualUri);
-                TitleBlock.Text = myOption.name;
+                ((UCSettings)DataContext).Message = myOption.name;
             }
             CheckCenterMouse();
 

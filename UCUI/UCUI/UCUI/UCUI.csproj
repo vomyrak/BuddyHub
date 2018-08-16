@@ -133,6 +133,10 @@
       <Project>{53e9d1c4-88a6-494b-9d12-912e11ba1226}</Project>
       <Name>CSharpServer</Name>
     </ProjectReference>
+    <ProjectReference Include="Plugin\Lynxmotion\Lynxmotion.csproj">
+      <Project>{acc49f8e-39f8-4b75-89db-b4b91da15671}</Project>
+      <Name>Lynxmotion</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

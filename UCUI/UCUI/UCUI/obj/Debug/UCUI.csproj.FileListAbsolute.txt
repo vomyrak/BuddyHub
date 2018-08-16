@@ -54,3 +54,5 @@ C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\bin\Debug\Newtonsoft.Json.xm
 C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\bin\Debug\MongoDB.Driver.Core.xml
 C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\bin\Debug\DnsClient.xml
 C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\obj\Debug\UCUI.csproj.CopyComplete
+C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\bin\Debug\Lynxmotion.dll
+C:\Users\win10\Desktop\UC\WSUROP2018\UCUI\UCUI\UCUI\bin\Debug\Lynxmotion.pdb
