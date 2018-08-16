@@ -1,7 +1,14 @@
+var username;
+
 $("input[type='text']").keypress(function(event) {
+  // Change the name display on the sidebar when the enter key is pressed. 
   if (event.which === 13) {
-    var name = $(this).val();
+    username = $(this).val();
     $(this).val("");
-    $("h2").html("<span>Hi</span> " + name + "!");
+    if (lang == "en") {
+      $("h2").html("<span>Hi</span> " + username + "!");
+    } else if (lang == "zh") {
+      $("h2").html("<span>你好</span> " + username + "!");
+    }
   }
 });
