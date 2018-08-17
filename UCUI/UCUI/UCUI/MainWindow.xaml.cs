@@ -56,6 +56,7 @@ namespace UCUI
             InitializeComponent();
             ButtonArray = new Button[9];
             SettingsView.ExecuteMethod += new EventHandler(UserControlHandler); //Handling when a button from SettingsView is pressed
+<<<<<<< HEAD
             //var serverResponse = NotifyServerAsyncResult(SERVER_ADDRESS + (int)Notif.GetServerStatus, null, "GET").Result;
             //if (serverResponse != null)
             //{
@@ -64,6 +65,9 @@ namespace UCUI
             //        serverResponse = NotifyServerAsyncResult(SERVER_ADDRESS + (int)Notif.GetControlOption, null, "GET").Result;
             //    }
             //}
+=======
+            HelpView.ExecuteMethod += new EventHandler(UserControlHandler);
+>>>>>>> prototype_balint
             try
             {
                 ControlOptions.ItemsSource = ControlSource.Options;
@@ -165,8 +169,24 @@ namespace UCUI
                     {
                         ButtonArray[i].Style = (Style)Application.Current.Resources["Pusher"];
                         ButtonArray[i].Name = "Button" + i.ToString();
-                        ButtonArray[i].Content = myOption.buttonLabels[visibleButtonCounter];
+
                         ButtonArray[i].Margin = new Thickness(10, 10, 10, 10);
+
+                        StackPanel ButtonContent = new StackPanel();
+                        ButtonContent.HorizontalAlignment = HorizontalAlignment.Center;
+                        ButtonContent.Orientation = Orientation.Vertical;
+                        if (myOption.buttonUris[visibleButtonCounter] != null)
+                        {
+                            Image ContentImage = new Image();
+                            ContentImage.Source = new BitmapImage(myOption.buttonUris[visibleButtonCounter]);
+                            ContentImage.MaxWidth = 50;
+                            ButtonContent.Children.Add(ContentImage);
+                        }
+                        TextBlock ContentText = new TextBlock();
+                        ContentText.Text= myOption.buttonLabels[visibleButtonCounter];
+                        ButtonContent.Children.Add(ContentText);
+
+                        ButtonArray[i].Content = ButtonContent;
                         Grid.SetColumn(ButtonArray[i], i % 3 + 1);
                         Grid.SetRow(ButtonArray[i], i / 3 + 1);
                         ButtonGrid.Children.Add(ButtonArray[i]);
@@ -210,7 +230,6 @@ namespace UCUI
                             
                             
                             CheckCenterMouse();
-
                         };
 
                         ButtonArray[i].MouseEnter += delegate (object a, MouseEventArgs b)
@@ -239,7 +258,7 @@ namespace UCUI
 
                 }
                 HeaderPic.Source = new BitmapImage(myOption.actualUri);
-                TitleBlock.Text = myOption.name;
+                ((UCSettings)DataContext).Message = myOption.name;
             }
             CheckCenterMouse();
 

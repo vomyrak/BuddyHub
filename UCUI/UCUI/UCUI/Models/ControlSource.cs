@@ -10,7 +10,7 @@ namespace UCUI.Models
     class ControlSource
     {
         private static List<ControlOption> _options;
-        
+
 
         static ControlSource()
         {
@@ -27,6 +27,9 @@ namespace UCUI.Models
                 {
                     _buttonVisible[j] = boolWords[j] == "true";
                 }
+                string[] _buttonImages = lines[6].Split(' ');
+
+
                 _options.Add(new ControlOption
                 {
                     buttonVisible = _buttonVisible,
@@ -34,22 +37,33 @@ namespace UCUI.Models
                     name = lines[2],
                     description = lines[3],
                     imageName = lines[4],
-                    buttonLabels = _buttonLabels
+                    buttonLabels = _buttonLabels,
+                    buttonImages = _buttonImages
 
                 });
 
             }
 
-            
+
             foreach (ControlOption curOption in _options)
             {
                 if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + curOption.imageName))
                 {
                     curOption.actualUri = new Uri(AppDomain.CurrentDomain.BaseDirectory + curOption.imageName, UriKind.RelativeOrAbsolute);
                 }
+                curOption.buttonUris = new Uri[curOption.buttonLabels.Length];
+                int i = 0;
+                foreach(string curImage in curOption.buttonImages)
+                {
+                    if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + curOption.buttonImages[i]))
+                    {
+                        curOption.buttonUris[i] = new Uri(AppDomain.CurrentDomain.BaseDirectory + curOption.buttonImages[i++], UriKind.RelativeOrAbsolute);
+                    }
+                    
+                }
             }
 
-   
+
         }
 
         public static List<ControlOption> Options

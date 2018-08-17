@@ -92,6 +92,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\AnimationCondtion.cs" />
+    <Compile Include="Models\InputInfo.cs" />
     <Compile Include="Models\UCMethods.cs" />
     <Compile Include="Models\UCSettings.cs" />
     <Compile Include="UserControls\HelpView.xaml.cs">

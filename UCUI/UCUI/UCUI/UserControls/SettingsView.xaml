@@ -182,22 +182,24 @@
                     Content='Visual Feedback'
                     IsChecked='{Binding IsShake, UpdateSourceTrigger=PropertyChanged}' />
               <StackPanel Grid.Row='3'
-                      Grid.Column='0'
-                      Orientation='Horizontal'>
+                          Grid.Column='0    '
+                          Orientation='Horizontal'>
                 <TextBlock VerticalAlignment='Center'
-                       FontFamily='Calibri'
-                       FontSize='24'>Theme:</TextBlock>
-                <ComboBox x:Name='ThemeBox'
-                      Margin='10'
-                      MinHeight='40'
-                      Style='{StaticResource theComboBox}'
-                      SelectionChanged='ComboBox_SelectionChanged'
+                           FontFamily='Calibri'
+                           FontSize='24'>Auto Tab:</TextBlock>
+                <ComboBox x:Name='TimerBox'
+                          Margin='10'
+                          MinHeight='40'
+                          Style='{StaticResource theComboBox}'
+                          SelectionChanged='ComboBox_SelectionChanged'
                           PreviewKeyDown="ComboBox_KeyDown">
-                  <ComboBoxItem IsSelected='True'
-                                >Modest</ComboBoxItem>
-                  <ComboBoxItem >Colorful</ComboBoxItem>
+                  <ComboBoxItem IsSelected='True'>None</ComboBoxItem>
+                  <ComboBoxItem>1s</ComboBoxItem>
+                  <ComboBoxItem>1.5s</ComboBoxItem>
+                  <ComboBoxItem>2s</ComboBoxItem>
                 </ComboBox>
               </StackPanel>
+              
               <CheckBox x:Name='HoverButton'
                     Grid.Row='0'
                     Grid.Column='1'
@@ -208,27 +210,23 @@
                       Grid.Column="1"
                     Content='Full Screen'
                     IsChecked='{Binding IsFull, UpdateSourceTrigger=PropertyChanged}' />
-
-              
               <StackPanel Grid.Row='3'
-                      Grid.Column='1'
-                      Orientation='Horizontal'>
+                          Grid.Column='1'
+                          Orientation='Horizontal'>
                 <TextBlock VerticalAlignment='Center'
-                       FontFamily='Calibri'
-                       FontSize='24'>Auto Tab:</TextBlock>
-                <ComboBox x:Name='TimerBox'
-                      Margin='10'
-                      MinHeight='40'
-                      Style='{StaticResource theComboBox}'
-                      SelectionChanged='ComboBox_SelectionChanged'
+                           FontFamily='Calibri'
+                           FontSize='24'>Theme:</TextBlock>
+                <ComboBox x:Name='ThemeBox'
+                          Margin='10'
+                          MinHeight='40'
+                          Style='{StaticResource theComboBox}'
+                          SelectionChanged='ComboBox_SelectionChanged'
                           PreviewKeyDown="ComboBox_KeyDown">
-                  <ComboBoxItem IsSelected='True'
-                                >None</ComboBoxItem>
-                  <ComboBoxItem >1s</ComboBoxItem>
-                  <ComboBoxItem >1.5s</ComboBoxItem>
-                  <ComboBoxItem >2s</ComboBoxItem>
+                  <ComboBoxItem IsSelected='True'>Modest</ComboBoxItem>
+                  <ComboBoxItem>Colorful</ComboBoxItem>
                 </ComboBox>
               </StackPanel>
+
             </Grid>
             <Button Grid.Row='6'
                   Grid.Column='0'

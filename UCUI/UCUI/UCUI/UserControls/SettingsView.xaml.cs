@@ -29,6 +29,8 @@ namespace UCUI.UserControls
 
         private Image[] ImageArray;
         private TextBox[] TextBoxArray;
+        private Thread tabThread = new Thread(UCSettings.AutoTab);
+        
 
         public SettingsView()
         {
@@ -91,6 +93,8 @@ namespace UCUI.UserControls
                 {
                     ((UCSettings)App.Current.MainWindow.DataContext).Message = "Could not load settings from UCConfig.txt";
                 }
+
+                tabThread.IsBackground = true;
             }
         }
 
@@ -163,7 +167,7 @@ namespace UCUI.UserControls
         }
 
 
-        #region Methods for changing UI theme, and doing so with switches and controlling Autotabbing
+        #region Methods for changing UI theme, and doing so with switches. Also  Autotabbing functionality is started here. See also UCMethods and UCSettings for it
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             switch (((ComboBox)sender).Name)
@@ -183,31 +187,30 @@ namespace UCUI.UserControls
                     break;
 
                 case "TimerBox":
-                    Thread thread = new Thread(UCSettings.AutoTab);
-                    thread.IsBackground = true;
+                    UCMethods.SendKeyPress(InputInfo.KeyCode.TAB);
                     switch (TimerBox.SelectedIndex)
                     {
                         case 0:
                             UCSettings.IsAuto = false;
+                            if (tabThread.IsAlive) tabThread.Abort();
                             break;
                         case 1:
                             UCSettings.IsAuto = true;
                             UCSettings.AutoTabTime = 1000;
-                            if (!thread.IsAlive) thread.Start();
+                            if (!tabThread.IsAlive) tabThread.Start();
                             break;
                         case 2:
                             UCSettings.IsAuto = true;
                             UCSettings.AutoTabTime = 1500;
-                            if (!thread.IsAlive)
+                            if (!tabThread.IsAlive)
                             {
-                                thread.Start();
-                                ((UCSettings)App.Current.MainWindow.DataContext).Message = "Oh shit";
+                                tabThread.Start();
                             }
                             break;
                         case 3:
                             UCSettings.IsAuto = true;
                             UCSettings.AutoTabTime = 2000;
-                            if (!thread.IsAlive) thread.Start();
+                            if (!tabThread.IsAlive) tabThread.Start();
                             break;
                     }
                     break;
