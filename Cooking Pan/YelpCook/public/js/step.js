@@ -17,7 +17,7 @@ var tempAudio3 = new SpeechSynthesisUtterance("The required temperature has been
     tempAudio2.voice = voices.filter(function(voice) { return voice.name == 'Google UK English Male'; })[0];
     tempAudio3.voice = voices.filter(function(voice) { return voice.name == 'Google UK English Male'; })[0];
 
-socket = io.connect("https://e02372f1a67d4f56b0b98313ca0e64f0.vfs.cloud9.us-east-2.amazonaws.com");
+socket = io.connect("http://localhost:3000");
 socket.on("connect", function() {
 	this.on("newTemp", (data) => {
 		if (data !== reading) {
