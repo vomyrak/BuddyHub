@@ -20,7 +20,7 @@ namespace AppServer
         private const int WM_DEVICEREMOVECOMPLETE = 0X8004;
 
         // Server Addresses
-        private const string SERVER_ADDRESS = "http://localhost:8080/";
+        private const string SERVER_ADDRESS = "http://192.168.0.105:8080/";
         //private const string NETWORK_ADDRESS = "http://+:8080/";
         private const string INTERNAL_ADDRESS = "http://localhost:8192/";
         private Server server;
