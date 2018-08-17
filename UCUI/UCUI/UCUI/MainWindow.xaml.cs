@@ -56,7 +56,6 @@ namespace UCUI
             InitializeComponent();
             ButtonArray = new Button[9];
             SettingsView.ExecuteMethod += new EventHandler(UserControlHandler); //Handling when a button from SettingsView is pressed
-<<<<<<< HEAD
             //var serverResponse = NotifyServerAsyncResult(SERVER_ADDRESS + (int)Notif.GetServerStatus, null, "GET").Result;
             //if (serverResponse != null)
             //{
@@ -65,9 +64,7 @@ namespace UCUI
             //        serverResponse = NotifyServerAsyncResult(SERVER_ADDRESS + (int)Notif.GetControlOption, null, "GET").Result;
             //    }
             //}
-=======
-            HelpView.ExecuteMethod += new EventHandler(UserControlHandler);
->>>>>>> prototype_balint
+                HelpView.ExecuteMethod += new EventHandler(UserControlHandler);
             try
             {
                 ControlOptions.ItemsSource = ControlSource.Options;

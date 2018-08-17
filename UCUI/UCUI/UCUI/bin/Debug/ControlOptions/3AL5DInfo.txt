@@ -4,3 +4,4 @@ Robotic arm
 Control the movement of a Lynxmotion AL5D robotic arm
 \\images\\arm.png
 Forward Left Right Back
+\\images\\forward.png \\images\\left.png \\images\\right.png \\images\\backwards.png

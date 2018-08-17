@@ -21,6 +21,7 @@ namespace AppServer
                 _listener.Prefixes.Add(s);
 
             _respondMethod = method ?? throw new ArgumentException("Method");
+            
             _listener.Start();
         }
 

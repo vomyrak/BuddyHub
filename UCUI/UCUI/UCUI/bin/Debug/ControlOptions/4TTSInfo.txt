@@ -4,3 +4,4 @@ Text-to-Speech
 Use text to speech software
 \\images\\tts.png
 Send Clear
+\\images\\send.png \\images\\clear.png

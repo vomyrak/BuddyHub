@@ -4,3 +4,7 @@ Light switch
 Toggle a smart light on/off.
 \\images\\light.png
 On/Off
+\\images\\switch.png
+
+
+
