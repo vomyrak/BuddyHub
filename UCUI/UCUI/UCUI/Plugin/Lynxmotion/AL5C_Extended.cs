@@ -97,6 +97,24 @@ namespace Lynxmotion
         }
         #endregion
 
+        public void IncreaseWrist_F()
+        {
+            float angle = GetServo_F(WristServo);
+            if (angle <= 0.95)
+                setWrist_F(angle + 0.01f);
+            else
+                setWrist_PW(Servo.MAX_PULSE_WIDTH);
+        }
+
+        public void DecreaseWrist_F()
+        {
+            float angle = GetServo_F(WristServo);
+            if (angle >= 0.05)
+                setWrist_F(angle - 0.01f);
+            else
+                setWrist_PW(Servo.MIN_PULSE_WIDTH);
+        }
+
         public void SetAllServosToMin()
         {
             setElbow_PW(Servo.MIN_PULSE_WIDTH);

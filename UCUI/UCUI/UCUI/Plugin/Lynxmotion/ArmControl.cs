@@ -53,6 +53,7 @@ namespace Lynxmotion
         public static void TiltUp(AL5C al5c)
         {         
             al5c.IncreaseElbow_F();
+            al5c.IncreaseWrist_F();
             al5c.updateServos();
         }
 
@@ -60,6 +61,7 @@ namespace Lynxmotion
         {
             
             al5c.DecreaseElbow_F();
+            al5c.DecreaseWrist_F();
             al5c.updateServos();
         }
 
