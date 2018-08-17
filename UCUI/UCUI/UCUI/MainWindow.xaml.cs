@@ -41,11 +41,29 @@ namespace UCUI
 
         public MainWindow()
         {
+            client = new HttpClient()
+            {
+                BaseAddress = new Uri(SERVER_ADDRESS)
+            };
 
+
+            internalServer = new WebServer(ProcessUINotif, INTERNAL_ADDRESS);
+            Task.Run(() =>
+            {
+                internalServer.Run();
+            });
             DataContext = new UCSettings();
             InitializeComponent();
             ButtonArray = new Button[9];
             SettingsView.ExecuteMethod += new EventHandler(UserControlHandler); //Handling when a button from SettingsView is pressed
+            //var serverResponse = NotifyServerAsyncResult(SERVER_ADDRESS + (int)Notif.GetServerStatus, null, "GET").Result;
+            //if (serverResponse != null)
+            //{
+            //    if (serverResponse.IsSuccessStatusCode)
+            //    {
+            //        serverResponse = NotifyServerAsyncResult(SERVER_ADDRESS + (int)Notif.GetControlOption, null, "GET").Result;
+            //    }
+            //}
             try
             {
                 ControlOptions.ItemsSource = ControlSource.Options;
@@ -79,17 +97,7 @@ namespace UCUI
 
             }
             
-            client = new HttpClient()
-            {
-                BaseAddress = new Uri(SERVER_ADDRESS)
-            };
 
-
-            internalServer = new WebServer(ProcessUINotif, INTERNAL_ADDRESS);
-            Task.Run(() =>
-            {
-                internalServer.Run();
-            });
         }
 
             
@@ -172,14 +180,33 @@ namespace UCUI
                         ButtonArray[i].Click += delegate (object a, RoutedEventArgs b)
                         {
                             // Get DeviceInfo Object
+                            string selectedDevice = myOption.name;
                             Button sourceButton = (Button)a;
                             string buttonName = sourceButton.Name;
                             int buttonIndex = Int32.Parse(buttonName.Substring(6));
-
-
-                            NotifyServer(SERVER_ADDRESS + "Alexa" + "/" + "Text To Speech",
-                                JsonConvert.SerializeObject(new Dictionary<string, string>() { ["input"] = "Alexa, " + myTextbox.Text }), 
-                                "POST");
+                            switch (selectedDevice)
+                            {
+                                case "Robotic arm":
+                                    selectedDevice = "AL5D";
+                                    break;
+                                case "Light switch":
+                                    selectedDevice = "smart lamp";
+                                    break;
+                                case "Text-to-Speech":
+                                    selectedDevice = "Alexa";
+                                    break;
+                            }
+                            if (selectedDevice == "Alexa")
+                            {
+                                NotifyServer(SERVER_ADDRESS + selectedDevice + "/" + buttonIndex,
+                                    myTextbox.Text,
+                                    "POST",
+                                    "text/plain");
+                            }
+                            else
+                            {
+                                NotifyServer(SERVER_ADDRESS + selectedDevice + "/" + buttonIndex, "", "POST");
+                            }
                             
                             
                             CheckCenterMouse();
@@ -320,22 +347,52 @@ namespace UCUI
             Outside_Click(null, null); //Mainwindow has access to this method
         }
 
-       private void NotifyServer(string url, string content, string method)
+       private void NotifyServer(string url, string content, string method, string contentType = "application/json")
         {
             Task.Run(() =>
             {
+
                 HttpRequestMessage message = new HttpRequestMessage()
                 {
                     Method = new HttpMethod(method),
-                    Content = new StringContent(content),
                     RequestUri = new Uri(url)
                 };
-                message.Content.Headers.Clear();
-                message.Content.Headers.Add("Content-Type", "application/json");
-                client.SendAsync(message);
+                if (method != "GET")
+                {
+                    message.Content = new StringContent(content);
+                    message.Content.Headers.Clear();
+                    message.Content.Headers.Add("Content-Type", contentType);
+                }
+                else
+                {
+                    message.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                }
+                var result = client.SendAsync(message).Result;
             });
         }
-        
+
+        private async Task<HttpResponseMessage> NotifyServerAsyncResult(string url, string content, string method)
+        {
+            HttpRequestMessage message = new HttpRequestMessage()
+            {
+                Method = new HttpMethod(method),
+                RequestUri = new Uri(url)
+            };
+            if (method != "GET")
+            {
+                message.Content = new StringContent(content);
+                message.Content.Headers.Clear();
+                message.Content.Headers.Add("Content-Type", "application/json");
+            }
+            else
+            {
+                message.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            }
+            var result = client.SendAsync(message).Result;
+
+            return result;
+        }
+
         private string ProcessUINotif(HttpListenerRequest request)
         {
             string rawUrl = request.RawUrl.Replace("%20", " ");

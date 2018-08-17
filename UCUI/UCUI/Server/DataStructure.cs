@@ -74,6 +74,8 @@ namespace AppServer
         public string Name { get; set; }
         [BsonElement("param")]
         public List<double> Param { get; set; }
+        [BsonElement("buttonIndex")]
+        public int ButtonIndex { get; set; }
     }
 
     public class RemoteDeviceMethod
@@ -96,7 +98,12 @@ namespace AppServer
         public string TextInputField { get; set; }
         [BsonElement("params")]
         public List<string> Params { get; set; }
+        [BsonElement("buttonIndex")]
+        public int ButtonIndex { get; set; }
     }
+
+
+
 
     /// <summary>
     /// Specify the format of authentication json file

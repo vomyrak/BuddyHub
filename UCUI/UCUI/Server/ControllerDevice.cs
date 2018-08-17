@@ -18,13 +18,14 @@ namespace AppServer
         public dynamic DeviceObject { get; set; }
         public string DeviceId { get; set; }
         public Dictionary<string, MethodInfo> MethodList { get; set; }
-
+        public readonly object _lock = new object();
         public ControllerDevice() { }
         public ControllerDevice(DeviceInfo deviceInfo, string deviceId)
         {
             DeviceInfo = deviceInfo;
             DeviceId = deviceId;
             MethodList = new Dictionary<string, MethodInfo>();
+            
         }
 
         public void BindMethodInfo(string name, MethodInfo method)

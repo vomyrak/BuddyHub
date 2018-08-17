@@ -28,7 +28,9 @@ namespace AppServer
         DeviceDetected,
         DeviceDisconnected,
         GetControllerDevice,
-        GetDeviceInfo
+        GetDeviceInfo,
+        GetControlOption,
+        GetServerStatus
     }
 
     public class Server
@@ -40,16 +42,14 @@ namespace AppServer
         private static WebServer ws;
         public static HttpClient client;
         public Dictionary<string, ControllerDevice> ConnectedDeviceList { get; set; }
-        public static event EventHandler<string> RaiseUINotifEvent;
-        public static event EventHandler<DeviceInfo> RaiseDeviceInfoEvent;
-        public static event EventHandler<ControllerDevice> RaiseControllerDeviceEvent;
 
         private const string INTERNAL_ADDRESS = "http://localhost:8192/";
-        private const string ALEXA_AUDIO_NAME = "audio.mp3";
+
+
         /// <summary>
         /// Constructor Server class
         /// </summary>
-        public Server(string hostAddress)
+        public Server(string[] hostAddress)
         {
             ConnectedDeviceList = new Dictionary<string, ControllerDevice>();
             ws = new WebServer(this.SendResponse, hostAddress);
@@ -328,17 +328,38 @@ namespace AppServer
                 {
                     if (device.DeviceInfo.ApiType == "LocalLib")
                     {
-                        string functionRequested = parsedRequest[1];
+                        int indexRequested = Int32.Parse(parsedRequest[1]);
+                        IEnumerable<USBDeviceMethod> resultList =
+                            from result in device.DeviceInfo.FunctionArray
+                            where result.ButtonIndex == indexRequested
+                            select result;
+                        
+                        string functionRequested = resultList.First().Name;
                         MethodInfo method = GetMethodInfo(device, functionRequested);
                         if (method == null) throw new InvalidMethodException("Method Not Found!");
                         else
                         {
                             ThreadStart threadStart = new ThreadStart(() =>
                             {
-                                string[] parameters = new string[fieldSize - 2];
-                                Array.Copy(parsedRequest, 2, parameters, 0, fieldSize - 2);
+                                bool lockTaken = false;
+                                try
+                                {
+                                    Monitor.TryEnter(device._lock, ref lockTaken);
+                                    if (lockTaken)
+                                    {
 
-                                method.Invoke(device.DeviceObject, parameters);
+                                        string[] parameters = new string[fieldSize - 2];
+                                        Array.Copy(parsedRequest, 2, parameters, 0, fieldSize - 2);
+                                        method.Invoke(device.DeviceObject, parameters);
+                                    }
+                                }
+                                finally
+                                {
+                                    if (lockTaken)
+                                    {
+                                        Monitor.Exit(device._lock);
+                                    }
+                                }
                             });
                             Thread newThread = new Thread(threadStart);
                             newThread.Start();
@@ -347,8 +368,13 @@ namespace AppServer
                     }
                     else if (device.DeviceInfo.ApiType == "Http")
                     {
-                        
-                        string functionRequested = parsedRequest[1];
+                        int indexRequested = Int32.Parse(parsedRequest[1]);
+                        IEnumerable<RemoteDeviceMethod> resultList =
+                            from result in device.DeviceInfo.Methods
+                            where result.ButtonIndex == indexRequested
+                            select result;
+
+                        string functionRequested = resultList.First().Method;
                         DeviceInfo deviceInfo = device.DeviceInfo;
                         foreach (RemoteDeviceMethod method in deviceInfo.Methods)
                         {
@@ -357,34 +383,74 @@ namespace AppServer
                                 HttpRequestMessage message;
                                 if (device.DeviceInfo.Device == "Alexa")
                                 {
-
                                     byte[] buffer = new byte[5000];
                                     request.InputStream.Read(buffer, 0, 5000);
                                     string content = System.Text.Encoding.UTF8.GetString(TrimNull(buffer));
+                                    content = JsonConvert.DeserializeObject<Dictionary<string, string>>(method.Data)["input"] + content;
+                                    content = JsonConvert.SerializeObject(new Dictionary<string, string> { ["input"] = content });
                                     message = FormRequestMessage(
                                         method.HttpMethod,
                                         method.Link,
                                         content
                                     );
                                     var response = SendToRemoteServerAsync(message).Result;
-                                    string result = response.Content.ReadAsStringAsync().Result;
-                                    result = method.Link.Substring(0, method.Link.Length - 4) + result;
-                                    
-                                    Task.Run(() =>
+                                    if (!response.IsSuccessStatusCode)
                                     {
-                                        AudioPlayer.Play(result);   
-                                    });
+                                        string errorPhrase = response.ReasonPhrase;
+                                        //return errorPhrase;
+                                    }
 
+                                    string result = response.Content.ReadAsStringAsync().Result;
+
+                                    result = method.Link.Substring(0, method.Link.Length - 4) + result;
+                                    ThreadStart threadStart = new ThreadStart(() => {
+                                        bool lockTaken = false;
+                                        try
+                                        {
+                                            
+                                            Monitor.TryEnter(device._lock, ref lockTaken);
+                                            if (lockTaken)
+                                            {
+                                                AudioPlayer.Play(result);
+                                            }
+                                        }
+                                        finally
+                                        {
+                                            if (lockTaken)
+                                            {
+                                                Monitor.Exit(device._lock);
+                                            }
+                                        }
+                                    });
+                                    new Thread(threadStart).Start();
                                 }
                                 else
                                 {
-                                    message = FormRequestMessage(
-                                        method.HttpMethod,
-                                        method.Link,
-                                        method.Data,
-                                        "application/json"
-                                    );
-                                    var result = SendToRemoteServerAsync(message);
+                                    ThreadStart threadStart = new ThreadStart(() => {
+                                        bool lockTaken = false;
+                                        try
+                                        {
+                                            Monitor.TryEnter(device._lock, ref lockTaken);
+                                            if (lockTaken)
+                                            {
+                                                message = FormRequestMessage(
+                                                    method.HttpMethod,
+                                                    method.Link,
+                                                    method.Data,
+                                                    "application/json"
+                                                );
+                                                var result = SendToRemoteServerAsync(message);
+                                            }
+                                        }
+                                        finally
+                                        {
+                                            if (lockTaken)
+                                            {
+                                                Monitor.Exit(device._lock);
+                                            }
+                                        }
+                                    });
+                                    new Thread(threadStart).Start();
                                 }
                             }
                             else throw new InvalidMethodException("Method not found!");
@@ -408,78 +474,10 @@ namespace AppServer
                     int actionType = int.Parse(parsedRequest[0]);
                     switch (actionType)
                     {
-                        case (int)Notif.Test:
-                            return string.Format("<HTML><BODY>My web page.<br>{0}</BODY></HTML>", DateTime.Now);
-                        case (int)Notif.CheckName:
-                            return QueryDeviceInfo(parsedRequest[1]);
-                        case (int)Notif.CheckIds:
-                            return QueryDeviceInfo(parsedRequest[1], parsedRequest[2]);
-                        case (int)Notif.InvokeMethod:
-                            int buttonIndex = Int32.Parse(parsedRequest[1]);
-                            ControllerDevice currentDevice = ConnectedDeviceList[parsedRequest[2]];
-                            DeviceInfo currentDeviceInfo = currentDevice.DeviceInfo;
-
-                            if (currentDeviceInfo.ApiType == "LocalLib")
-                            {
-
-                                int count = currentDeviceInfo.FunctionArray.Count;
-                                if (buttonIndex > count - 1) { }
-                                else
-                                {
-                                    Task.Run(() =>
-                                    {
-                                        MethodInfo methodToBind = GetMethodInfo(currentDevice, currentDeviceInfo.FunctionArray[buttonIndex].Name);
-                                        methodToBind.Invoke(currentDevice.DeviceObject, null);
-                                    });
-                                }
-                            }
-                            else if (currentDeviceInfo.ApiType == "Http")
-                            {
-                                Dictionary<string, string> body = new Dictionary<string, string>
-                                {
-                                    ["name"] = "smart lamp",
-                                    ["method"] = "off"
-                                };
-                                RemoteDeviceMethod requestedDeviceMethod = currentDevice.DeviceInfo.Methods.Where(s => s.Method == "on").ToList()[0];
-
-                                HttpRequestMessage message = FormRequestMessage(
-                                    requestedDeviceMethod.HttpMethod,
-                                    requestedDeviceMethod.Link,
-                                    requestedDeviceMethod.Data,
-                                    "application/json");
-                                var result = SendAsync(message);
-
-
-                            }
-                            return "";
-                        case (int)Notif.GetDeviceInfo:
-                            RaiseDeviceInfoEvent?.Invoke(this, ConnectedDeviceList[parsedRequest[1]].DeviceInfo);
-                            return "";
-                        case (int)Notif.GetControllerDevice:
-                            RaiseControllerDeviceEvent?.Invoke(this, ConnectedDeviceList[parsedRequest[1]]);
-                            return "";
-                        case (int)Notif.PostToServer:
-                            byte[] buffer = new byte[100];
-                            request.InputStream.Read(buffer, 0, 100);
-                            string content = System.Text.Encoding.UTF8.GetString(TrimNull(buffer));
-                            //Dictionary<string, string> body = JsonConvert.DeserializeObject<Dictionary<string, string>>(content);
-                            //ControllerDevice requestedDevice = ConnectedDeviceList[body["name"]];
-                            //DeviceInfo requestedDeviceInfo = requestedDevice.DeviceInfo;
-                            //RemoteDeviceMethod requestedDeviceMethod = requestedDevice.DeviceInfo.Methods.Where(s => s.Method == "on").ToList()[0];
-                            //HttpRequestMessage message = new HttpRequestMessage()
-                            //{
-                            //
-                            //    Method = new HttpMethod(requestedDeviceMethod.HttpMethod),
-                            //    RequestUri = new Uri(requestedDeviceMethod.Link),
-                            //    Content = new StringContent(requestedDeviceMethod.Data)
-                            //};
-                            //message.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                            //client.SendAsync(message);
-                            return "";
                         case (int)Notif.DeviceDetected:
                             string deviceName = ObtainUSBDeviceInfo();
                             if (deviceName == "")
-                                SendAsync(FormRequestMessage(
+                                SendToRemoteServerAsync(FormRequestMessage(
                                     "POST",
                                     INTERNAL_ADDRESS + "Device Not Found",
                                     ""));
@@ -487,6 +485,11 @@ namespace AppServer
                         case (int)Notif.DeviceDisconnected:
                             CheckRemovedDevice();
                             return "";
+                        case (int)Notif.GetControlOption:
+
+                            return "";
+                        case (int)Notif.GetServerStatus:
+                            return "Server Running";
                         default:
                             throw new InvalidActionException("Not a valid action to perform.");
                 
@@ -497,6 +500,7 @@ namespace AppServer
                 }
                 catch (Exception e)
                 {
+                    
                     Console.WriteLine(e);
                     return "";
                 }
@@ -521,18 +525,13 @@ namespace AppServer
         }
 
 
-        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage message)
-        {
-            var response = await SendToRemoteServerAsync(message);
-            return response;
-        }
         /// <summary>
         /// Post data to remote server
         /// </summary>
         /// <param name="host">Remote host address</param>
         /// <param name="message">Message to be post</param>
         /// <returns></returns>
-        private async Task<HttpResponseMessage> SendToRemoteServerAsync(HttpRequestMessage message)
+        public async Task<HttpResponseMessage> SendToRemoteServerAsync(HttpRequestMessage message)
         {
             try
             {

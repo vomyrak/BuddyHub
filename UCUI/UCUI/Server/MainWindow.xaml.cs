@@ -21,6 +21,7 @@ namespace AppServer
 
         // Server Addresses
         private const string SERVER_ADDRESS = "http://localhost:8080/";
+        //private const string NETWORK_ADDRESS = "http://+:8080/";
         private const string INTERNAL_ADDRESS = "http://localhost:8192/";
         private Server server;
         private HwndSource windowHandle;
@@ -32,7 +33,7 @@ namespace AppServer
             windowHandle = HwndSource.FromHwnd(handle);
             windowHandle.AddHook(new HwndSourceHook(WndProc));
             this.Hide();
-            server = new Server(SERVER_ADDRESS);
+            server = new Server(new string[] { SERVER_ADDRESS});
             server.Run();
             server.ObtainUSBDeviceInfo();
             server.ObtainRemoteDeviceInfo();
@@ -65,12 +66,12 @@ namespace AppServer
                                     INTERNAL_ADDRESS + "Device Not Found",
                                     ""
                                     );
-                                server.SendAsync(message);
+                                server.SendToRemoteServerAsync(message);
                             }
                             break;
                         case WM_DEVICEREMOVECOMPLETE:
                             HttpRequestMessage message2 = server.FormRequestMessage("POST", INTERNAL_ADDRESS + "Removed", "");
-                            server.SendAsync(message2);
+                            server.SendToRemoteServerAsync(message2);
                             server.CheckRemovedDevice();
                             break;
         
