@@ -163,6 +163,18 @@ namespace UCUI
                     Grid.SetRow(myTextbox, 1);
                     Grid.SetColumnSpan(myTextbox, 3);
                     ButtonGrid.Children.Add(myTextbox);
+                    foreach (Control curControl in ButtonGrid.Children)
+                    {
+                        if (curControl.GetType() == HelpButton.GetType())
+                            if (((TextBlock)((StackPanel)((Button)curControl).Content).Children[1]).Text.Equals("Clear"))
+                            {
+                                ((Button)curControl).Click += delegate (object a, RoutedEventArgs i)
+                                {
+                                    myTextbox.Text = null;
+                                };
+
+                            }
+                    }
                 }
                 HeaderPic.Source = new BitmapImage(myOption.actualUri);
                 ((UCSettings)DataContext).Message = myOption.name;
