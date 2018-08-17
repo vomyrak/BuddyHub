@@ -19,7 +19,7 @@ namespace Lynxmotion
         {
             float angle = GetServo_F(GripperServo);
             if (angle <= 0.95)
-                setGripper_F(angle + 0.002f);
+                setGripper_F(angle + 0.01f);
             else
                 setGripper_PW(Servo.MAX_PULSE_WIDTH);
         }
@@ -28,7 +28,7 @@ namespace Lynxmotion
         {
             float angle = GetServo_F(GripperServo);
             if (angle >= 0.05)
-                setGripper_F(angle - 0.002f);
+                setGripper_F(angle - 0.01f);
             else
                 setGripper_PW(Servo.MIN_PULSE_WIDTH);
         }
@@ -40,7 +40,7 @@ namespace Lynxmotion
         {
             float angle = GetServo_F(ShoulderServo);
             if (angle <= 0.95)
-                setShoulder_F(angle + 0.002f);
+                setShoulder_F(angle + 0.01f);
             else
                 setShoulder_PW(Servo.MAX_PULSE_WIDTH);
         }
@@ -49,7 +49,7 @@ namespace Lynxmotion
         {
             float angle = GetServo_F(ShoulderServo);
             if (angle >= 0.05)
-                setShoulder_F(angle - 0.002f);
+                setShoulder_F(angle - 0.01f);
             else
                 setShoulder_PW(Servo.MIN_PULSE_WIDTH);
         }
@@ -61,7 +61,7 @@ namespace Lynxmotion
         {
             float angle = GetServo_F(ShoulderBaseServo);
             if (angle <= 0.95)
-                setShoulderBase_F(angle + 0.002f);
+                setShoulderBase_F(angle + 0.01f);
             else
                 setShoulderBase_PW(Servo.MAX_PULSE_WIDTH);
         }
@@ -70,7 +70,7 @@ namespace Lynxmotion
         {
             float angle = GetServo_F(ShoulderBaseServo);
             if (angle >= 0.05)
-                setShoulderBase_F(angle - 0.002f);
+                setShoulderBase_F(angle - 0.01f);
             else
                 setShoulderBase_PW(Servo.MIN_PULSE_WIDTH);
         }
@@ -82,7 +82,7 @@ namespace Lynxmotion
         {
             float angle = GetServo_F(ElbowServo);
             if (angle <= 0.95)
-                setElbow_F(angle + 0.002f);
+                setElbow_F(angle + 0.01f);
             else
                 setElbow_PW(Servo.MAX_PULSE_WIDTH);
         }
@@ -91,7 +91,7 @@ namespace Lynxmotion
         {
             float angle = GetServo_F(ElbowServo);
             if (angle >= 0.05)
-                setElbow_F(angle - 0.002f);
+                setElbow_F(angle - 0.01f);
             else
                 setElbow_PW(Servo.MIN_PULSE_WIDTH);
         }
