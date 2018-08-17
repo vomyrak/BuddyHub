@@ -122,11 +122,13 @@ namespace UCUI
                         {
                             Image ContentImage = new Image();
                             ContentImage.Source = new BitmapImage(myOption.buttonUris[visibleButtonCounter]);
+                            ContentImage.HorizontalAlignment = HorizontalAlignment.Center;
                             ContentImage.MaxWidth = 50;
                             ButtonContent.Children.Add(ContentImage);
                         }
                         TextBlock ContentText = new TextBlock();
                         ContentText.Text = myOption.buttonLabels[visibleButtonCounter];
+                        ContentText.HorizontalAlignment = HorizontalAlignment.Center;
                         ButtonContent.Children.Add(ContentText);
 
                         ButtonArray[i].Content = ButtonContent;

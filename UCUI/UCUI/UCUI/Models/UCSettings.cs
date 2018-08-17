@@ -188,35 +188,63 @@ namespace UCUI.Models
         public void ControlThread()
         {
             Thread.CurrentThread.IsBackground = true;
-            SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
-            AL5C al5c = new AL5C(SSC32s[0].PortName);
-            al5c.RelaxAllServos();
-            al5c.setShoulderBase_F(0.5f);
-            al5c.setShoulder_F(0.5f);
-            al5c.setElbow_F(0.5f);
-            al5c.updateServos();
-            while (true)
+            try
             {
-                while (ButtonKey == "Button1")
+                SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
+                AL5C al5c = new AL5C(SSC32s[0].PortName);
+                al5c.RelaxAllServos();
+                al5c.setShoulderBase_F(0.5f);
+                al5c.setShoulder_F(0.5f);
+                al5c.setElbow_F(0.5f);
+                al5c.setWrist_F(0.5f);
+                al5c.updateServos();
+                while (true)
                 {
-                    ArmControl.MoveForward(al5c);
-                    Thread.Sleep(30);
+                    while (ButtonKey == "Button0")
+                    {
+                        ArmControl.IncreaseGrip(al5c);
+                        Thread.Sleep(30);
+                    }
+                    while (ButtonKey == "Button1")
+                    {
+                        ArmControl.MoveForward(al5c);
+                        Thread.Sleep(30);
+                    }
+                    while (ButtonKey == "Button2")
+                    {
+                        ArmControl.TiltUp(al5c);
+                        Thread.Sleep(30);
+                    }
+                    while (ButtonKey == "Button3")
+                    {
+                        ArmControl.TurnLeft(al5c);
+                        Thread.Sleep(30);
+                    }
+                    while (ButtonKey == "Button5")
+                    {
+                        ArmControl.TurnRight(al5c);
+                        Thread.Sleep(30);
+                    }
+                    while (ButtonKey == "Button6")
+                    {
+                        ArmControl.DecreaseGrip(al5c);
+                        Thread.Sleep(30);
+                    }
+                    while (ButtonKey == "Button7")
+                    {
+                        ArmControl.MoveBackward(al5c);
+                        Thread.Sleep(30);
+                    }
+                    while (ButtonKey == "Button8")
+                    {
+                        ArmControl.TiltDown(al5c);
+                        Thread.Sleep(30);
+                    }
                 }
-                while (ButtonKey == "Button3")
-                {
-                    ArmControl.TurnLeft(al5c);
-                    Thread.Sleep(30);
-                }
-                while (ButtonKey == "Button5")
-                {
-                    ArmControl.TurnRight(al5c);
-                    Thread.Sleep(30);
-                }
-                while (ButtonKey == "Button7")
-                {
-                    ArmControl.MoveBackward(al5c);
-                    Thread.Sleep(30);
-                }
+            }
+            catch(Exception)
+            {
+                Message = "Arm couldn't be found!";
             }
         }
     }
