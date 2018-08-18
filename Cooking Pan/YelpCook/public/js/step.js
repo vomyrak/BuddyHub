@@ -11,10 +11,10 @@ var tempAudio = new SpeechSynthesisUtterance("The pan is too hot, turn the heat 
 var tempAudio2 = new SpeechSynthesisUtterance("The pan is not yet hot enough, please keep waiting");
 var tempAudio3 = new SpeechSynthesisUtterance("The required temperature has been reached");
 
-socket = io.connect("http://localhost:3000");
+socket = io.connect("https://buddy-cook.herokuapp.com");
 socket.on("connect", function() {
 	this.on("newTemp", (data) => {
-		if (data) {
+		if (data !== reading) {
 			reading = data;
 			$("#temperature-reading").text(reading);
 			if(reading < tempLimit) {
