@@ -11,7 +11,7 @@ var tempAudio = new SpeechSynthesisUtterance("The pan is too hot, turn the heat 
 var tempAudio2 = new SpeechSynthesisUtterance("The pan is not yet hot enough, please keep waiting");
 var tempAudio3 = new SpeechSynthesisUtterance("The required temperature has been reached");
 
-socket = io.connect("http://localhost:3000");
+socket = io.connect("https://buddy-cook.herokuapp.com");
 socket.on("connect", function() {
 	this.on("newTemp", (data) => {
 		if (data) {
@@ -26,7 +26,7 @@ socket.on("connect", function() {
 				window.speechSynthesis.speak(tempAudio);
 			}
 			else {
-				window.speechSynthesis.speak(tempAudio3);	
+				window.speechSynthesis.speak(tempAudio3);
 			}
 		}
 		/*$("#temperature-reading").text(reading);
@@ -37,7 +37,7 @@ socket.on("connect", function() {
 			//	tempPlayed = true;
 			}
 		}
-		else if (reading < tempLimit) {	
+		else if (reading < tempLimit) {
 		//	$("#temperature-reading").toggleClass("alert");
 			if (!tempPlayed) {
 				window.speechSynthesis.speak(tempAudio2);
@@ -70,15 +70,14 @@ function getTimer(stepTime) {
 }
 
 
-function enableMute() { 
-    
+function enableMute() {
+
     tempAudio2.volume = 0;
-    
-} 
 
-function disableMute() { 
-	
+}
+
+function disableMute() {
+
     tempAudio2.volume = 1;
-    
-} 
 
+}
