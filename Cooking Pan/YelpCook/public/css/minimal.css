@@ -36,7 +36,7 @@ margin-top:52px;
 
 a.animated-button:link, a.animated-button:visited {
   position: relative;
-  display: block;
+  display: inline-block;
  /* margin: 30px auto 0;*/
   padding: 14px 15px;
   color: #fff;
@@ -83,7 +83,7 @@ a.animated-button:link:hover:after, a.animated-button:visited:hover:after {
 }
 a.animated-button:link, a.animated-button:visited {
   position: relative;
-  display: block;
+  display: inline-block;
 /*  margin: 30px auto 0;*/
   padding: 14px 15px;
   color: black;
@@ -149,5 +149,6 @@ body {
 
 .jumbotron {
 	background: none;
-
+  margin: 0 none;
+  padding: 0;
 }
