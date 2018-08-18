@@ -154,44 +154,47 @@ namespace UCUI.Models
                 string selectedDevice = selected.name;
                 int buttonIndex = 0;
                 if (Int32.TryParse(buttonKey.Substring(6), out buttonIndex))
-                if (value != buttonKey)
                 {
+                    if (value != buttonKey)
+                    {
 
-                    switch (selectedDevice)
-                    {
-                        case "Robotic arm":
-                            selectedDevice = "AL5D";
-                            buttonKey = value;
-                            while (value == buttonKey)
-                            {
-                                currentWindow.NotifyServer("http://192.168.0.105:8080/" + selectedDevice + "/" + buttonIndex,
-                                    "",
-                                    "POST");
-                            }
-                            return;
-                        case "Light switch":
-                            selectedDevice = "smart lamp";
-                            break;
-                        case "Text-to-Speech":
-                            selectedDevice = "Alexa";
-                            break;
-                    }
-                    if (value == "ButtonNull")
-                    {
-                        if (selectedDevice != "Alexa")
+                        switch (selectedDevice)
                         {
-                            currentWindow.NotifyServer("http://192.168.0.105:8080/" + selectedDevice + "/" + buttonIndex,
-                               "", "POST");
+                            case "Robotic arm":
+                                selectedDevice = "AL5D";
+                                buttonKey = value;
+                                while (value == buttonKey)
+                                {
+                                    currentWindow.NotifyServer(currentWindow.localIP + selectedDevice + "/" + buttonIndex,
+                                        "",
+                                        "POST");
+                                }
+                                return;
+                            case "Light switch":
+                                selectedDevice = "smart lamp";
+                                break;
+                            case "Text-to-Speech":
+                                selectedDevice = "Alexa";
+                                break;
                         }
-                    }
+                        if (value == "ButtonNull")
+                        {
+                            if (selectedDevice != "Alexa")
+                            {
+                                    currentWindow.NotifyServer(currentWindow.localIP + selectedDevice + "/" + buttonIndex,
+                                   "", "POST");
+                            }
+                        }
 
-                    
-                        
-                    buttonKey = value;
-                    
-                    
-                    OnPropertyChanged();
+
+
+
+
+
+                        OnPropertyChanged();
+                    }
                 }
+                buttonKey = value;
             }
         }
 
@@ -223,67 +226,6 @@ namespace UCUI.Models
         }
         #endregion
 
-        public void ControlThread()
-        {
-            Thread.CurrentThread.IsBackground = true;
-            try
-            {
-                SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
-                AL5C al5c = new AL5C(SSC32s[0].PortName);
-                al5c.RelaxAllServos();
-                al5c.setShoulderBase_F(0.5f);
-                al5c.setShoulder_F(0.5f);
-                al5c.setElbow_F(0.5f);
-                al5c.setWrist_F(0.5f);
-                al5c.updateServos();
-                while (true)
-                {
-                    while (ButtonKey == "Button0")
-                    {
-                        ArmControl.IncreaseGrip(al5c);
-                        Thread.Sleep(30);
-                    }
-                    while (ButtonKey == "Button1")
-                    {
-                        ArmControl.MoveForward(al5c);
-                        Thread.Sleep(30);
-                    }
-                    while (ButtonKey == "Button2")
-                    {
-                        ArmControl.TiltUp(al5c);
-                        Thread.Sleep(30);
-                    }
-                    while (ButtonKey == "Button3")
-                    {
-                        ArmControl.TurnLeft(al5c);
-                        Thread.Sleep(30);
-                    }
-                    while (ButtonKey == "Button5")
-                    {
-                        ArmControl.TurnRight(al5c);
-                        Thread.Sleep(30);
-                    }
-                    while (ButtonKey == "Button6")
-                    {
-                        ArmControl.DecreaseGrip(al5c);
-                        Thread.Sleep(30);
-                    }
-                    while (ButtonKey == "Button7")
-                    {
-                        ArmControl.MoveBackward(al5c);
-                        Thread.Sleep(30);
-                    }
-                    while (ButtonKey == "Button8")
-                    {
-                        ArmControl.TiltDown(al5c);
-                        Thread.Sleep(30);
-                    }
-                }
-            }
-            catch(Exception)
-            {
-                Message = "Arm couldn't be found!";
-            }
-        }
+        
     }
 }

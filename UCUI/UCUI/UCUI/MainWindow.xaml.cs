@@ -54,6 +54,15 @@ namespace UCUI
                 BaseAddress = new Uri(localIP)
             };
 
+            try
+            {
+                NotifyServer(localIP, "Test", "POST");
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                Environment.Exit(1);
+            }
 
             internalServer = new WebServer(ProcessUINotif, INTERNAL_ADDRESS);
             Task.Run(() =>
@@ -404,7 +413,21 @@ namespace UCUI
                 {
                     message.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 }
-                var result = client.SendAsync(message).Result;
+                try
+                {
+                    var result = client.SendAsync(message).Result;
+                }
+                catch (AggregateException ae)
+                {
+                    string errorStr = "";
+                    foreach (Exception inner in ae.InnerExceptions)
+                    {
+                        errorStr += inner.Message;
+                        errorStr += "\n";
+                    }
+                    MessageBox.Show("Local Server Not Found", "Error");
+                    Environment.Exit(1);
+                }
             });
         }
 

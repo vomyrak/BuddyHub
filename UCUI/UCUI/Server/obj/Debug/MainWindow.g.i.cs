@@ -79,15 +79,7 @@ namespace AppServer {
             switch (connectionId)
             {
             case 1:
-            this.HelpText = ((System.Windows.Controls.Grid)(target));
-            return;
-            case 2:
-            
-            #line 46 "..\..\..\UserControls\HelpView.xaml"
-            ((System.Windows.Controls.Button)(target)).Click += new System.Windows.RoutedEventHandler(this.Button_Click);
-            
-            #line default
-            #line hidden
+            this.listBox = ((System.Windows.Controls.ListBox)(target));
             return;
             }
             this._contentLoaded = true;
