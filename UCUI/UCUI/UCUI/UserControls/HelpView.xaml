@@ -40,7 +40,8 @@
           <Button Style='{StaticResource Shaker}'
                   Content='Return' 
                   HorizontalAlignment='Right'
-                  MinWidth='60'
+                  MinWidth='80'
+                  MinHeight='40'
                   Margin='10 5'
                   Click='Button_Click'/>   
         </DockPanel>

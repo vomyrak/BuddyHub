@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lynxmotion;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,13 +10,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace UCUI.Models 
+namespace UCUI.Models
 {
     class UCSettings : INotifyPropertyChanged
     {
 
         //KeyBinds stored in string instead of Key so it can be more easily read from text file (No backwards conversion needed). Alternatively it could be read binary mode.
-        static private string[] keyBinds = new string[10];    
+        static private string[] keyBinds = new string[10];
         static public void SetKey(string keyIn, int i)
         {
             if (keyIn != keyBinds[i])
@@ -30,13 +31,13 @@ namespace UCUI.Models
             else return "null";
         }
 
-        private  bool isShake; //Increased visual feedback animation for shaker buttons
+        private bool isShake; //Increased visual feedback animation for shaker buttons
         public bool IsShake
         {
-            get { return isShake;}
+            get { return isShake; }
             set
             {
-                if(value!=isShake)
+                if (value != isShake)
                 {
                     isShake = value;
                     OnPropertyChanged();
@@ -50,7 +51,7 @@ namespace UCUI.Models
             get { return isCenter; }
             set
             {
-                if(value!=isCenter)
+                if (value != isCenter)
                 {
                     isCenter = value;
                     OnPropertyChanged();
@@ -64,7 +65,7 @@ namespace UCUI.Models
             get { return isHover; }
             set
             {
-                if(value!=isHover)
+                if (value != isHover)
                 {
                     isHover = value;
                     OnPropertyChanged();
@@ -78,7 +79,7 @@ namespace UCUI.Models
             get { return isSound; }
             set
             {
-                if(value!=isSound)
+                if (value != isSound)
                 {
                     isSound = value;
                     OnPropertyChanged();
@@ -116,7 +117,7 @@ namespace UCUI.Models
                         App.Current.MainWindow.WindowStyle = WindowStyle.ToolWindow;
                         App.Current.MainWindow.ResizeMode = ResizeMode.NoResize;
                         App.Current.MainWindow.WindowState = WindowState.Maximized;
-                        
+
                     }
                     else
                     {
@@ -211,15 +212,78 @@ namespace UCUI.Models
             while (IsAuto)
             {
                 Thread.Sleep(AutoTabTime);
-                Application.Current.Dispatcher.Invoke((Action)delegate {
+                Application.Current.Dispatcher.Invoke((Action)delegate
+                {
                     UCMethods.NextTab();
                 });
-                
+
             }
-            if(Thread.CurrentThread.IsBackground)Thread.CurrentThread.Abort();
+            if (Thread.CurrentThread.IsBackground) Thread.CurrentThread.Abort();
 
         }
         #endregion
 
+        public void ControlThread()
+        {
+            Thread.CurrentThread.IsBackground = true;
+            try
+            {
+                SSC32ENumerationResult[] SSC32s = AL5C.EnumerateConnectedSSC32(9600);
+                AL5C al5c = new AL5C(SSC32s[0].PortName);
+                al5c.RelaxAllServos();
+                al5c.setShoulderBase_F(0.5f);
+                al5c.setShoulder_F(0.5f);
+                al5c.setElbow_F(0.5f);
+                al5c.setWrist_F(0.5f);
+                al5c.updateServos();
+                while (true)
+                {
+                    while (ButtonKey == "Button0")
+                    {
+                        ArmControl.IncreaseGrip(al5c);
+                        Thread.Sleep(30);
+                    }
+                    while (ButtonKey == "Button1")
+                    {
+                        ArmControl.MoveForward(al5c);
+                        Thread.Sleep(30);
+                    }
+                    while (ButtonKey == "Button2")
+                    {
+                        ArmControl.TiltUp(al5c);
+                        Thread.Sleep(30);
+                    }
+                    while (ButtonKey == "Button3")
+                    {
+                        ArmControl.TurnLeft(al5c);
+                        Thread.Sleep(30);
+                    }
+                    while (ButtonKey == "Button5")
+                    {
+                        ArmControl.TurnRight(al5c);
+                        Thread.Sleep(30);
+                    }
+                    while (ButtonKey == "Button6")
+                    {
+                        ArmControl.DecreaseGrip(al5c);
+                        Thread.Sleep(30);
+                    }
+                    while (ButtonKey == "Button7")
+                    {
+                        ArmControl.MoveBackward(al5c);
+                        Thread.Sleep(30);
+                    }
+                    while (ButtonKey == "Button8")
+                    {
+                        ArmControl.TiltDown(al5c);
+                        Thread.Sleep(30);
+                    }
+                }
+            }
+            catch(Exception)
+            {
+                Message = "Arm couldn't be found!";
+            }
+        }
     }
 }

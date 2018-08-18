@@ -184,69 +184,53 @@ namespace UCUI
                         {
                             Image ContentImage = new Image();
                             ContentImage.Source = new BitmapImage(myOption.buttonUris[visibleButtonCounter]);
+                            ContentImage.HorizontalAlignment = HorizontalAlignment.Center;
                             ContentImage.MaxWidth = 50;
                             ButtonContent.Children.Add(ContentImage);
                         }
                         TextBlock ContentText = new TextBlock();
-                        ContentText.Text= myOption.buttonLabels[visibleButtonCounter];
+                        ContentText.Text = myOption.buttonLabels[visibleButtonCounter];
+                        ContentText.HorizontalAlignment = HorizontalAlignment.Center;
                         ButtonContent.Children.Add(ContentText);
 
                         ButtonArray[i].Content = ButtonContent;
                         Grid.SetColumn(ButtonArray[i], i % 3 + 1);
                         Grid.SetRow(ButtonArray[i], i / 3 + 1);
                         ButtonGrid.Children.Add(ButtonArray[i]);
-                        
+
+
 
                         ButtonArray[i].PreviewMouseDown += delegate (object a, MouseButtonEventArgs b)
                         {
-                            if (((UCSettings)DataContext).IsSound) UCMethods.PlayMySound();
+                            CheckSound();
+                            ((UCSettings)DataContext).ButtonKey = ((Button)a).Name;
                         };
 
-                        ButtonArray[i].Click += delegate (object a, RoutedEventArgs b)
+                        ButtonArray[i].PreviewMouseUp += delegate (object a, MouseButtonEventArgs b)
                         {
-                            // Get DeviceInfo Object
-                            
-                            //string selectedDevice = myOption.name;
-                            //Button sourceButton = (Button)a;
-                            //string buttonName = sourceButton.Name;
-                            //int buttonIndex = Int32.Parse(buttonName.Substring(6));
-                            //switch (selectedDevice)
-                            //{
-                            //    case "Robotic arm":
-                            //        selectedDevice = "AL5D";
-                            //        break;
-                            //    case "Light switch":
-                            //        selectedDevice = "smart lamp";
-                            //        break;
-                            //    case "Text-to-Speech":
-                            //        selectedDevice = "Alexa";
-                            //        break;
-                            //}
-                            //if (selectedDevice == "Alexa")
-                            //{
-                            //    NotifyServer(SERVER_ADDRESS + selectedDevice + "/" + buttonIndex,
-                            //        myTextbox.Text,
-                            //        "POST",
-                            //        "text/plain");
-                            //}
-                            //else
-                            //{
-                            //    NotifyServer(SERVER_ADDRESS + selectedDevice + "/" + buttonIndex, "", "POST");
-                            //}
-                            
-                                
-                            CheckCenterMouse();
+                            ((UCSettings)DataContext).ButtonKey = "ButtonNull";
                         };
+
+
 
                         ButtonArray[i].MouseEnter += delegate (object a, MouseEventArgs b)
                         {
                             if (((UCSettings)DataContext).IsHover)
                             {
                                 CheckSound();
-                                ((Button)a).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                                CheckCenterMouse();
+                                ((UCSettings)DataContext).ButtonKey = ((Button)a).Name;
                             }
-
                         };
+
+                        ButtonArray[i].MouseLeave += delegate (object a, MouseEventArgs b)
+                        {
+                            if (((UCSettings)DataContext).IsHover)
+                            {                               
+                                ((UCSettings)DataContext).ButtonKey = "ButtonNull";
+                            }
+                        };
+
                         visibleButtonCounter++;
                     }
                 }
