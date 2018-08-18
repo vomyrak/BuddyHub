@@ -33,3 +33,5 @@ C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\Server\obj\Debug\AppSe
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\Server\obj\Debug\AppServer.Properties.Resources.resources
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\Server\obj\Debug\AppServer.exe
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\Server\obj\Debug\AppServer.pdb
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\Server\obj\Debug\Interop.NetFwTypeLib.dll
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\Server\obj\Debug\Server.csproj.ResolveComReference.cache

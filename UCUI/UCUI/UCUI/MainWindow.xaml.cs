@@ -19,6 +19,7 @@ using System.IO;
 using Newtonsoft.Json;
 using AppServer;
 using System.Windows.Media;
+using System.Net.Sockets;
 
 namespace UCUI
 {
@@ -29,21 +30,28 @@ namespace UCUI
     {
         private Button[] ButtonArray;
         //private Server server;
-        private HttpClient client;
+        public HttpClient client;
         private WebServer internalServer;
 
-        private const string SERVER_ADDRESS = "http://localhost:8080/";
+        //public const string SERVER_ADDRESS = "http://192.168.0.105:8080/";
         private const string INTERNAL_ADDRESS = "http://localhost:8192/";
         // USB Message Constants
         private const int WM_DEVICECHANGE = 0x219;
         private const int WM_DEVICEARRIVAL = 0x8000;
         private const int WM_DEVICEREMOVECOMPLETE = 0X8004;
-
+        public string localIP;
         public MainWindow()
         {
+
+            using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0))
+            {
+                socket.Connect("8.8.8.8", 65530);
+                IPEndPoint endPoint = socket.LocalEndPoint as IPEndPoint;
+                localIP = String.Format("http://{0}:8080/", endPoint.Address.ToString());
+            }
             client = new HttpClient()
             {
-                BaseAddress = new Uri(SERVER_ADDRESS)
+                BaseAddress = new Uri(localIP)
             };
 
 
@@ -197,35 +205,36 @@ namespace UCUI
                         ButtonArray[i].Click += delegate (object a, RoutedEventArgs b)
                         {
                             // Get DeviceInfo Object
-                            string selectedDevice = myOption.name;
-                            Button sourceButton = (Button)a;
-                            string buttonName = sourceButton.Name;
-                            int buttonIndex = Int32.Parse(buttonName.Substring(6));
-                            switch (selectedDevice)
-                            {
-                                case "Robotic arm":
-                                    selectedDevice = "AL5D";
-                                    break;
-                                case "Light switch":
-                                    selectedDevice = "smart lamp";
-                                    break;
-                                case "Text-to-Speech":
-                                    selectedDevice = "Alexa";
-                                    break;
-                            }
-                            if (selectedDevice == "Alexa")
-                            {
-                                NotifyServer(SERVER_ADDRESS + selectedDevice + "/" + buttonIndex,
-                                    myTextbox.Text,
-                                    "POST",
-                                    "text/plain");
-                            }
-                            else
-                            {
-                                NotifyServer(SERVER_ADDRESS + selectedDevice + "/" + buttonIndex, "", "POST");
-                            }
                             
+                            //string selectedDevice = myOption.name;
+                            //Button sourceButton = (Button)a;
+                            //string buttonName = sourceButton.Name;
+                            //int buttonIndex = Int32.Parse(buttonName.Substring(6));
+                            //switch (selectedDevice)
+                            //{
+                            //    case "Robotic arm":
+                            //        selectedDevice = "AL5D";
+                            //        break;
+                            //    case "Light switch":
+                            //        selectedDevice = "smart lamp";
+                            //        break;
+                            //    case "Text-to-Speech":
+                            //        selectedDevice = "Alexa";
+                            //        break;
+                            //}
+                            //if (selectedDevice == "Alexa")
+                            //{
+                            //    NotifyServer(SERVER_ADDRESS + selectedDevice + "/" + buttonIndex,
+                            //        myTextbox.Text,
+                            //        "POST",
+                            //        "text/plain");
+                            //}
+                            //else
+                            //{
+                            //    NotifyServer(SERVER_ADDRESS + selectedDevice + "/" + buttonIndex, "", "POST");
+                            //}
                             
+                                
                             CheckCenterMouse();
                         };
 
@@ -252,10 +261,38 @@ namespace UCUI
                     Grid.SetRow(myTextbox, 1);
                     Grid.SetColumnSpan(myTextbox, 3);
                     ButtonGrid.Children.Add(myTextbox);
+                    foreach (Control curControl in ButtonGrid.Children)
+                    {
+                        if (curControl.GetType() == HelpButton.GetType()) //Note the bug: If no image added to Button label
+                            if (((TextBlock)((StackPanel)((Button)curControl).Content).Children[1]).Text.Equals("Clear"))
+                            {
+                                ((Button)curControl).Click += delegate (object a, RoutedEventArgs i)
+                                {
+                                    myTextbox.Text = null;
+                                };
+
+                            }
+                    }
+                    foreach (Control curControl in ButtonGrid.Children)
+                    {
+                        if (curControl.GetType() == HelpButton.GetType()) //Note the bug: If no image added to Button label
+                            if (((TextBlock)((StackPanel)((Button)curControl).Content).Children[1]).Text.Equals("Send"))
+                            {
+                                ((Button)curControl).Click += delegate (object a, RoutedEventArgs i)
+                                {
+                                    NotifyServer(localIP + "Alexa" + "/" + 4,
+                                        myTextbox.Text,
+                                        "POST",
+                                        "text/plain");
+                                };
+
+                            }
+                    }
 
                 }
                 HeaderPic.Source = new BitmapImage(myOption.actualUri);
                 ((UCSettings)DataContext).Message = myOption.name;
+
             }
             CheckCenterMouse();
 
@@ -363,7 +400,7 @@ namespace UCUI
             Outside_Click(null, null); //Mainwindow has access to this method
         }
 
-       private void NotifyServer(string url, string content, string method, string contentType = "application/json")
+       public void NotifyServer(string url, string content, string method, string contentType = "application/json")
         {
             Task.Run(() =>
             {

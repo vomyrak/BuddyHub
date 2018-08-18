@@ -1,10 +1,10 @@
-false false false false true false false false false
+false false false true false true false false false
 false
 Light switch
 Toggle a smart light on/off.
 \\images\\light.png
-On/Off
-\\images\\switch.png
+On Off
+\\images\\switch.png \\images\\switchoff.png
 
 
 

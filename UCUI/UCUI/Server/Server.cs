@@ -16,6 +16,7 @@ using System.Reflection;
 using System.Threading;
 using System.Management;
 
+
 namespace AppServer
 {
     public enum Notif
@@ -339,7 +340,7 @@ namespace AppServer
                         if (method == null) throw new InvalidMethodException("Method Not Found!");
                         else
                         {
-                            ThreadStart threadStart = new ThreadStart(() =>
+                            Task.Run(() =>
                             {
                                 bool lockTaken = false;
                                 try
@@ -361,8 +362,6 @@ namespace AppServer
                                     }
                                 }
                             });
-                            Thread newThread = new Thread(threadStart);
-                            newThread.Start();
                             return "";
                         }
                     }
@@ -403,7 +402,7 @@ namespace AppServer
                                     string result = response.Content.ReadAsStringAsync().Result;
 
                                     result = method.Link.Substring(0, method.Link.Length - 4) + result;
-                                    ThreadStart threadStart = new ThreadStart(() => {
+                                    Task.Run(() => {
                                         bool lockTaken = false;
                                         try
                                         {
@@ -422,11 +421,10 @@ namespace AppServer
                                             }
                                         }
                                     });
-                                    new Thread(threadStart).Start();
                                 }
                                 else
                                 {
-                                    ThreadStart threadStart = new ThreadStart(() => {
+                                    Task.Run(() => {
                                         bool lockTaken = false;
                                         try
                                         {
@@ -450,10 +448,9 @@ namespace AppServer
                                             }
                                         }
                                     });
-                                    new Thread(threadStart).Start();
                                 }
                             }
-                            else throw new InvalidMethodException("Method not found!");
+                            //else throw new InvalidMethodException("Method not found!");
 
                         }
                         

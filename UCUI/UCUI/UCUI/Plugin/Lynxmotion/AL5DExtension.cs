@@ -137,6 +137,23 @@ namespace Lynxmotion
             updateServos();
         }
 
+        public void IncreaseWrist_F()
+        {
+            float angle = GetServo_F(WristServo);
+            if (angle <= 0.95)
+                setWrist_F(angle + 0.01f);
+            else
+                setWrist_PW(Servo.MAX_PULSE_WIDTH);
+        }
+
+        public void DecreaseWrist_F()
+        {
+            float angle = GetServo_F(WristServo);
+            if (angle >= 0.05)
+                setWrist_F(angle - 0.01f);
+            else
+                setWrist_PW(Servo.MIN_PULSE_WIDTH);
+        }
 
         public void MoveForward()
         {
@@ -169,6 +186,7 @@ namespace Lynxmotion
         public void TiltUp()
         {
             IncreaseElbow_F();
+            IncreaseWrist_F();
             updateServos();
         }
 
@@ -176,6 +194,7 @@ namespace Lynxmotion
         {
 
             DecreaseElbow_F();
+            DecreaseWrist_F();
             updateServos();
         }
     }

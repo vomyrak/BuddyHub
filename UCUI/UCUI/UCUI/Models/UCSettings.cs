@@ -142,15 +142,53 @@ namespace UCUI.Models
             }
         }
 
-        private string buttonKey; //ToString() of the current key down in the main window. Compared with e.Key is compared with keybinds[i] to determine its value. Fires the pressdown animation.
+        private string buttonKey = "ButtonNull"; //ToString() of the current key down in the main window. Compared with e.Key is compared with keybinds[i] to determine its value. Fires the pressdown animation.
         public string ButtonKey
         {
             get { return buttonKey; }
             set
             {
+                MainWindow currentWindow = (MainWindow)App.Current.MainWindow;
+                ControlOption selected = (ControlOption)currentWindow.ControlOptions.SelectedItem;
+                string selectedDevice = selected.name;
+                int buttonIndex = 0;
+                if (Int32.TryParse(buttonKey.Substring(6), out buttonIndex))
                 if (value != buttonKey)
                 {
+
+                    switch (selectedDevice)
+                    {
+                        case "Robotic arm":
+                            selectedDevice = "AL5D";
+                            buttonKey = value;
+                            while (value == buttonKey)
+                            {
+                                currentWindow.NotifyServer("http://192.168.0.105:8080/" + selectedDevice + "/" + buttonIndex,
+                                    "",
+                                    "POST");
+                            }
+                            return;
+                        case "Light switch":
+                            selectedDevice = "smart lamp";
+                            break;
+                        case "Text-to-Speech":
+                            selectedDevice = "Alexa";
+                            break;
+                    }
+                    if (value == "ButtonNull")
+                    {
+                        if (selectedDevice != "Alexa")
+                        {
+                            currentWindow.NotifyServer("http://192.168.0.105:8080/" + selectedDevice + "/" + buttonIndex,
+                               "", "POST");
+                        }
+                    }
+
+                    
+                        
                     buttonKey = value;
+                    
+                    
                     OnPropertyChanged();
                 }
             }

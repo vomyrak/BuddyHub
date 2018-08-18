@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Net.Http;
+using System.Net.Sockets;
+using System.Net;
+using System.Diagnostics;
+using NetFwTypeLib;
 
 namespace AppServer
 {
@@ -25,15 +29,47 @@ namespace AppServer
         private const string INTERNAL_ADDRESS = "http://localhost:8192/";
         private Server server;
         private HwndSource windowHandle;
-
         public MainWindow()
         {
             InitializeComponent();
+            FireWallManagement(Process.GetCurrentProcess().ProcessName, AppDomain.CurrentDomain.FriendlyName);
+            #region Obtain local IP address
+            string localIP;
+            using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0))
+            {
+                socket.Connect("8.8.8.8", 65530);
+                IPEndPoint endPoint = socket.LocalEndPoint as IPEndPoint;
+                localIP = String.Format("http://{0}:8080/", endPoint.Address.ToString());
+            }
+            // Warning, this firewall policy is OS specific
+            Process myProcess = new Process
+            {
+                StartInfo = {
+                    FileName = "netsh.exe",
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    Arguments = String.Format("http add urlacl user = everyone url={0}"
+                    ,
+                    localIP),
+                    Verb = "runas"
+                    }
+            };
+            myProcess.Start();
+            myProcess.WaitForExit();
+            //Process.Start(new ProcessStartInfo()
+            //{
+            //    FileName = "netsh.exe",
+            //    WindowStyle = ProcessWindowStyle.Hidden,
+            //    Arguments = String.Format("http add urlacl user=everyone url=", localIP),
+            //    Verb = "runas"
+            //});
+            #endregion
+
+
             var handle = new WindowInteropHelper(this).EnsureHandle();
             windowHandle = HwndSource.FromHwnd(handle);
             windowHandle.AddHook(new HwndSourceHook(WndProc));
             this.Hide();
-            server = new Server(new string[] { SERVER_ADDRESS});
+            server = new Server(new string[] { localIP });
             server.Run();
             server.ObtainUSBDeviceInfo();
             server.ObtainRemoteDeviceInfo();
@@ -84,5 +120,36 @@ namespace AppServer
 
 
         #endregion
+
+        private void FireWallManagement(string ruleName, string progName)
+        {
+            Type NetFwMgrType = Type.GetTypeFromProgID("HNetCfg.FwMgr", false);
+            INetFwMgr mgr = (INetFwMgr)Activator.CreateInstance(NetFwMgrType);
+            bool fireWallEnabled = mgr.LocalPolicy.CurrentProfile.FirewallEnabled;
+            if (fireWallEnabled)
+            {
+                Type tNetFwPolicy2 = Type.GetTypeFromProgID("HNetCfg.FwPolicy2");
+                INetFwPolicy2 fwPolicy2 = (INetFwPolicy2)Activator.CreateInstance(tNetFwPolicy2);
+                foreach (INetFwRule2 rule in fwPolicy2.Rules)
+                {
+                    if (rule.Name == ruleName)
+                    {
+                        if (!rule.Enabled)
+                        {
+                            rule.Enabled = true;
+                        }
+                        return;
+                    }
+                }
+                INetFwRule2 inboundRule = (INetFwRule2)Activator.CreateInstance(Type.GetTypeFromProgID("HNetCfg.FWRule"));
+                inboundRule.Enabled = true;
+                inboundRule.Action = NET_FW_ACTION_.NET_FW_ACTION_ALLOW;
+                inboundRule.Protocol = (int)NET_FW_IP_PROTOCOL_.NET_FW_IP_PROTOCOL_TCP;
+                inboundRule.LocalPorts = "8080";
+                inboundRule.Name = ruleName;
+                inboundRule.ApplicationName = progName;
+                fwPolicy2.Rules.Add(inboundRule);
+            }
+        }
     }
 }
