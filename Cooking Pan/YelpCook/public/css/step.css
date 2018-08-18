@@ -1,0 +1,34 @@
+#stepImage{
+	/*border: 3px solid black;*/
+	float: left;
+	width: 55%;
+	padding-left: 50px;
+	padding-right: 0;
+	/*padding-bottom: 2px;*/
+}
+
+
+#stepText{
+	border: 3px solid black;
+	float: left;
+	width: 50%;
+	padding: 30px;
+}
+
+.container{
+	margin-top: 0px;
+	width: 80%;
+	padding: none 0;
+}
+
+/*.row{
+	margin-top: 0;
+	width: 80%;
+	padding: 0;
+}*/
+/*strong{
+	border: 3px solid black;
+	float: left;
+	width: 20%;
+	padding: 10px;
+}*/
