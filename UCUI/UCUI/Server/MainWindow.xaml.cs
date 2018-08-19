@@ -32,7 +32,7 @@ namespace AppServer
         public MainWindow()
         {
             InitializeComponent();
-            FireWallManagement(Process.GetCurrentProcess().ProcessName, AppDomain.CurrentDomain.FriendlyName);
+            FireWallManagement(Process.GetCurrentProcess().ProcessName, AppDomain.CurrentDomain.BaseDirectory + AppDomain.CurrentDomain.FriendlyName);
             #region Obtain local IP address
             string localIP;
             using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0))

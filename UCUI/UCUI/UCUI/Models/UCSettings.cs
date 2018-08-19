@@ -17,6 +17,8 @@ namespace UCUI.Models
 
         //KeyBinds stored in string instead of Key so it can be more easily read from text file (No backwards conversion needed). Alternatively it could be read binary mode.
         static private string[] keyBinds = new string[10];
+
+        // AutoResetEvent
         static public void SetKey(string keyIn, int i)
         {
             if (keyIn != keyBinds[i])
@@ -156,14 +158,22 @@ namespace UCUI.Models
                 if (Int32.TryParse(buttonKey.Substring(6), out buttonIndex))
                 {
                     if (value != buttonKey)
-                    { 
+                    {
                         switch (selectedDevice)
                         {
                             case "Robotic arm":
-                                selectedDevice = "AL5D";
-                                //currentWindow.NotifyServer(currentWindow.localIP + selectedDevice + "/" + buttonIndex,
-                                  //  "",
-                                    //"POST");
+                                //selectedDevice = "AL5D";
+                                //Task.Run(() => 
+                                //{
+                                //    while (currentWindow.buttonPressed)
+                                //    {
+                                //        currentWindow.NotifyServer(currentWindow.localIP + selectedDevice + "/" + buttonIndex,
+                                //          "",
+                                //        "POST");
+                                //        Thread.Sleep(20);
+                                //    }
+                                //});
+
                                 break;
                             case "Light switch":
                                 selectedDevice = "smart lamp";
@@ -180,10 +190,37 @@ namespace UCUI.Models
                                    "", "POST");
                             }
                         }
+                        buttonKey = value;
                         OnPropertyChanged();
                     }
                 }
-                buttonKey = value;
+                else
+                {
+                    Int32.TryParse(value.Substring(6), out buttonIndex);
+                    if (value != buttonKey)
+                    {
+                        switch (selectedDevice)
+                        {
+                            case "Robotic arm":
+                                selectedDevice = "AL5D";
+                                Task.Run(() =>
+                                {
+                                    while (currentWindow.buttonPressed)
+                                    {
+                                        currentWindow.NotifyServer(currentWindow.localIP + selectedDevice + "/" + buttonIndex,
+                                          "",
+                                        "POST");
+                                        Thread.Sleep(100);
+                                    }
+                                    Thread.Sleep(50);
+                                });
+                            break;
+                        }
+                        buttonKey = value;
+                        OnPropertyChanged();
+                    }
+                }
+
             }
         }
 

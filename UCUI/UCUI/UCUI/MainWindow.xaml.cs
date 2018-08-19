@@ -40,6 +40,7 @@ namespace UCUI
         private const int WM_DEVICEARRIVAL = 0x8000;
         private const int WM_DEVICEREMOVECOMPLETE = 0X8004;
         public string localIP;
+        public bool buttonPressed = false;
         public MainWindow()
         {
 
@@ -211,15 +212,17 @@ namespace UCUI
 
                         ButtonArray[i].PreviewMouseDown += delegate (object a, MouseButtonEventArgs b)
                         {
+                            buttonPressed = true;
                             CheckSound();
                             ((UCSettings)DataContext).ButtonKey = ((Button)a).Name;
+                            
                         };
 
                         ButtonArray[i].PreviewMouseUp += delegate (object a, MouseButtonEventArgs b)
                         {
+                            buttonPressed = false;
                             ((UCSettings)DataContext).ButtonKey = "ButtonNull";
                         };
-
 
 
                         ButtonArray[i].MouseEnter += delegate (object a, MouseEventArgs b)
@@ -227,6 +230,7 @@ namespace UCUI
                             if (((UCSettings)DataContext).IsHover)
                             {
                                 CheckSound();
+                                buttonPressed = true;
                                 CheckCenterMouse();
                                 ((UCSettings)DataContext).ButtonKey = ((Button)a).Name;
                             }
@@ -235,7 +239,8 @@ namespace UCUI
                         ButtonArray[i].MouseLeave += delegate (object a, MouseEventArgs b)
                         {
                             if (((UCSettings)DataContext).IsHover)
-                            {                               
+                            {
+                                buttonPressed = false;
                                 ((UCSettings)DataContext).ButtonKey = "ButtonNull";
                             }
                         };
@@ -259,7 +264,7 @@ namespace UCUI
                         if (curControl.GetType() == HelpButton.GetType()) //Note the bug: If no image added to Button label
                             if (((TextBlock)((StackPanel)((Button)curControl).Content).Children[1]).Text.Equals("Clear"))
                             {
-                                ((Button)curControl).Click += delegate (object a, RoutedEventArgs i)
+                                ((Button)curControl).PreviewMouseDown += delegate (object a, MouseButtonEventArgs i)
                                 {
                                     myTextbox.Text = null;
                                 };
