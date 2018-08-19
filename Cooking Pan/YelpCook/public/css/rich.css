@@ -134,6 +134,12 @@ a.animated-button.choose-recipe:after {
 }
 /*END OF ANIMATED BUTTON CODE */
 
+.btn.btn-sm.animated-button.add-new-recipe{
+  /*border: 3px solid red;*/
+  margin-top: 15px;
+  display: inline-block;
+  margin-bottom: 15px;
+}
 
 body {
 	background: url(aromatic-board-bread-349608-50-percent-opacity.jpg);
@@ -141,6 +147,9 @@ body {
 }
 
 .jumbotron {
-	background: none;
-
+  background: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
 }
+

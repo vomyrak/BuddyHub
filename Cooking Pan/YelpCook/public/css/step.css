@@ -7,14 +7,32 @@
 	margin-left: 70px;
 	margin-right: 0px;
 	padding-right: 0;
+	max-height: 350px;
+	max-width: 400px;
 	/*padding-bottom: 2px;*/
 }
 
-
-
-
-.stepContainer{
+p{
+	margin-right: 600px;
+	/*border: 3px solid red;*/
 	width: 90%;
+}
+
+/*.carousel-control.right{
+	margin-left: 100px;
+	border:	2px solid red;
+}*/
+
+#stepText{
+	margin-right: 50px;
+	border: 3px solid red;
+}
+
+.container{
+	width: 90%;
+	/*background-color: red;*/
+	/*min-height: 10%;*/
+	/*line-height: 100%;*/
 }
 	/*margin-top: 0px;
 	

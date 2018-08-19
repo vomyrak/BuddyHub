@@ -1,0 +1,25 @@
+body{
+	line-height: 100%;
+	/*width: 90%;*/
+	margin: 0 auto;
+}
+h1{
+	/*margin-top: 500px;*/
+	/*float: right;*/
+	padding-bottom: 0;
+	border-spacing: 0;
+	/*background-color: red;*/
+}
+
+/*p{
+	float: right;
+	background-color: red;
+}*/
+.row{
+	/*width: 80%;*/
+	margin: 0 auto;
+}
+img{
+	/*max-height: 200px;*/
+	float: left;
+}

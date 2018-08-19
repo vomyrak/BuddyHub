@@ -110,6 +110,8 @@ a.animated-button.add-new-recipe {
   width: 200%;
   margin-left: 120%;
   margin-right: 30%
+  /*margin-top: 100px;*/
+  /*padding: 20px;*/
 
   
 }
@@ -141,7 +143,17 @@ a.animated-button.choose-recipe:after {
 }
 /*END OF ANIMATED BUTTON CODE */
 
+.btn.btn-sm.animated-button.add-new-recipe{
+  /*border: 3px solid red;*/
+  margin-top: 15px;
+  display: inline-block;
+  margin-bottom: 15px;
+}
 
+/*p{
+  border: 3px solid red;
+  /*padding-bottom: 10px;*/
+}*/
 body {
 	background-color: bisque;
 	background-size: cover;
@@ -149,7 +161,7 @@ body {
 
 .jumbotron {
 	background: none;
- /* margin-top: 0;
-  margin-bottom: 0;*/
-  /*padding: 0;*/
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
 }

@@ -7,8 +7,9 @@
   font-family: "lexie_readableregular";
 }
 
+
 .imagestyle1 {
-    padding-bottom: 50px;
+    padding-bottom: 0;
     padding-right: 15px;
     padding-left: 5px;
 }
@@ -19,7 +20,7 @@
     text-align: center;
     margin: auto;
     font-family: "lexie_readableregular";
-    padding: 50px 0;
+    padding: 0 0;
     height: 300px;
 }
 
