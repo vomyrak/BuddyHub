@@ -156,20 +156,15 @@ namespace UCUI.Models
                 if (Int32.TryParse(buttonKey.Substring(6), out buttonIndex))
                 {
                     if (value != buttonKey)
-                    {
-
+                    { 
                         switch (selectedDevice)
                         {
                             case "Robotic arm":
                                 selectedDevice = "AL5D";
-                                buttonKey = value;
-                                while (value == buttonKey)
-                                {
-                                    currentWindow.NotifyServer(currentWindow.localIP + selectedDevice + "/" + buttonIndex,
-                                        "",
-                                        "POST");
-                                }
-                                return;
+                                //currentWindow.NotifyServer(currentWindow.localIP + selectedDevice + "/" + buttonIndex,
+                                  //  "",
+                                    //"POST");
+                                break;
                             case "Light switch":
                                 selectedDevice = "smart lamp";
                                 break;
@@ -185,12 +180,6 @@ namespace UCUI.Models
                                    "", "POST");
                             }
                         }
-
-
-
-
-
-
                         OnPropertyChanged();
                     }
                 }

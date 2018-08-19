@@ -47,7 +47,7 @@ namespace AppServer
                 StartInfo = {
                     FileName = "netsh.exe",
                     WindowStyle = ProcessWindowStyle.Hidden,
-                    Arguments = String.Format("http add urlacl user = everyone url={0}"
+                    Arguments = String.Format("http add urlacl user=everyone url={0}"
                     ,
                     localIP),
                     Verb = "runas"
@@ -55,15 +55,8 @@ namespace AppServer
             };
             myProcess.Start();
             myProcess.WaitForExit();
-            //Process.Start(new ProcessStartInfo()
-            //{
-            //    FileName = "netsh.exe",
-            //    WindowStyle = ProcessWindowStyle.Hidden,
-            //    Arguments = String.Format("http add urlacl user=everyone url=", localIP),
-            //    Verb = "runas"
-            //});
             #endregion
-
+            
 
             var handle = new WindowInteropHelper(this).EnsureHandle();
             windowHandle = HwndSource.FromHwnd(handle);
@@ -74,7 +67,11 @@ namespace AppServer
             server.ObtainUSBDeviceInfo();
             server.ObtainRemoteDeviceInfo();
 
+
+            
         }
+
+
 
         #region USB Device Events
         /// <summary>

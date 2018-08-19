@@ -323,6 +323,7 @@ namespace AppServer
                 ControllerDevice device = IsDeviceConnected(deviceRequested);
                 if (device == null)
                 {
+                    return "Device Not Found";
                     throw new InvalidDeviceException("Device Not Found!");
                 }
                 else
@@ -334,10 +335,14 @@ namespace AppServer
                             from result in device.DeviceInfo.FunctionArray
                             where result.ButtonIndex == indexRequested
                             select result;
-                        
+
                         string functionRequested = resultList.First().Name;
                         MethodInfo method = GetMethodInfo(device, functionRequested);
-                        if (method == null) throw new InvalidMethodException("Method Not Found!");
+                        if (method == null)
+                        {
+                            return "Method Not Found";
+                            throw new InvalidMethodException("Method Not Found!");
+                        }
                         else
                         {
                             Task.Run(() =>
@@ -362,7 +367,7 @@ namespace AppServer
                                     }
                                 }
                             });
-                            return "";
+                            return "OK";
                         }
                     }
                     else if (device.DeviceInfo.ApiType == "Http")
@@ -402,11 +407,12 @@ namespace AppServer
                                     string result = response.Content.ReadAsStringAsync().Result;
 
                                     result = method.Link.Substring(0, method.Link.Length - 4) + result;
-                                    Task.Run(() => {
+                                    Task.Run(() =>
+                                    {
                                         bool lockTaken = false;
                                         try
                                         {
-                                            
+
                                             Monitor.TryEnter(device._lock, ref lockTaken);
                                             if (lockTaken)
                                             {
@@ -424,7 +430,8 @@ namespace AppServer
                                 }
                                 else
                                 {
-                                    Task.Run(() => {
+                                    Task.Run(() =>
+                                    {
                                         bool lockTaken = false;
                                         try
                                         {
@@ -453,10 +460,14 @@ namespace AppServer
                             //else throw new InvalidMethodException("Method not found!");
 
                         }
-                        
-                        return "";
+
+                        return "OK";
                     }
-                    else throw new InvalidDeviceException("Invalid device API type");
+                    else
+                    {
+                        return "Invalid Device API Type";
+                        throw new InvalidDeviceException("Invalid device API type");
+                    }
                     
                 }
             }
@@ -499,14 +510,14 @@ namespace AppServer
                 {
                     
                     Console.WriteLine(e);
-                    return "";
+                    return "Error";
                 }
             }
 
             else
             {
                 
-                return "";
+                return "Error";
             }
 
         }
@@ -565,16 +576,35 @@ namespace AppServer
                 ManagementClass USBClass = new ManagementClass("Win32_USBHUB");
                 ManagementObjectCollection USBCollection = USBClass.GetInstances();
 
-                foreach (ManagementObject usb in USBCollection)
+                //foreach (ManagementObject usb in USBCollection)
+                //{
+                //    string deviceId = usb["deviceid"].ToString();
+                //
+                //    foreach (string registeredDevice in ConnectedDeviceList.Keys.ToArray())
+                //    {
+                //        if (deviceId != ConnectedDeviceList[registeredDevice].DeviceId)
+                //        {
+                //            ConnectedDeviceList.Remove(registeredDevice);
+                //            
+                //        }
+                //    }
+                //}
+                foreach (string registeredDevice in ConnectedDeviceList.Keys.ToArray())
                 {
-                    string deviceId = usb["deviceid"].ToString();
-
-                    foreach (string registeredDevice in ConnectedDeviceList.Keys.ToArray())
+                    bool matched = false;
+                    foreach (ManagementObject usb in USBCollection)
                     {
-                        if (deviceId != ConnectedDeviceList[registeredDevice].DeviceId)
+                        string deviceId = usb["deviceid"].ToString();
+                        if (deviceId == ConnectedDeviceList[registeredDevice].DeviceId)
+                        {
+                            matched = true;
+                        }
+                    }
+                    if (matched == false)
+                    {
+                        if (ConnectedDeviceList[registeredDevice].DeviceInfo.ApiType == "LocalLib")
                         {
                             ConnectedDeviceList.Remove(registeredDevice);
-                            
                         }
                     }
                 }
