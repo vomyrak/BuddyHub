@@ -1,7 +1,7 @@
 <% include partials/header %>
 
-<div class="stepContainer">
-  <div class="row">
+<div class="container">
+  <div class="stepContainer">
 
     <!-- The code below displays the previous step button for each step apart from the very first one -->
 
@@ -25,8 +25,8 @@
       <!-- The code below introduces the timer -->
       <% if(step.stepnumber == recipe.instruction.length) {%>
 	      <div style="text-align: center" class="container">
-	      	<h1 style="text-align: center" padding=0>Temperature: <span id="temperature-reading" value="<%= step.temperature %>"></span></h1>
-		  	<h1>Timer
+	      	<h1 style="text-align: center" id="stepTemp"; margin: 0 auto;>Temperature: <span id="temperature-reading" value="<%= step.temperature %>"></span></h1>
+		  	<h1 id="stepTimer"; margin: 0 auto;>Timer
 		      	<div id="countdownExample">
 		      		<button class="btn btn-lg" id="start-step" value="<%= step.time %>">Start</button>
 		          	<h2><div class="values"></div></h2>
@@ -34,7 +34,7 @@
 		    </h1>
 		    </div>
             <p style="text-align: center">
-            <img width="40%" src="<%=step.image%>" id="stepImage"> <br />
+            <img src="<%=step.image%>" id="stepImage"> <br />
             <strong><%= step.stepnumber %></strong> - <%= step.step %> <br />
             <strong>Time for this step: </strong> - <%= step.time %> minutes <br />
             <strong>Temperature of this step: </strong> - <%= step.temperature %> Celsius <br />
@@ -54,7 +54,7 @@
 		    </h1>
 	    </div>
           <p style="text-align: center">
-            <img width="40%" src="<%=step.image%>" id="stepImage"> <br />
+            <img src="<%=step.image%>" id="stepImage"> <br />
             <strong><%= step.stepnumber %></strong> - <%= step.step %> <br />
             <strong>Time for this step: </strong> - <%= step.time %> minutes <br />
             <strong>Temperature of this step: </strong> - <%= step.temperature %> Celsius <br />
