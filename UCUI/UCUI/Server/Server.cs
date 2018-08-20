@@ -485,10 +485,11 @@ namespace AppServer
                         case (int)Notif.DeviceDetected:
                             string deviceName = ObtainUSBDeviceInfo();
                             if (deviceName == "")
-                                SendToRemoteServerAsync(FormRequestMessage(
-                                    "POST",
-                                    INTERNAL_ADDRESS + "Device Not Found",
-                                    ""));
+                            //SendToRemoteServerAsync(FormRequestMessage(
+                            //  "POST",
+                            //INTERNAL_ADDRESS + "Device Not Found",
+                            //""));
+                            { }
                             return "";
                         case (int)Notif.DeviceDisconnected:
                             CheckRemovedDevice();

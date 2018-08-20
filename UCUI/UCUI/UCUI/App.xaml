@@ -256,8 +256,36 @@
                   </BeginStoryboard>
                 </DataTrigger.ExitActions>
               </DataTrigger>
-
-              <DataTrigger Value="True">
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding='{Binding RelativeSource={RelativeSource Self}, Path=IsFocused}'
+                        Value='True' />
+                                <Condition Binding='{Binding IsBuddy  }'
+                        Value='True' />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
+        
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#FFD9AE2C"
+                                    Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
+                                    FillBehavior='HoldEnd'
+                                    Duration="0:0:0.05" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiDataTrigger.EnterActions>
+                            <MultiDataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="Gray"
+                                    Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
+                                    FillBehavior='Stop'
+                                    Duration="0:0:0.05" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiDataTrigger.ExitActions>
+                        </MultiDataTrigger>
+                        <DataTrigger Value="True">
                 <DataTrigger.Binding>
                   <Binding Path='IsOpen'
                              Mode="OneWay" />

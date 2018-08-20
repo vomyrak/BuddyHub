@@ -268,7 +268,15 @@ namespace UCUI
                                 {
                                     myTextbox.Text = null;
                                 };
+                                ((Button)curControl).MouseEnter += delegate (object a, MouseEventArgs b)
+                                {
+                                    if (((UCSettings)DataContext).IsHover)
+                                    {
+                                        CheckSound();
+                                        ((Button)a).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                                    }
 
+                                };
                             }
                     }
                     foreach (Control curControl in ButtonGrid.Children)
@@ -283,9 +291,19 @@ namespace UCUI
                                         "POST",
                                         "text/plain");
                                 };
+                                ((Button)curControl).MouseEnter += delegate (object a, MouseEventArgs b)
+                                {
+                                    if (((UCSettings)DataContext).IsHover)
+                                    {
+                                        CheckSound();
+                                        ((Button)a).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                                    }
+
+                                };
 
                             }
                     }
+
 
                 }
                 HeaderPic.Source = new BitmapImage(myOption.actualUri);
@@ -468,6 +486,14 @@ namespace UCUI
             }
             return "";
         }
-}
+
+        private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(((UCSettings)DataContext).IsBuddy)
+            {
+                UCMethods.SendKeyPress(InputInfo.KeyCode.ENTER);
+            }
+        }
+    }
 
 }

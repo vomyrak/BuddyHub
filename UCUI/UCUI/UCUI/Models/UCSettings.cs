@@ -17,7 +17,7 @@ namespace UCUI.Models
 
         //KeyBinds stored in string instead of Key so it can be more easily read from text file (No backwards conversion needed). Alternatively it could be read binary mode.
         static private string[] keyBinds = new string[10];
-
+        private string selectedDevice = "";
         // AutoResetEvent
         static public void SetKey(string keyIn, int i)
         {
@@ -131,6 +131,20 @@ namespace UCUI.Models
             }
         }
 
+        private bool isBuddy;
+        public bool IsBuddy
+        {
+            get { return isBuddy; }
+            set
+            {
+                if (value != isBuddy)
+                {
+                    isBuddy = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private string message; //Displayed on TitleBlock in MainWindow
         public string Message
         {
@@ -153,74 +167,76 @@ namespace UCUI.Models
             {
                 MainWindow currentWindow = (MainWindow)App.Current.MainWindow;
                 ControlOption selected = (ControlOption)currentWindow.ControlOptions.SelectedItem;
-                string selectedDevice = selected.name;
-                int buttonIndex = 0;
-                if (Int32.TryParse(buttonKey.Substring(6), out buttonIndex))
+                if (selected != null)
                 {
-                    if (value != buttonKey)
+                    selectedDevice = selected.name;
+                    int buttonIndex = 0;
+                    if (Int32.TryParse(buttonKey.Substring(6), out buttonIndex))
                     {
-                        switch (selectedDevice)
+                        if (value != buttonKey)
                         {
-                            case "Robotic arm":
-                                //selectedDevice = "AL5D";
-                                //Task.Run(() => 
-                                //{
-                                //    while (currentWindow.buttonPressed)
-                                //    {
-                                //        currentWindow.NotifyServer(currentWindow.localIP + selectedDevice + "/" + buttonIndex,
-                                //          "",
-                                //        "POST");
-                                //        Thread.Sleep(20);
-                                //    }
-                                //});
-
-                                break;
-                            case "Light switch":
-                                selectedDevice = "smart lamp";
-                                break;
-                            case "Text-to-Speech":
-                                selectedDevice = "Alexa";
-                                break;
-                        }
-                        if (value == "ButtonNull")
-                        {
-                            if (selectedDevice != "Alexa")
+                            switch (selectedDevice)
                             {
+                                case "Robotic arm":
+                                    //selectedDevice = "AL5D";
+                                    //Task.Run(() => 
+                                    //{
+                                    //    while (currentWindow.buttonPressed)
+                                    //    {
+                                    //        currentWindow.NotifyServer(currentWindow.localIP + selectedDevice + "/" + buttonIndex,
+                                    //          "",
+                                    //        "POST");
+                                    //        Thread.Sleep(20);
+                                    //    }
+                                    //});
+
+                                    break;
+                                case "Light switch":
+                                    selectedDevice = "smart lamp";
+                                    break;
+                                case "Text-to-Speech":
+                                    selectedDevice = "Alexa";
+                                    break;
+                            }
+                            if (value == "ButtonNull")
+                            {
+                                if (selectedDevice != "Alexa")
+                                {
                                     currentWindow.NotifyServer(currentWindow.localIP + selectedDevice + "/" + buttonIndex,
                                    "", "POST");
+                                }
                             }
+                            buttonKey = value;
+                            OnPropertyChanged();
                         }
-                        buttonKey = value;
-                        OnPropertyChanged();
                     }
-                }
-                else
-                {
-                    Int32.TryParse(value.Substring(6), out buttonIndex);
-                    if (value != buttonKey)
+                    else
                     {
-                        switch (selectedDevice)
+                        Int32.TryParse(value.Substring(6), out buttonIndex);
+                        if (value != buttonKey)
                         {
-                            case "Robotic arm":
-                                selectedDevice = "AL5D";
-                                Task.Run(() =>
-                                {
-                                    while (currentWindow.buttonPressed)
+                            switch (selectedDevice)
+                            {
+                                case "Robotic arm":
+                                    selectedDevice = "AL5D";
+                                    Task.Run(() =>
                                     {
-                                        currentWindow.NotifyServer(currentWindow.localIP + selectedDevice + "/" + buttonIndex,
-                                          "",
-                                        "POST");
-                                        Thread.Sleep(100);
-                                    }
-                                    Thread.Sleep(50);
-                                });
-                            break;
+                                        while (currentWindow.buttonPressed)
+                                        {
+                                            currentWindow.NotifyServer(currentWindow.localIP + selectedDevice + "/" + buttonIndex,
+                                              "",
+                                            "POST");
+                                            Thread.Sleep(100);
+                                        }
+                                        Thread.Sleep(50);
+                                    });
+                                    break;
+                            }
+                            buttonKey = value;
+                            OnPropertyChanged();
                         }
-                        buttonKey = value;
-                        OnPropertyChanged();
                     }
                 }
-
             }
         }
 

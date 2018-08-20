@@ -14,7 +14,8 @@
         FontSize='22'
         FontFamily='Calibri'
         KeyUp='Window_KeyUp'
-        PreviewKeyDown="Window_PreviewKeyDown">
+        PreviewKeyDown="Window_PreviewKeyDown"
+            PreviewMouseDown="Window_PreviewMouseDown">
 
   <Grid>
     <Rectangle Name='Overlay'
