@@ -3,10 +3,6 @@ $("input[type='text']").keypress(function(event) {
   if (event.which === 13) {
     username = $(this).val();
     $(this).val("");
-    if (lang == "en") {
-      $("h2").html("<span>Hi</span> " + username + "!");
-    } else if (lang == "zh") {
-      $("h2").html("<span>你好</span> " + username + "!");
-    }
+    $("h2").html("<span>Hi</span> " + username + "!");
   }
 });

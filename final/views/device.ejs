@@ -7,7 +7,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <title class="lang en">Universal Controller 2.0</title>
-  <title class="land zh">通用控制器 2.0</title>
 
 
   <link rel="stylesheet" href="./css/buttonshake.css" />
@@ -42,7 +41,6 @@
       <ul class="list-unstyled components">
         <li>
           <a href="/" class="lang en">Home</a>
-          <a href="/" class="lang zh">主頁</a>
         </li>
       </ul>
     </nav>
@@ -58,11 +56,9 @@
           <button type="button" id="sidebarCollapse" class="settingsbtn">
                 <i class="fas fa-align-left"></i>
                 <span class="lang en">Toggle Sidebar</span>
-                <span class="lang zh">工具欄</span>
             </button>
           <!-- Button trigger modal -->
           <button type="button" class="settingsbtn lang en" data-toggle="modal" data-target="#exampleModal">Settings</button>
-          <button type="button" class="settingsbtn lang zh" data-toggle="modal" data-target="#exampleModal">設定</button>
 
           <!-- Modal -->
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -70,29 +66,23 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title lang en" id="exampleModalLabel">Settings</h5>
-                  <h5 class="modal-title lang zh" id="exampleModalLabel">設定</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
                   <input class="lang en" type="text" id="namebox" placeholder="Enter your name">
-                  <input class="lang zh" type="text" id="namebox-zh" placeholder="輸入你的名字">
                   <br>
                   <!--Change theme-->
                   <li>
                     <div class="lang en">
                       <button class="settingsbtn lang en" onclick=" setActiveStyleSheet('default'); return false;">Light</button> | <button class="settingsbtn lang en" onclick=" setActiveStyleSheet('alternate'); return false;">Dark</button>
                     </div>
-                    <div class="lang zh">
-                      <button class="settingsbtn lang zh" onclick=" setActiveStyleSheet('default'); return false;">淺色</button> | <button class="settingsbtn lang zh" onclick=" setActiveStyleSheet('alternate'); return false;">深色</button>
-                    </div>
                   </li>
                   <br>
                   <li>
                     <!--Sound enabler-->
                     <button class="settingsbtn lang en" id="mutefxn">Mute sound - No</button>
-                    <button class="settingsbtn lang zh" id="mutefxn-zh">靜音模式 - 關閉</button>
                   </li><br>
                   <li>
                     <!--Sound choices-->
@@ -113,18 +103,11 @@
                   <li>
                     <!--Shake enabler-->
                     <button class="settingsbtn lang en" id="shake">Shake - No</button>
-                    <button class="settingsbtn lang zh" id="shake-zh">震動模式 - 關閉</button>
                   </li>
                   <br>
-                  <li>
-                    <!--Language Chooser-->
-                    <button class="settingsbtn" onclick="changeLanguage('en')">English</button>
-                    <button class="settingsbtn" onclick="changeLanguage('zh')">繁體中文</button>
-                  </li>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="settingsbtn lang en" data-dismiss="modal">Close</button>
-                  <button type="button" class="settingsbtn lang zh" data-dismiss="modal">關閉</button>
                 </div>
               </div>
             </div>
@@ -134,9 +117,7 @@
 
       <!-- Title -->
       <H1 class="lang en" style="text-align: center; font-size : 1.5em; font-weight: bolder">Universal Controller 2.0</H1>
-      <H1 class="lang zh" style="text-align: center; font-size : 1.5em; font-weight: bolder">通用控制器 2.0</H1>
-      <h1 class="lang en" style="text-align: center"><%= device.device_en %></h1>
-      <h1 class="lang zh" style="text-align: center"><%= device.device_zh %></h1>
+      <h1 class="lang en" style="text-align: center"><%= device.device_name %></h1>
     </div>
 
     <section class="tab-content">
@@ -158,17 +139,15 @@
               <input type="hidden" id="callback_function<%= method.method %>" value='<%= method.callback_function %>' />
               <input type="hidden" id="text_input_field<%= method.method %>" value='<%= method.text_input_field %>' />
               <button onclick="sendRequest(this)" class="method-button lang en" type="submit" value="<%= method.method %>" id='<%= method.method %>'><%= method.method %></button>
-              <button onclick="sendRequest(this)" class="method-button lang zh" type="submit" value="<%= method.method %>" id='<%= method.method %>'><%= method.method_zh %></button>
             </div>
             <% }); %>
     </section>
   </div>
 
-  <!-- Stores the mapping of unspaced device name to display name in different language -->
+  <!-- Stores the mapping of unspaced device name to display name -->
   <div>
     <% devices.forEach(function(device) { %>
-      <input type="hidden" id="<%= device.device.replace(/\s/g, '') %>en" value='<%= device.device_en %>' />
-      <input type="hidden" id="<%= device.device.replace(/\s/g, '') %>zh" value='<%= device.device_zh %>' />
+      <input type="hidden" id="<%= device.device.replace(/\s/g, '') %>en" value='<%= device.device_name %>' />
       <% }); %>
     </div>
 
@@ -185,7 +164,6 @@
   <script src="../js/tether.js"></script>
   <script src="../js/sound.js"></script>
   <script src="../js/index.js"></script>
-  <script src="../js/language.js"></script>
   <script src="../js/name.js"></script>
   <script src="../js/http.js"></script>
   <script src="../js/cookies.js"></script>

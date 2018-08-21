@@ -45,13 +45,3 @@ $("#mutefxn").click(function() {
     $("#mutefxn").text("Mute sound - No");
   }
 });
-
-$("#mutefxn-zh").click(function() {
-  if (audio.muted === false) {
-    audio.muted = true;
-    $("#mutefxn-zh").text("靜音模式 - 啓動");
-  } else {
-    audio.muted = false;
-    $("#mutefxn-zh").text("靜音模式 - 關閉");
-  }
-});
