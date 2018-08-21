@@ -31,11 +31,9 @@ mongoose.connect(connectString, options)
 // Model for mongo database
 const outputSchema = new mongoose.Schema({
   device: String,
-  device_en: String,
-  device_zh: String,
+  device_name: String,
   methods: [{
     method: String,
-    method_zh: String,
     description: String,
     http_method: String,
     link: String,
@@ -50,7 +48,7 @@ const outputSchema = new mongoose.Schema({
   }]
 });
 
-const OutputDevice = mongoose.model('outputDevices2', outputSchema, 'outputDevices2');
+const OutputDevice = mongoose.model('outputDevices3', outputSchema, 'outputDevices3');
 
 // A dictionary of online users
 const users = {};
@@ -102,6 +100,10 @@ app.get('/device', function(req, res) {
       });
     });
   });
+});
+
+app.post('/buddycook', function(req, res) {
+  res.send("https://buddy-cook.herokuapp.com/");
 });
 
 app.post('/tts', function(req, res) {

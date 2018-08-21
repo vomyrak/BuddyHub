@@ -1,4 +1,7 @@
-var callback_map = {"decode_and_play_audio": decodeAndPlay};
+var callback_map = {
+  "decode_and_play_audio": decodeAndPlay,
+  "open_link": openLink
+};
 
 function sendRequest(button) {
   var http_method = document.getElementById("http_method" + button.value).value;
@@ -50,4 +53,15 @@ function decodeAndPlay(link) {
   var audio = new Audio(link);
   audio.load();
   audio.play();
+}
+
+function openLink(link) {
+  var win = window.open(link, '_blank');
+  if (win) {
+    //Browser has allowed it to be opened
+    win.focus();
+  } else {
+    //Browser has blocked it
+    alert('Please allow popups for this website');
+  }
 }
