@@ -37,6 +37,7 @@ function sendRequest(button) {
       }
     }
   };
+
   // Open Connection
   xhttp.open(http_method, link, true);
   // Set headers of the http request
