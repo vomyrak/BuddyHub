@@ -102,6 +102,10 @@ app.get('/device', function(req, res) {
   });
 });
 
+app.post('/buddycook', function(req, res) {
+  res.send("https://buddy-cook.herokuapp.com/");
+});
+
 app.post('/tts', function(req, res) {
   var input = req.body.input
   // Config json object to be send to the google tts API
