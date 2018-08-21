@@ -31,6 +31,7 @@ mongoose.connect(connectString, options)
 // Model for mongo database
 const outputSchema = new mongoose.Schema({
   device: String,
+  device_name: String,
   methods: [{
     method: String,
     description: String,
@@ -47,7 +48,7 @@ const outputSchema = new mongoose.Schema({
   }]
 });
 
-const OutputDevice = mongoose.model('outputDevices', outputSchema, 'outputDevices');
+const OutputDevice = mongoose.model('outputDevices3', outputSchema, 'outputDevices3');
 
 // A dictionary of online users
 const users = {};
@@ -69,8 +70,6 @@ app.get('/', function(req, res) {
   // Render the page with all output devices in the dropdown
 
   var query = OutputDevice.find().sort('device');
-  //query.select('device');
-
 
   query.exec(function(err, devices) {
     if (err) return handleError(err);
@@ -84,16 +83,27 @@ app.get('/', function(req, res) {
 app.get('/device', function(req, res) {
   // Render the page with all output devices in the menu
   // Render the page with methods of the selected device
-  var query = OutputDevice.findOne({
-    device: req.query.selected
-  });
-  query.exec(function(error, selected) {
-    if (error) return handleError(error);
-  
-    res.render('device', {
-      device: selected
+  var query = OutputDevice.find().sort('device');
+
+  query.exec(function(err, devices) {
+    if (err) return handleError(err);
+
+    var query2 = OutputDevice.findOne({
+      device: req.query.selected
+    });
+    query2.exec(function(error, selected) {
+      if (error) return handleError(error);
+
+      res.render('device', {
+        devices: devices,
+        device: selected
+      });
     });
   });
+});
+
+app.post('/buddycook', function(req, res) {
+  res.send("https://buddy-cook.herokuapp.com/");
 });
 
 app.post('/tts', function(req, res) {
@@ -117,7 +127,9 @@ app.post('/tts', function(req, res) {
     if (this.readyState == 4 && this.status == 200) {
       // If the http request is successful
       // Write the response text to the output file
-      const outputFile = './output.txt';
+      // Generate a random number between 10,000,000 and 99,999,999 to name the output files
+      var number = Math.floor(Math.random()*90000000) + 10000000;
+      const outputFile = './output'+ number + '.txt';
       fs.writeFile(outputFile, this.responseText, 'binary', err => {
         if (err) {
           console.error('ERROR:', err);
@@ -126,13 +138,14 @@ app.post('/tts', function(req, res) {
         console.log(`Audio content written to file: ${outputFile}`);
         // Execute the command to turn the response text to an mp3 file
         // See: https://cloud.google.com/text-to-speech/docs/create-audio#text-to-speech-text-protocol
-        exec('sed \'s|audioContent| |\' < ./output.txt > ./tmp-output.txt && tr -d \'\n ":{}\' < ./tmp-output.txt > ./tmp-output-2.txt && base64 ./tmp-output-2.txt --decode > ./public/synthesize-text-audio.mp3 && rm ./tmp-output*.txt && rm ./output.txt', (err, stdout, stderr) => {
+        exec('sed \'s|audioContent| |\' < ./output' + number + '.txt > ./tmp-output' + number + '.txt && tr -d \'\n ":{}\' < ./tmp-output' + number + '.txt > ./tmp-output-2' + number + '.txt && base64 ./tmp-output-2' + number + '.txt --decode > ./public/audio/synthesize-text-audio' + number + '.mp3 && rm ./tmp-output*.txt && rm ./output' + number + '.txt', (err, stdout, stderr) => {
           if (err) {
             console.error('ERROR:', err);
             // Node couldn't execute the command
             return;
           }
-          res.sendStatus(200);
+          // Send the path of the generated mp3 as response
+          res.send('/audio/synthesize-text-audio' + number + '.mp3');
         });
       });
     }
