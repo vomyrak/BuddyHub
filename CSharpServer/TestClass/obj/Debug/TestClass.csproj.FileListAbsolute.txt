@@ -1,0 +1,7 @@
+C:\WSUROP18\CSharpServer\TestClass\obj\Debug\TestClass.csprojAssemblyReference.cache
+C:\WSUROP18\CSharpServer\TestClass\obj\Debug\TestClass.csproj.CoreCompileInputs.cache
+C:\WSUROP18\CSharpServer\TestClass\bin\Debug\TestClass.dll.config
+C:\WSUROP18\CSharpServer\TestClass\bin\Debug\TestClass.dll
+C:\WSUROP18\CSharpServer\TestClass\bin\Debug\TestClass.pdb
+C:\WSUROP18\CSharpServer\TestClass\obj\Debug\TestClass.dll
+C:\WSUROP18\CSharpServer\TestClass\obj\Debug\TestClass.pdb

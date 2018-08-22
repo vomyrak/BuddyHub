@@ -3,10 +3,10 @@ const app = express();
 const fs = require('fs');
 const server = require('http').createServer(app);
 const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-const exec = require('child_process').exec;
+const { exec } = require('child_process');
 const mongoose = require("mongoose");
 const filereader = require("./auth.json");
-const filereader2 = require("./keys.json");
+// const filereader2 = require("./keys.json");
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // to support JSON-encoded bodies
@@ -15,36 +15,30 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
 }));
 
 // Config and connect to mongo database
-var options = {
-  useNewUrlParser: true,
-  auth: {
-    authdb: "admin"
-  }
-};
+var options = {useNewUrlParser: true, auth: {authdb: "admin"}};
 options.user = filereader.user;
 options.pass = filereader.pass;
-var connectString = "mongodb://" + filereader.dns + ":27017/uc";
+var connectString = "mongodb://"+filereader.dns+":27017/uc";
 mongoose.connect(connectString, options)
-  .then(() => console.log('Connected to MongoDB...'))
-  .catch(error => console.error('Failed to connect', error));
+    .then(() => console.log('Connected to MongoDB...'))
+    .catch(error => console.error('Failed to connect',error));
 
 // Model for mongo database
 const outputSchema = new mongoose.Schema({
-  device: String,
-  methods: [{
-    method: String,
-    description: String,
-    http_method: String,
-    link: String,
-    data: String,
-    headers: String,
-    callback_function: String,
-    text_input_field: String,
-    params: [{
-      param_field: String,
-      param_choices: [Number]
+    device: String,
+    methods: [{
+      method: String,
+      description: String,
+      http_method: String,
+      link: String,
+      data: String,
+      headers: String,
+      callback_function: String,
+      text_input_field:String,
+      params: [{
+        param_field: String,
+        param_choices: [Number]}]
     }]
-  }]
 });
 
 const OutputDevice = mongoose.model('outputDevices', outputSchema, 'outputDevices');
@@ -66,13 +60,13 @@ const html_dir = __dirname + '/public/html/';
 
 app.get('/', function(req, res) {
   // Direct to home page
-  // Render the page with all output devices in the dropdown
+  // Render the page with all output devices in the menu
 
   var query = OutputDevice.find().sort('device');
   //query.select('device');
 
 
-  query.exec(function(err, devices) {
+  query.exec(function (err, devices) {
     if (err) return handleError(err);
 
     res.render('index', {
@@ -83,15 +77,22 @@ app.get('/', function(req, res) {
 
 app.get('/device', function(req, res) {
   // Render the page with all output devices in the menu
-  // Render the page with methods of the selected device
-  var query = OutputDevice.findOne({
-    device: req.query.selected
-  });
-  query.exec(function(error, selected) {
-    if (error) return handleError(error);
-  
-    res.render('device', {
-      device: selected
+  var listQuery = OutputDevice.find().sort('device');
+  listQuery.select('device');
+
+
+  listQuery.exec(function (err, devices) {
+    if (err) return handleError(err);
+
+    // Render the page with methods of the selected device
+    var query = OutputDevice.findOne({device: req.query.selected});
+    query.exec(function (error, selected) {
+      if (error) return handleError(error);
+
+      res.render('device', {
+        devices: devices,
+        methods: selected.methods
+      });
     });
   });
 });
@@ -100,16 +101,16 @@ app.post('/tts', function(req, res) {
   var input = req.body.input
   // Config json object to be send to the google tts API
   var data = {
-    input: {
+    input :{
       text: input
     },
-    voice: {
-      languageCode: 'en-gb',
-      name: 'en-GB-Standard-A',
-      ssmlGender: 'FEMALE'
+    voice :{
+      languageCode:'en-gb',
+      name:'en-GB-Standard-A',
+      ssmlGender:'FEMALE'
     },
-    audioConfig: {
-      audioEncoding: 'MP3'
+    audioConfig:{
+      audioEncoding:'MP3'
     }
   }
   xhttp = new XMLHttpRequest();
@@ -126,7 +127,7 @@ app.post('/tts', function(req, res) {
         console.log(`Audio content written to file: ${outputFile}`);
         // Execute the command to turn the response text to an mp3 file
         // See: https://cloud.google.com/text-to-speech/docs/create-audio#text-to-speech-text-protocol
-        exec('sed \'s|audioContent| |\' < ./output.txt > ./tmp-output.txt && tr -d \'\n ":{}\' < ./tmp-output.txt > ./tmp-output-2.txt && base64 ./tmp-output-2.txt --decode > ./public/synthesize-text-audio.mp3 && rm ./tmp-output*.txt && rm ./output.txt', (err, stdout, stderr) => {
+        exec('sed \'s|audioContent| |\' < ./output.txt > ./tmp-output.txt && tr -d \'\n ":{}\' < ./tmp-output.txt > ./tmp-output-2.txt && base64 ./tmp-output-2.txt --decode > ./synthesize-text-audio.mp3 && rm ./tmp-output*.txt && rm ./output.txt', (err, stdout, stderr) => {
           if (err) {
             console.error('ERROR:', err);
             // Node couldn't execute the command
@@ -141,7 +142,21 @@ app.post('/tts', function(req, res) {
   xhttp.open("POST", "https://texttospeech.googleapis.com/v1beta1/text:synthesize", true);
   // Set headers of the http request
   xhttp.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-  xhttp.setRequestHeader("X-Goog-Api-Key", filereader2.google);
+  // xhttp.setRequestHeader("X-Goog-Api-Key", filereader2.google);
   // Send the http request with the data
   xhttp.send(JSON.stringify(data));
+});
+
+app.get('/synthesize-text-audio.mp3', function(req, res) {
+  var filePath = "./synthesize-text-audio.mp3";
+  var stat = fs.statSync(filePath);
+
+  res.writeHead(200, {
+    'Content-Type': 'audio/mpeg',
+    'Content-Length': stat.size
+  });
+
+  var readStream = fs.createReadStream(filePath);
+  // We replaced all the event handlers with a simple call to util.pump()
+  readStream.pipe(res);
 });

@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 node_modules/*
 auth.json
 keys.json
-output.txt
-.DS_STORE
+=======
+node_modules/*
+auth.json
+keys.json
+>>>>>>> prototype-vk

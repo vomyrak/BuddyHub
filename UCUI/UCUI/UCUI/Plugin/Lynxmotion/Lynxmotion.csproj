@@ -56,8 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AL5D.cs" />
-    <Compile Include="AL5DExtension.cs" />
+    <Compile Include="AL5C.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servo.cs" />
     <Compile Include="SSC32.cs" />
@@ -67,9 +66,6 @@
       <Project>{53e9d1c4-88a6-494b-9d12-912e11ba1226}</Project>
       <Name>CSharpServer</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

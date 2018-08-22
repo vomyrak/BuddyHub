@@ -1,4 +1,3 @@
-﻿
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,19 +17,8 @@ using System.Windows.Shapes;
 using UCUI.Models;
 using UCUI.UserControls;
 using System.Media;
-<<<<<<< HEAD
-=======
-using CSharpServer;
-using System.Threading;
-using System.Windows.Interop;
-using System.Management;
-using System.Reflection;
-using System.Runtime.InteropServices;
->>>>>>> rachel
 using System.Windows.Controls.Primitives;
-using System.Net.Http;
 using System.IO;
-using Newtonsoft.Json;
 
 namespace UCUI
 {
@@ -40,34 +28,9 @@ namespace UCUI
     public partial class MainWindow : Window
     {
         private Button[] ButtonArray;
-<<<<<<< HEAD
 
         public MainWindow()
         {
-=======
-        private Server server;
-        private HttpClient client;
-        private HwndSource windowHandle;
-
-        private const string SERVER_ADDRESS = "http://localhost:8080/";
-
-        // USB Message Constants
-        private const int WM_DEVICECHANGE = 0x219;
-        private const int WM_DEVICEARRIVAL = 0x8000;
-        private const int WM_DEVICEREMOVECOMPLETE = 0X8004;
-
-
-        // Threading Management
-        private Thread newThread;
-        private delegate void CallingDelegate();
-        private Random random = new Random();
-
-
-        public MainWindow()
-        {
-
-            InitializeComponent();
->>>>>>> rachel
             DataContext = new UCSettings();
             InitializeComponent();
             ButtonArray = new Button[9];
@@ -76,15 +39,12 @@ namespace UCUI
             try
             {
                 ControlOptions.ItemsSource = ControlSource.Options;
-                
-                
             }
             catch (TypeInitializationException)
             {
                 TitleBlock.Text = "Make sure the Control Options folder is set up correctly!";
                 OptionsHeader.Text = "Couldn't list options";
             }
-<<<<<<< HEAD
             
         }
 
@@ -94,94 +54,6 @@ namespace UCUI
 
          ---------------------------*/
         #region Navigating usercontrols
-=======
-            if (File.Exists("UCConfig.txt"))
-            {
-                try
-                {
-                    string lines = System.IO.File.ReadAllText("UCConfig.txt");
-
-                    string[] words = lines.Split(' ');
-
-                    for (int i = 0; i < 9; i++)
-                    {
-                        UCSettings.SetKey(words[i], i);
-                    }
-                    ((UCSettings)DataContext).IsCenter = words[9] == "True";
-                    ((UCSettings)DataContext).IsHover = words[10] == "True";
-                    ((UCSettings)DataContext).IsShake = words[11] == "True";
-                    ((UCSettings)DataContext).IsSound = words[12] == "True";
-                }
-                catch(Exception)
-                {
-                    TitleBlock.Text = "Could not load settings from UCConfig.txt";
-                }
-
-            }
-            // Server script
-            var serverThread = new Thread(ServerRoutine);
-            serverThread.Start();
-            client = new HttpClient()
-            {
-                BaseAddress = new Uri(SERVER_ADDRESS)
-            };
-
-            // Obtain window handle and attach system message hook
-            var handle = new WindowInteropHelper(this).EnsureHandle();
-            windowHandle = HwndSource.FromHwnd(handle);
-            windowHandle.AddHook(new HwndSourceHook(WndProc));
-
-            Task.Run(() =>
-            {
-                serverThread.Join();
-                server.ObtainUSBDeviceInfo();
-                server.ObtainRemoteDeviceInfo();
-            });
-            server.RaiseUINotifEvent += Server_RaiseUINotifEvent;
-        }
-
-        private void Server_RaiseUINotifEvent(object sender, string e)
-        {
-            MessageBox.Show(e);
-        }
-
-
-
-
-        #region
-        // Region of Code for USB device events
-        /// <summary>
-        /// Callback function for message processing
-        /// </summary>
-        /// <param name="hwnd">Window Handle</param>
-        /// <param name="msg">Message</param>
-        /// <param name="wParam">Main Message</param>
-        /// <param name="lParam">Secondary Message</param>
-        /// <param name="handled"></param>
-        /// <returns></returns>
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            switch (msg)
-            {
-                case WM_DEVICECHANGE:
-                    switch ((uint)wParam.ToInt32()) {
-                        case WM_DEVICEARRIVAL:
-                            NotifyServer(SERVER_ADDRESS + Notif.DeviceDetected, "");
-                            break;
-                        case WM_DEVICEREMOVECOMPLETE:
-                            NotifyServer(SERVER_ADDRESS + Notif.DeviceDisconnected, "");
-                            break;
-
-                    }
-                    break;
-            }
-            return IntPtr.Zero;
-        }
-
-        
-        
-        #endregion
->>>>>>> rachel
         private void PageOpen(object sender, RoutedEventArgs e)
         {
             Button myButton = (Button)sender;
@@ -233,14 +105,7 @@ namespace UCUI
 
                     if (myOption.buttonVisible[i])
                     {
-<<<<<<< HEAD
                         ButtonArray[i].Style = (Style)Application.Current.Resources["Pusher"];
-=======
-
-
-                        ButtonArray[i].Content = i.ToString();
-                        string disp = i.ToString();
->>>>>>> rachel
                         ButtonArray[i].Name = "Button" + i.ToString();
 
                         ButtonArray[i].Margin = new Thickness(10, 10, 10, 10);
@@ -272,42 +137,6 @@ namespace UCUI
 
                         ButtonArray[i].Click += delegate (object a, RoutedEventArgs b)
                         {
-<<<<<<< HEAD
-=======
-                            // Get DeviceInfo Object
-                            Button sourceButton = (Button)a;
-                            string buttonName = sourceButton.Name;
-                            int buttonIndex = Int32.Parse(buttonName.Substring(6));
-
-                            // To replace "AL5D" with reference from the selected menu or button
-                            ControllerDevice currentDevice = server.ConnectedDeviceList["AL5D"];
-                            DeviceInfo currentDeviceInfo = currentDevice.DeviceInfo;
-
-                            if (currentDeviceInfo.ApiType == "LocalLib")
-                            {
-                                
-                                int count = currentDeviceInfo.FunctionArray.Count;
-                                if (buttonIndex > count - 1) { }
-                                else
-                                {
-                                    Task.Run(() =>
-                                    {
-                                        MethodInfo methodToBind = server.GetMethodInfo(currentDevice, currentDeviceInfo.FunctionArray[buttonIndex].Name);
-                                        methodToBind.Invoke(currentDevice.DeviceObject, null);
-                                    });
-                                }
-                            }
-                            else if (currentDeviceInfo.ApiType == "Http")
-                            {
-                                Dictionary<string, string> messageDict = new Dictionary<string, string>
-                                {
-                                    ["name"] = "smart lamp",
-                                    ["method"] = "off"
-                                };
-
-                                NotifyServer(SERVER_ADDRESS + (int)Notif.PostToServer, JsonConvert.SerializeObject(messageDict));
-                            }
->>>>>>> rachel
                             CheckCenterMouse();
                         };
 
@@ -424,16 +253,10 @@ namespace UCUI
         #region Switch Control functions
        private void OptionsExpander_LostFocus(object sender, RoutedEventArgs e)
         {
-<<<<<<< HEAD
             Expander myExpander = (Expander)sender;
             myExpander.SetResourceReference(Expander.BackgroundProperty, "ThemeBrush");
             OptionsHeader.SetResourceReference(TextBlock.BackgroundProperty, "ThemeBrush");
         }
-=======
-            server = new Server(SERVER_ADDRESS);
-            server.Run();
-            //deviceInterface.TestRoboticArm();
->>>>>>> rachel
 
         private void OptionsExpander_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -457,7 +280,6 @@ namespace UCUI
 
         #endregion
 
-<<<<<<< HEAD
         protected void UserControlHandler(object sender, EventArgs e)
         {
             Outside_Click(null, null); //Mainwindow has access to this method
@@ -465,26 +287,5 @@ namespace UCUI
 
        
 }
-=======
-        private void NotifyServer(string url, string content)
-        {
-            Task.Run(() =>
-            {
-                HttpRequestMessage message = new HttpRequestMessage()
-                {
-                    Method = new HttpMethod("POST"),
-                    Content = new StringContent(content),
-                    RequestUri = new Uri(url)
-                };
-                message.Content.Headers.Clear();
-                message.Content.Headers.Add("Content-Type", "application/json");
-                client.SendAsync(message);
-            });
-        }
-        
-
-    }
-    
->>>>>>> rachel
 
 }
