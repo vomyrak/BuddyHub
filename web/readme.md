@@ -135,7 +135,7 @@ function resizeText(multiplier) {
 ```
 
 ### 4. Font for users with dyslexia
-The Lexie Readable font was designed with accessibility and legibility in mind, an attempt to capture the strength and clarity of Comic Sans without the comic book associations Add the following into css files.
+The Lexie Readable font was designed with accessibility and legibility in mind, an attempt to capture the strength and clarity of Comic Sans without the comic book associations. Add the following into css files.
 ```css
 @font-face {
     font-family: 'lexie_readableregular';
