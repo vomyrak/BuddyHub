@@ -18,12 +18,15 @@ using System.Windows.Shapes;
 using UCUI.Models;
 using UCUI.UserControls;
 using System.Media;
+<<<<<<< HEAD
+=======
 using CSharpServer;
 using System.Threading;
 using System.Windows.Interop;
 using System.Management;
 using System.Reflection;
 using System.Runtime.InteropServices;
+>>>>>>> rachel
 using System.Windows.Controls.Primitives;
 using System.Net.Http;
 using System.IO;
@@ -37,6 +40,11 @@ namespace UCUI
     public partial class MainWindow : Window
     {
         private Button[] ButtonArray;
+<<<<<<< HEAD
+
+        public MainWindow()
+        {
+=======
         private Server server;
         private HttpClient client;
         private HwndSource windowHandle;
@@ -59,7 +67,12 @@ namespace UCUI
         {
 
             InitializeComponent();
+>>>>>>> rachel
             DataContext = new UCSettings();
+            InitializeComponent();
+            ButtonArray = new Button[9];
+            SettingsView.ExecuteMethod += new EventHandler(UserControlHandler); //Handling when a button from SettingsView is pressed
+            HelpView.ExecuteMethod += new EventHandler(UserControlHandler);
             try
             {
                 ControlOptions.ItemsSource = ControlSource.Options;
@@ -71,6 +84,17 @@ namespace UCUI
                 TitleBlock.Text = "Make sure the Control Options folder is set up correctly!";
                 OptionsHeader.Text = "Couldn't list options";
             }
+<<<<<<< HEAD
+            
+        }
+
+        /*---------------------------
+         
+               UIElement events
+
+         ---------------------------*/
+        #region Navigating usercontrols
+=======
             if (File.Exists("UCConfig.txt"))
             {
                 try
@@ -157,6 +181,7 @@ namespace UCUI
         
         
         #endregion
+>>>>>>> rachel
         private void PageOpen(object sender, RoutedEventArgs e)
         {
             Button myButton = (Button)sender;
@@ -170,46 +195,75 @@ namespace UCUI
                     break;
             }
             Overlay.Visibility = Visibility.Visible;
-            Outside.Visibility = Visibility.Visible;
             MainView.Effect = new BlurEffect();
             CheckCenterMouse();
+            OptionsExpander.Focusable = false;
+            ControlOptions.IsTabStop = false;
+            ((UCSettings)DataContext).IsOpen = true;
+            
         }
 
-        private void Outside_Click(object sender, RoutedEventArgs e)
+        public void Outside_Click(object sender, RoutedEventArgs e)
         {
             HelpView.Visibility = System.Windows.Visibility.Collapsed;
             SettingsView.Visibility = System.Windows.Visibility.Collapsed;
-            Outside.Visibility = Visibility.Collapsed;
             Overlay.Visibility = Visibility.Collapsed;
             MainView.Effect = null;
+            ControlOptions.Focusable = true;
+            OptionsExpander.IsTabStop = true;
+            ((UCSettings)DataContext).IsOpen = false;
+            SettingsView.SaveButton.Content = "Save Settings";
         }
+        #endregion
 
+        //Every time the selection changes in the CotrolOptions listbox the 3x3 
+        //array of buttons in ButtonGrid is repolpulated. 
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ButtonGrid.Children.Clear();
 
             if (ControlOptions.SelectedItem != null)
             {
-                ButtonArray = new Button[9];
                 ControlOption myOption = (ControlOption)ControlOptions.SelectedItem;
-                int visibleButtonCounter=0;
+                int visibleButtonCounter=0;                                                             //Used to iterate through label array from ControlOption
+
                 for (int i = 0; i < 9; i++)
                 {
                     ButtonArray[i] = new Button();
 
                     if (myOption.buttonVisible[i])
                     {
+<<<<<<< HEAD
+                        ButtonArray[i].Style = (Style)Application.Current.Resources["Pusher"];
+=======
 
 
                         ButtonArray[i].Content = i.ToString();
                         string disp = i.ToString();
+>>>>>>> rachel
                         ButtonArray[i].Name = "Button" + i.ToString();
-                        ButtonArray[i].Content = myOption.buttonLabels[visibleButtonCounter];
+
                         ButtonArray[i].Margin = new Thickness(10, 10, 10, 10);
+
+                        StackPanel ButtonContent = new StackPanel();
+                        ButtonContent.HorizontalAlignment = HorizontalAlignment.Center;
+                        ButtonContent.Orientation = Orientation.Vertical;
+                        if (myOption.buttonUris[visibleButtonCounter] != null)
+                        {
+                            Image ContentImage = new Image();
+                            ContentImage.Source = new BitmapImage(myOption.buttonUris[visibleButtonCounter]);
+                            ContentImage.MaxWidth = 50;
+                            ButtonContent.Children.Add(ContentImage);
+                        }
+                        TextBlock ContentText = new TextBlock();
+                        ContentText.Text= myOption.buttonLabels[visibleButtonCounter];
+                        ButtonContent.Children.Add(ContentText);
+
+                        ButtonArray[i].Content = ButtonContent;
                         Grid.SetColumn(ButtonArray[i], i % 3 + 1);
                         Grid.SetRow(ButtonArray[i], i / 3 + 1);
                         ButtonGrid.Children.Add(ButtonArray[i]);
-                        ButtonArray[i].Style = (Style)Application.Current.Resources["Pusher"];
+                        
 
                         ButtonArray[i].PreviewMouseDown += delegate (object a, MouseButtonEventArgs b)
                         {
@@ -218,6 +272,8 @@ namespace UCUI
 
                         ButtonArray[i].Click += delegate (object a, RoutedEventArgs b)
                         {
+<<<<<<< HEAD
+=======
                             // Get DeviceInfo Object
                             Button sourceButton = (Button)a;
                             string buttonName = sourceButton.Name;
@@ -251,6 +307,7 @@ namespace UCUI
 
                                 NotifyServer(SERVER_ADDRESS + (int)Notif.PostToServer, JsonConvert.SerializeObject(messageDict));
                             }
+>>>>>>> rachel
                             CheckCenterMouse();
                         };
 
@@ -277,60 +334,138 @@ namespace UCUI
                     Grid.SetRow(myTextbox, 1);
                     Grid.SetColumnSpan(myTextbox, 3);
                     ButtonGrid.Children.Add(myTextbox);
+                    foreach (Control curControl in ButtonGrid.Children)
+                    {
+                        if (curControl.GetType() == HelpButton.GetType())
+                            if (((TextBlock)((StackPanel)((Button)curControl).Content).Children[1]).Text.Equals("Clear"))
+                            {
+                                ((Button)curControl).Click += delegate (object a, RoutedEventArgs i)
+                                {
+                                    myTextbox.Text = null;
+                                };
+
+                            }
+                    }
                 }
                 HeaderPic.Source = new BitmapImage(myOption.actualUri);
-                TitleBlock.Text = myOption.name;
+                ((UCSettings)DataContext).Message = myOption.name;
             }
             CheckCenterMouse();
 
 
         }
 
+        #region Detecting keystrokes for keybinds and animating it
+        //In Pusher style the multibinding animationcondition fires by comparing 
+        //the name of indiviudual buttons to a stored "Button that's supposed to 
+        //be pressed" string. This function changes that string, and fires the 
+        //click event. Alternatively a new dependencyproperty could have been 
+        //delared but this was simpler. 
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+
+            if (!((UCSettings)DataContext).IsOpen)
+            {
+                if (e.Key == Key.Return)
+                {
+                    for (int i = 0; i < 9; i++)
+                    {
+                        if ((ButtonArray?[i]?.Content) != null && ButtonArray[i].IsFocused)
+                        {
+                            ((UCSettings)DataContext).ButtonKey = "Button" + i.ToString();
+                            CheckSound();
+                            return;
+                        }
+                    }
+                }
+
+                for (int i = 0; i < 9; i++)
+                {
+                    if (UCSettings.GetKey(i).Equals(e.Key.ToString()) && (ButtonArray?[i]?.Content) != null) //if content is null the button is not visible, so checksound shouldn't be played
+                    {
+                        ((UCSettings)DataContext).ButtonKey = "Button" + i.ToString();
+                        ButtonArray[i].RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                        CheckSound();
+                        e.Handled = true;
+                        return;
+                    }
+                }
+                if (UCSettings.GetKey(9).Equals(e.Key.ToString()))  //key 9 is the key bound to the sidebar
+                {
+                    OptionsExpander.IsExpanded = !OptionsExpander.IsExpanded;
+                    e.Handled = true;
+                }
+            }
+            else if (e.Key == Key.Escape) Outside_Click(null, null);
+        }
+
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            ((UCSettings)DataContext).ButtonKey = "ButtonNull";
+        }
+        #endregion
+
+        #region Checks for settings
         private void CheckCenterMouse()
         {
             if (((UCSettings)DataContext).IsCenter)
                 UCMethods.SetPosition(this);
 
         }
-
+        
         private void CheckSound()
         {
             if (((UCSettings)DataContext).IsSound)
                 UCMethods.PlayMySound();
         }
+        #endregion
 
-
-
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        #region Switch Control functions
+       private void OptionsExpander_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (SettingsView.Visibility != Visibility.Visible)
-            {
-                for (int i = 0; i < 9; i++)
-                {
-                    if (UCSettings.GetKey(i) == e.Key.ToString()&& ButtonArray[i].Content != null)
-                    {
-                        ((UCSettings)DataContext).ButtonKey = "Button" + i.ToString();
-                        ButtonArray[i].RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-                        CheckSound();
-                        break;
-                    }
-                }
-            }
+<<<<<<< HEAD
+            Expander myExpander = (Expander)sender;
+            myExpander.SetResourceReference(Expander.BackgroundProperty, "ThemeBrush");
+            OptionsHeader.SetResourceReference(TextBlock.BackgroundProperty, "ThemeBrush");
         }
-
-        private void Window_KeyUp(object sender, KeyEventArgs e)
-        {
-            ((UCSettings)DataContext).ButtonKey = "ButtonNull";
-        }
-
-        private void ServerRoutine()
-        {
+=======
             server = new Server(SERVER_ADDRESS);
             server.Run();
             //deviceInterface.TestRoboticArm();
+>>>>>>> rachel
 
+        private void OptionsExpander_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Expander myExpander = (Expander)sender;
+
+            if (!myExpander.IsMouseOver)
+            {
+                myExpander.Background = (Brush)Application.Current.Resources["GoldBrush"];
+                OptionsHeader.Background = (Brush)Application.Current.Resources["GoldBrush"];
+            }
+        }
+        
+        private void ControlOptions_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                if (ControlOptions.SelectedIndex >= ControlSource.Options.Count - 1) ControlOptions.SelectedIndex = 0;
+                else ControlOptions.SelectedIndex++;
+            }
         }
 
+        #endregion
+
+<<<<<<< HEAD
+        protected void UserControlHandler(object sender, EventArgs e)
+        {
+            Outside_Click(null, null); //Mainwindow has access to this method
+        }
+
+       
+}
+=======
         private void NotifyServer(string url, string content)
         {
             Task.Run(() =>
@@ -350,5 +485,6 @@ namespace UCUI
 
     }
     
+>>>>>>> rachel
 
 }

@@ -1,6 +1,16 @@
+<<<<<<< HEAD
 true true true true true true true true true
 false
 Macro
 Record and replay mouse and keyboard inputs
 \\images\\macro.png
 1 2 3 4 5 6 7 8 9
+null
+=======
+true true true true true true true true true
+false
+Macro
+Record and replay mouse and keyboard inputs
+\\images\\macro.png
+1 2 3 4 5 6 7 8 9
+>>>>>>> rachel
