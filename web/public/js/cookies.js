@@ -43,10 +43,17 @@ window.onload = function(e) {
   var cookiefontsize = readCookie("fontsize");
   document.body.style.fontSize = cookiefontsize ? cookiefontsize : "1.0em";
 
+  username = readCookie("name");
+  var greeting;
+    greeting = username ? "<span>Hi</span> " + username + "!" : "<h2>Welcome!</h2>";
+  $("h2").html(greeting);
+
   for (i = 0; i < tabs.length; i++) {
-    var deviceName = tabs[i];
-    var unspacedDeviceName = deviceName.replace(/\s/g, '');
-    $(".components").append("<li><a  onclick=\"playSound()\" class=\"tabtext\" href=\"/device?selected=" + deviceName + "\" id=\"#tabname" + unspacedDeviceName + "\">" + deviceName + "</a></li>");
+    // Create tabs for eah device stored in tabs array
+    var device = tabs[i];
+    var unspacedDeviceName = device.replace(/\s/g, '');
+    var deviceName = $("#" + unspacedDeviceName + "en").val();
+    $(".components").append("<li><a class=\"tabtext lang en\" href=\"/device?selected=" + device + "\" id=\"#tabname" + unspacedDeviceName + "\">" + deviceName + "</a></li>");
   }
 }
 
@@ -58,4 +65,5 @@ window.onunload = function(e) {
   document.cookie = "fontsize=" + document.body.style.fontSize + "";
   document.cookie = "muted=" + audio.muted + "";
   document.cookie = "shake=" + stylesheet.disabled + "";
+  document.cookie = "name=" + username + "";
 }
