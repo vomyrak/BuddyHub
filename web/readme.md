@@ -58,7 +58,7 @@ setActiveStyleSheet(title);
 
 
 ### 2. Button shake
-Allow users to enable a visual feedback when clicking on buttons. In between your `<head>` tags in the `.ejs` file, link a the buttonshake stylesheet (`buttonshake.css`) as the **_first_** stylesheet.
+Allow users to enable a visual feedback when clicking on buttons. In between your `<head>` tags in the `.ejs` file, link the buttonshake stylesheet (`buttonshake.css`) as the **_first_** stylesheet.
 
 ```html
 <link rel="stylesheet" href="./css/buttonshake.css" />
