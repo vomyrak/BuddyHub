@@ -53,7 +53,8 @@ function getPreferredStyleSheet() {
 
 var cookie = readCookie("style");
 var title = cookie ? cookie : getPreferredStyleSheet();
-setActiveStyleSheet(title);```
+setActiveStyleSheet(title);
+```
 
 
 ### 2. Button shake
