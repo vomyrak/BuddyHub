@@ -1,4 +1,4 @@
-#Designing for Accessibility
+# Designing for Accessibility
 
 ### 1. Stylesheet Switcher
 This provides an alternate theme for the user to choose from. In between your `<head>` tags in the `.ejs` file, link a second stylesheet (`style2.css`). Duplicate your existing stylesheet and change the stylings to create `style2.css`.
