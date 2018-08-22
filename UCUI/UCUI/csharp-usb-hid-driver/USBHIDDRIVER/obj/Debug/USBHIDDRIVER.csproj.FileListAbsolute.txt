@@ -1,0 +1,9 @@
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\csharp-usb-hid-driver\USBHIDDRIVER\bin\Debug\USBHIDDRIVER.XML
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\csharp-usb-hid-driver\USBHIDDRIVER\bin\Debug\USBHIDDRIVER.dll
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\csharp-usb-hid-driver\USBHIDDRIVER\bin\Debug\USBHIDDRIVER.pdb
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\csharp-usb-hid-driver\USBHIDDRIVER\bin\Debug\nunit.framework.xml
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\csharp-usb-hid-driver\USBHIDDRIVER\obj\Debug\USBHIDDRIVER.csprojAssemblyReference.cache
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\csharp-usb-hid-driver\USBHIDDRIVER\obj\Debug\USBHIDDRIVER.csproj.CoreCompileInputs.cache
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\csharp-usb-hid-driver\USBHIDDRIVER\obj\Debug\USBHIDDRIVER.csproj.CopyComplete
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\csharp-usb-hid-driver\USBHIDDRIVER\obj\Debug\USBHIDDRIVER.dll
+C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\csharp-usb-hid-driver\USBHIDDRIVER\obj\Debug\USBHIDDRIVER.pdb
