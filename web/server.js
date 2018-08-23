@@ -120,16 +120,21 @@ app.get('/contact', function(req, res) {
   });
 });
 
-app.get('/feedback', function(req, res) {
+app.post('/feedback', function(req, res) {
   // Upload the details o the device suggestion to the database.
   // The "processed" field is set to false until the admin process this
   // device suggestion.
 
+  var name = req.body.name;
+  var email = req.body.email;
+  var device = req.body.device;
+  var description = req.body.description;
+
   var suggestion = new DeviceSuggestion({
-    name: req.query.name,
-    email: req.query.email,
-    device: req.query.device,
-    description: req.query.description,
+    name: name,
+    email: email,
+    device: device,
+    description: description,
     approved: false,
     processed: false
   });
@@ -140,13 +145,13 @@ app.get('/feedback', function(req, res) {
   // Send a confirmation email to user
   var mailOptions = {
     from: filereader3.email,
-    to: req.query.email,
+    to: email,
     subject: 'Device Suggestion Form Received',
-    text: 'Dear ' + req.query.name + ',\n\n' +
+    text: 'Dear ' + name + ',\n\n' +
     'Your device suggestion form had been received. ' +
     'We will notice you once we have reviewed your suggestion.\n\n' +
-    'Device: ' + req.query.device + '\n' +
-    'Description: ' + req.query.description + '\n\n' +
+    'Device: ' + device + '\n' +
+    'Description: ' + description + '\n\n' +
     'Thank you for choosing BuddyHub!\n\n'
   };
 
