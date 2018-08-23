@@ -56,6 +56,7 @@ const deviceSchema = new mongoose.Schema({
   email: String,
   device: String,
   description: String,
+  approved: Boolean,
   processed: Boolean
 });
 
@@ -116,6 +117,7 @@ app.get('/feedback', function(req, res) {
     email: req.query.email,
     device: req.query.device,
     description: req.query.description,
+    approved: false, 
     processed: false
   });
   suggestion.save(function(err) {
