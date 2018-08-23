@@ -54,13 +54,10 @@ app.use(express.static(__dirname + '/public'));
 // Set the view engine to ejs
 app.set('view engine', 'ejs');
 
-// HTML directory
-const html_dir = __dirname + '/public/html/';
-
 app.get('/', function(req, res) {
-  res.sendFile(html_dir + 'index.html');
+  res.render('index');
 });
 
 app.get('/add-api', function(req, res) {
-  res.sendFile(html_dir + 'add-api.html');
+  res.render('add-api');
 });
