@@ -41,13 +41,24 @@
     <div class="container">
       <H1 class="lang en" style="text-align: center; font-size : 1.0em; font-weight: bolder">Upload your device on Buddy Hub!</H1>
       <br>
-      <a id="add-api" href="/add-api" title="Add API">
-        <button class="method-button">Add device with RESTful API</button>
-      </a>
-      <br>
-      <a id="add-c-sharp" href="/add-c-sharp" title="Add C# devices">
-        <button class="method-button">Add Device with C# library</button>
-      </a>
+      <form action="/feedback" method="post">
+        <br>
+        Name: <input type="text" class="form-control" name="name" placeholder="Please enter your name" required/>
+        Email: <input type="email" class="form-control" name="email" placeholder="How can we contact you?" required/>
+        Device Name: <input type="text" class="form-control" name="device" placeholder="Name of the device you want us to add" required />
+        <div class="methods">
+          Method1: <br>
+          &#8195;Method Name: <input type="text" class="form-control" name="method1" placeholder="Name of the method(e.g. turn on, etc.)" required/>
+          &#8195;HTTP Method: <input type="text" class="form-control" name="httpmethod1" placeholder="HTTP method (GET, POST, PUT, DELETE)" required/>
+          &#8195;Link: <input type="text" class="form-control" name="link1" placeholder="Link of the call" required/>
+          &#8195;Data: <input type="text" class="form-control" name="data1" placeholder="JSON data to be sent" required/>
+          &#8195;Headers: <input type="text" class="form-control" name="headers1" placeholder="Header of the request" required/>
+          &#8195;Text Input Field: <input type="text" class="form-control" name="textinput1" placeholder="text input field in the JSON data if required"/>
+          <br>
+        </div>
+        <input type="button" style="float: right; margin-right: 100px;" value="Add method"/> <br><br>
+        <input type="submit" class="method-button" value="Submit"/>
+      </form>
     </div>
   </div>
 
