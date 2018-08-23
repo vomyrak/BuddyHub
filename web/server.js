@@ -7,6 +7,7 @@ const exec = require('child_process').exec;
 const mongoose = require("mongoose");
 const filereader = require("./auth.json");
 const filereader2 = require("./keys.json");
+const filereader3 = require("./email.json");
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // to support JSON-encoded bodies
@@ -61,6 +62,18 @@ const deviceSchema = new mongoose.Schema({
 });
 
 const DeviceSuggestion = mongoose.model('deviceSuggestion', deviceSchema, 'deviceSuggestion');
+
+// Email Configuration
+
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: filereader3.email,
+    pass: filereader3.password
+  }
+});
 
 // A dictionary of online users
 const users = {};
@@ -117,13 +130,32 @@ app.get('/feedback', function(req, res) {
     email: req.query.email,
     device: req.query.device,
     description: req.query.description,
-    approved: false, 
+    approved: false,
     processed: false
   });
   suggestion.save(function(err) {
     if (err) return handleError(err);
   });
 
+  // Send a confirmation email to user
+  var mailOptions = {
+    from: filereader3.email,
+    to: req.query.email,
+    subject: 'Device Suggestion Form Received',
+    text: 'Dear ' + req.query.name + ',\n' +
+    'Your device suggestion form had been received and due to be processed. ' +
+    'We will notice you once we have reviewed your suggestion.\n' +
+    'Device: ' + req.query.device + '\n' +
+    'Description: ' + req.query.description + '\n'
+  };
+
+  transporter.sendMail(mailOptions, function(error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
 
   // Direct to summited page
   // Render the page with all output devices in the dropdown
