@@ -121,35 +121,18 @@
       <!-- Title -->
 
       <H1 class="lang en" style="text-align: center; font-size : 1.5em; font-weight: bolder">Universal Controller 2.0</H1>
+      <H3 class="lang en" style="text-align: center; font-size : 1.5em; font-weight: bolder">Device Suggestion</H1>
 
     </div>
 
-    <!-- Main tab -->
-    <section id="tab1" class="tab-content active">
-      <div class="container">
-        <br>
-        <!-- Select devices -->
-        <select class="form-control lang en" id="device" onChange="getObject(this.value, this.text)">
-            <option value="" disabled selected >Select device</option>
-            <% devices.forEach(function(device) { %>
-            <option value="<%= device.device %>"><%= device.device_name %></option>
-            <% }); %>
-        </select>
-      </div>
-
-
-      <div style="padding:30px 20px; width:300px; margin:auto">
-        <button id='create_me' class="method-button lang en" style="font-size : 1.0em">Add Device</button>
-      </div>
-
-      <div>
-        <h3>Cannot find the device you want? Suggest a device we should add!</h3>
-        <a id="contact_us" href="/contact" title="Contact Us">
-          <button class="method-button">Suggest Device</button>
-        </a>
-      </div>
-
-    </section>
+    <form action="/feedback" method="get">
+      <br> Name:        <input type="text" class="form-control" name="name" placeholder="Please enter your name" required/>
+      Email:       <input type="email" class="form-control" name="email" placeholder="How can we contact you?" required/>
+      Device:      <input type="text" class="form-control" name="device" placeholder="Name of the device you want us to add" required />
+      Description: <input type="text" class="form-control" name="description" placeholder="Please describe the device you want us to add" required/>
+      <br>
+      <input type="submit" class="method-button" value="Submit">
+    </form>
   </div>
 
   <!-- Stores the mapping of unspaced device name to display name in different language -->

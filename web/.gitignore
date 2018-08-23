@@ -1,6 +1,7 @@
 node_modules/*
 auth.json
 keys.json
+email.json
 output.txt
 .DS_STORE
 public/audio/*.mp3
