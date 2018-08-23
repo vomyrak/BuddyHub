@@ -59,7 +59,7 @@ const deviceSchema = new mongoose.Schema({
   processed: Boolean
 });
 
-const deviceSuggestion = mongoose.model('deviceSuggestion', deviceSchema, 'deviceSuggestion');
+const DeviceSuggestion = mongoose.model('deviceSuggestion', deviceSchema, 'deviceSuggestion');
 
 // A dictionary of online users
 const users = {};
@@ -107,9 +107,20 @@ app.get('/contact', function(req, res) {
 });
 
 app.get('/feedback', function(req, res) {
-  //TODO: process suggestion form database
+  // Upload the details o the device suggestion to the database.
+  // The "processed" field is set to false until the admin process this
+  // device suggestion.
 
-  console.log(req.query.device);
+  var suggestion = new DeviceSuggestion({
+    name: req.query.name,
+    email: req.query.email,
+    device: req.query.device,
+    description: req.query.description,
+    processed: false
+  });
+  suggestion.save(function(err) {
+    if (err) return handleError(err);
+  });
 
 
   // Direct to summited page
@@ -174,8 +185,8 @@ app.post('/tts', function(req, res) {
       // If the http request is successful
       // Write the response text to the output file
       // Generate a random number between 10,000,000 and 99,999,999 to name the output files
-      var number = Math.floor(Math.random()*90000000) + 10000000;
-      const outputFile = './output'+ number + '.txt';
+      var number = Math.floor(Math.random() * 90000000) + 10000000;
+      const outputFile = './output' + number + '.txt';
       fs.writeFile(outputFile, this.responseText, 'binary', err => {
         if (err) {
           console.error('ERROR:', err);
