@@ -1,4 +1,4 @@
-#Designing for Accessibility
+# Designing for Accessibility
 
 ### 1. Stylesheet Switcher
 This provides an alternate theme for the user to choose from. In between your `<head>` tags in the `.ejs` file, link a second stylesheet (`style2.css`). Duplicate your existing stylesheet and change the stylings to create `style2.css`.
@@ -53,11 +53,12 @@ function getPreferredStyleSheet() {
 
 var cookie = readCookie("style");
 var title = cookie ? cookie : getPreferredStyleSheet();
-setActiveStyleSheet(title);```
+setActiveStyleSheet(title);
+```
 
 
 ### 2. Button shake
-Allow users to enable a visual feedback when clicking on buttons. In between your `<head>` tags in the `.ejs` file, link a the buttonshake stylesheet (`buttonshake.css`) as the **_first_** stylesheet.
+Allow users to enable a visual feedback when clicking on buttons. In between your `<head>` tags in the `.ejs` file, link the buttonshake stylesheet (`buttonshake.css`) as the **_first_** stylesheet.
 
 ```html
 <link rel="stylesheet" href="./css/buttonshake.css" />
@@ -134,7 +135,7 @@ function resizeText(multiplier) {
 ```
 
 ### 4. Font for users with dyslexia
-The Lexie Readable font was designed with accessibility and legibility in mind, an attempt to capture the strength and clarity of Comic Sans without the comic book associations Add the following into css files.
+The Lexie Readable font was designed with accessibility and legibility in mind, an attempt to capture the strength and clarity of Comic Sans without the comic book associations. Add the following into css files.
 ```css
 @font-face {
     font-family: 'lexie_readableregular';
