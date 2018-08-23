@@ -182,6 +182,10 @@ app.get('/feedback', isLoggedIn, function(req, res) {
     }
   });
 
+  res.redirect('/submitted');
+});
+
+app.get('/submitted', function(req, res) {
   // Direct to summited page
   // Render the page with all output devices in the dropdown
 
