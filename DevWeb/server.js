@@ -60,3 +60,7 @@ const html_dir = __dirname + '/public/html/';
 app.get('/', function(req, res) {
   res.sendFile(html_dir + 'index.html');
 });
+
+app.get('/add-api', function(req, res) {
+  res.sendFile(html_dir + 'add-api.html');
+});
