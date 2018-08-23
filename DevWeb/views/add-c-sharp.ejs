@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title class="lang en">BuddyHub@Developers</title>
+
+  <!--Button shake (Has to remain the first stylesheet - refer buttonshake.js)-->
+  <!-- <link rel="stylesheet" href="../css/buttonshake.css" /> -->
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+  <!-- <link href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" /> -->
+
+  <!-- Our Custom CSS -->
+  <link rel="stylesheet" title="default" type="text/css" href="../css/style.css" />
+  <link rel="alternate stylesheet" type="text/css" href="../css/style2.css" title="alternate" />
+
+  <!-- Scrollbar Custom CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+  <!--  jQuery-->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+  <!-- Font Awesome JS -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="./css/tether.css">
+</head>
+
+<body>
+
+  <% include ./partials/sidebar %>
+
+  <div id="content">
+    <div class="container">
+      <% include ./partials/header %>
+    </div>
+
+    <div class="container">
+      <H1 class="lang en" style="text-align: center; font-size : 1.0em; font-weight: bolder">Upload your device on Buddy Hub!</H1>
+      <br>
+      <form action="/feedback" method="post">
+        <br>
+        Name: <input type="text" class="form-control" name="name" placeholder="Please enter your name" required/>
+        Email: <input type="email" class="form-control" name="email" placeholder="How can we contact you?" required/>
+        Device Name: <input type="text" class="form-control" name="device" placeholder="Name of the device you want us to add" required />
+        Class Name: <input type="text" class="form-control" name="class" placeholder="Class Name of the device in your library" required />
+        VID: <input type="text" class="form-control" name="vid" placeholder="VID of the device" required />
+        PID: <input type="text" class="form-control" name="pid" placeholder="PID of the device" required />
+        Library Name: <input type="text" class="form-control" name="library" placeholder="Library Name of the device" required />
+        <div class="functions">
+          Function1: <br>
+          &#8195;Function Name: <input type="text" class="form-control" name="function1" placeholder="Name of the function in the library(e.g. turnOn, etc.)" required/>
+          <br>
+        </div>
+        <input type="button" style="float: right; margin-right: 100px;" value="Add function"/> <br><br>
+        <input type="submit" class="method-button" value="Submit"/>
+      </form>
+    </div>
+  </div>
+
+  <!-- jQuery CDN - Slim version (=without AJAX) -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <!-- Popper.JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  <!-- jQuery Custom Scroller CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+  <script src="../js/menu.js"></script>
+</body>
+
+</html>
