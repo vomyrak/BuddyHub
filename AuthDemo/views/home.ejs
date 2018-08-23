@@ -1,0 +1,15 @@
+<!doctype html>
+<head></head>
+
+<body>
+    <h1>Hi</h1>
+
+<% if(!currentUser){ %>
+<a href='/register'>Sign up</a>
+<a href='/login'>Login</a>
+
+<% } else{ %>
+    <li>Signed in as <a href=#><%= currentUser.username %></a></li>
+<a href='/logout'>Logout</a>
+<% } %>
+</body>

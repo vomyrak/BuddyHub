@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title class="lang en">Universal Controller 2.0</title>
+  <title>Universal Controller 2.0</title>
 
 
   <link rel="stylesheet" href="./css/buttonshake.css" />
@@ -36,13 +36,22 @@
     <!-- Sidebar  -->
     <nav id="sidebar">
       <div class="sidebar-header">
-        <h2></h2>
+        <h2>Welcome!</h2>
       </div>
       <ul class="list-unstyled components">
         <li>
-          <a href="/" class="lang en">Home</a>
+          <a href="/">Home</a>
         </li>
       </ul>
+        <footer style="position:fixed; bottom: 0; height:50px; background-color: gray; width:250px; padding: 11px; color : white">
+
+<button data-toggle="modal" data-target="#signupmodal">Sign up</button> | 
+
+<button data-toggle="modal" data-target="#loginmodal">Login</button>  |
+
+<button href=''>Logout</button>
+
+        </footer>  
     </nav>
   </div>
 
@@ -55,69 +64,67 @@
 
           <button type="button" id="sidebarCollapse" class="settingsbtn">
                 <i class="fas fa-align-left"></i>
-                <span class="lang en">Toggle Sidebar</span>
+                <span>Toggle Sidebar</span>
             </button>
-          <!-- Button trigger modal -->
-          <button type="button" class="settingsbtn lang en" data-toggle="modal" data-target="#exampleModal">Settings</button>
+                      <!-- Button trigger modal -->
+<button type="button" class="settingsbtn" data-toggle="modal" data-target="#exampleModal">
+Settings
+</button>
 
-          <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title lang en" id="exampleModalLabel">Settings</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <input class="lang en" type="text" id="namebox" placeholder="Enter your name">
-                  <br>
-                  <!--Change theme-->
-                  <li>
-                    <div class="lang en">
-                      <button class="settingsbtn lang en" onclick=" setActiveStyleSheet('default'); return false;">Light</button> | <button class="settingsbtn lang en" onclick=" setActiveStyleSheet('alternate'); return false;">Dark</button>
-                    </div>
-                  </li>
-                  <br>
-                  <li>
-                    <!--Sound enabler-->
-                    <button class="settingsbtn lang en" id="mutefxn">Mute sound - No</button>
-                  </li><br>
-                  <li>
-                    <!--Sound choices-->
-                    <button class="settingsbtn" id="sound1">1</button> |
-                    <button class="settingsbtn" id="sound2">2</button> |
-                    <button class="settingsbtn" id="sound3">3</button> |
-                    <button class="settingsbtn" id="sound4">4</button> |
-                    <button class="settingsbtn" id="sound5">5</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--Change theme-->
+            
+            <li >
+              <button class="settingsbtn" onclick=" setActiveStyleSheet('default'); return false;">Light</button> | <button class="settingsbtn" onclick=" setActiveStyleSheet('alternate'); return false;">Dark</button>
+            </li>
+            <br>
+            <li>
+              <!--Sound enabler-->
+              <button class="settingsbtn" id="mutefxn" >Mute sound - No</button>
+            </li><br>
+            <li>
+              <!--Sound choices-->
+                <button class="settingsbtn" id="sound1">1</button> |
+              <button class="settingsbtn" id="sound2">2</button> |
+              <button class="settingsbtn" id="sound3">3</button> |
+              <button class="settingsbtn" id="sound4">4</button> |
+              <button class="settingsbtn" id="sound5">5</button>
 
-                  </li>
-                  <br>
-                  <li>
-                    <!--Change size-->
-                    <button class="settingsbtn" onclick="resizeText(1)" id="plustext">+</button> |
-                    <button class="settingsbtn" onclick="resizeText(-1)" id="minustext">-</button>
-                  </li>
-                  <br>
-                  <li>
-                    <!--Shake enabler-->
-                    <button class="settingsbtn lang en" id="shake">Shake - No</button>
-                  </li>
-                  <br>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="settingsbtn lang en" data-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
-          </div>
+            </li>
+            <br>
+            <li>
+              <!--Change size-->
+              <button class="settingsbtn" onclick="resizeText(1)" id="plustext">+</button> |
+              <button class="settingsbtn" onclick="resizeText(-1)" id="minustext">-</button>
+            </li>
+              <br>
+            <li>
+              <!--Shake enabler-->
+              <button class="settingsbtn" id="shake">Shake - No</button>
+            </li>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="settingsbtn" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
         </div>
       </nav>
 
       <!-- Title -->
-      <H1 class="lang en" style="text-align: center; font-size : 1.5em; font-weight: bolder">Universal Controller 2.0</H1>
-      <h1 class="lang en" style="text-align: center"><%= device.device_name %></h1>
+      <H1 style="text-align: center; font-size : 1.5em; font-weight: bolder">Universal Controller 2.0</H1>
+      <h1 style="text-align: center"><%= device.device %></h1>
     </div>
 
     <section class="tab-content">
@@ -129,7 +136,7 @@
             <input placeholder="Enter text here" class="form-control" id="textbox<%= method.method %>" value='' />
           </div>
           <% } %>
-            <Br></Br>
+        <Br></Br>
             <div>
               <!-- Store the information for http request in the hidden input fields -->
               <input type="hidden" id="http_method<%= method.method %>" value='<%= method.http_method %>' />
@@ -138,18 +145,65 @@
               <input type="hidden" id="headers<%= method.method %>" value='<%= method.headers %>' />
               <input type="hidden" id="callback_function<%= method.method %>" value='<%= method.callback_function %>' />
               <input type="hidden" id="text_input_field<%= method.method %>" value='<%= method.text_input_field %>' />
-              <button onclick="sendRequest(this)" class="method-button lang en" type="submit" value="<%= method.method %>" id='<%= method.method %>'><%= method.method %></button>
+              <button onclick="sendRequest(this)"  class="method-button" type="submit" value="<%= method.method %>" id='<%= method.method %>'><%= method.method %></button>
             </div>
-            <% }); %>
+        <% }); %>
     </section>
-  </div>
+      
+      <!--          Sign up modal-->
+          <div class="modal fade" id="signupmodal" tabindex="-1" role="dialog" aria-labelledby="signupmodalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signupmodalLabel">Sign Up Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form action="#" method="POST">
+      <div class="modal-body">
+     
+<input type="text" name="username" placeholder="Username">
+ <input type="password" name="password" placeholder="Password">
+   
 
-  <!-- Stores the mapping of unspaced device name to display name -->
-  <div>
-    <% devices.forEach(function(device) { %>
-      <input type="hidden" id="<%= device.device.replace(/\s/g, '') %>en" value='<%= device.device_name %>' />
-      <% }); %>
+            
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="settingsbtn" data-dismiss="modal">Submit</button>
+      </div>
+          </form>
     </div>
+  </div>
+</div>
+          
+          <!--          Login modal-->
+          <div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="loginmodalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginmodalLabel">Login Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form action="/login" method="POST">
+      <div class="modal-body">
+     
+<input type="text" name="username" placeholder="Username">
+ <input type="password" name="password" placeholder="Password">
+ 
+
+            
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="settingsbtn" data-dismiss="modal">Submit</button>
+      </div>
+          </form>
+    </div>
+  </div>
+</div>
+  </div>
 
   <!-- jQuery CDN - Slim version (=without AJAX) -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -164,7 +218,7 @@
   <script src="../js/tether.js"></script>
   <script src="../js/sound.js"></script>
   <script src="../js/index.js"></script>
-  <script src="../js/name.js"></script>
+    <script src="../js/name.js"></script>
   <script src="../js/http.js"></script>
   <script src="../js/cookies.js"></script>
   <script src="../js/stylesheetswitcher.js"></script>

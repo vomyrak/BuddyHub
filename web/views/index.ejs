@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title class="lang en">Universal Controller 2.0</title>
+  <title>Universal Controller 2.0</title>
 
-  <!--Button shake (Has to remain the first stylesheet - refer buttonshake.js)-->
+<!--Button shake (Has to remain the first stylesheet - refer buttonshake.js)-->
   <link rel="stylesheet" href="./css/buttonshake.css" />
   <!-- Bootstrap CSS CDN -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -22,30 +22,46 @@
   <!-- Scrollbar Custom CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
-  <!--  jQuery-->
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-
+    <!--  jQuery-->
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+    
   <!-- Font Awesome JS -->
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 
-  <link rel="stylesheet" href="./css/tether.css">
 </head>
 
 <body id="myBody">
 
-  <!-- Menu -->
+ <!-- Menu -->
   <div class="wrapper">
     <!-- Sidebar  -->
     <nav id="sidebar">
       <div class="sidebar-header">
-        <h2></h2>
+         <h2>Welcome!</h2>
+
+
+        
       </div>
+        
       <ul class="list-unstyled components">
         <li>
-          <a href="/" class="lang en">Home</a>
+          <a href="/">Home</a>
         </li>
       </ul>
+      <footer style="position:fixed; bottom: 0; height:50px; background-color: gray; width:250px; padding: 11px; color : white">
+
+<button data-toggle="modal" data-target="#signupmodal">Sign up</button> | 
+
+<button data-toggle="modal" data-target="#loginmodal">Login</button>  |
+
+<button href=''>Logout</button>
+
+        </footer>        
+        
     </nav>
   </div>
 
@@ -58,98 +74,141 @@
 
           <button type="button" id="sidebarCollapse" class="settingsbtn">
                 <i class="fas fa-align-left"></i>
-                <span class="lang en">Toggle Sidebar</span>
+                <span>Toggle Sidebar</span>
             </button>
-          <!-- Button trigger modal -->
-          <button type="button" class="settingsbtn lang en" data-toggle="modal" data-target="#exampleModal">Settings</button>
+                      <!-- Button trigger modal -->
+<button type="button" class="settingsbtn" data-toggle="modal" data-target="#exampleModal">
+Settings
+</button>
 
-          <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title lang en" id="exampleModalLabel">Settings</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <input class="lang en" type="text" id="namebox" placeholder="Enter your name">
-                  <br>
-                  <!--Change theme-->
-                  <li>
-                    <div class="lang en">
-                      <button class="settingsbtn lang en" onclick=" setActiveStyleSheet('default'); return false;">Light</button> | <button class="settingsbtn lang en" onclick=" setActiveStyleSheet('alternate'); return false;">Dark</button>
-                    </div>
-                  </li>
-                  <br>
-                  <li>
-                    <!--Sound enabler-->
-                    <button class="settingsbtn lang en" id="mutefxn">Mute sound - No</button>
-                  </li><br>
-                  <li>
-                    <!--Sound choices-->
-                    <button class="settingsbtn" id="sound1">1</button> |
-                    <button class="settingsbtn" id="sound2">2</button> |
-                    <button class="settingsbtn" id="sound3">3</button> |
-                    <button class="settingsbtn" id="sound4">4</button> |
-                    <button class="settingsbtn" id="sound5">5</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--Change theme-->
+        
+            <li >
+              <button class="settingsbtn" onclick=" setActiveStyleSheet('default'); return false;">Light</button> | <button class="settingsbtn" onclick=" setActiveStyleSheet('alternate'); return false;">Dark</button>
+            </li>
+            <br>
+            <li>
+              <!--Sound enabler-->
+              <button class="settingsbtn" id="mutefxn" >Mute sound - No</button> 
+            </li><br>
+            <li>
+              <!--Sound choices-->
+                <button class="settingsbtn" id="sound1">1</button> |
+              <button class="settingsbtn" id="sound2">2</button> |
+              <button class="settingsbtn" id="sound3">3</button> |
+              <button class="settingsbtn" id="sound4">4</button> |
+              <button class="settingsbtn" id="sound5">5</button>
 
-                  </li>
-                  <br>
-                  <li>
-                    <!--Change size-->
-                    <button class="settingsbtn" onclick="resizeText(1)" id="plustext">+</button> |
-                    <button class="settingsbtn" onclick="resizeText(-1)" id="minustext">-</button>
-                  </li>
-                  <br>
-                  <li>
-                    <!--Shake enabler-->
-                    <button class="settingsbtn lang en" id="shake">Shake - No</button>
-                  </li>
-                  <br>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="settingsbtn lang en" data-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
-          </div>
+            </li>
+            <br>
+            <li>
+              <!--Change size-->
+              <button class="settingsbtn" onclick="resizeText(1)" id="plustext">+</button> |
+              <button class="settingsbtn" onclick="resizeText(-1)" id="minustext">-</button>
+            </li>
+              <br>
+            <li>
+              <!--Shake enabler-->
+              <button class="settingsbtn" id="shake">Shake - No</button> 
+            </li>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="settingsbtn" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
         </div>
+<!--          Sign up modal-->
+          <div class="modal fade" id="signupmodal" tabindex="-1" role="dialog" aria-labelledby="signupmodalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signupmodalLabel">Sign Up Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form action="#" method="POST">
+      <div class="modal-body">
+     
+<input type="text" name="username" placeholder="Username">
+ <input type="password" name="password" placeholder="Password">
+   
+
+            
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="settingsbtn" data-dismiss="modal">Submit</button>
+      </div>
+          </form>
+    </div>
+  </div>
+</div>
+          
+          <!--          Login modal-->
+          <div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="loginmodalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginmodalLabel">Login Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form action="/login" method="POST">
+      <div class="modal-body">
+     
+<input type="text" name="username" placeholder="Username">
+ <input type="password" name="password" placeholder="Password">
+ 
+
+            
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="settingsbtn" data-dismiss="modal">Submit</button>
+      </div>
+          </form>
+    </div>
+  </div>
+</div>
       </nav>
 
       <!-- Title -->
-
-      <H1 class="lang en" style="text-align: center; font-size : 1.5em; font-weight: bolder">Universal Controller 2.0</H1>
+  
+      <H1 style="text-align: center; font-size : 2.0em; font-weight: bolder">Universal Controller 2.0</H1>
 
     </div>
 
     <!-- Main tab -->
     <section id="tab1" class="tab-content active">
       <div class="container">
-        <br>
+<br>
         <!-- Select devices -->
-        <select class="form-control lang en" id="device" onChange="getObject(this.value, this.text)">
+        <select class="form-control" id="device" onChange="getObject(this.value)">
             <option value="" disabled selected >Select device</option>
             <% devices.forEach(function(device) { %>
-            <option value="<%= device.device %>"><%= device.device_name %></option>
-            <% }); %>
+              <option value="<%= device.device %>"><%= device.device %></option>
+              <% }); %>
           </select>
-      </div>
+          </div>
 
-
-      <div style="padding:30px 20px; width:300px; margin:auto">
-        <button id='create_me' class="method-button lang en" style="font-size : 1.0em">Add Device</button>
-      </div>
+        <div style="padding:30px 20px; width:300px; margin:auto">
+          <button id='create_me' class="method-button" style="font-size : 1.0em">Add Device</button>
+        </div>
 
     </section>
-  </div>
-
-  <!-- Stores the mapping of unspaced device name to display name in different language -->
-  <div>
-    <% devices.forEach(function(device) { %>
-      <input type="hidden" id="<%= device.device.replace(/\s/g, '') %>en" value='<%= device.device_name %>' />
-      <% }); %>
   </div>
 
   <!-- jQuery CDN - Slim version (=without AJAX) -->
@@ -162,13 +221,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
   <script src="../js/buttonshake.js"></script>
-  <script src="../js/tether.js"></script>
+
   <script src="../js/sound.js"></script>
   <script src="../js/index.js"></script>
-  <script src="../js/name.js"></script>
+    <script src="../js/name.js"></script>
   <script src="../js/http.js"></script>
   <script src="../js/cookies.js"></script>
-  <script src="../js/stylesheetswitcher.js"></script>
+<script src="../js/stylesheetswitcher.js"></script>
   <script src="../js/resizetext.js"></script>
   <script src="../js/menu.js"></script>
 
