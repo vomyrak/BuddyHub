@@ -147,7 +147,7 @@ app.get('/feedback', function(req, res) {
     'We will notice you once we have reviewed your suggestion.\n\n' +
     'Device: ' + req.query.device + '\n' +
     'Description: ' + req.query.description + '\n\n' +
-    'Thank you for choosing BuddyHub!\n\n' 
+    'Thank you for choosing BuddyHub!\n\n'
   };
 
   transporter.sendMail(mailOptions, function(error, info) {
@@ -158,6 +158,10 @@ app.get('/feedback', function(req, res) {
     }
   });
 
+  res.redirect('/submitted');
+});
+
+app.get('/submitted', function(req, res) {
   // Direct to summited page
   // Render the page with all output devices in the dropdown
 
