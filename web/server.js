@@ -143,7 +143,7 @@ app.get('/feedback', function(req, res) {
     to: req.query.email,
     subject: 'Device Suggestion Form Received',
     text: 'Dear ' + req.query.name + ',\n' +
-    'Your device suggestion form had been received and due to be processed. ' +
+    'Your device suggestion form had been received. ' +
     'We will notice you once we have reviewed your suggestion.\n' +
     'Device: ' + req.query.device + '\n' +
     'Description: ' + req.query.description + '\n'
