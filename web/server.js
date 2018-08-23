@@ -142,11 +142,12 @@ app.get('/feedback', function(req, res) {
     from: filereader3.email,
     to: req.query.email,
     subject: 'Device Suggestion Form Received',
-    text: 'Dear ' + req.query.name + ',\n' +
+    text: 'Dear ' + req.query.name + ',\n\n' +
     'Your device suggestion form had been received. ' +
-    'We will notice you once we have reviewed your suggestion.\n' +
+    'We will notice you once we have reviewed your suggestion.\n\n' +
     'Device: ' + req.query.device + '\n' +
-    'Description: ' + req.query.description + '\n'
+    'Description: ' + req.query.description + '\n\n' +
+    'Thank you for choosing BuddyHub!\n\n' 
   };
 
   transporter.sendMail(mailOptions, function(error, info) {
