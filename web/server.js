@@ -80,6 +80,26 @@ app.get('/', function(req, res) {
   });
 });
 
+app.get('/contact', function(req, res) {
+  // Direct to home page
+  // Render the page with all output devices in the dropdown
+
+  var query = OutputDevice.find().sort('device');
+
+  query.exec(function(err, devices) {
+    if (err) return handleError(err);
+
+    res.render('contact', {
+      devices: devices
+    });
+  });
+});
+
+app.post('/feedback', function(req, res) {
+  console.log(req.body.name);
+});
+
+
 app.get('/device', function(req, res) {
   // Render the page with all output devices in the menu
   // Render the page with methods of the selected device
