@@ -50,6 +50,17 @@ const outputSchema = new mongoose.Schema({
 
 const OutputDevice = mongoose.model('outputDevices3', outputSchema, 'outputDevices3');
 
+// Model for mongo database
+const deviceSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  device: String,
+  description: String,
+  processed: Boolean
+});
+
+const deviceSuggestion = mongoose.model('deviceSuggestion', deviceSchema, 'deviceSuggestion');
+
 // A dictionary of online users
 const users = {};
 
@@ -81,7 +92,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/contact', function(req, res) {
-  // Direct to home page
+  // Direct to device suggestion page
   // Render the page with all output devices in the dropdown
 
   var query = OutputDevice.find().sort('device');
@@ -95,10 +106,25 @@ app.get('/contact', function(req, res) {
   });
 });
 
-app.post('/feedback', function(req, res) {
-  console.log(req.body.name);
-});
+app.get('/feedback', function(req, res) {
+  //TODO: process suggestion form database
 
+  console.log(req.query.device);
+
+
+  // Direct to summited page
+  // Render the page with all output devices in the dropdown
+
+  var query = OutputDevice.find().sort('device');
+
+  query.exec(function(err, devices) {
+    if (err) return handleError(err);
+
+    res.render('submitted', {
+      devices: devices
+    });
+  });
+});
 
 app.get('/device', function(req, res) {
   // Render the page with all output devices in the menu
