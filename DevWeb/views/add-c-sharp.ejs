@@ -54,11 +54,14 @@
         PID: <input type="text" class="form-control" name="pid" placeholder="PID of the device" required />
         Library Name: <input type="text" class="form-control" name="library" placeholder="Library Name of the device" required />
         <div class="functions">
-          Function1: <br>
-          &#8195;Function Name: <input type="text" class="form-control" name="function1" placeholder="Name of the function in the library(e.g. turnOn, etc.)" required/>
-          <br>
+          <div>
+            Function: <br>
+            &#8195;Function Name: <input type="text" class="form-control" name="function1" placeholder="Name of the function in the library(e.g. turnOn, etc.)" required/>
+            &#8195;Continuous? <input type="checkbox" name="continuous" value="continuous"><br>
+            <input type="button" onclick="removeFunction(this)" style="float: right; margin-right: 100px;" value="Delete Function" /> <br><br>
+          </div>
         </div>
-        <input type="button" style="float: right; margin-right: 100px;" value="Add function"/> <br><br>
+        <input type="button" onclick="addFunction(this)" style="float: right; margin-right: 100px;" value="Add function"/> <br><br>
         <input type="submit" class="method-button" value="Submit"/>
       </form>
     </div>
@@ -74,6 +77,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
   <script src="../js/menu.js"></script>
+  <script src="../js/fields.js"></script>
 </body>
 
 </html>

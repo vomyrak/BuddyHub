@@ -65,3 +65,9 @@ app.get('/add-api', function(req, res) {
 app.get('/add-c-sharp', function(req, res) {
   res.render('add-c-sharp');
 });
+
+app.post('/upload-api', function(req, res) {
+  console.log(req.body.method1.length);
+  console.log(req.body.method1[0]);
+  console.log(req.body.method1[1]);
+});
