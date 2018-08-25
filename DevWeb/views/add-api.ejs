@@ -36,45 +36,47 @@
 
   <% include ./partials/sidebar %>
 
-  <div id="content">
-    <div class="container">
-      <% include ./partials/header %>
-    </div>
+    <div id="content">
+      <div class="container">
+        <% include ./partials/header %>
+      </div>
 
-    <div class="container">
-      <H1 class="lang en" style="text-align: center; font-size : 1.0em; font-weight: bolder">Upload your device on Buddy Hub!</H1>
-      <br>
-      <form action="/feedback" method="post">
+      <div class="container">
+        <H1 class="lang en" style="text-align: center; font-size : 1.0em; font-weight: bolder">Upload your device on Buddy Hub!</H1>
         <br>
-        Name: <input type="text" class="form-control" name="name" placeholder="Please enter your name" required/>
-        Email: <input type="email" class="form-control" name="email" placeholder="How can we contact you?" required/>
-        Device Name: <input type="text" class="form-control" name="device" placeholder="Name of the device you want us to add" required />
-        <div class="methods">
-          Method1: <br>
-          &#8195;Method Name: <input type="text" class="form-control" name="method1" placeholder="Name of the method(e.g. turn on, etc.)" required/>
-          &#8195;HTTP Method: <input type="text" class="form-control" name="httpmethod1" placeholder="HTTP method (GET, POST, PUT, DELETE)" required/>
-          &#8195;Link: <input type="text" class="form-control" name="link1" placeholder="Link of the call" required/>
-          &#8195;Data: <input type="text" class="form-control" name="data1" placeholder="JSON data to be sent" required/>
-          &#8195;Headers: <input type="text" class="form-control" name="headers1" placeholder="Header of the request" required/>
-          &#8195;Text Input Field: <input type="text" class="form-control" name="textinput1" placeholder="text input field in the JSON data if required"/>
-          <br>
-        </div>
-        <input type="button" style="float: right; margin-right: 100px;" value="Add method"/> <br><br>
-        <input type="submit" class="method-button" value="Submit"/>
-      </form>
+        <form action="/upload-api" method="post">
+          <br> Name: <input type="text" class="form-control" name="name" placeholder="Please enter your name" required/> Email: <input type="email" class="form-control" name="email" placeholder="How can we contact you?" required/> Device Name: <input
+            type="text" class="form-control" name="device" placeholder="Name of the device you want us to add" required />
+          <div class="methods">
+            <div>
+              Method: <br>
+              &#8195;Method Name: <input type="text" class="form-control" name="method" placeholder="Name of the method(e.g. turn on, etc.)" required/>
+              &#8195;HTTP Method: <input type="text" class="form-control" name="httpmethod" placeholder="HTTP method (GET, POST, PUT, DELETE)" required/>
+              &#8195;Link: <input type="text" class="form-control" name="link" placeholder="Link of the call" required/>
+              &#8195;Data: <input type="text" class="form-control" name="data" placeholder="JSON data to be sent" required/>
+              &#8195;Headers: <input type="text" class="form-control" name="headers" placeholder="Header of the request" required/>
+              &#8195;Text Input Field: <input type="text" class="form-control" name="textinput" placeholder="text input field in the JSON data if required"/>
+              &#8195;Continuous? <input type="checkbox" name="continuou" value="continuous"><br>
+              <input type="button" onclick="removeMethod(this)" style="float: right; margin-right: 100px;" value="Delete Method" /> <br><br>
+            </div>
+          </div>
+          <input type="button" onclick="addMethod(this)" style="float: right; margin-right: 100px;" value="Add Method" /> <br><br>
+          <input type="submit" class="method-button" value="Submit" />
+        </form>
+      </div>
     </div>
-  </div>
-  
-  <!-- jQuery CDN - Slim version (=without AJAX) -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <!-- Popper.JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-  <!-- Bootstrap JS -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-  <!-- jQuery Custom Scroller CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
-  <script src="../js/menu.js"></script>
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <script src="../js/menu.js"></script>
+    <script src="../js/fields.js"></script>
 </body>
 
 </html>
