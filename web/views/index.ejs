@@ -5,7 +5,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title class="lang en">BuddyHub</title>
+
+  <title>Universal Controller 2.0</title>
 
 <!--Button shake (Has to remain the first stylesheet - refer buttonshake.js)-->
   <link rel="stylesheet" href="./css/buttonshake.css" />
@@ -198,21 +199,14 @@ Settings
         <select class="form-control" id="device" onChange="getObject(this.value)">
             <option value="" disabled selected >Select device</option>
             <% devices.forEach(function(device) { %>
-            <option value="<%= device.device %>"><%= device.device_name %></option>
-            <% }); %>
-        </select>
-      </div>
+              <option value="<%= device.device %>"><%= device.device %></option>
+              <% }); %>
+          </select>
+          </div>
 
         <div style="padding:30px 20px; width:300px; margin:auto">
           <button id='create_me' class="method-button" style="font-size : 1.0em">Add Device</button>
         </div>
-
-      <div>
-        <h1 class="lang en" style="text-align: center; font-size : 1.0em; font-weight: bolder">Cannot find the device you want? Suggest a device we should add!</h1>
-        <a id="contact_us" href="/contact" title="Contact Us">
-          <button class="method-button">Suggest Device</button>
-        </a>
-      </div>
 
     </section>
   </div>
