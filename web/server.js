@@ -7,6 +7,7 @@ const exec = require('child_process').exec;
 const mongoose = require("mongoose");
 const filereader = require("./auth.json");
 const filereader2 = require("./keys.json");
+const filereader3 = require("./email.json");
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // to support JSON-encoded bodies
@@ -50,6 +51,30 @@ const outputSchema = new mongoose.Schema({
 
 const OutputDevice = mongoose.model('outputDevices3', outputSchema, 'outputDevices3');
 
+// Model for mongo database
+const deviceSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  device: String,
+  description: String,
+  approved: Boolean,
+  processed: Boolean
+});
+
+const DeviceSuggestion = mongoose.model('deviceSuggestion', deviceSchema, 'deviceSuggestion');
+
+// Email Configuration
+
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: filereader3.email,
+    pass: filereader3.password
+  }
+});
+
 // A dictionary of online users
 const users = {};
 
@@ -75,6 +100,73 @@ app.get('/', function(req, res) {
     if (err) return handleError(err);
 
     res.render('index', {
+      devices: devices
+    });
+  });
+});
+
+app.get('/contact', function(req, res) {
+  // Direct to device suggestion page
+  // Render the page with all output devices in the dropdown
+
+  var query = OutputDevice.find().sort('device');
+
+  query.exec(function(err, devices) {
+    if (err) return handleError(err);
+
+    res.render('contact', {
+      devices: devices
+    });
+  });
+});
+
+app.get('/feedback', function(req, res) {
+  // Upload the details o the device suggestion to the database.
+  // The "processed" field is set to false until the admin process this
+  // device suggestion.
+
+  var suggestion = new DeviceSuggestion({
+    name: req.query.name,
+    email: req.query.email,
+    device: req.query.device,
+    description: req.query.description,
+    approved: false,
+    processed: false
+  });
+  suggestion.save(function(err) {
+    if (err) return handleError(err);
+  });
+
+  // Send a confirmation email to user
+  var mailOptions = {
+    from: filereader3.email,
+    to: req.query.email,
+    subject: 'Device Suggestion Form Received',
+    text: 'Dear ' + req.query.name + ',\n\n' +
+    'Your device suggestion form had been received. ' +
+    'We will notice you once we have reviewed your suggestion.\n\n' +
+    'Device: ' + req.query.device + '\n' +
+    'Description: ' + req.query.description + '\n\n' +
+    'Thank you for choosing BuddyHub!\n\n' 
+  };
+
+  transporter.sendMail(mailOptions, function(error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+
+  // Direct to summited page
+  // Render the page with all output devices in the dropdown
+
+  var query = OutputDevice.find().sort('device');
+
+  query.exec(function(err, devices) {
+    if (err) return handleError(err);
+
+    res.render('submitted', {
       devices: devices
     });
   });
@@ -128,8 +220,8 @@ app.post('/tts', function(req, res) {
       // If the http request is successful
       // Write the response text to the output file
       // Generate a random number between 10,000,000 and 99,999,999 to name the output files
-      var number = Math.floor(Math.random()*90000000) + 10000000;
-      const outputFile = './output'+ number + '.txt';
+      var number = Math.floor(Math.random() * 90000000) + 10000000;
+      const outputFile = './output' + number + '.txt';
       fs.writeFile(outputFile, this.responseText, 'binary', err => {
         if (err) {
           console.error('ERROR:', err);
