@@ -8,7 +8,7 @@ const method_html = "<div>Method: <br>" +
   "&#8195;Data: <input type=\"text\" class=\"form-control\" name=\"data\" placeholder=\"JSON data to be sent\" required/>" +
   "&#8195;Headers: <input type=\"text\" class=\"form-control\" name=\"headers\" placeholder=\"Header of the request\" required/>" +
   "&#8195;Text Input Field: <input type=\"text\" class=\"form-control\" name=\"textinput\" placeholder=\"text input field in the JSON data if required\"/>" +
-  "&#8195;Continuous? <input type=\"checkbox\" name=\"continuous\" value=\"continuous\"><br>" +
+  "&#8195;Continuous? <input type=\"checkbox\" class=\"form-control\" name=\"continuous\" value=\"true\"><br>" +
   "<input type=\"button\" onclick=\"removeMethod(this)\" style=\"float: right; margin-right: 100px;\" value=\"Delete Method\"/> <br><br></div>";
 
 const function_html = "<div>Function: <br>" +
