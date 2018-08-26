@@ -45,8 +45,9 @@
         <H1 class="lang en" style="text-align: center; font-size : 1.0em; font-weight: bolder">Upload your device on Buddy Hub!</H1>
         <br>
         <form action="/upload-api" method="post">
-          <br> Name: <input type="text" class="form-control" name="name" placeholder="Please enter your name" required/> Email: <input type="email" class="form-control" name="email" placeholder="How can we contact you?" required/> Device Name: <input
-            type="text" class="form-control" name="device" placeholder="Name of the device you want us to add" required />
+          <br> Name: <input type="text" class="form-control" name="name" placeholder="Please enter your name" required/>
+          Email: <input type="email" class="form-control" name="email" placeholder="How can we contact you?" required/>
+          Device Name: <input type="text" class="form-control" name="device" placeholder="Name of the device you want us to add" required />
           <div class="methods">
             <div>
               Method: <br>
@@ -56,7 +57,8 @@
               &#8195;Data: <input type="text" class="form-control" name="data" placeholder="JSON data to be sent" required/>
               &#8195;Headers: <input type="text" class="form-control" name="headers" placeholder="Header of the request" required/>
               &#8195;Text Input Field: <input type="text" class="form-control" name="textinput" placeholder="text input field in the JSON data if required"/>
-              &#8195;Continuous? <input type="checkbox" name="continuou" value="continuous"><br>
+              &#8195;Continuous? <input type="checkbox" class="form-control" name="continuous" value="true">
+              <input type="hidden" class="form-control" value="false" name="continuous"><br>
               <input type="button" onclick="removeMethod(this)" style="float: right; margin-right: 100px;" value="Delete Method" /> <br><br>
             </div>
           </div>

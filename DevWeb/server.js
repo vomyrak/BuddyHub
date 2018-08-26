@@ -29,6 +29,26 @@ mongoose.connect(connectString, options)
   .catch(error => console.error('Failed to connect', error));
 
 
+// Model for mongo database
+const apiSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  device: String,
+  methods: [{
+    method: String,
+    http_method: String,
+    link: String,
+    data: String,
+    headers: String,
+    text_input_field: String,
+    continuous: Boolean,
+  }],
+  processed: Boolean,
+});
+
+const PendingAPI = mongoose.model('pendingAPIs', apiSchema, 'pendingAPIs');
+
+
 
 // Email Configuration
 
@@ -67,10 +87,48 @@ app.get('/add-c-sharp', function(req, res) {
 });
 
 app.post('/upload-api', function(req, res) {
-  console.log(req.body.method.length);
-  for (var i = 0; i < req.body.method.length; i++) {
-    console.log(req.body.method[i]);
+
+  var name = req.body.name;
+  var email = req.body.email;
+  var device = req.body.device;
+  var methods = [];
+
+  if (req.body.method[1] != undefined) {
+    for (var i = 0; i < req.body.method.length; i++) {
+      var method = {
+        method: req.body.method[i],
+        http_method: req.body.httpmethod[i],
+        link: req.body.link[i],
+        data: req.body.data[i],
+        headers: req.body.headers[i],
+        text_input_field: req.body.textinput[i],
+        continuous: req.body.continuous[i] == 'true'
+      }
+      methods.push(method);
+    }
+  } else {
+    methods = [{
+      method: req.body.method,
+      http_method: req.body.httpmethod,
+      link: req.body.link,
+      data: req.body.data,
+      headers: req.body.headers,
+      text_input_field: req.body.textinput,
+      continuous: req.body.continuous == 'true'
+    }]
   }
+
+  var api = new PendingAPI({
+    name: name,
+    email: email,
+    device: device,
+    methods: methods,
+    processed: false
+  });
+  api.save(function(err) {
+    if (err) return handleError(err);
+  });
+
   res.redirect("/submitted");
 });
 
