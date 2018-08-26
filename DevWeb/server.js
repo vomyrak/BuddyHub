@@ -67,7 +67,13 @@ app.get('/add-c-sharp', function(req, res) {
 });
 
 app.post('/upload-api', function(req, res) {
-  console.log(req.body.method1.length);
-  console.log(req.body.method1[0]);
-  console.log(req.body.method1[1]);
+  console.log(req.body.method.length);
+  for (var i = 0; i < req.body.method.length; i++) {
+    console.log(req.body.method[i]);
+  }
+  res.redirect("/submitted");
+});
+
+app.get('/submitted', function(req, res) {
+  res.render('submitted');
 });
