@@ -2,7 +2,7 @@ var num_method = 1;
 var num_function = 1;
 
 const method_html = "<div>Method: <br>" +
-  "&#8195;Method Name: <input type=\"text\" class=\"form-control\" name=\"method\" placeholder=\"Name of the method(e.g. turn on, etc.)\" required/>" +
+  "&#8195;Method Name: <input type=\"text\" minlength=\"2\" class=\"form-control\" name=\"method\" placeholder=\"Name of the method(e.g. turn on, etc.)\" required/>" +
   "&#8195;HTTP Method: <input type=\"text\" class=\"form-control\" name=\"httpmethod\" placeholder=\"HTTP method (GET, POST, PUT, DELETE)\" required/>" +
   "&#8195;Link: <input type=\"text\" class=\"form-control\" name=\"link\" placeholder=\"Link of the call\" required/>" +
   "&#8195;Data: <input type=\"text\" class=\"form-control\" name=\"data\" placeholder=\"JSON data to be sent\" required/>" +
