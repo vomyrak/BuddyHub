@@ -42,27 +42,41 @@
     </div>
 
     <div class="container">
-      <H1 class="lang en" style="text-align: center; font-size : 1.0em; font-weight: bolder">Upload your device on Buddy Hub!</H1>
+      <H1 class="lang en" style="text-align: center; font-size : 1.2em; font-weight: bolder">Upload your device on Buddy Hub!</H1>
+      <H1 class="lang en" style="text-align: center; font-size : 1.0em; font-weight: bolder; color:red">Please note that for a device with C Sharp Library to work on BuddyHub, the library must implement our IDevice interface!</H1>
       <br>
+      <!-- Form for users to fill in detail of C Sharp Library of the device -->
       <form action="/upload-c-sharp" method="post">
         <br>
+        <!-- Name of the user -->
         Name: <input type="text" class="form-control" name="name" placeholder="Please enter your name" required/>
+        <!-- Email of the user -->
         Email: <input type="email" class="form-control" name="email" placeholder="How can we contact you?" required/>
+        <!-- Name of the Device to be displyed -->
         Device Name: <input type="text" class="form-control" name="device" placeholder="Name of the device you want us to add" required />
+        <!-- Class name in the library which the functions will be invoked -->
         Class Name: <input type="text" class="form-control" name="class" placeholder="Class Name of the device in your library" required />
+        <!-- VID of device for device recognition -->
         VID: <input type="text" class="form-control" name="vid" placeholder="VID of the device" required />
+        <!-- PID of the device for device recognition -->
         PID: <input type="text" class="form-control" name="pid" placeholder="PID of the device" required />
+        <!-- Name of the C Sharp Library of the device -->
         Library Name: <input type="text" class="form-control" name="library" placeholder="Library Name of the device" required />
         <div class="functions">
           <div>
             Function: <br>
+            <!-- Name of the function in the library -->
             &#8195;Function Name: <input type="text" minlength="2" class="form-control" name="function" placeholder="Name of the function in the library(e.g. turnOn, etc.)" required title="Minimum 2 character"/>
+            <!-- Allow function to be continuously invoked when the button is hold -->
             &#8195;Continuous? <input type="checkbox" class="form-control" name="continuous" value="true">
             <input type="hidden" class="form-control" value="false" name="continuous"><br>
+            <!-- Button for removing this function section from the form -->
             <input type="button" onclick="removeFunction(this)" style="float: right; margin-right: 100px;" value="Delete Function" /> <br><br>
           </div>
         </div>
+        <!-- Button for adding a new function -->
         <input type="button" onclick="addFunction(this)" style="float: right; margin-right: 100px;" value="Add function"/> <br><br>
+        <!-- Button for submitting the form -->
         <input type="submit" class="method-button" value="Submit"/>
       </form>
     </div>
