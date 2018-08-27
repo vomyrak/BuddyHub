@@ -1,0 +1,5 @@
+node_modules/*
+auth.json
+keys.json
+email.json
+.DS_STORE
