@@ -29,7 +29,7 @@ mongoose.connect(connectString, options)
   .catch(error => console.error('Failed to connect', error));
 
 
-// Model for mongo database
+// Model for mongo database (API devices)
 const apiSchema = new mongoose.Schema({
   name: String,
   email: String,
@@ -48,6 +48,7 @@ const apiSchema = new mongoose.Schema({
 
 const PendingAPI = mongoose.model('pendingAPIs', apiSchema, 'pendingAPIs');
 
+// Model for mongo database (C Sharp library devices)
 const cSharpSchema = new mongoose.Schema({
   name: String,
   email: String,
@@ -92,26 +93,37 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
+  // Render the homepage
   res.render('index');
 });
 
 app.get('/add-api', function(req, res) {
+  // Render the API form page
   res.render('add-api');
 });
 
 app.get('/add-c-sharp', function(req, res) {
+  // Render the C Sharp form page
   res.render('add-c-sharp');
 });
 
 app.post('/upload-api', function(req, res) {
-
+  // Get the fields from the form
   var name = req.body.name;
   var email = req.body.email;
   var device = req.body.device;
   var methods = [];
   var methods_text = "";
 
+  // Since when there is only one method,
+  // method[0] becomes the first char of the method name.
+  // While a method with a single char is not allowed,
+  // req.body.method[0].length == 1 will indicated that
+  // only one method is submitted, therefore shall not enters the while loop.
   if (req.body.method[0].length != 1) {
+    // If more than one method is submitted,
+    // add each method to the methods array
+    // and add the formatted text for the confirmation email to methods_text.
     for (var i = 0; i < req.body.method.length; i++) {
       var method = {
         method: req.body.method[i],
@@ -134,6 +146,9 @@ app.post('/upload-api', function(req, res) {
         "    Continuous: " + method.continuous + "\n";
     }
   } else {
+    // If only one method is submitted,
+    // add the method to the methods array
+    // and format the text for the confirmation email.
     methods = [{
       method: req.body.method,
       http_method: req.body.httpmethod,
@@ -153,6 +168,7 @@ app.post('/upload-api', function(req, res) {
       "    Continuous: " + req.body.continuous + "\n";
   }
 
+  // Put the fields together into the PendingAPI Schema.
   var api = new PendingAPI({
     name: name,
     email: email,
@@ -160,6 +176,7 @@ app.post('/upload-api', function(req, res) {
     methods: methods,
     processed: false
   });
+  // Save the details of the API into the database
   api.save(function(err) {
     if (err) return handleError(err);
   });
@@ -189,7 +206,7 @@ app.post('/upload-api', function(req, res) {
 });
 
 app.post('/upload-c-sharp', function(req, res) {
-
+  // Get the fields from the form
   var name = req.body.name;
   var email = req.body.email;
   var device = req.body.device;
@@ -200,7 +217,15 @@ app.post('/upload-c-sharp', function(req, res) {
   var functions = [];
   var functions_text = "";
 
+  // Since when there is only one function,
+  // function[0] becomes the first char of the function name.
+  // While a function with a single char is not allowed,
+  // req.body.function[0].length == 1 will indicated that
+  // only one function is submitted, therefore shall not enters the while loop.
   if (req.body.function[0].length != 1) {
+    // If more than one function is submitted,
+    // add each function to the functions array
+    // and add the formatted text for the confirmation email to functions_text.
     for (var i = 0; i < req.body.function.length; i++) {
       var func = {
         name: req.body.function[i],
@@ -213,6 +238,9 @@ app.post('/upload-c-sharp', function(req, res) {
         "    Continuous: " + func.continuous + "\n";
     }
   } else {
+    // If only one function is submitted,
+    // add the function to the functions array
+    // and format the text for the confirmation email.
     functions = [{
       name: req.body.function,
       continuous: req.body.continuous == 'true'
@@ -222,6 +250,7 @@ app.post('/upload-c-sharp', function(req, res) {
       "    Continuous: " + req.body.continuous + "\n";
   }
 
+  // Put the fields together into the PendingCSharp Schema.
   var csharp = new PendingCSharp({
     name: name,
     email: email,
@@ -233,6 +262,7 @@ app.post('/upload-c-sharp', function(req, res) {
     functions: functions,
     processed: false
   });
+  // Save the details of the C Sharp library into the database
   csharp.save(function(err) {
     if (err) return handleError(err);
   });

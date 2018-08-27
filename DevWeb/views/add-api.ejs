@@ -42,27 +42,42 @@
       </div>
 
       <div class="container">
-        <H1 class="lang en" style="text-align: center; font-size : 1.0em; font-weight: bolder">Upload your device on Buddy Hub!</H1>
+        <H1 class="lang en" style="text-align: center; font-size : 1.2em; font-weight: bolder">Upload your device on Buddy Hub!</H1>
         <br>
+        <!-- Form for users to fill in detail of the API of the device -->
         <form action="/upload-api" method="post">
-          <br> Name: <input type="text" class="form-control" name="name" placeholder="Please enter your name" required/>
+          <br>
+          <!-- Name of the user -->
+          Name: <input type="text" class="form-control" name="name" placeholder="Please enter your name" required/>
+          <!-- Email of the user -->
           Email: <input type="email" class="form-control" name="email" placeholder="How can we contact you?" required/>
+          <!-- Name of the device -->
           Device Name: <input type="text" class="form-control" name="device" placeholder="Name of the device you want us to add" required />
           <div class="methods">
             <div>
               Method: <br>
+              <!-- Display name of he method -->
               &#8195;Method Name: <input type="text" minlength="2" class="form-control" name="method" placeholder="Name of the method(e.g. turn on, etc.)" required title="Minimum 2 character"/>
+              <!-- HTTP method used in the request (GET, POST, PUT or DELETE) -->
               &#8195;HTTP Method: <input type="text" class="form-control" name="httpmethod" placeholder="HTTP method (GET, POST, PUT, DELETE)" required/>
+              <!-- URL of the HTTP request to be sent to -->
               &#8195;Link: <input type="text" class="form-control" name="link" placeholder="Link of the call" required/>
+              <!-- JSON data to be sent out -->
               &#8195;Data: <input type="text" class="form-control" name="data" placeholder="JSON data to be sent" required/>
+              <!-- Headers of the HTTP request to be sent -->
               &#8195;Headers: <input type="text" class="form-control" name="headers" placeholder="Header of the request" required/>
+              <!-- Field name of the text input to go in the JSON data to be sent -->
               &#8195;Text Input Field: <input type="text" class="form-control" name="textinput" placeholder="text input field in the JSON data if required"/>
+              <!-- Allow function to be continuously invoked when the button is hold -->
               &#8195;Continuous? <input type="checkbox" class="form-control" name="continuous" value="true">
               <input type="hidden" class="form-control" value="false" name="continuous"><br>
+              <!-- Button for removing this method section from the form -->
               <input type="button" onclick="removeMethod(this)" style="float: right; margin-right: 100px;" value="Delete Method" /> <br><br>
             </div>
           </div>
+          <!-- Button for adding a new method -->
           <input type="button" onclick="addMethod(this)" style="float: right; margin-right: 100px;" value="Add Method" /> <br><br>
+          <!-- Buttom for submitting the form -->
           <input type="submit" class="method-button" value="Submit" />
         </form>
       </div>
