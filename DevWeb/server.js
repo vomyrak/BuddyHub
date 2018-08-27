@@ -92,8 +92,9 @@ app.post('/upload-api', function(req, res) {
   var email = req.body.email;
   var device = req.body.device;
   var methods = [];
+  var methods_text = "";
 
-  if (req.body.method[1] != undefined) {
+  if (req.body.method[0].length != 1) {
     for (var i = 0; i < req.body.method.length; i++) {
       var method = {
         method: req.body.method[i],
@@ -105,6 +106,15 @@ app.post('/upload-api', function(req, res) {
         continuous: req.body.continuous[i] == 'true'
       }
       methods.push(method);
+
+      methods_text += "Method" + i + ": \n" +
+        "  Method Name: " + req.body.method[i] + "\n" +
+        "  Http Method: " + req.body.httpmethod[i] + "\n" +
+        "  Link: " + req.body.link[i] + "\n" +
+        "  Data: " + req.body.data[i] + "\n" +
+        "  Headers: " + req.body.headers[i] + "\n" +
+        "  Text Input Field: " + req.body.textinput[i] + "\n" +
+        "  Continuous: " + req.body.continuous[i] + "\n";
     }
   } else {
     methods = [{
@@ -115,7 +125,15 @@ app.post('/upload-api', function(req, res) {
       headers: req.body.headers,
       text_input_field: req.body.textinput,
       continuous: req.body.continuous == 'true'
-    }]
+    }];
+    methods_text = "Method1: \n" +
+      "  Method Name: " + req.body.method + "\n" +
+      "  Http Method: " + req.body.httpmethod + "\n" +
+      "  Link: " + req.body.link + "\n" +
+      "  Data: " + req.body.data + "\n" +
+      "  Headers: " + req.body.headers + "\n" +
+      "  Text Input Field: " + req.body.textinput + "\n" +
+      "  Continuous: " + req.body.continuous + "\n";
   }
 
   var api = new PendingAPI({
@@ -127,6 +145,27 @@ app.post('/upload-api', function(req, res) {
   });
   api.save(function(err) {
     if (err) return handleError(err);
+  });
+
+  // Send a confirmation email to user
+  var mailOptions = {
+    from: filereader3.email,
+    to: email,
+    subject: 'Device API Upload Form Received',
+    text: 'Dear ' + name + ',\n\n' +
+    'Your device suggestion form had been received. ' +
+    'We will notice you once we have reviewed your suggestion.\n\n' +
+    'Device: ' + device + '\n' +
+    'Methods: \n' + methods_text + '\n\n' +
+    'Thank you for choosing BuddyHub!\n\n'
+  };
+
+  transporter.sendMail(mailOptions, function(error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
   });
 
   res.redirect("/submitted");
