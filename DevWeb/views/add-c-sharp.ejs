@@ -44,7 +44,7 @@
     <div class="container">
       <H1 class="lang en" style="text-align: center; font-size : 1.0em; font-weight: bolder">Upload your device on Buddy Hub!</H1>
       <br>
-      <form action="/feedback" method="post">
+      <form action="/upload-c-sharp" method="post">
         <br>
         Name: <input type="text" class="form-control" name="name" placeholder="Please enter your name" required/>
         Email: <input type="email" class="form-control" name="email" placeholder="How can we contact you?" required/>
@@ -56,8 +56,9 @@
         <div class="functions">
           <div>
             Function: <br>
-            &#8195;Function Name: <input type="text" class="form-control" name="function1" placeholder="Name of the function in the library(e.g. turnOn, etc.)" required/>
-            &#8195;Continuous? <input type="checkbox" name="continuous" value="continuous"><br>
+            &#8195;Function Name: <input type="text" minlength="2" class="form-control" name="function" placeholder="Name of the function in the library(e.g. turnOn, etc.)" required title="Minimum 2 character"/>
+            &#8195;Continuous? <input type="checkbox" class="form-control" name="continuous" value="true">
+            <input type="hidden" class="form-control" value="false" name="continuous"><br>
             <input type="button" onclick="removeFunction(this)" style="float: right; margin-right: 100px;" value="Delete Function" /> <br><br>
           </div>
         </div>
