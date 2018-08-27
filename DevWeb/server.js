@@ -48,6 +48,23 @@ const apiSchema = new mongoose.Schema({
 
 const PendingAPI = mongoose.model('pendingAPIs', apiSchema, 'pendingAPIs');
 
+const cSharpSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  device: String,
+  class_name: String,
+  vid: String,
+  pid: String,
+  library_name: String,
+  functions: [{
+    name: String,
+    continuous: Boolean,
+  }],
+  processed: Boolean,
+});
+
+const PendingCSharp = mongoose.model('pendingCSharps', cSharpSchema, 'pendingCSharps');
+
 
 
 // Email Configuration
@@ -107,14 +124,14 @@ app.post('/upload-api', function(req, res) {
       }
       methods.push(method);
 
-      methods_text += "Method" + i + ": \n" +
-        "  Method Name: " + req.body.method[i] + "\n" +
-        "  Http Method: " + req.body.httpmethod[i] + "\n" +
-        "  Link: " + req.body.link[i] + "\n" +
-        "  Data: " + req.body.data[i] + "\n" +
-        "  Headers: " + req.body.headers[i] + "\n" +
-        "  Text Input Field: " + req.body.textinput[i] + "\n" +
-        "  Continuous: " + req.body.continuous[i] + "\n";
+      methods_text += "  Method" + (i + 1) + ": \n" +
+        "    Method Name: " + req.body.method[i] + "\n" +
+        "    Http Method: " + req.body.httpmethod[i] + "\n" +
+        "    Link: " + req.body.link[i] + "\n" +
+        "    Data: " + req.body.data[i] + "\n" +
+        "    Headers: " + req.body.headers[i] + "\n" +
+        "    Text Input Field: " + req.body.textinput[i] + "\n" +
+        "    Continuous: " + method.continuous + "\n";
     }
   } else {
     methods = [{
@@ -126,14 +143,14 @@ app.post('/upload-api', function(req, res) {
       text_input_field: req.body.textinput,
       continuous: req.body.continuous == 'true'
     }];
-    methods_text = "Method1: \n" +
-      "  Method Name: " + req.body.method + "\n" +
-      "  Http Method: " + req.body.httpmethod + "\n" +
-      "  Link: " + req.body.link + "\n" +
-      "  Data: " + req.body.data + "\n" +
-      "  Headers: " + req.body.headers + "\n" +
-      "  Text Input Field: " + req.body.textinput + "\n" +
-      "  Continuous: " + req.body.continuous + "\n";
+    methods_text = "  Method1: \n" +
+      "    Method Name: " + req.body.method + "\n" +
+      "    Http Method: " + req.body.httpmethod + "\n" +
+      "    Link: " + req.body.link + "\n" +
+      "    Data: " + req.body.data + "\n" +
+      "    Headers: " + req.body.headers + "\n" +
+      "    Text Input Field: " + req.body.textinput + "\n" +
+      "    Continuous: " + req.body.continuous + "\n";
   }
 
   var api = new PendingAPI({
@@ -157,6 +174,83 @@ app.post('/upload-api', function(req, res) {
     'We will notice you once we have reviewed your suggestion.\n\n' +
     'Device: ' + device + '\n' +
     'Methods: \n' + methods_text + '\n\n' +
+    'Thank you for choosing BuddyHub!\n\n'
+  };
+
+  transporter.sendMail(mailOptions, function(error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+
+  res.redirect("/submitted");
+});
+
+app.post('/upload-c-sharp', function(req, res) {
+
+  var name = req.body.name;
+  var email = req.body.email;
+  var device = req.body.device;
+  var class_name = req.body.class;
+  var vid = req.body.vid;
+  var pid = req.body.pid;
+  var library = req.body.library;
+  var functions = [];
+  var functions_text = "";
+
+  if (req.body.function[0].length != 1) {
+    for (var i = 0; i < req.body.function.length; i++) {
+      var func = {
+        name: req.body.function[i],
+        continuous: req.body.continuous[i] == 'true'
+      }
+      functions.push(func);
+
+      functions_text += "  Function" + (i + 1) + ": \n" +
+        "    Function Name: " + req.body.function[i] + "\n" +
+        "    Continuous: " + func.continuous + "\n";
+    }
+  } else {
+    functions = [{
+      name: req.body.function,
+      continuous: req.body.continuous == 'true'
+    }];
+    functions_text = "  Function1: \n" +
+      "    Function Name: " + req.body.function + "\n" +
+      "    Continuous: " + req.body.continuous + "\n";
+  }
+
+  var csharp = new PendingCSharp({
+    name: name,
+    email: email,
+    device: device,
+    class_name: class_name,
+    vid: vid,
+    pid: pid,
+    library_name: library,
+    functions: functions,
+    processed: false
+  });
+  csharp.save(function(err) {
+    if (err) return handleError(err);
+  });
+
+  // Send a confirmation email to user
+  var mailOptions = {
+    from: filereader3.email,
+    to: email,
+    subject: 'Device API Upload Form Received',
+    text: 'Dear ' + name + ',\n\n' +
+    'Your device suggestion form had been received. ' +
+    'We will notice you once we have reviewed your suggestion.\n\n' +
+    'Device: ' + device + '\n' +
+    'Class Name: ' + class_name + '\n' +
+    'vid: ' + vid + '\n' +
+    'pid: ' + pid + '\n' +
+    'Library Name: ' + library + '\n' +
+    'Functions: \n' + functions_text + '\n\n' +
     'Thank you for choosing BuddyHub!\n\n'
   };
 
