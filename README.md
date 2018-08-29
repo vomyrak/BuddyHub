@@ -1,5 +1,5 @@
 # BuddyHub
-## BuddyHub: A Universal Controller Platform for Assistive Technology
+## A Universal Controller Platform for Assistive Technology
 BuddyHub is an Open Source platform that leverages the Internet of Things to allow people with various disabilities to control devices in their environment through a simple-to-navigate and user-friendly interface.
 
 BuddyHub was born out of a join collaboration between Imperial College London and Wooden Spoon: The Children's Charity of Rugby, the latter of whom invests heavily in assistive technologies and aims to promote the development of such technologies and make them more accessible to end users.
