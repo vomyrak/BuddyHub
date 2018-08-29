@@ -44,7 +44,7 @@
       "text_input_field" : <field in JSON data that the text input goes>, } ],
     "apiType" : "Http"
   ```
-  * devices with C# library
+  * devices with C# library (need to implement our IDevice interface, more than 9 functions on same device might not work due to the limit of our button index, hope to be improved in the future): 
   ```
     "device": <Name of class that the functions are applied to(String)>,
     "device_name" : <display name of device(String)>,
