@@ -2,7 +2,7 @@
 ## Install and run the code on local machine
 
 1. Do `npm install` in this folder.
-2. Create a mongo database, put the details in *auth.json* in this folder in the following format:
+2. Create a mongo database(Refer to set up Mondo database below), put the details in *auth.json* in this folder in the following format:
   ```
   {
     "user": "<username of your database>",
@@ -27,7 +27,8 @@
 
 ## Set up Mongo database
 1. [Install MongoDB](https://docs.mongodb.com/manual/installation/)
-2. Add your own device.
+2. Set up a database with name "uc" and a collection inside it called "OutputDevices3"
+3. Add your own device in the collection.
   * devices with APIs:
   ```
     "device" : "<device name(String)>",
@@ -60,7 +61,7 @@
     "vid" : <VID of device(String)>,
     "pid" : <PID of device(String)>,
     "function" : [ {
-      "name" : <function name(String)>, 
+      "name" : <function name(String)>,
       "buttonIndex" : <button position(Int)(refer below)> } ],
     "apiType" : 'LocalLib'
   ```
