@@ -1,5 +1,5 @@
 # BuddyHub
-### A Universal Controller Platform for Assistive Technology
+### The Universal Controller Platform for Assistive Technology
 **BuddyHub is a free and Open Source platform that leverages the Internet of Things (IoT) to allow people with different disabilities to control various output devices in their environment via accesible inputs through a simple-to-navigate and user-friendly interface.**
 
 ## About
