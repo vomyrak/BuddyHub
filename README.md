@@ -59,8 +59,8 @@ List of features we wish to implement but have not:
 * Implementing clear and intuitive button icons for the web interface
 * Ability to save user settings and preferences
 * Ability to add futher language options
-* Integration with other softwares and open APIs to contain day-to-day application within BuddyHub's interface (e.g. instant-messaging apps, FitBit etc.)
-* Integration of an AAC (Augmentative and Alternative Communication) board alongisde the current text-to-speech capabilities
+* Integration with other softwares and open APIs to contain day-to-day applications within BuddyHub's interface (e.g. instant-messaging apps, Fitbit etc.)
+* Integration of an AAC (Augmentative and Alternative Communication) board alongside the current text-to-speech capability
 * Setting up of macros
 * Android and iOS mobile app
 * More audio-visual feedback options
