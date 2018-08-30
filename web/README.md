@@ -1,4 +1,4 @@
-# BuddyHub
+# BuddyHub (Installation guide for contributors)
 ## Install and run the code on local machine
 
 1. Do `npm install` in this folder.
