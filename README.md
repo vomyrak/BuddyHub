@@ -52,7 +52,18 @@ Wish to contribute to BuddyHub? Fork the repo and follow the installation guide 
 
 List of features we wish to implement but have not:
 #### Accesibility
-* Three
+* One and two-switch modes for navigation
+* Tremor filtering for push buttons
+* Adjustable wait time for click-on-hover option
+* Accesibility options for the visually impaired such as screen reader support
+* Implementing clear and intuitive button icons for the web interface
+* Ability to save user settings and preferences
+* Ability to add futher language options
+* Integration with other softwares and open APIs to contain day-to-day application within BuddyHub's interface (e.g. instant-messaging apps, FitBit etc.)
+* Integration of an AAC (Augmentative and Alternative Communication) board alongisde the current text-to-speech capabilities
+* Setting up of macros
+* Android and iOS mobile app
+* More audio-visual feedback options
 
 #### Security
 * API authentication via OAuth 2.0
