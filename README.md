@@ -39,18 +39,28 @@ To demonstrate the universal plug-and-play capabilities of the prototype that th
 ## Add a Device (Developer Documentation)
 Wish to integrate a device with BuddyHub?
 
-Requirements:
-* RESTful Web API
-* Two
-* Three
+Requirements :
+* RESTful Web API that accepts HTTP POST requests (for devices with a TCP connection)
+* C# wrapper that implements our IDevice interface (for USB devices)
+* Easy-to-understand device names and descriptions for hardware functionality
+* Supports API authentication via OAuth 2.0 (_to be implemented_)
 
 ## Future Improvements
 Wish to contribute to BuddyHub? Fork the repo and follow the installation guide as shown [here](https://github.com/vomyrak/WSUROP2018/blob/master/web/README.md).
 
-Features yet to be implemented:
-* One
-* Two
+List of features we wish to implement but have not:
+### Accesibility
 * Three
+
+### Security
+* API authentication via OAuth 2.0
+* Hardware authentication to register device's IP Address
+* GDPR compliance to ensure user's data security
+
+### Development
+* Improve on the workflow for developers to integrate new devices to BuddyHub
+* CLI (Command Line Interface) tool for the integration of new devices
+* Adding more devices to BuddyHub and possible integration with other smart hubs such as Apple HomeKit and Samsung SmartThings
 
 List of issues can be found [here](https://github.com/vomyrak/WSUROP2018/issues).
 
