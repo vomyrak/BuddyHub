@@ -27,9 +27,9 @@ To install the Windows version, follow the steps below:
 To demonstrate the universal plug-and-play capabilities of the prototype that the team developed, we cross-tested the universal controller platform with the following input and output devices:
 
 ### Input Devices:
-* Tobi Eyetracker
+(**_Any input devices that are natively mapped to a PC's mouse and keyboard inputs can be used to interact with BuddyHub's UI._**)
+* Tobii Eye Tracker 4C
 * Most accesible joysticks (we used ...)
-* 
 
 ### Output Devices:
 * Web-based Voice Synthesizer for Alexa (allows a user with limited vocal capabilities to interact with Alexa through BuddyHub)
@@ -40,7 +40,7 @@ To demonstrate the universal plug-and-play capabilities of the prototype that th
 Wish to integrate a device with BuddyHub?
 
 Requirements:
-* One
+* RESTful Web API
 * Two
 * Three
 
