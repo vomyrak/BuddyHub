@@ -26,12 +26,12 @@ To install the Windows version, follow the steps below:
 ## List of Compatible Devices (Updated: 30/8/18)
 To demonstrate the universal plug-and-play capabilities of the prototype that the team developed, we cross-tested the universal controller platform with the following input and output devices:
 
-### Input Devices:
-(**_Any input devices that are natively mapped to a PC's mouse and keyboard inputs can be used to interact with BuddyHub's UI._**)
+#### Input Devices:
+(_Any input devices that are natively mapped to a PC's mouse and keyboard inputs can be used to interact with BuddyHub's UI._)
 * Tobii Eye Tracker 4C
 * Most accesible joysticks (we used ...)
 
-### Output Devices:
+#### Output Devices:
 * Web-based Voice Synthesizer for Alexa (allows a user with limited vocal capabilities to interact with Alexa through BuddyHub)
 * Philips Hue Go ([API Documentation](https://www.developers.meethue.com/documentation/getting-started))
 * Robotic arm (we wrote a C# web API and wrapper to interact with the robotic arm's native C# firmware)
@@ -39,25 +39,27 @@ To demonstrate the universal plug-and-play capabilities of the prototype that th
 ## Add a Device (Developer Documentation)
 Wish to integrate a device with BuddyHub?
 
-Requirements :
+#### Requirements:
 * RESTful Web API that accepts HTTP POST requests (for devices with a TCP connection)
 * C# wrapper that implements our IDevice interface (for USB devices)
 * Easy-to-understand device names and descriptions for hardware functionality
-* Supports API authentication via OAuth 2.0 (_to be implemented_)
+* Supports API authentication via OAuth 2.0 and hardware authentication (_to be implemented_)
+
+#### Guide:
 
 ## Future Improvements
 Wish to contribute to BuddyHub? Fork the repo and follow the installation guide as shown [here](https://github.com/vomyrak/WSUROP2018/blob/master/web/README.md).
 
 List of features we wish to implement but have not:
-### Accesibility
+#### Accesibility
 * Three
 
-### Security
+#### Security
 * API authentication via OAuth 2.0
 * Hardware authentication to register device's IP Address
 * GDPR compliance to ensure user's data security
 
-### Development
+#### Development
 * Improve on the workflow for developers to integrate new devices to BuddyHub
 * CLI (Command Line Interface) tool for the integration of new devices
 * Adding more devices to BuddyHub and possible integration with other smart hubs such as Apple HomeKit and Samsung SmartThings
