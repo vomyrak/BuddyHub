@@ -40,6 +40,8 @@ To demonstrate the universal plug-and-play capabilities of the prototype that th
 ## Add a Device (Developer Documentation)
 Wish to integrate a device with BuddyHub?
 
+Users can suggest devices to be added to BuddyHub by clicking on the "Suggest Device" button on BuddyHub's UI. Simply just fill in the form and the details will be sent for a review. The admin team will look into adding the suggested devices on a regular basis. 
+
 #### Requirements:
 * RESTful Web API that accepts HTTP requests (for devices with a TCP/UDP connection)
 * C# wrapper that implements our IDevice interface (for USB devices)
