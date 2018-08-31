@@ -50,7 +50,7 @@ Wish to integrate a device with BuddyHub?
 * Visit [BuddyHub@Developers](https://developers-buddyhub.herokuapp.com/) to add a new device
 
 #### Suggest a Device
-Users can also suggest devices to be added to BuddyHub by clicking on the "Suggest Device" button on BuddyHub's UI. Simply just fill in the form and the details will be sent for a review. The admin team will look into adding the suggested devices on a regular basis.
+Users can also suggest devices to be added to BuddyHub by clicking on the ["Suggest Device"](https://wsurop18-universal-controller.herokuapp.com/contact) button on BuddyHub's UI. Simply just fill in the form and the details will be sent for a review. The admin team will look into adding the suggested devices on a regular basis.
 
 ## Future Improvements
 Wish to contribute to BuddyHub? Fork the repo and follow the installation guide as shown [here](https://github.com/vomyrak/WSUROP2018/blob/master/web/README.md).
