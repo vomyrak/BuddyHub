@@ -17,9 +17,9 @@ BuddyHub currently has a web and desktop (Windows) version, both of which are fu
 To access the web version of BuddyHub, please visit [BuddyHub (Web)](https://wsurop18-universal-controller.herokuapp.com/).
 
 To install the Windows version, follow the steps below:
-* One
-* Two
-* Three
+* [Download zip file from here.]() Extract the zip file to desired location. Among all other files, there should be two separate executables that include the server and the desktop UI.
+* To run BuddyHub, run server.exe.
+* To run desktop UI, after running server.exe, run UCUI.exe
 
 ## Guide to BuddyHub's UI
 
