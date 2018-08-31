@@ -40,8 +40,6 @@ To demonstrate the universal plug-and-play capabilities of the prototype that th
 ## Add a Device (Developer Documentation)
 Wish to integrate a device with BuddyHub?
 
-Users can suggest devices to be added to BuddyHub by clicking on the "Suggest Device" button on BuddyHub's UI. Simply just fill in the form and the details will be sent for a review. The admin team will look into adding the suggested devices on a regular basis. 
-
 #### Requirements:
 * RESTful Web API that accepts HTTP requests (for devices with a TCP/UDP connection)
 * C# wrapper that implements our IDevice interface (for USB devices)
@@ -49,6 +47,10 @@ Users can suggest devices to be added to BuddyHub by clicking on the "Suggest De
 * Supports API authentication via OAuth 2.0 and hardware authentication (_to be implemented_)
 
 #### Guide:
+* Visit [BuddyHub@Developers](https://developers-buddyhub.herokuapp.com/) to add a new device
+
+#### Suggest a Device
+Users can also suggest devices to be added to BuddyHub by clicking on the "Suggest Device" button on BuddyHub's UI. Simply just fill in the form and the details will be sent for a review. The admin team will look into adding the suggested devices on a regular basis.
 
 ## Future Improvements
 Wish to contribute to BuddyHub? Fork the repo and follow the installation guide as shown [here](https://github.com/vomyrak/WSUROP2018/blob/master/web/README.md).
@@ -74,6 +76,7 @@ List of features we wish to implement but have not:
 * GDPR compliance to ensure user's data security
 
 #### Development
+* An interface for admins to approve and process device suggestions and submissions
 * Improve on the workflow for developers to integrate new devices to BuddyHub
 * CLI (Command Line Interface) tool for the integration of new devices
 * Adding more devices to BuddyHub and possible integration with other smart hubs such as Apple HomeKit and Samsung SmartThings
