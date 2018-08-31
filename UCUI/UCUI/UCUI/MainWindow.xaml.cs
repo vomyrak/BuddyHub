@@ -264,7 +264,7 @@ namespace UCUI
                         if (curControl.GetType() == HelpButton.GetType()) //Note the bug: If no image added to Button label
                             if (((TextBlock)((StackPanel)((Button)curControl).Content).Children[1]).Text.Equals("Clear"))
                             {
-                                ((Button)curControl).PreviewMouseDown += delegate (object a, MouseButtonEventArgs i)
+                                ((Button)curControl).Click += delegate (object a, RoutedEventArgs i)
                                 {
                                     myTextbox.Text = null;
                                 };
@@ -332,7 +332,9 @@ namespace UCUI
                     {
                         if ((ButtonArray?[i]?.Content) != null && ButtonArray[i].IsFocused)
                         {
+                            buttonPressed = true;
                             ((UCSettings)DataContext).ButtonKey = "Button" + i.ToString();
+                            ButtonArray[i].RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
                             CheckSound();
                             return;
                         }
@@ -341,11 +343,14 @@ namespace UCUI
 
                 for (int i = 0; i < 9; i++)
                 {
-                    if (UCSettings.GetKey(i).Equals(e.Key.ToString()) && (ButtonArray?[i]?.Content) != null) //if content is null the button is not visible, so checksound shouldn't be played
+                    if (UCSettings.GetKey(i).Equals(e.Key.ToString()) && (ButtonArray[i].Content) != null) //if content is null the button is not visible, so checksound shouldn't be played
                     {
+                        buttonPressed = true;
                         ((UCSettings)DataContext).ButtonKey = "Button" + i.ToString();
-                        ButtonArray[i].RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                        //ButtonArray[i].RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
                         CheckSound();
+
+
                         e.Handled = true;
                         return;
                     }
@@ -362,6 +367,7 @@ namespace UCUI
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
+            buttonPressed = false;
             ((UCSettings)DataContext).ButtonKey = "ButtonNull";
         }
         #endregion
