@@ -48,6 +48,11 @@ Wish to integrate a device with BuddyHub?
 
 #### Guide:
 * Visit [BuddyHub@Developers](https://developers-buddyhub.herokuapp.com/) to add a new device
+* Choose to add a device with either a RESTful API or a C# interface
+* Fill up the form with user-friendly names and descriptions (these will be what users see in the main BuddyHub UI)
+* Specify the HTTP methods and resources that BuddyHub will use to interact with your device
+* Select if a text input interface is require for your device
+* Submit your device for approval by the admin team and we'll get back to you as soon as possible
 
 #### Suggest a Device
 Users can also suggest devices to be added to BuddyHub by clicking on the ["Suggest Device"](https://wsurop18-universal-controller.herokuapp.com/contact) button on BuddyHub's UI. Simply just fill in the form and the details will be sent for a review. The admin team will look into adding the suggested devices on a regular basis.
