@@ -18,8 +18,7 @@ To access the web version of BuddyHub, please visit [BuddyHub (Web)](http://wsur
 
 To install the Windows version, follow the steps below:
 * [Download zip file from here.](http://wsurop18-universal-controller.herokuapp.com/buddyhub-2018-08-31.zip) Extract the zip file to desired location. Among all other files, there should be two separate executables that include the server and the desktop UI.
-* To run BuddyHub, run server.exe.
-* To run the desktop UI, after running server.exe, run UCUI.exe
+* To run BuddyHub, run server.exe followed by UCUI.exe to launch the UI.
 
 ## Guide to BuddyHub's UI
 
@@ -35,7 +34,7 @@ To demonstrate the universal plug-and-play capabilities of the prototype that th
 #### Output Devices:
 * Web-based Voice Synthesizer for Alexa (allows a user with limited vocal capabilities to interact with Alexa through BuddyHub)
 * Philips Hue Go ([API Documentation](https://www.developers.meethue.com/documentation/getting-started))
-* Robotic arm (we wrote a C# web API and wrapper to interact with the robotic arm's native C# firmware)
+* Robotic arm (we wrote a **C# web API and wrapper** to interact with the robotic arm's native C# firmware)
 
 ## Add a Device (Developer Documentation)
 Wish to integrate a device with BuddyHub?
