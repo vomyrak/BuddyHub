@@ -23,7 +23,7 @@ To install the Windows version, follow the steps below:
 ## Guide to BuddyHub's UI
 Detailed below are the accessibility settings that we have implemented on the web and desktop versions of BuddyHub's UI. This should assist future developers should they wish to edit current / add new accessibility features.
 ### BuddyHub (Web)
-### 1. Stylesheet Switcher
+#### 1. Stylesheet Switcher
 This provides an alternate theme for the user to choose from. In between your `<head>` tags in the `.ejs` file, link a second stylesheet (`style2.css`). Duplicate your existing stylesheet and change the stylings to create `style2.css`.
 
 ```html
@@ -80,7 +80,7 @@ setActiveStyleSheet(title);
 ```
 
 
-### 2. Button shake
+#### 2. Button shake
 Allow users to enable a visual feedback when clicking on buttons. In between your `<head>` tags in the `.ejs` file, link the buttonshake stylesheet (`buttonshake.css`) as the **_first_** stylesheet.
 
 ```html
@@ -134,7 +134,7 @@ $("#shake").click( function (){
   );
 ```
 
-### 3. Font size
+#### 3. Font size
 Allow users to increase or decrease the overall font size of the page. 
 
 Create buttons into your settings modal box  to allow selection.
@@ -157,7 +157,7 @@ function resizeText(multiplier) {
 
 ```
 
-### 4. Font for users with dyslexia
+#### 4. Font for users with dyslexia
 The Lexie Readable font was designed with accessibility and legibility in mind, an attempt to capture the strength and clarity of Comic Sans without the comic book associations. Add the following into css files.
 ```css
 @font-face {
@@ -174,7 +174,7 @@ The Lexie Readable font was designed with accessibility and legibility in mind, 
 
 Add the following [files](https://github.com/vomyrak/WSUROP2018/tree/master/web/public/css/fonts) into your css/fonts folder. 
 
-### 5. Sound
+#### 5. Sound
 Enable user to choose between having an audio feedback or not when clicking on `<a>, <button>` and  `<select>` tags. The following code also consists of 5 other choices of sound that the user can choose from.
 
 ```javascript
@@ -240,7 +240,7 @@ $("#mutefxn").click( function (){
 <button class="settingsbtn" id="sound5">5</button>
 ```
 
-### Cookies
+#### Cookies
 The following code saves the selection of all the settings in cookies.
 ```javascript
 function createCookie(name, value, days) {
