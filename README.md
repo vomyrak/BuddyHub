@@ -240,7 +240,7 @@ $("#mutefxn").click( function (){
 <button class="settingsbtn" id="sound5">5</button>
 ```
 
-#### Cookies
+#### 6. Cookies
 The following code saves the selection of all the settings in cookies.
 ```javascript
 function createCookie(name, value, days) {
