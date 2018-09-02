@@ -40,8 +40,13 @@
     <!-- Sidebar  -->
     <nav id="sidebar">
       <div class="sidebar-header">
-         <h2>Welcome!</h2>
+         
+<% if(!currentUser){ %>
 
+<h2>Welcome!</h2>
+<% } else{ %>
+ <h2><%= currentUser.username %></h2> 
+<% } %>
 
         
       </div>
@@ -57,7 +62,7 @@
 
 <button data-toggle="modal" data-target="#loginmodal">Login</button>  |
 
-<button href=''>Logout</button>
+       <button>   <a href='/logout'>Logout</a></button>
 
         </footer>        
         
@@ -139,19 +144,17 @@ Settings
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-        <form action="#" method="POST">
+      
       <div class="modal-body">
-     
+       <form action="/register" method="POST">
 <input type="text" name="username" placeholder="Username">
  <input type="password" name="password" placeholder="Password">
-   
-
+   <button>Submit</button>
+ </form>
             
       </div>
-      <div class="modal-footer">
-        <button type="button" class="settingsbtn" data-dismiss="modal">Submit</button>
-      </div>
-          </form>
+    
+         
     </div>
   </div>
 </div>
@@ -171,13 +174,9 @@ Settings
      
 <input type="text" name="username" placeholder="Username">
  <input type="password" name="password" placeholder="Password">
- 
 
-            
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="settingsbtn" data-dismiss="modal">Submit</button>
-      </div>
+        <button>Submit</button>
+     </div>
           </form>
     </div>
   </div>

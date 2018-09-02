@@ -46,7 +46,7 @@ a:focus {
     margin: 40px 0;
 }
 
-#namebox, #namebox-zh {
+#namebox {
 	width: 100%;
     color: black;
     text-align: center;

@@ -15,6 +15,12 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
   extended: true
 }));
 
+var passport = require("passport");
+//enable login method using local strategy
+var localStrategy = require("passport-local");
+var passportLocalMongoose = require("passport-local-mongoose");
+var User = require("./public/js/user");
+
 // Config and connect to mongo database
 var options = {
   useNewUrlParser: true,
@@ -28,6 +34,18 @@ var connectString = "mongodb://" + filereader.dns + ":27017/uc";
 mongoose.connect(connectString, options)
   .then(() => console.log('Connected to MongoDB...'))
   .catch(error => console.error('Failed to connect', error));
+
+//Passport Configuration
+app.use(require("express-session")({
+        secret : "WSUROP2018",
+        resave : false,
+        saveUninitialized : false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // Model for mongo database
 const outputSchema = new mongoose.Schema({
@@ -90,6 +108,12 @@ app.set('view engine', 'ejs');
 // HTML directory
 const html_dir = __dirname + '/public/html/';
 
+//middleware so that req.user will be available in every single template
+app.use(function(req,res,next){
+   res.locals.currentUser = req.user;
+    next();
+});
+
 app.get('/', function(req, res) {
   // Direct to home page
   // Render the page with all output devices in the dropdown
@@ -105,7 +129,7 @@ app.get('/', function(req, res) {
   });
 });
 
-app.get('/contact', function(req, res) {
+app.get('/contact', isLoggedIn, function(req, res) {
   // Direct to device suggestion page
   // Render the page with all output devices in the dropdown
 
@@ -120,7 +144,7 @@ app.get('/contact', function(req, res) {
   });
 });
 
-app.get('/feedback', function(req, res) {
+app.get('/feedback', isLoggedIn, function(req, res) {
   // Upload the details o the device suggestion to the database.
   // The "processed" field is set to false until the admin process this
   // device suggestion.
@@ -147,7 +171,7 @@ app.get('/feedback', function(req, res) {
     'We will notice you once we have reviewed your suggestion.\n\n' +
     'Device: ' + req.query.device + '\n' +
     'Description: ' + req.query.description + '\n\n' +
-    'Thank you for choosing BuddyHub!\n\n' 
+    'Thank you for choosing BuddyHub!\n\n'
   };
 
   transporter.sendMail(mailOptions, function(error, info) {
@@ -172,7 +196,7 @@ app.get('/feedback', function(req, res) {
   });
 });
 
-app.get('/device', function(req, res) {
+app.get('/device', isLoggedIn, function(req, res) {
   // Render the page with all output devices in the menu
   // Render the page with methods of the selected device
   var query = OutputDevice.find().sort('device');
@@ -250,3 +274,54 @@ app.post('/tts', function(req, res) {
   // Send the http request with the data
   xhttp.send(JSON.stringify(data));
 });
+
+
+//-------------------------//
+//-----AUTHENTICATION------//
+//-------------------------//
+
+
+//Auth routes//
+
+
+//handle sign up logic
+app.post("/register", function(req,res){
+   //making a new user (1)
+    var newUser = new User({username : req.body.username});
+    User.register(newUser, req.body.password, function(err,user) {
+        if(err){
+            console.log(err);
+            return res.render("home");
+        }
+        //then loging them in using passport.authenticate (2)
+        passport.authenticate("local")(req,res, function(){
+            res.redirect("/");
+        });
+    }
+
+    )
+});
+
+//handling login logic
+//using middleware to call authenticate method
+app.post("/login", passport.authenticate("local",
+    {
+        successRedirect: "/",
+        failureRedirect: "/"
+    }
+    ), function(req,res){
+});
+
+//Logout Route
+app.get("/logout", function(req,res){
+    req.logout();
+    res.redirect("/");
+});
+
+//middleware to check if user is logged in
+function isLoggedIn(req,res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/");
+}
