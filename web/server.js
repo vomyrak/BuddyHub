@@ -144,11 +144,7 @@ app.get('/contact', isLoggedIn, function(req, res) {
   });
 });
 
-<<<<<<< HEAD
 app.get('/feedback', isLoggedIn, function(req, res) {
-=======
-app.post('/feedback', function(req, res) {
->>>>>>> ffe6e5b... change device suggesstion submission form to post method
   // Upload the details o the device suggestion to the database.
   // The "processed" field is set to false until the admin process this
   // device suggestion.
