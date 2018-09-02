@@ -1,7 +1,4 @@
-var callback_map = {
-  "decode_and_play_audio": decodeAndPlay,
-  "open_link": openLink
-};
+var callback_map = {"decode_and_play_audio": decodeAndPlay};
 
 function sendRequest(button) {
   var http_method = document.getElementById("http_method" + button.value).value;
@@ -30,14 +27,19 @@ function sendRequest(button) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
+      // If the http request is successful
+      console.log("success");
       // If there is a callback function,
       // find the coresponding function in the callback_map and apply.
       if (callback_function != '') {
+        // console.log(this.responseText);
+        console.log(this.responseText);
         callback_map[callback_function](this.response);
       }
+    } else {
+      console.log(this.responseText);
     }
   };
-
   // Open Connection
   xhttp.open(http_method, link, true);
   // Set headers of the http request
@@ -49,20 +51,8 @@ function sendRequest(button) {
   xhttp.send(data);
 }
 
-function decodeAndPlay(link) {
+function decodeAndPlay(encodedMP3) {
   // Play the audio on the server
-  var audio = new Audio(link);
-  audio.load();
+  var audio = new Audio('/synthesize-text-audio.mp3');
   audio.play();
-}
-
-function openLink(link) {
-  var win = window.open(link, '_blank');
-  if (win) {
-    //Browser has allowed it to be opened
-    win.focus();
-  } else {
-    //Browser has blocked it
-    alert('Please allow popups for this website');
-  }
 }
