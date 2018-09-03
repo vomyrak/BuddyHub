@@ -322,7 +322,7 @@ To demonstrate the universal plug-and-play capabilities of the prototype that th
 #### Output Devices:
 * Web-based Voice Synthesizer for Alexa (allows a user with limited vocal capabilities to interact with Alexa through BuddyHub)
 * Philips Hue Go ([API Documentation](https://www.developers.meethue.com/documentation/getting-started))
-* Robotic arm (we wrote a **C# web API and wrapper** to interact with the robotic arm's native C# firmware)
+* Robotic arm (we wrote a C# API to interact with the robotic arm's native firmware)
 
 ## Add a Device (Developer Documentation)
 Wish to integrate a device with BuddyHub?
