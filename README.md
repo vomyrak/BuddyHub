@@ -23,6 +23,7 @@ To install the Windows version, follow the steps below:
 ## Guide to BuddyHub's UI
 Detailed below are the accessibility settings that we have implemented on the web and desktop versions of BuddyHub's UI. This should assist future developers should they wish to edit current / add new accessibility features.
 ### BuddyHub (Web)
+![Web Screenshot](https://user-images.githubusercontent.com/33024429/44993438-7fdbd700-af92-11e8-89af-382574926858.png)
 #### 1. Stylesheet Switcher
 This provides an alternate theme for the user to choose from. In between your `<head>` tags in the `.ejs` file, link a second stylesheet (`style2.css`). Duplicate your existing stylesheet and change the stylings to create `style2.css`.
 
@@ -309,6 +310,7 @@ window.onunload = function(e) {
 
 ```
 ### BuddyHub (Desktop)
+![Desktop Screenshot](https://user-images.githubusercontent.com/33024429/44993218-b7964f00-af91-11e8-8178-2ab4fd17444d.png)
 
 ## List of Compatible Devices (Updated: 30/8/18)
 To demonstrate the universal plug-and-play capabilities of the prototype that the team developed, we cross-tested the universal controller platform with the following input and output devices:
