@@ -22,7 +22,6 @@ C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\UCUI\Plugin\Lynxmotion
 D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\Lynxmotion.dll.config
 D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\Lynxmotion.dll
 D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\Lynxmotion.pdb
-D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\CSharpServer.exe
 D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\MongoDB.Bson.dll
 D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\MongoDB.Driver.dll
 D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\Newtonsoft.Json.dll
@@ -30,8 +29,6 @@ D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\Mong
 D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\DnsClient.dll
 D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
 D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\System.Buffers.dll
-D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\CSharpServer.pdb
-D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\CSharpServer.exe.config
 D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\MongoDB.Bson.xml
 D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\MongoDB.Driver.xml
 D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\Newtonsoft.Json.xml
@@ -48,3 +45,8 @@ C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\UCUI\Plugin\Lynxmotion
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\AppServer.pdb
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\AppServer.exe.config
 C:\Users\Vomyrak\Documents\VS Projects\WSUROP18\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\NAudio.xml
+D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\AppServer.exe
+D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\NAudio.dll
+D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\AppServer.pdb
+D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\AppServer.exe.config
+D:\Visual Studio\Projects\WSUROP\UCUI\UCUI\UCUI\Plugin\Lynxmotion\bin\Debug\NAudio.xml

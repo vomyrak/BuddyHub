@@ -189,7 +189,7 @@ namespace UCUI.Models
                                     //        Thread.Sleep(20);
                                     //    }
                                     //});
-
+                                    selectedDevice = "AL5D";
                                     break;
                                 case "Light switch":
                                     selectedDevice = "smart lamp";
@@ -200,7 +200,7 @@ namespace UCUI.Models
                             }
                             if (value == "ButtonNull")
                             {
-                                if (selectedDevice != "Alexa")
+                                if (selectedDevice != "Alexa" && selectedDevice != "AL5D")
                                 {
                                     currentWindow.NotifyServer(currentWindow.localIP + selectedDevice + "/" + buttonIndex,
                                    "", "POST");
@@ -223,7 +223,7 @@ namespace UCUI.Models
                                     {
                                         while (currentWindow.buttonPressed)
                                         {
-                                            currentWindow.NotifyServer(currentWindow.localIP + selectedDevice + "/" + buttonIndex,
+                                            currentWindow.NotifyServer(currentWindow.localIP + "AL5D" + "/" + buttonIndex,
                                               "",
                                             "POST");
                                             Thread.Sleep(100);

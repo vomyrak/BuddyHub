@@ -56,6 +56,9 @@ namespace AppServer
             ws = new WebServer(this.SendResponse, hostAddress);
             client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+
         }
 
         /// <summary>
@@ -311,7 +314,7 @@ namespace AppServer
         /// <returns>A string corresponding to the status of the operation</returns>
         public string SendResponse(HttpListenerRequest request)
         {
-
+            Console.WriteLine(request.Url);
             string rawUrl = request.RawUrl.Replace("%20", " ");
             string[] parsedRequest = rawUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
             

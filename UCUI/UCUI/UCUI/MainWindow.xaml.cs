@@ -424,9 +424,9 @@ namespace UCUI
 
        public void NotifyServer(string url, string content, string method, string contentType = "application/json")
         {
+                Console.WriteLine(url); 
             Task.Run(() =>
             {
-
                 HttpRequestMessage message = new HttpRequestMessage()
                 {
                     Method = new HttpMethod(method),
