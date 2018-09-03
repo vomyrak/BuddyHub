@@ -81,6 +81,14 @@ namespace AppServer {
             case 1:
             this.listBox = ((System.Windows.Controls.ListBox)(target));
             return;
+            case 2:
+            
+            #line 45 "..\..\..\UserControls\HelpView.xaml"
+            ((System.Windows.Controls.Button)(target)).Click += new System.Windows.RoutedEventHandler(this.Button_Click);
+            
+            #line default
+            #line hidden
+            return;
             }
             this._contentLoaded = true;
         }

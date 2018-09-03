@@ -1,4 +1,5 @@
-﻿﻿################################################################################
+<<<<<<< HEAD
+﻿################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
@@ -24,8 +25,10 @@
 /CSharpServer/CSharpServer/bin/Debug
 /UC
 /VoiceSynthesizer
+/UCUI/UCUI/UCUI/obj
 /CSharpServer/.vs/CSharpServer/v15
 /Misc/GlobalHook/.vs/GlobalHook
+/UCUI/UCUI/UCUI/bin
 /UCUI/UCUI/UCUI/CSharpServer/auth.json
 /UCUI/UCUI/UCUI/auth.json
 /UCUI/UCUI/Test
