@@ -23,7 +23,7 @@ To install the Windows version, follow the steps below:
 ## Guide to BuddyHub's UI
 Detailed below are the accessibility settings that we have implemented on the web and desktop versions of BuddyHub's UI. This should assist future developers should they wish to edit current / add new accessibility features.
 
-To configure the accessibility settings of BuddyHub, check out this [guide](https://github.com/vomyrak/BuddyHub/blob/master/accessibility.md)
+To configure the accessibility settings of BuddyHub, check out this [guide](https://github.com/vomyrak/BuddyHub/blob/master/accessibility.md).
 
 ### BuddyHub (Web)
 ![Web Screenshot](https://user-images.githubusercontent.com/33024429/44993438-7fdbd700-af92-11e8-89af-382574926858.png)
