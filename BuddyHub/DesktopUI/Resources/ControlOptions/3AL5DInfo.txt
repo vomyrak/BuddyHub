@@ -1,0 +1,7 @@
+true true true true false true true true true
+false
+Robotic arm
+Control the movement of a Lynxmotion AL5D robotic arm
+\\images\\arm.png
+Grab Forward Up Left Right Release Back Down
+\\images\\grab.png \\images\\forward.png \\images\\up.png \\images\\left.png \\images\\right.png \\images\\release.png \\images\\backwards.png \\images\\down.png

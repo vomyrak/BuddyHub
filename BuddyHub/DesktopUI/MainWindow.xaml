@@ -1,0 +1,179 @@
+﻿    <Window x:Class="UCUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UCUI"
+        xmlns:prop='clr-namespace:UCUI.Models'
+        mc:Ignorable="d"
+        xmlns:views='clr-namespace:UCUI.UserControls'
+        Title="Universal Controller"
+        Height="450"
+        Width="800"
+        WindowState='Maximized'
+        FontSize='22'
+        FontFamily='Calibri'
+        KeyUp='Window_KeyUp'
+        PreviewKeyDown="Window_PreviewKeyDown"
+            PreviewMouseDown="Window_PreviewMouseDown">
+
+  <Grid>
+    <Rectangle Name='Overlay'
+               Fill='#7F000000'
+               Visibility='Collapsed'
+               Panel.ZIndex='1'
+               MouseUp='Outside_Click' />
+
+    <views:HelpView x:Name='HelpView'
+                    Visibility='Collapsed'
+                    Panel.ZIndex='3' />
+
+    <views:SettingsView x:Name='SettingsView'
+                        Visibility='Collapsed'
+                        Panel.ZIndex='3' />
+
+    <DockPanel x:Name='MainView'
+               Panel.ZIndex='0'>
+      <StackPanel Background='{DynamicResource ThemeBrush}'
+                  DockPanel.Dock='Top'
+                  Orientation='Horizontal'>
+        <Image x:Name='HeaderPic'
+               MaxHeight='24'
+               Margin='5 0 10 0' />
+        <TextBlock x:Name='TitleBlock'
+                   Background='#00000000'
+                   FontSize='26'
+                   FontWeight='Bold'
+                   Foreground='White' 
+                   Text='{Binding Message}'/>
+      </StackPanel>
+
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width='Auto' />
+          <ColumnDefinition Width='*' />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+          <RowDefinition Height='1*' />
+        </Grid.RowDefinitions>
+        <Expander x:Name="OptionsExpander"
+                  ExpandDirection='Right'
+                  Background="{DynamicResource ThemeBrush}"
+                  IsExpanded='True'
+                  PreviewGotKeyboardFocus="OptionsExpander_GotFocus"
+                  LostFocus="OptionsExpander_LostFocus">
+          <Expander.HeaderTemplate>
+            <DataTemplate>
+              <TextBlock Width="30" 
+                        Focusable="False" />
+            </DataTemplate>
+          </Expander.HeaderTemplate>
+
+          <DockPanel Grid.Column='0'
+                     >
+            <TextBlock TextWrapping='Wrap'
+                       Text='      Control Options       '
+                       FontSize='24'
+                       Background="{DynamicResource ThemeBrush}"
+                       FontFamily="Calibri"
+                       FontWeight="Bold"
+                       Foreground="White"
+                       DockPanel.Dock='Top'
+                       x:Name='OptionsHeader' />
+
+            <Grid DockPanel.Dock='Bottom'>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width='1*' />
+                <ColumnDefinition Width='1*' />
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition Height='60' />
+              </Grid.RowDefinitions>
+              <Button Name='SettingsButton'
+                      Style='{StaticResource Shaker}'
+                      Content='Settings'
+                      Grid.Column='0'
+                      Margin='5 5 5 5'
+                      Click='PageOpen' />
+              <Button x:Name='HelpButton'
+                      Grid.Column='1'
+                      Content='Help'
+                      Margin='0 5 5 5'
+                      Style='{StaticResource Shaker}'
+                      Click='PageOpen' />
+            </Grid>
+
+            <ListBox x:Name='ControlOptions'
+                     Grid.Column='0'
+                     SelectionChanged='SelectionChanged'
+                     MaxWidth='250'
+                     ScrollViewer.HorizontalScrollBarVisibility='Disabled'   
+                     KeyDown="ControlOptions_KeyDown"
+                     >
+
+              <ListBox.ItemTemplate >
+                <DataTemplate>
+                  <DockPanel>
+                    <Image DockPanel.Dock='Left'
+                           Source='{Binding actualUri}'
+                           MaxWidth='64'
+                           MaxHeight='64'/>
+                    <TextBlock Text='{Binding name}'
+                               HorizontalAlignment='Left'
+                               Foreground="#FF353535"
+                               Margin='9, 0, 0, 0'
+                               DockPanel.Dock='Top' />
+                    <TextBlock Text='{Binding description}'
+                               HorizontalAlignment='Left'
+                               Foreground="Gray"
+                               Margin='9, 0, 0, 10'
+                               FontSize='16 '
+                               TextWrapping='Wrap'
+                               DockPanel.Dock='Bottom' />
+
+                  </DockPanel>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+
+              <ListBox.Resources>
+                <Style x:Key="{x:Type ScrollBar}"
+                       TargetType="{x:Type ScrollBar}">
+                  <Setter Property="MinWidth"
+                          Value="30" />
+                </Style>
+              </ListBox.Resources>
+
+            </ListBox>
+          </DockPanel>
+        </Expander>
+        <Grid x:Name='ButtonGrid'
+              Grid.Column='1'>
+
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height='2*' />
+            <RowDefinition Height='2*' />
+            <RowDefinition Height='2*' />
+            <RowDefinition />
+          </Grid.RowDefinitions>
+
+          <Grid.Resources>
+            <Style TargetType="{x:Type Button}">
+              <Setter Property='Margin'
+                      Value='10' />
+            </Style>
+
+          </Grid.Resources>
+        </Grid>
+      </Grid>
+    </DockPanel>
+  </Grid>
+</Window>
