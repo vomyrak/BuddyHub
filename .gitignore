@@ -23,7 +23,7 @@
 !*/packages/build/
 
 # Uncomment if necessary however generally it will be regenerated when needed
-#*//packages/repositories.config
+#*/packages/repositories.config
 
 # MSTest test Results
 */[Tt]est[Rr]esult*/
@@ -218,3 +218,4 @@ wwwroot/*
 #####
 # End of core ignore list, below put you custom 'per project' settings (patterns or path)
 #####
+/BuddyHub
