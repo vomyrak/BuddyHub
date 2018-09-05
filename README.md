@@ -347,7 +347,7 @@ Wish to integrate a device with BuddyHub?
 Users can also suggest devices to be added to BuddyHub by clicking on the ["Suggest Device"](https://wsurop18-universal-controller.herokuapp.com/contact) button on BuddyHub's UI. Simply just fill in the form and the details will be sent for a review. The admin team will look into adding the suggested devices on a regular basis.
 
 ## Future Improvements
-Wish to contribute to BuddyHub? Fork the repo and follow the installation guide as shown [here](https://github.com/vomyrak/WSUROP2018/blob/master/web/README.md).
+Wish to contribute to BuddyHub? Fork the repo and follow the installation guide as shown [here](https://github.com/vomyrak/BuddyHub/blob/master/web/README.md).
 
 List of features we wish to implement but have not:
 #### Accesibility
@@ -375,7 +375,7 @@ List of features we wish to implement but have not:
 * CLI (Command Line Interface) tool for the integration of new devices
 * Adding more devices to BuddyHub and possible integration with other smart hubs such as Apple HomeKit and Samsung SmartThings
 
-List of issues can be found [here](https://github.com/vomyrak/WSUROP2018/issues).
+List of issues can be found [here](https://github.com/vomyrak/BuddyHub/issues).
 
 ## Contributors and Acknowledgements
 This project was initiated and funded by Wooden Spoon: The Children's Charity of Rugby, and was developed by a team of 10 undergraduate students from Imperial College London under the supervision and guidance of _Dr. Ian Radcliffe_ from Imperial College London, Department of Bioengineering.
