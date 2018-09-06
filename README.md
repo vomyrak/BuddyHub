@@ -7,7 +7,7 @@ BuddyHub was born out of a joint collaboration between Imperial College London a
 
 BuddyHub aims to be an affordable, end-to-end solution for people with disabilities to utilize smart devices in their surroundings through a variety of accessible input devices that caters to their individual needs in a plug-and-play fashion. This is all done through the user interface of BuddyHub, which was designed with a special needs audience in mind. For instance, a user with limited motion capabilities could control smart appliances, robotic arms and other forms of hardware they might need, as long as they are integrated into BuddyHub's system.
 
-BuddyHub interacts with third-party devices via HTTP requests to the API endpoint of integrated devices which are supplied by developers through our developer portal.
+BuddyHub interacts with third-party devices via HTTP requests to the RESTful API endpoint of integrated devices which are supplied by developers through our developer portal.
 
 This project also aims to promote the development of assistive technology by providing a platform for developers and companies to build on and integrate their products with. The ultimate goal is to make such technologies more affordable as well as integrate them with the Internet of Things for the benefit of end users. As more devices become interconnected, this universal controller platform can act as a central hub of control for these devices, giving users with various disabilities the ability to utilize a wide range of devices that cater to their individual needs.
 
