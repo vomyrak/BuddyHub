@@ -52,18 +52,6 @@ passport.deserializeUser(User.deserializeUser());
 const OutputDevice = require('./models/output-device');
 const DeviceSuggestion = require('./models/device-suggestion');
 
-// Email Configuration
-
-var nodemailer = require('nodemailer');
-
-var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: filereader3.email,
-    pass: filereader3.password
-  }
-});
-
 // A dictionary of online users
 const users = {};
 
@@ -115,7 +103,7 @@ app.get('/contact', isLoggedIn, function(req, res) {
   });
 });
 
-app.get('/feedback', isLoggedIn, function(req, res) {
+app.post('/feedback', isLoggedIn, function(req, res) {
   // Upload the details o the device suggestion to the database.
   // The "processed" field is set to false until the admin process this
   // device suggestion.
@@ -138,25 +126,8 @@ app.get('/feedback', isLoggedIn, function(req, res) {
   });
 
   // Send a confirmation email to user
-  var mailOptions = {
-    from: filereader3.email,
-    to: email,
-    subject: 'Device Suggestion Form Received',
-    text: 'Dear ' + name + ',\n\n' +
-    'Your device suggestion form had been received. ' +
-    'We will notice you once we have reviewed your suggestion.\n\n' +
-    'Device: ' + device + '\n' +
-    'Description: ' + description + '\n\n' +
-    'Thank you for choosing BuddyHub!\n\n'
-  };
-
-  transporter.sendMail(mailOptions, function(error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
+  var emailSender = require('./utils/email');
+  emailSender.sendConfEmail(email, name, device, description);
 
   res.redirect('/submitted');
 });
