@@ -34,8 +34,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading;
-using System.Management;
-
+using UCProtocol;
+using UCUtility;
+ 
 namespace AppServer
 {
 
@@ -44,22 +45,67 @@ namespace AppServer
 
         
         private static WebServer ws;
+        private static WebServer internalServer;
         public static HttpClient client;
         public Dictionary<string, ControllerDevice> ConnectedDeviceList { get; set; }
 
-        // constants
-        private const string INTERNAL_ADDRESS = "http://localhost:8192/"; // Predefined desktop UI server address for posting notifications 
 
 
         /// <summary>
         /// constructor of server class
         /// </summary>
-        public Server(string[] hostAddress)
+        public Server(string[] hostAddress, string[] internalAddress)
         {
             ConnectedDeviceList = new Dictionary<string, ControllerDevice>();
             ws = new WebServer(this.SendResponse, hostAddress);
+            internalServer = new WebServer(InternalResponse, internalAddress);
             client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            ObtainRemoteDeviceInfo();
+        }
+
+
+        private void UpdateUSBDeviceList(HashSet<string> deviceIdSet)
+        {
+            foreach (string deviceId in deviceIdSet)
+            {
+                ParseDeviceId(deviceId, out string vid, out int vidIndex, out string pid, out int pidIndex);
+                if (vidIndex < 0 || pidIndex < 0) { } // Invalid device
+                else RegisterUSBDeviceById(deviceId, vid, pid);
+            }
+        }
+
+        /// <summary>
+        /// Parse deviceId for identification
+        /// https://stackoverflow.com/questions/8303069/how-to-get-the-vid-and-pid-of-all-usb-devices-connected-to-my-system-in-net
+        /// </summary>
+        /// <param name="deviceId"></param>
+        /// <param name="vid"></param>
+        /// <param name="pid"></param>
+        private void ParseDeviceId(string deviceId, out string vid, out int vidIndex, out string pid, out int pidIndex)
+        {
+            vidIndex = deviceId.IndexOf("VID_");
+            string startingAtVid = deviceId.Substring(vidIndex + 4); // + 4 to remove "VID_"                    
+            vid = startingAtVid.Substring(0, 4); // vid is four characters long
+
+            pidIndex = deviceId.IndexOf("PID_");
+            string startingAtPid = deviceId.Substring(pidIndex + 4); // + 4 to remove "PID_"                    
+            pid = startingAtPid.Substring(0, 4); // pid is four characters long
+        }
+
+        private void RegisterUSBDeviceById(string deviceId, string vid, string pid)
+        {
+            foreach (string device in ConnectedDeviceList.Keys.ToList())
+            {
+                if (ConnectedDeviceList[device].DeviceId == deviceId) return;
+            }
+            DeviceInfo newDeviceInfo = JsonConvert.DeserializeObject<DeviceInfo>(QueryDeviceInfo(vid, pid));
+            if (newDeviceInfo != null)
+            {
+                newDeviceInfo.ToFile("newDevice.txt");
+                AddDevice(newDeviceInfo.Device, new ControllerDevice(newDeviceInfo, deviceId));
+                BindDevice(newDeviceInfo.Device, newDeviceInfo.Assembly);
+            }
         }
 
         /// <summary>
@@ -68,6 +114,7 @@ namespace AppServer
         public void Run()
         {
             ws.Run();
+            internalServer.Run();
         }
 
         /// <summary>
@@ -85,25 +132,6 @@ namespace AppServer
             ConnectedDeviceList.Remove(name);
         }
 
-        /// <summary>
-        /// Query the existence of device within database
-        /// </summary>
-        /// <param name="vid">vid of usb devices</param>
-        /// <param name="pid">pid of usb devices</param>
-        public void CheckValidDevice(string vid, string pid)
-        {
-            DeviceInfo resultDeviceInfo = JsonConvert.DeserializeObject<DeviceInfo>(QueryDeviceInfo(vid, pid));
-            if (resultDeviceInfo != null)
-            {
-                string deviceName = resultDeviceInfo.Device;
-                ConnectedDeviceList[deviceName] = new ControllerDevice
-                {
-                    DeviceInfo = resultDeviceInfo
-                };
-                BindDevice(deviceName, resultDeviceInfo.Assembly);
-            }
-            else throw new InvalidDeviceException("Device Not Recognised by System", 0);
-        }
 
         /// <summary>
         /// Link device library and instantiate device object
@@ -135,7 +163,12 @@ namespace AppServer
         public string QueryDeviceInfo(string vid, string pid)
         {
             // Generate database connection string from auth.json
-            string path = "..\\..\\auth.json";
+            string path;
+            if (Debugger.IsAttached)
+            {
+                path = "..\\..\\..\\auth.json";
+            }
+            else path = "auth.json";
             string json = "";
             using (StreamReader sr = File.OpenText(path))
             {
@@ -166,10 +199,10 @@ namespace AppServer
             // Generate database connection string from auth.json
             string path;
             if (Debugger.IsAttached)
-                path = "..\\..\\auth.json";
-            else
-                path = "auth.json";
-
+            {
+                path = "..\\..\\..\\auth.json";
+            }
+            else path = "auth.json";
             string json = "";
             using (StreamReader sr = File.OpenText(path))
             {
@@ -211,6 +244,36 @@ namespace AppServer
 
         }
         
+        public string InternalResponse(HttpListenerRequest request)
+        {
+            Console.WriteLine(request.Url);
+            string rawUrl = request.RawUrl.Replace("%20", " ");
+            string[] parsedRequest = rawUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+
+            int fieldSize = parsedRequest.Length;
+            if (parsedRequest.Length == 0) return "Invalid Notification Received!";
+            else if (request.HttpMethod == "POST")
+            {
+                int notification = Int16.Parse(parsedRequest[0]);
+                switch (notification)
+                {
+                    case (int)Notif.DeviceChanged:
+                        byte[] buffer = new byte[5000];
+                        request.InputStream.Read(buffer, 0, 5000);
+                        string content = System.Text.Encoding.UTF8.GetString(TrimNull(buffer));
+                        HashSet<string> deviceIdSet = JsonConvert.DeserializeObject<HashSet<string>>(content);
+                        UpdateUSBDeviceList(deviceIdSet);
+                        return "OK";
+                    default:
+                        return "Invalid Notification Received!";
+                }
+            }
+            else
+            {
+                return "Invalid Notification Received!";
+            }
+        }
+
         /// <summary>
         /// Send response to the client according to request information
         /// </summary>
@@ -280,7 +343,7 @@ namespace AppServer
                     else if (device.DeviceInfo.ApiType == "Http")
                     {
                         int indexRequested = Int32.Parse(parsedRequest[1]);
-                        IEnumerable<RemoteDeviceMethod> resultList =
+                            IEnumerable<RemoteDeviceMethod> resultList =
                             from result in device.DeviceInfo.Methods
                             where result.ButtonIndex == indexRequested
                             select result;
@@ -440,90 +503,6 @@ namespace AppServer
                 }
             }
             return null;
-        }
-
-        /// <summary>
-        /// Instantiate new thread that check for removed usb devices
-        /// </summary>
-        public void CheckRemovedDevice()
-        {
-            Task.Run(() =>
-            {
-                ManagementClass USBClass = new ManagementClass("Win32_USBHUB");
-                ManagementObjectCollection USBCollection = USBClass.GetInstances();
-                foreach (string registeredDevice in ConnectedDeviceList.Keys.ToArray())
-                {
-                    bool matched = false;
-                    foreach (ManagementObject usb in USBCollection)
-                    {
-                        string deviceId = usb["deviceid"].ToString();
-                        if (deviceId == ConnectedDeviceList[registeredDevice].DeviceId)
-                        {
-                            matched = true;
-                        }
-                    }
-                    if (matched == false)
-                    {
-                        if (ConnectedDeviceList[registeredDevice].DeviceInfo.ApiType == "LocalLib")
-                        {
-                            ConnectedDeviceList.Remove(registeredDevice);
-                        }
-                    }
-                }
-            });
-        }
-
-        /// <summary>
-        /// Check for the validity of USB devices connected to the machine.
-        /// WARNING: THIS METHOD IS WINDOWS-SPECIFIC.
-        /// https://stackoverflow.com/questions/8303069/how-to-get-the-vid-and-pid-of-all-usb-devices-connected-to-my-system-in-net
-        /// </summary>
-        /// <returns></returns>
-        public string ObtainUSBDeviceInfo()
-        {
-            string result = "";
-            ManagementClass USBClass = new ManagementClass("Win32_USBHUB");
-            ManagementObjectCollection USBCollection = USBClass.GetInstances();
-
-            foreach (ManagementObject usb in USBCollection)
-            {
-                try
-                {
-                    string deviceId = usb["deviceid"].ToString();
-                    if (deviceId == null)
-                    {
-                        throw new Exception("Device not found!");
-                    }
-                    else
-                    {
-                        int vidIndex = deviceId.IndexOf("VID_");
-                        string startingAtVid = deviceId.Substring(vidIndex + 4); // + 4 to remove "VID_"                    
-                        string vid = startingAtVid.Substring(0, 4); // vid is four characters long
-
-                        int pidIndex = deviceId.IndexOf("PID_");
-                        string startingAtPid = deviceId.Substring(pidIndex + 4); // + 4 to remove "PID_"                    
-                        string pid = startingAtPid.Substring(0, 4); // pid is four characters long
-
-                        if (vidIndex < 0 || pidIndex < 0) { }
-                        else
-                        {
-                            DeviceInfo newDeviceInfo = JsonConvert.DeserializeObject<DeviceInfo>(QueryDeviceInfo(vid, pid));
-                            if (newDeviceInfo != null)
-                            {
-                                newDeviceInfo.ToFile("newDevice");
-                                result = newDeviceInfo.Device;
-                                AddDevice(result, new ControllerDevice(newDeviceInfo, deviceId));
-                                BindDevice(result, newDeviceInfo.Assembly);
-                            }
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-            }
-            return result;
         }
 
         /// <summary>

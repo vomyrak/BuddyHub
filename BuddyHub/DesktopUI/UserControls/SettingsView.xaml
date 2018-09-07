@@ -93,7 +93,7 @@
                                 <Style x:Key="{x:Type Image}"
                      TargetType="{x:Type Image}">
                                     <Setter Property='Source'
-                        Value="pack://application:,,,/Images/ButtPic.png" />
+                        Value="pack://application:,,,/Resources/ButtPic.png" />     
                                     <Setter Property='MaxHeight'
                         Value="60" />
                                     <Setter Property='HorizontalAlignment'

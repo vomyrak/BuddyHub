@@ -17,9 +17,9 @@ using System.Net.Http;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
-using AppServer;
 using System.Windows.Media;
 using System.Net.Sockets;
+using UCProtocol;
 
 namespace UCUI
 {
@@ -31,7 +31,7 @@ namespace UCUI
         private Button[] ButtonArray;
         //private Server server;
         public HttpClient client;
-        private WebServer internalServer;
+        //private WebServer internalServer;
 
         //public const string SERVER_ADDRESS = "http://192.168.0.105:8080/";
         private const string INTERNAL_ADDRESS = "http://localhost:8192/";
@@ -65,11 +65,11 @@ namespace UCUI
                 Environment.Exit(1);
             }
 
-            internalServer = new WebServer(ProcessUINotif, INTERNAL_ADDRESS);
-            Task.Run(() =>
-            {
-                internalServer.Run();
-            });
+            //internalServer = new WebServer(ProcessUINotif, INTERNAL_ADDRESS);
+            //Task.Run(() =>
+            //{
+            //    internalServer.Run();
+            //});
             DataContext = new UCSettings();
             InitializeComponent();
             ButtonArray = new Button[9];

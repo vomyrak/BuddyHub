@@ -14,8 +14,8 @@ namespace UCUI.Models
 
         static ControlSource()
         {
-            _options = new List<ControlOption>();
-            string[] filenames = Directory.GetFiles("ControlOptions");
+                _options = new List<ControlOption>();
+                string[] filenames = Directory.GetFiles("ControlOptions");
 
             for (int i = 0; i < filenames.Length; i++)
             {

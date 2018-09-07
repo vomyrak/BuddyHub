@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>UCUI</RootNamespace>
     <AssemblyName>UCUI</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -37,7 +37,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Images\ucicon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DnsClient, Version=1.0.7.0, Culture=neutral, PublicKeyToken=4574bb5573c51424, processorArchitecture=MSIL">
@@ -149,25 +150,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\1200px-Imperial_College_London_crest.svg.ico" />
+    <Resource Include="Resources\ButtPic.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\ucicon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ButtPic.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Server\Server.csproj">
-      <Project>{23dd9750-8150-40ec-9a75-043b8a53a589}</Project>
-      <Name>Server</Name>
+    <ProjectReference Include="..\UCProtocol\UCProtocol.csproj">
+      <Project>{a06ce3d7-057a-42ad-815d-3d48a2bdae2a}</Project>
+      <Name>UCProtocol</Name>
     </ProjectReference>
-    <ProjectReference Include="Plugin\Lynxmotion\Lynxmotion.csproj">
-      <Project>{acc49f8e-39f8-4b75-89db-b4b91da15671}</Project>
-      <Name>Lynxmotion</Name>
+    <ProjectReference Include="..\UCUtility\UCUtility.csproj">
+      <Project>{98ec50fa-4433-4f9f-9d93-cfa2e7c7d302}</Project>
+      <Name>UCUtility</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
