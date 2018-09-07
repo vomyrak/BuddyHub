@@ -107,11 +107,16 @@ This project was initiated and funded by Wooden Spoon: The Children's Charity of
 
 The team comprised of _Maksim Lavrov, May McCool, Terence Seow, Rachel Tan, Yong Shen Tan, Sung Kyun Yi, Fiona Boyce, Joan Tso, Balint Hodossy and Husheng Deng_.
 
+The team would like acknowledge the fair use of code or code snippets of the following people:
+  * _Rémy Dispagne_ [Lynxmotion SSC32/AL5x Robotic Arm Library](https://github.com/remyzerems/Lynxmotion/)
+  * _David_ [Simple C# Web Server](https://www.codehosting.net/blog/BlogEngine/post/Simple-C-Web-Server/)
+  * _Sagar Pardeshi_ [Detect Insertion and Removal of USB Drive C#](https://www.c-sharpcorner.com/blogs/detect-insertion-and-removal-of-usb-drive-c-sharp1)
+
 The team would like to thank the following people for their contributions and advice to the team throughout the course of the project:
   
   * _Mahendran Subramanian_, _Balasundaram Kadirvelu_ and _Pavel Orlov_ from Dr. Faisal's Research Group, Imperial College London
   * _Paschal Egan_ and _Niraj Kanabar_ from Imperial College London, Department of Bioengineering
-  * _Dr. Thomas Clarke_ from Imperial College London
+  * _Dr. Thomas Clarke_ and _Professor Cheung, Peter Y_ from Imperial College London, Department of Electrical and Electronics Engineering
   * _Ben Crundwell_ from Cambridge Design Partnership
   * _Barrie Ellis_ from Special Effects
   * _Charlie Danger_, _Simon Bull_, _Christian Dryden_, _Rachel Moore_, _Hélio Lourenço_ and _Diane Arthurs_ from ACE Center
