@@ -48,38 +48,9 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // Model for mongo database
-const outputSchema = new mongoose.Schema({
-  device: String,
-  device_name: String,
-  methods: [{
-    method: String,
-    description: String,
-    http_method: String,
-    link: String,
-    data: String,
-    headers: String,
-    callback_function: String,
-    text_input_field: String,
-    params: [{
-      param_field: String,
-      param_choices: [Number]
-    }]
-  }]
-});
 
-const OutputDevice = mongoose.model('outputDevices3', outputSchema, 'outputDevices3');
-
-// Model for mongo database
-const deviceSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  device: String,
-  description: String,
-  approved: Boolean,
-  processed: Boolean
-});
-
-const DeviceSuggestion = mongoose.model('deviceSuggestion', deviceSchema, 'deviceSuggestion');
+const OutputDevice = require('./models/output-device');
+const DeviceSuggestion = require('./models/device-suggestion');
 
 // Email Configuration
 
