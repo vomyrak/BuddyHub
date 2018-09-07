@@ -1,4 +1,4 @@
-const filereader3 = require("../email.json");
+const filereader = require("../email.json");
 
 // Email Configuration
 
@@ -7,8 +7,8 @@ var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: filereader3.email,
-    pass: filereader3.password
+    user: filereader.email,
+    pass: filereader.password
   }
 });
 
@@ -19,7 +19,7 @@ exports.sendConfEmail = function(email, name, device, description) {
   console.log(device);
   // Send a confirmation email to user
   var mailOptions = {
-    from: filereader3.email,
+    from: filereader.email,
     to: email,
     subject: 'Device Suggestion Form Received',
     text: 'Dear ' + name + ',\n\n' +

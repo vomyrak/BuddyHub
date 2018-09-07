@@ -7,7 +7,6 @@ const exec = require('child_process').exec;
 const mongoose = require("mongoose");
 const filereader = require("./auth.json");
 const filereader2 = require("./keys.json");
-const filereader3 = require("./email.json");
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // to support JSON-encoded bodies
@@ -49,8 +48,8 @@ passport.deserializeUser(User.deserializeUser());
 
 // Model for mongo database
 
-const OutputDevice = require('./models/output-device');
-const DeviceSuggestion = require('./models/device-suggestion');
+const OutputDevice = require('./db/models/output-device');
+const DeviceSuggestion = require('./db/models/device-suggestion');
 
 // A dictionary of online users
 const users = {};
