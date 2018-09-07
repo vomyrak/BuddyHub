@@ -1,0 +1,10 @@
+false false false true true true false false true
+false
+Cooking Pan
+Interact with a recipe software
+\\images\\pan.png
+Favourites Timer Next Help
+null null null null
+
+
+
