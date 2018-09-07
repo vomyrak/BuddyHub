@@ -59,9 +59,9 @@ Wish to integrate a device with BuddyHub?
 #### Guide:
 * Visit [BuddyHub@Developers](https://developers-buddyhub.herokuapp.com/) to add a new device
 * Choose to add a device with either a RESTful API or a C# interface
+    * Link your project with UCProtocol and UCUtility projects under ./BuddyHub/
     * C# libraries have to implement an C# IDevice interface
-    * Link your project to the IDevice interface that is under UCUI/UCUI/UCUI/CSharpServer/IDevice.cs (_to be relocated_)
-    * Link your project to System.ComponentModel ```using System.ComponentModel.Composition```
+    * In your main device object source file, link your project to System.ComponentModel ```using System.ComponentModel.Composition```
     * Export your main object class using ```[Export(typeof(CSharpServer.IDevice))]```
 * Fill up the form with user-friendly names and descriptions (these will be what users see in the main BuddyHub UI)
 * Specify the HTTP methods and resources that BuddyHub will use to interact with your device
