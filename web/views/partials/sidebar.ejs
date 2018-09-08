@@ -3,12 +3,22 @@
   <!-- Sidebar  -->
   <nav id="sidebar">
     <div class="sidebar-header">
-      <h2></h2>
+      <% if(!currentUser){ %>
+      <h2>Welcome!</h2>
+      <% } else{ %>
+      <h2><%= currentUser.username %></h2>
+      <% } %>
     </div>
     <ul class="list-unstyled components">
       <li>
         <a href="/" class="lang en">Home</a>
       </li>
     </ul>
+
+    <footer style="position:fixed; bottom: 0; height:50px; background-color: gray; width:250px; padding: 11px; color : white">
+      <button data-toggle="modal" data-target="#signupmodal">Sign up</button> |
+      <button data-toggle="modal" data-target="#loginmodal">Login</button> |
+      <button>   <a href='/logout'>Logout</a></button>
+    </footer>
   </nav>
 </div>
