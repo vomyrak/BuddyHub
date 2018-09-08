@@ -2,32 +2,27 @@
 ## Install and run the code on local machine
 
 1. Do `npm install` in this folder.
-2. Create a mongo database(Refer to set up Mondo database below), put the details in *auth.json* in this folder in the following format:
+2. Create a mongo database(Refer to set up Mondo database below), put the details in *.env* file in this folder in the following format:
   ```
-  {
-    "user": "<username of your database>",
-    "pass": "<password of your database>",
-    "dns": "<IP address of your databse>"
-  }
+  DB_DNS=<IP address of your database>
+  DB_USER="<username of your database>"
+  DB_PASS="<password of your database>"
+  DB_NAME="<name of your database>"
   ```
-3. If you are not using the text to speech on the server, just create *keys.json* in this folder. Else, obtain a API key from Google API service, put the key in *keys.json* in this folder as follow:
+3. If you are not using the text to speech on the server, ignore this. Else, obtain a API key from Google API service, put the key in *.env* file in this folder as follow:
   ```
-  {
-    "google": "<your API key>"
-  }
+  GOOGLE="<your API key>"
   ```
-4. If you are not using the device suggestion functionality, just create *email.json* in this folder. Else, put the email and password in *email.json* in this folder as follow:
+4. If you are not using the device suggestion functionality, ignore this. Else, put the email and password in *.env* in this folder as follow:
   ```
-  {
-    "email": "<your email>",
-    "password": "<your password>"
-  }
+  EMAIL="<your email>"
+  EMAIL_PWD="<password of your email>"
   ```
-5. run `node server.js` and open [http://localhost:8000](http://localhost:8000) in your browser.
+5. run `node -r dotenv/config server.js` and open [http://localhost:8000](http://localhost:8000) in your browser.
 
 ## Set up Mongo database
 1. [Install MongoDB](https://docs.mongodb.com/manual/installation/)
-2. Set up a database with name "uc" and a collection inside it called "OutputDevices3"
+2. Set up a database and open a collection inside it called "OutputDevices3"
 3. Add your own device in the collection.
   * devices with APIs:
   ```
@@ -44,7 +39,7 @@
       "text_input_field" : <field in JSON data that the text input goes>, } ],
     "apiType" : "Http"
   ```
-  * devices with C# library (need to implement our IDevice interface, more than 9 functions on same device might not work due to the limit of our button index, hope to be improved in the future): 
+  * devices with C# library (need to implement our IDevice interface, more than 9 functions on same device might not work due to the limit of our button index, hope to be improved in the future):
   ```
     "device": <Name of class that the functions are applied to(String)>,
     "device_name" : <display name of device(String)>,
