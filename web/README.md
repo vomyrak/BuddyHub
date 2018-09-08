@@ -13,7 +13,7 @@
   ```
   GOOGLE="<your API key>"
   ```
-4. If you are not using the device suggestion functionality, ignore this. Else, put the email and password in *email.json* in this folder as follow:
+4. If you are not using the device suggestion functionality, ignore this. Else, put the email and password in *.env* in this folder as follow:
   ```
   EMAIL="<your email>"
   EMAIL_PWD="<password of your email>"
