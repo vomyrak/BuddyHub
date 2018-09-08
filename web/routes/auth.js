@@ -1,5 +1,5 @@
 var passport = require("passport");
-var User = require("../public/js/user");
+var User = require("../db/models/user");
 
 // Function for registering a new user
 exports.register = function(req,res){

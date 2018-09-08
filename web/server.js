@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
 
 // Get process.env variables
 require('dotenv').config();
+
 // Connect to the database
 require('./db/connection');
 
@@ -18,7 +19,7 @@ require('./db/connection');
 var passport = require("passport");
 // Enable login method using local strategy
 var localStrategy = require("passport-local");
-var User = require("./public/js/user");
+var User = require("./db/models/user");
 const auth = require('./routes/auth');
 
 // Passport Configuration
