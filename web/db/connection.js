@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const filereader = require("../auth.json");
 
 // Config and connect to mongo database
 var options = {
@@ -8,9 +7,9 @@ var options = {
     authdb: "admin"
   }
 };
-options.user = filereader.user;
-options.pass = filereader.pass;
-var connectString = "mongodb://" + filereader.dns + ":27017/uc";
+options.user = process.env.DB_USER;
+options.pass = process.env.DB_PASS;
+var connectString = "mongodb://" + process.env.DB_DNS + ":27017/" + process.env.DB_NAME;
 mongoose.connect(connectString, options)
   .then(() => console.log('Connected to MongoDB...'))
   .catch(error => console.error('Failed to connect', error));

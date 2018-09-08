@@ -5,7 +5,6 @@ const server = require('http').createServer(app);
 const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 const exec = require('child_process').exec;
 const mongoose = require("mongoose");
-const filereader = require("./keys.json");
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // to support JSON-encoded bodies
@@ -19,6 +18,9 @@ var localStrategy = require("passport-local");
 var passportLocalMongoose = require("passport-local-mongoose");
 var User = require("./public/js/user");
 
+// Get env variables
+require('dotenv').config();
+// Connect to the database
 require('./db/connection');
 
 //Passport Configuration
@@ -204,7 +206,7 @@ app.post('/tts', function(req, res) {
   xhttp.open("POST", "https://texttospeech.googleapis.com/v1beta1/text:synthesize", true);
   // Set headers of the http request
   xhttp.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-  xhttp.setRequestHeader("X-Goog-Api-Key", filereader.google);
+  xhttp.setRequestHeader("X-Goog-Api-Key", process.env.GOOGLE);
   // Send the http request with the data
   xhttp.send(JSON.stringify(data));
 });

@@ -1,5 +1,3 @@
-const filereader = require("../email.json");
-
 // Email Configuration
 
 var nodemailer = require('nodemailer');
@@ -7,8 +5,8 @@ var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: filereader.email,
-    pass: filereader.password
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PWD
   }
 });
 
@@ -19,7 +17,7 @@ exports.sendConfEmail = function(email, name, device, description) {
   console.log(device);
   // Send a confirmation email to user
   var mailOptions = {
-    from: filereader.email,
+    from: process.env.EMAIL,
     to: email,
     subject: 'Device Suggestion Form Received',
     text: 'Dear ' + name + ',\n\n' +
