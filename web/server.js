@@ -5,9 +5,7 @@ const server = require('http').createServer(app);
 const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 const exec = require('child_process').exec;
 const mongoose = require("mongoose");
-const filereader = require("./auth.json");
-const filereader2 = require("./keys.json");
-const filereader3 = require("./email.json");
+const filereader = require("./keys.json");
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // to support JSON-encoded bodies
@@ -21,19 +19,7 @@ var localStrategy = require("passport-local");
 var passportLocalMongoose = require("passport-local-mongoose");
 var User = require("./public/js/user");
 
-// Config and connect to mongo database
-var options = {
-  useNewUrlParser: true,
-  auth: {
-    authdb: "admin"
-  }
-};
-options.user = filereader.user;
-options.pass = filereader.pass;
-var connectString = "mongodb://" + filereader.dns + ":27017/uc";
-mongoose.connect(connectString, options)
-  .then(() => console.log('Connected to MongoDB...'))
-  .catch(error => console.error('Failed to connect', error));
+require('./db/connection');
 
 //Passport Configuration
 app.use(require("express-session")({
@@ -48,50 +34,9 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // Model for mongo database
-const outputSchema = new mongoose.Schema({
-  device: String,
-  device_name: String,
-  methods: [{
-    method: String,
-    description: String,
-    http_method: String,
-    link: String,
-    data: String,
-    headers: String,
-    callback_function: String,
-    text_input_field: String,
-    params: [{
-      param_field: String,
-      param_choices: [Number]
-    }]
-  }]
-});
 
-const OutputDevice = mongoose.model('outputDevices3', outputSchema, 'outputDevices3');
-
-// Model for mongo database
-const deviceSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  device: String,
-  description: String,
-  approved: Boolean,
-  processed: Boolean
-});
-
-const DeviceSuggestion = mongoose.model('deviceSuggestion', deviceSchema, 'deviceSuggestion');
-
-// Email Configuration
-
-var nodemailer = require('nodemailer');
-
-var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: filereader3.email,
-    pass: filereader3.password
-  }
-});
+const OutputDevice = require('./db/models/output-device');
+const DeviceSuggestion = require('./db/models/device-suggestion');
 
 // A dictionary of online users
 const users = {};
@@ -104,9 +49,6 @@ app.use(express.static(__dirname + '/public'));
 
 // Set the view engine to ejs
 app.set('view engine', 'ejs');
-
-// HTML directory
-const html_dir = __dirname + '/public/html/';
 
 //middleware so that req.user will be available in every single template
 app.use(function(req,res,next){
@@ -144,7 +86,7 @@ app.get('/contact', isLoggedIn, function(req, res) {
   });
 });
 
-app.get('/feedback', isLoggedIn, function(req, res) {
+app.post('/feedback', isLoggedIn, function(req, res) {
   // Upload the details o the device suggestion to the database.
   // The "processed" field is set to false until the admin process this
   // device suggestion.
@@ -167,25 +109,8 @@ app.get('/feedback', isLoggedIn, function(req, res) {
   });
 
   // Send a confirmation email to user
-  var mailOptions = {
-    from: filereader3.email,
-    to: email,
-    subject: 'Device Suggestion Form Received',
-    text: 'Dear ' + name + ',\n\n' +
-    'Your device suggestion form had been received. ' +
-    'We will notice you once we have reviewed your suggestion.\n\n' +
-    'Device: ' + device + '\n' +
-    'Description: ' + description + '\n\n' +
-    'Thank you for choosing BuddyHub!\n\n'
-  };
-
-  transporter.sendMail(mailOptions, function(error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
+  var emailSender = require('./utils/email');
+  emailSender.sendConfEmail(email, name, device, description);
 
   res.redirect('/submitted');
 });
@@ -279,7 +204,7 @@ app.post('/tts', function(req, res) {
   xhttp.open("POST", "https://texttospeech.googleapis.com/v1beta1/text:synthesize", true);
   // Set headers of the http request
   xhttp.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-  xhttp.setRequestHeader("X-Goog-Api-Key", filereader2.google);
+  xhttp.setRequestHeader("X-Goog-Api-Key", filereader.google);
   // Send the http request with the data
   xhttp.send(JSON.stringify(data));
 });
