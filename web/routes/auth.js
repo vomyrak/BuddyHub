@@ -1,17 +1,16 @@
 var passport = require("passport");
-//enable login method using local strategy
-var localStrategy = require("passport-local");
 var User = require("../public/js/user");
 
+// Function for registering a new user
 exports.register = function(req,res){
-   //making a new user (1)
+   // Making a new user (1)
     var newUser = new User({username : req.body.username});
     User.register(newUser, req.body.password, function(err,user) {
         if(err){
             console.log(err);
             return res.render("home");
         }
-        //then loging them in using passport.authenticate (2)
+        // Then loging them in using passport.authenticate (2)
         passport.authenticate("local")(req,res, function(){
             res.redirect("/");
         });
@@ -20,7 +19,8 @@ exports.register = function(req,res){
     )
 };
 
-//using middleware to call authenticate method
+// Function for logging in
+// Both successful and failed login attempt will redirect to route '/'
 exports.login = passport.authenticate("local",
     {
         successRedirect: "/",
@@ -28,12 +28,14 @@ exports.login = passport.authenticate("local",
     }
 );
 
+// Function for logging out
 exports.logout = function(req,res){
     req.logout();
     res.redirect("/");
 };
 
-//middleware to check if user is logged in
+// Middleware to check if user is logged in
+// If user not logged in, redirect to route '/'
 exports.isLoggedIn = function (req,res, next){
     if(req.isAuthenticated()){
         return next();

@@ -9,19 +9,19 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
   extended: true
 }));
 
-// Dependencies for authentication
-var passport = require("passport");
-//enable login method using local strategy
-var localStrategy = require("passport-local");
-var User = require("./public/js/user");
-const auth = require('./routes/auth');
-
-// Get env variables
+// Get process.env variables
 require('dotenv').config();
 // Connect to the database
 require('./db/connection');
 
-//Passport Configuration
+// Dependencies for authentication
+var passport = require("passport");
+// Enable login method using local strategy
+var localStrategy = require("passport-local");
+var User = require("./public/js/user");
+const auth = require('./routes/auth');
+
+// Passport Configuration
 app.use(require("express-session")({
         secret : "WSUROP2018",
         resave : false,
@@ -42,10 +42,10 @@ app.use(express.static(__dirname + '/public'));
 // Set the view engine to ejs
 app.set('view engine', 'ejs');
 
-//middleware so that req.user will be available in every single template
+// Middleware so that req.user will be available in every single template
 app.use(function(req,res,next){
    res.locals.currentUser = req.user;
-    next();
+   next();
 });
 
 //-------------------------//
@@ -80,13 +80,13 @@ app.post('/tts', tts.texttospeech);
 //-----AUTHENTICATION------//
 //-------------------------//
 
-//Auth routes//
+// Auth routes //
 
-//handle sign up logic
+// Handle sign up logic
 app.post("/register", auth.register);
 
-//handling login logic
+// Handling login logic
 app.post("/login", auth.login);
 
-//Logout Route
+// Logout Route
 app.get("/logout", auth.logout);
