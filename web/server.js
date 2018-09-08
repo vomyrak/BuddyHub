@@ -5,8 +5,7 @@ const server = require('http').createServer(app);
 const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 const exec = require('child_process').exec;
 const mongoose = require("mongoose");
-const filereader = require("./auth.json");
-const filereader2 = require("./keys.json");
+const filereader = require("./keys.json");
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // to support JSON-encoded bodies
@@ -20,19 +19,7 @@ var localStrategy = require("passport-local");
 var passportLocalMongoose = require("passport-local-mongoose");
 var User = require("./public/js/user");
 
-// Config and connect to mongo database
-var options = {
-  useNewUrlParser: true,
-  auth: {
-    authdb: "admin"
-  }
-};
-options.user = filereader.user;
-options.pass = filereader.pass;
-var connectString = "mongodb://" + filereader.dns + ":27017/uc";
-mongoose.connect(connectString, options)
-  .then(() => console.log('Connected to MongoDB...'))
-  .catch(error => console.error('Failed to connect', error));
+require('./db/connection');
 
 //Passport Configuration
 app.use(require("express-session")({
@@ -62,9 +49,6 @@ app.use(express.static(__dirname + '/public'));
 
 // Set the view engine to ejs
 app.set('view engine', 'ejs');
-
-// HTML directory
-const html_dir = __dirname + '/public/html/';
 
 //middleware so that req.user will be available in every single template
 app.use(function(req,res,next){
@@ -220,7 +204,7 @@ app.post('/tts', function(req, res) {
   xhttp.open("POST", "https://texttospeech.googleapis.com/v1beta1/text:synthesize", true);
   // Set headers of the http request
   xhttp.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-  xhttp.setRequestHeader("X-Goog-Api-Key", filereader2.google);
+  xhttp.setRequestHeader("X-Goog-Api-Key", filereader.google);
   // Send the http request with the data
   xhttp.send(JSON.stringify(data));
 });
