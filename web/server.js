@@ -15,7 +15,6 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
 var passport = require("passport");
 //enable login method using local strategy
 var localStrategy = require("passport-local");
-var passportLocalMongoose = require("passport-local-mongoose");
 var User = require("./public/js/user");
 
 // Get env variables
@@ -39,9 +38,6 @@ passport.deserializeUser(User.deserializeUser());
 
 const OutputDevice = require('./db/models/output-device');
 const DeviceSuggestion = require('./db/models/device-suggestion');
-
-// A dictionary of online users
-const users = {};
 
 const port = 8000;
 server.listen(port);
