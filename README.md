@@ -99,7 +99,7 @@ List of features we wish to implement but have not:
 * Improve on the workflow for developers to integrate new devices to BuddyHub
 * CLI (Command Line Interface) tool for the integration of new devices
 * Adding more devices to BuddyHub and possible integration with other smart hubs such as Apple HomeKit and Samsung SmartThings
-* Allow desktop UI to render buttons dynamically based on delevopers' specifications as they are currently rendered statically
+* Allow the desktop UI to render buttons dynamically based on delevopers' specifications as they are currently rendered statically
 
 List of issues can be found [here](https://github.com/vomyrak/BuddyHub/issues).
 
