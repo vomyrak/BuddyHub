@@ -35,6 +35,11 @@ namespace USBManager
     {
         ManagementEventWatcher Watcher { get; set; }
         string LocalIP { get; set; }
+
+        /// <summary>
+        /// Initialise internal server for communication with UI
+        /// Initialise USB event watcher
+        /// </summary>
         public USBManager()
         {
             LocalIP = NetworkManager.GenerateIPAddress(8192);
