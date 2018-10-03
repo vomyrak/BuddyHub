@@ -99,7 +99,7 @@ namespace AppServer
             {
                 if (ConnectedDeviceList[device].DeviceId == deviceId) return;
             }
-            DeviceInfo newDeviceInfo = JsonConvert.DeserializeObject<DeviceInfo>(QueryDeviceInfo(vid, pid));
+            DeviceInfo newDeviceInfo = JsonConvert.DeserializeObject<DeviceInfo>(QueryDeviceInfo(vid, pid, true));
             if (newDeviceInfo != null)
             {
                 newDeviceInfo.ToFile("newDevice.txt");
@@ -160,7 +160,7 @@ namespace AppServer
         /// <param name="vid">Vid of USB devices</param>
         /// <param name="pid">Pid of USB devices</param>
         /// <returns></returns>
-        public string QueryDeviceInfo(string vid, string pid)
+        public string QueryDeviceInfo(string vid, string pid, bool connectionStr = false)
         {
             // Generate database connection string from auth.json
             string path;
@@ -175,14 +175,24 @@ namespace AppServer
                 json = sr.ReadToEnd();
             }
             Auth auth = JsonConvert.DeserializeObject<Auth>(json);
-            var connectionString = new MongoUrlBuilder
+            MongoClient mongo;
+            if (connectionStr)
             {
-                Server = new MongoServerAddress(auth.Dns, 27017),
-                Username = auth.User,
-                Password = auth.Pass
-            };
+                var connectionString = String.Format("mongodb://{0}:{1}@controllerdb-shard-00-00-ei8d1.mongodb.net:27017,controllerdb-shard-00-01-ei8d1.mongodb.net:27017,controllerdb-shard-00-02-ei8d1.mongodb.net:27017/test?ssl=true&replicaSet=ControllerDb-shard-0&authSource=admin&retryWrites=true", auth.User, auth.Pass);
+                mongo = new MongoClient(connectionString);
+            }
+            else
+            {
+                var connectionString = new MongoUrlBuilder
+                {
+                    Server = new MongoServerAddress(auth.Dns, 27017),
+                    Username = auth.User,
+                    Password = auth.Pass
+                };
+
+                mongo = new MongoClient(connectionString.ToMongoUrl());
+            }
             // Establish connection
-            var mongo = new MongoClient(connectionString.ToMongoUrl());
             var db = mongo.GetDatabase("uc");
             var coll = db.GetCollection<DeviceInfo>("outputData");
             var outputDevice = coll
@@ -194,7 +204,8 @@ namespace AppServer
             return outputDevice[0].ToString();
         }
 
-        public List<DeviceInfo> QueryRemoteDeviceInfo()
+
+        public List<DeviceInfo> QueryRemoteDeviceInfo(bool connectionStr = false)
         {
             // Generate database connection string from auth.json
             string path;
@@ -209,14 +220,23 @@ namespace AppServer
                 json = sr.ReadToEnd();
             }
             Auth auth = JsonConvert.DeserializeObject<Auth>(json);
-            var connectionString = new MongoUrlBuilder
+            MongoClient mongo;
+            if (connectionStr)
             {
-                Server = new MongoServerAddress(auth.Dns, 27017),
-                Username = auth.User,
-                Password = auth.Pass
-            };
+                var connectionString = String.Format("mongodb://{0}:{1}@controllerdb-shard-00-00-ei8d1.mongodb.net:27017,controllerdb-shard-00-01-ei8d1.mongodb.net:27017,controllerdb-shard-00-02-ei8d1.mongodb.net:27017/test?ssl=true&replicaSet=ControllerDb-shard-0&authSource=admin&retryWrites=true", auth.User, auth.Pass);
+                mongo = new MongoClient(connectionString);
+            }
+            else
+            {
+                var connectionString = new MongoUrlBuilder
+                {
+                    Server = new MongoServerAddress(auth.Dns, 27017),
+                    Username = auth.User,
+                    Password = auth.Pass
+                };
+                mongo = new MongoClient(connectionString.ToMongoUrl());
+            }
             // Establish connection
-            var mongo = new MongoClient(connectionString.ToMongoUrl());
             var db = mongo.GetDatabase("uc");
             var coll = db.GetCollection<DeviceInfo>("outputDevices");
             var outputDevice = coll
@@ -510,7 +530,7 @@ namespace AppServer
         /// </summary>
         public void ObtainRemoteDeviceInfo()
         {
-            List<DeviceInfo> remoteDeviceList = QueryRemoteDeviceInfo();
+            List<DeviceInfo> remoteDeviceList = QueryRemoteDeviceInfo(true);
             foreach (DeviceInfo deviceInfo in remoteDeviceList)
             {
                 AddDevice(deviceInfo.Device, new ControllerDevice(deviceInfo, deviceInfo.Device));
