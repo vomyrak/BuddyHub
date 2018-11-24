@@ -43,7 +43,6 @@ namespace AppServer
     public class Server
     {
 
-        
         private static WebServer ws;
         private static WebServer internalServer;
         public static HttpClient client;
@@ -62,11 +61,53 @@ namespace AppServer
             client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             ObtainRemoteDeviceInfo();
+            Assembly usbMgrDll = Assembly.LoadFile(Directory.GetCurrentDirectory() + "\\..\\" + "USBManager.dll");
+            IManager usbMgr = null;
+            foreach (Type type in usbMgrDll.GetTypes())
+            {
+                if (type.GetInterface("IManager") != null)
+                {
+                    Task.Run(() => { usbMgr = Activator.CreateInstance(type) as IManager; });
+                }
+                }
         }
 
 
         private void UpdateUSBDeviceList(HashSet<string> deviceIdSet)
         {
+            // Check for connected or disconnected devices
+            HashSet<string> disconnectedKeys = new HashSet<string>();
+            HashSet<string> connectedIds = new HashSet<string>();
+            foreach (string deviceKey in ConnectedDeviceList.Keys)
+            {
+                if (ConnectedDeviceList[deviceKey].DeviceInfo.ApiType == "LocalLib")
+                {
+                    bool matched = false;
+                    foreach (string deviceId in deviceIdSet)
+                    {
+                        if (ConnectedDeviceList[deviceKey].DeviceId == deviceId)
+                        {
+                            // Device status unchagned
+                            connectedIds.Add(deviceId);
+                            matched = true;
+                        }
+                    }
+                    if (!matched)
+                    {
+                        // Since connected device not found at USB port, it is disconnected
+                        disconnectedKeys.Add(deviceKey);
+                    }
+                }
+            }
+            foreach (string key in disconnectedKeys)
+            {
+                ConnectedDeviceList.Remove(key);
+            }
+            foreach (string id in connectedIds)
+            {
+                deviceIdSet.Remove(id);
+            }
+            // Check for new devices that are not registered
             foreach (string deviceId in deviceIdSet)
             {
                 ParseDeviceId(deviceId, out string vid, out int vidIndex, out string pid, out int pidIndex);
@@ -95,17 +136,18 @@ namespace AppServer
 
         private void RegisterUSBDeviceById(string deviceId, string vid, string pid)
         {
-            foreach (string device in ConnectedDeviceList.Keys.ToList())
+            try
             {
-                if (ConnectedDeviceList[device].DeviceId == deviceId) return;
+                DeviceInfo newDeviceInfo = JsonConvert.DeserializeObject<DeviceInfo>(QueryDeviceInfo(vid, pid, true));
+                if (newDeviceInfo != null)
+                {
+                    newDeviceInfo.ToFile("newDevice.txt");
+                    AddDevice(newDeviceInfo.Device, new ControllerDevice(newDeviceInfo, deviceId));
+                    BindDevice(newDeviceInfo.Device, newDeviceInfo.Assembly);
+                }
             }
-            DeviceInfo newDeviceInfo = JsonConvert.DeserializeObject<DeviceInfo>(QueryDeviceInfo(vid, pid, true));
-            if (newDeviceInfo != null)
-            {
-                newDeviceInfo.ToFile("newDevice.txt");
-                AddDevice(newDeviceInfo.Device, new ControllerDevice(newDeviceInfo, deviceId));
-                BindDevice(newDeviceInfo.Device, newDeviceInfo.Assembly);
-            }
+            catch (Exception e) { Console.WriteLine(e.Message); }
+            
         }
 
         /// <summary>
@@ -139,7 +181,7 @@ namespace AppServer
         /// <param name="deviceName">The friendly name of device</param>
         public void BindDevice(string deviceName, string assemblyName)
         {
-            Assembly dll = Assembly.LoadFile(Directory.GetCurrentDirectory() + "\\" + assemblyName + ".dll");
+            Assembly dll = Assembly.LoadFile(Directory.GetCurrentDirectory() + "\\..\\plugin\\" + assemblyName + ".dll");
             ConnectedDeviceList[deviceName].Library = dll;
             IDevice newDevice = null;
             foreach (Type type in dll.GetTypes())
@@ -163,12 +205,7 @@ namespace AppServer
         public string QueryDeviceInfo(string vid, string pid, bool connectionStr = false)
         {
             // Generate database connection string from auth.json
-            string path;
-            if (Debugger.IsAttached)
-            {
-                path = "..\\..\\..\\auth.json";
-            }
-            else path = "auth.json";
+            string path = "auth.json";
             string json = "";
             using (StreamReader sr = File.OpenText(path))
             {
@@ -208,12 +245,7 @@ namespace AppServer
         public List<DeviceInfo> QueryRemoteDeviceInfo(bool connectionStr = false)
         {
             // Generate database connection string from auth.json
-            string path;
-            if (Debugger.IsAttached)
-            {
-                path = "..\\..\\..\\auth.json";
-            }
-            else path = "auth.json";
+            string path = "auth.json";
             string json = "";
             using (StreamReader sr = File.OpenText(path))
             {
@@ -278,8 +310,8 @@ namespace AppServer
                 switch (notification)
                 {
                     case (int)Notif.DeviceChanged:
-                        byte[] buffer = new byte[5000];
-                        request.InputStream.Read(buffer, 0, 5000);
+                        byte[] buffer = new byte[50000];
+                        request.InputStream.Read(buffer, 0, 50000);
                         string content = System.Text.Encoding.UTF8.GetString(TrimNull(buffer));
                         HashSet<string> deviceIdSet = JsonConvert.DeserializeObject<HashSet<string>>(content);
                         UpdateUSBDeviceList(deviceIdSet);

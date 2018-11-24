@@ -223,3 +223,4 @@ wwwroot/*
 # End of core ignore list, below put you custom 'per project' settings (patterns or path)
 #####
 /BuddyHub/Server/auth.json
+/BuddyHub/bin
