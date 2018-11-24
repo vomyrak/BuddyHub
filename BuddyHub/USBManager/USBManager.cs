@@ -28,10 +28,12 @@ using UCProtocol;
 using Newtonsoft.Json;
 using System.Net.Http;
 using UCUtility;
+using System.ComponentModel.Composition;
 
 namespace USBManager
 {
-    public class USBManager
+    [Export(typeof(UCProtocol.IManager))]
+    public class USBManager : IManager
     {
         ManagementEventWatcher Watcher { get; set; }
         string LocalIP { get; set; }
@@ -46,14 +48,17 @@ namespace USBManager
             NetworkManager.NetshRegister(LocalIP);
             ScanUSBDevices();
             Watcher = new ManagementEventWatcher();
-            WqlEventQuery query = new WqlEventQuery("SELECT * FROM Win32_DEVICECHANGEEVENT WHERE EventType = 2 OR EventType = 3");
+            WqlEventQuery query = new WqlEventQuery("SELECT * FROM __InstanceOperationEvent WITHIN 2 WHERE TargetInstance ISA 'WIN32_USBHub'");
             Watcher.EventArrived += Watcher_EventArrived;
             Watcher.Query = query;
             Watcher.Start();
             Watcher.WaitForNextEvent();
         }
 
-        
+        public object GetManager()
+        {
+            return this;
+        }
         public void ScanUSBDevices()
         {
             WqlObjectQuery query = new WqlObjectQuery("SELECT * FROM WIN32_USBHub");
@@ -70,6 +75,7 @@ namespace USBManager
             }
             if (USBIdSet.Count != 0)
             {
+                
                 var response = SendNotificationToServer(Notif.DeviceChanged, JsonConvert.SerializeObject(USBIdSet)).Result;
                 Console.WriteLine(response.Content);
             }
@@ -77,6 +83,7 @@ namespace USBManager
 
         private void Watcher_EventArrived(object sender, EventArrivedEventArgs e)
         {
+            if (e.NewEvent.ClassPath.ClassName == "__InstanceCreationEvent" || e.NewEvent.ClassPath.ClassName == "__InstanceDeletionEvent")
             ScanUSBDevices();
         }
 

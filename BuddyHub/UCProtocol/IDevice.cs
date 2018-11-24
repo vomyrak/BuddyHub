@@ -27,5 +27,6 @@ namespace UCProtocol
     {
         object ConnectDevice(string serialPort);
         string GetSerialPort();
+        void Initialise();
     }
 }

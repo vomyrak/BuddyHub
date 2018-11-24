@@ -105,18 +105,20 @@ namespace Lynxmotion
             Console.WriteLine("Enumerating connected SSC32...");
 
             // Try every single COM port on the machine
+            foreach (string port_name in SerialPort.GetPortNames())
+            {
                 try
                 {
-                    Console.WriteLine("\tTrying to connect to " + "COM8" + " at " + baudRate + "bps");
+                    Console.WriteLine("\tTrying to connect to " + port_name + " at " + baudRate + "bps");
 
                     // Try to connect to a ssc32 board on that port
-                    current_ssc32.Connect("COM8", baudRate);
-                    
+                    current_ssc32.Connect(port_name, baudRate);
+
                     Console.WriteLine("\t\tConnected !");
 
                     string version = current_ssc32.getSoftwareVersion();
 
-                    ret.Add(new SSC32ENumerationResult("COM8", baudRate, version));
+                    ret.Add(new SSC32ENumerationResult(port_name, baudRate, version));
                 }
                 catch (Exception exc)
                 {
@@ -131,8 +133,8 @@ namespace Lynxmotion
                 {
 
                 }
-            
 
+            }
             try
             {
                 current_ssc32.Dispose();

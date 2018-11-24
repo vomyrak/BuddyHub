@@ -20,6 +20,7 @@
 //  along with this library.  If not, see <http://www.gnu.org/licenses/>.
 //
 //  All trademarks, service marks, trade names, product names are the property of their respective owners.
+using System;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using UCProtocol;
@@ -42,7 +43,7 @@ namespace Lynxmotion
         public string GetSerialPort()
         {
             SSC32ENumerationResult[] SSC32s = AL5D.EnumerateConnectedSSC32(9600);
-            if (SSC32s.Length > 0)
+            if (SSC32s.Length > 0) 
             {
                 return SSC32s[0].PortName;
             }
@@ -76,11 +77,15 @@ namespace Lynxmotion
         public AL5D(string portName)
             : base(portName, 9600, 6)
         {
-            Initialize(0, 1, 2, 3, 4, 5);
+            Initialise();
             GoToIdlePosition(false);
             updateServos();
         }
 
+        public void Initialise()
+        {
+            Initialize(0, 1, 2, 3, 4, 5);
+        }
         /// <summary>
         /// Creates an AL5C robot arm by specifying a custom servo channel allocation
         /// </summary>
