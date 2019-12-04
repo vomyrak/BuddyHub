@@ -40,6 +40,7 @@ In addition, an example implementation of hardware device control library is inc
       "dns": "<IP address of your databse>"
     }
     ```
+    * Change the database query code in .Server/Server.cs according to your database setting.
     * Build debug configuration with Visual Studio and run it in debug mode
     * You can also place a copy of it under .bin/ServerExe. If you publish the server project as a exe, that will be the default working directory. Note that exe file should be executed with administrative previledge.
 
