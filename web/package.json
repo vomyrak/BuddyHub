@@ -17,7 +17,7 @@
     "express-session": "^1.15.6",
     "fs": "0.0.1-security",
     "http": "0.0.0",
-    "mongoose": "^5.2.5",
+    "mongoose": "^5.7.5",
     "nodemailer": "^4.6.8",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
