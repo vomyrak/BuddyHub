@@ -15,7 +15,7 @@
     "fs": "0.0.1-security",
     "http": "0.0.0",
     "mongoose": "^5.2.9",
-    "nodemailer": "^4.6.8",
+    "nodemailer": "^6.4.16",
     "xmlhttprequest": "^1.8.0"
   }
 }
